@@ -1,0 +1,8 @@
+# Ignore everything.
+/*
+
+# Except for the following:
+!.gitignore
+
+# Exclude all archives.
+*.zip
