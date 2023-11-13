@@ -425,7 +425,90 @@ F & False  \\
         |B| = n2^{n-1}
     \] \q
 
-    \end{ps}
+    
+    \p{ii} Let \( B = \{(S, T) | S \in 2^A, T \in 2^A, S \cap T = \emptyset \} \). 
+
+    Consider the smallest value of \( n = 2 \):
+    \begin{align*}
+        &A = \{1, 2\} \\
+        &2^A = \{\emptyset, \{1\}, \{2\}, \{1, 2\} \} 
+    \end{align*}
+    
+    Now consider all possible pairs \( (U, k) \), where \( U \in 2^A \) and \( k \in \mathbb{N} \)
+    represents the number of distinct subsets in \( 2^A \) with which \( U \) can be paired, such
+    that \( U \) and each of these subsets have an empty intersection:
+
+    \begin{enumerate}[label=\arabic*.]
+        \item \( (\emptyset, 4) \Leftrightarrow B = \{ (\emptyset, \emptyset), (\emptyset, \{1\}),
+            (\emptyset, \{2\}), (\emptyset, \{1,2\}) \), \dots \}
+        \item \( (\{1\}, 2) \Leftrightarrow B = \{ \dots ,(\{1\}, \emptyset), (\{1\}, \{2\}), \dots \} \)
+        \item \( (\{2\}, 2) \Leftrightarrow B = \{ \dots ,(\{2\}, \emptyset), (\{2\}, \{1\}), \dots \} \)
+        \item \( (\{1,2\}, 1) \Leftrightarrow B = \{ \dots ,(\{1,2\}, \emptyset) \} \)
+    \end{enumerate}
+
+    Let \( n = 3 \), then:
+    \begin{align*}
+        &A = \{1, 2, 3\} \\
+        &2^A = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1, 2\}, \{1,3\}, \{2, 3\}, \{1, 2, 3\} \} 
+    \end{align*}
+
+    The pairs \( (U, k) \) are:
+    \begin{enumerate}[label=\arabic*.]
+        \item \( (\emptyset, 8) \)
+        \item \( (\{1\}, 4) \)
+        \item \( (\{2\}, 4) \)
+        \item \( (\{3\}, 4) \)
+        \item \( (\{1,2\}, 2) \)
+        \item \( (\{1,3\}, 2) \)
+        \item \( (\{2,3\}, 2) \)
+        \item \( (\{1,2,3\}, 1) \)
+    \end{enumerate}
+
+    Observe the emerging common pattern. Since each element can always form at least one pair, the
+    total number of cases to be considered equals to \( |2^A| = 2^{|A|} \) (\( 2^2 = 4 \) when \( n
+    = 2 \), and \( 2^3 = 8 \) when \( n = 3 \)). Furthermore, notice that \( k \) goes down by the
+    factor of 2 with each extra element in \( U \). Lastly, there are \( \binom{n}{|U|} \) cases
+    which are considered for each cardinality of \( U \).
+
+    Thus, to calculate the cardinality of \( B \), we have to find the sum of the
+    product of \( k \) (the number of pairs for a given cardinality of \( U \)) and the number of
+    possible ways to choose \( |U| \) elements from the collection of \( n \) elements: 
+    \[
+        |B| = \sum_{|U|=0}^n 2^{|U|}\binom{n}{n - |U|}
+    \]
+    Let us denote \( |U| \) as \( x \), and simplify the above sum using the fact that the number of
+    ways to choose \( i \) elements from \( j \) elements equals to the number of ways to exclude \(
+    j - i \) elements from \( j \) elements:
+    
+    \begin{align}
+        \label{sum2x}
+        |B| = \sum_{x=0}^n 2^x \binom{n}{x}
+    \end{align}
+    
+    Now consider the binomial theorem:
+    \[
+        (a+b)^n = \sum_{x=0}^n a^{n-x} b^x \binom{n}{x}
+    \]   
+    Let \( a = 1 \) and \( b = 2 \):
+    
+    \begin{align*}
+        (1 + 2)^n &= \sum_{x=0}^n 1^{n-x}2^x \binom{n}{x}\\
+        3^n &= \sum_{x=0}^n 2^x \binom{n}{x}
+    \end{align*} 
+    Hence \eqref{sum2x} equals to \( 3^n \), leading to the final answer:
+    \[
+        |B| = 3^n 
+    \] \q
+    
+    \textit{Remark}. The result can be interpreted intuitively as being analogous to the power set.
+    Another way to calculate the cardinality of \( B \) is to find the number of triples of
+    pair-wise disjoint sets \( (S, T, A \backslash (S \cup T)) \), as indicated by the given hint. In this case,
+    there are three options for each element of \( A \): it is either in \( T \), \( S \) or it is
+    excluded. Since there are \( n \) elements and each one has three choices, the total number of
+    such triples is \( 3 \times 3 \time 3 \times \dots \times 3 \) \( n \) times, i.e. \( 3^n \).
+
+\end{ps}
+
 
 
 \section*{5.}
@@ -475,6 +558,180 @@ F & False  \\
 \end{ps}
 
 \section*{6.}
+
+This section will make use of the following structure:
+\[
+    \text{Proposition } P(n)
+\]   
+
+\begin{enumerate}
+    \item Base case.
+    \item Inductive hypothesis.
+    \item Inductive step.
+    \item Conclusion.
+\end{enumerate}
+
+\begin{ps}
+
+    \p{a} \[ P(n) = \sum_{1 \leq i \leq n} (2i - 1) = n^2, \forall n \in \mathbb{N} \]
+    \begin{enumerate}[label=\arabic*.]
+        \item Let \( n = 1 \), then: 
+        \begin{align*}
+            2 \times 1 - 1 &= 1^2 \\
+            1 &= 1
+        \end{align*}
+        Hence, P(1) is true.
+
+    \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N} \) is an arbitrary
+        fixed number.
+
+    \item Let n = k + 1, then:
+    \begin{align*}
+        \sum_{1 \leq i \leq k+1} (2i-1) &= (k+1)^2 \\
+        \sum_{1 \leq i \leq k} (2i-1) + 2(k+1) - 1 &= (k+1)^2 
+    \end{align*}
+    Using the inductive hypothesis:
+    \begin{align*}
+            k^2 + 2k + 2 - 1 &= k^2 + 2k + 1 \\
+            k^2 + 2k + 1 &= k^2 + 2k + 1
+    \end{align*}
+    Hence \( P(k+1) \) is true.
+
+    \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
+        \mathbb{N} \) under the assumption that \( P(k) \) is true. Since \( P(1) \) has also been
+        shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
+        \mathbb{N} \).
+
+    \end{enumerate} \q
+
+    \p{b} \[ P(n) = \sum_{1 \leq i \leq n} i^2 = \frac{1}{6}n(n+1)(2n+1), \forall n \in
+    \mathbb{N} \]
+
+    \begin{enumerate}[label=\arabic*.]
+        \item Let \( n = 1 \), then: 
+        \begin{align*}
+            1^2 &= \frac{1}{6}(1)(1+1)(2(1) + 1) \\
+            1 &= 1
+        \end{align*}
+        Hence, P(1) is true.
+
+    \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N} \) is an arbitrary
+        fixed number.
+
+    \item Let n = k + 1, then:
+    \begin{align*}
+        \sum_{1 \leq i \leq k+1} i^2 &= \frac{1}{6}(k+1)(k+2)(2k+3) \\
+        \sum_{1 \leq i \leq k} i^2 + (k+1)^2 &= \frac{1}{6}(2k^3 + 9k^2 + 13k + 6)
+    \end{align*}
+    Using the inductive hypothesis:
+    \begin{align*}
+        \frac{1}{6}k(k+1)(2k+1) + k^2 + 2k + 1 &= \frac{1}{3}k^3 + \frac{3}{2}k^2 + \frac{13}{6}k + 1 \\
+         \frac{1}{3}k^3 + \frac{3}{2}k^2 + \frac{13}{6}k + 1 &= \frac{1}{3}k^3 + \frac{3}{2}k^2 + \frac{13}{6}k + 1
+    \end{align*}
+    Hence \( P(k+1) \) is true.
+
+    \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
+        \mathbb{N} \) under the assumption that \( P(k) \) is true. Since \( P(1) \) has also been
+        shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
+        \mathbb{N} \).
+
+    \end{enumerate} \q
+    
+    \p{c}
+    \begin{align*}
+        \sum_{3 \leq i \leq n-2} i^2 =
+        \sum_{1 \leq i \leq n-2} i^2 - \sum_{1 \leq i \leq 2} i^2 =
+        \sum_{1 \leq i \leq n-2} i^2 - 5
+    \end{align*}
+    Using the result from part (b), the equation above transforms into:
+    \begin{align*}
+        &\frac{1}{6}(n-2)(n-1)(2n-3) - 5 = \\
+        &\frac{1}{6}(2n^3 - 9n^2 + 13n - 6) - 5 = \\
+        &\frac{1}{3}n^3 - \frac{3}{2}n^2 + \frac{13}{6}n - 6, \forall n \in \mathbb{N}, n \geq 5
+    \end{align*} \q
+
+    \p{d} 
+    \[
+        P(n): 7^n - 1 \text{ is divisible by 6 for all } n \in \mathbb{N}_0.
+    \]   
+
+    \begin{enumerate}[label=\arabic*.]
+        \item Let \( n = 0 \), then: 
+        \begin{align*}
+            7^0 - 1 = 1 - 1 = 0
+        \end{align*}
+        Since 0 is divisible by 6, P(0) is true.
+
+    \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N}_0 \) is an arbitrary
+        fixed number. Therefore, \( P(k) \) can be expressed as \( P(k) = 6m \), where \( m \in \mathbb{N}_0 \).
+
+    \item Consider \( P(k+1) - P(k) \):
+    \begin{align*}
+        7^{k+1} - 1 - 7^k + 1 &= \\
+        7^k (7-1) &= \\
+        6(7^k)
+    \end{align*}
+    Thus \( P(k+1) \) can be expressed as follows:
+    \begin{align*}
+        P(k+1) = 6(7^k) + P(k)
+    \end{align*}
+    Using the inductive hypothesis: 
+    \begin{align*}
+        P(k+1) = 6(7^k) + 6m = 6(7^k + m) \text{ is divisible by 6.}
+    \end{align*}
+
+    Hence \( P(k+1) \) is true.
+
+    \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
+        \mathbb{N}_0 \) under the assumption that \( P(k) \) is true. Since \( P(0) \) has also been
+        shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
+        \mathbb{N}_0 \).
+
+    \end{enumerate} \q
+
+    \p{e}
+    \[
+        P(n): 2n + 1 \leq 2^n, \forall n \in \mathbb{N}, n \geq 3
+    \]   
+    \begin{enumerate}[label=\arabic*.]
+        \item Let \( n = 3 \), then: 
+        \begin{align*}
+            2(3) + 1 &\leq 2^3 \\
+            7 &\leq 8
+        \end{align*}
+        Hence, P(3) is true.
+
+    \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N} \) is an arbitrary
+        fixed number.
+
+    \item Consider \( P(k) \):
+    \begin{align*}
+        2k + 1 &\leq 2^k \quad \biggr| \times 2 \\
+        4k + 2 &\leq 2^{k+1}
+    \end{align*}
+    Now consider the statement \( 2k+3 \leq 4k + 2 \):
+    \begin{align*}
+        2k + 3 &\leq 4k + 2 \\
+        2k &\geq 1 \\
+        k &\geq \frac{1}{2}
+    \end{align*}
+    Thus, the above statement is true for all \( k \in \mathbb{N}, k \geq 3 \).
+    Therefore, using the principle of transitivity:
+    \begin{align*}
+        2k+3 &\leq 2^{k+1} \\
+        2(k+1) + 1 &\leq 2^{k+1}
+    \end{align*}
+    Hence \( P(k+1) \) is true.
+
+    \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
+        \mathbb{N} \) under the assumption that \( P(k) \) is true. Since \( P(3) \) has also been
+        shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
+        \mathbb{N}, n \geq 3 \).
+
+    \end{enumerate} \q
+
+\end{ps}
+
 \section*{7.}
 \section*{8.}
 
