@@ -2,10 +2,12 @@
 
 % Packages
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathtools}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{geometry}
 \usepackage{fancyhdr}
+\usepackage{cancel}
 
 % Page Geometry
 \geometry{a4paper, margin=1in, headheight=14.5pt}
@@ -20,6 +22,7 @@
 % Custom Commands
 \newcommand{\p}[1]{\item[\textnormal{(#1)}]}
 \newcommand{\q}{\hfill $\blacksquare$}
+\newcommand{\nir}{\mathrel{\mathrlap{/}*}}
 
 \newenvironment{ps}
 {\begin{enumerate}[leftmargin=0em, itemindent=1.5em]}
@@ -38,10 +41,12 @@ F & False  \\
 \(\oplus\) & XOR \\
 \( \downarrow \) & NOR \\
 \( \uparrow \) & NAND \\
-\(\mathbb{E}\) & Set of all even integers \\
-\(\mathbb{O}\) & Set of all odd integers \\
 \( \blacksquare \) & Indicates the end of proof/solution \\
 \( \overset{d}{\equiv} \) & Equivalent by definition \\
+\(\mathbb{E}\) & Set of all even integers \\
+\(\mathbb{O}\) & Set of all odd integers \\
+\( x*y \) & \( (x, y) \in R \) \\
+\(x \nir y \) & \( (x, y) \notin R \) \\
 
 \hline
 \end{tabular}
@@ -733,6 +738,122 @@ This section will make use of the following structure:
 \end{ps}
 
 \section*{7.}
+This section will make use of the following structure:
+\[
+    \text{Relation } R \text{ on } \mathbb{Z}.
+\]   
+\begin{enumerate}
+
+    \item Check if \( R \) is reflexive (for any \(x \in Z, x*x \)).
+    \item Check if \( R \) is symmetric (if \( x*y \), then \( y*x \)).
+    \item Check if \( R \) is transitive (if \( x*y \) and \( y*z \), then \( x*z \)).
+
+\end{enumerate}
+
+Furthermore, the following facts will be utilized:
+\begin{enumerate}
+
+    \item If \(a \in \mathbb{E} \text{ and } a = b + c \), then it must be the case that either both
+        \( b,c \in \mathbb{E} \) or both \( b,c \in \mathbb{O} \).
+
+    \item If \(a \in \mathbb{E} \text{ and } a = bc \), then it must be the case that either
+        \( b \in \mathbb{E} \text{ or } c \in \mathbb{E} \).
+
+\end{enumerate}
+
+
+\begin{ps}
+
+    \p{i}
+        \[
+            R = \{ x*y \,|\, (x+y) \in \mathbb{O} \}
+        \]   
+
+        \begin{enumerate}[label=\arabic*.]
+
+            \item \(\forall x \in \mathbb{Z} (x + x = 2x \in \mathbb{E}) \implies x \nir x \implies
+                R \) is \textbf{irreflexive}.
+
+            \item If \( (x+y) \in \mathbb{O} \), then \( x+y = (y+x) \in \mathbb{O} \implies y*x
+                \implies R \) is \textbf{symmetric}.
+
+            % CLARIFY
+            \item Suppose \( x \in \mathbb{E} \) and \( (x+y) \in \mathbb{O} \). Moreover, suppose
+                \( z \in \mathbb{E} \) and \( (y+z) \in \mathbb{O} \). Then \( (x+z) \in \mathbb{E}
+                \implies x \nir z \implies R \)  is \textbf{intransitive}.
+
+        \end{enumerate}
+
+    \p{ii}
+        \[
+            R = \{ x*y \,|\, (x+y) \in \mathbb{E} \}
+        \]   
+
+        \begin{enumerate}[label=\arabic*.]
+
+            \item \(\forall x \in \mathbb{Z} (x + x = 2x \in \mathbb{E}) \implies x * x
+                \implies R \) is \textbf{reflexive}.
+
+            \item If \( (x+y) \in \mathbb{E} \), then \( x+y = (y+x) \in \mathbb{E} \implies
+                y*x \implies R \) is \textbf{symmetric}.
+            
+            \item Consider the case when \( x, y \in \mathbb{O} \). Then \( (x+y) \in \mathbb{E} \),
+                and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{O} \) must be true.
+                Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
+
+                Now consider an alternative case when \( x,y \in \mathbb{E} \). Then \( (x+y) \in
+                \mathbb{E} \), and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{E} \)
+                Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
+
+                Since both cases have shown that \( x*z \), \( R \) is \textbf{transitive}.
+
+        \end{enumerate}
+
+    \p{iii}
+        \[
+            R = \{ x*y \,|\, xy \in \mathbb{O} \}
+        \]   
+
+        \begin{enumerate}[label=\arabic*.]
+
+            \item Let \(x = 2 \text{, then } x^2 = 4 \in \mathbb{E} \implies x \nir x \implies
+                R \) is \textbf{irreflexive}.
+
+            \item If \( xy \in \mathbb{O} \), then \( xy = yx \in \mathbb{O} \implies y*x
+                \implies R \) is \textbf{symmetric}.
+
+            \item If \( xy, yz \in \mathbb{O} \), then \( x, y, z \in \mathbb{O} \) must be true.
+                Therefore \( xz \in \mathbb{O} \implies x*z \implies R\) is \textbf{transitive}.
+ 
+        \end{enumerate}
+    %
+    % \p{iv}
+    %     \[
+    %         R = \{ x*y \,|\, (x+xy) \in \mathbb{E} \}
+    %     \]   
+    %
+    %     \begin{enumerate}[label=\arabic*.]
+    %
+    %         \item \(\forall x \in \mathbb{Z} (x + x^2 = 2x \in \mathbb{E}) \implies x * x
+    %             \implies R \) is \textbf{reflexive}.
+    %
+    %         \item If \( (x+y) \in \mathbb{E} \), then \( x+y = (y+x) \in \mathbb{E} \implies
+    %             y*x \implies R \) is \textbf{symmetric}.
+    %         
+    %         \item Consider the case when \( x, y \in \mathbb{O} \). Then \( (x+y) \in \mathbb{E} \),
+    %             and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{O} \) must be true.
+    %             Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
+    %
+    %             Now consider an alternative case when \( x,y \in \mathbb{E} \). Then \( (x+y) \in
+    %             \mathbb{E} \), and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{E} \)
+    %             Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
+    %
+    %             Since both cases have shown that \( x*z \), \( R \) is \textbf{transitive}.
+    %
+    %     \end{enumerate}
+
+\end{ps}
+
 \section*{8.}
 
 \end{document}
