@@ -1,6 +1,14 @@
+main :: IO ()
+main = do
+    putStrLn("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
+    putStrLn("twoNodesConnected " ++ show(twoNodesConnected 8 9 [(0,2), (0, 1), (3, 4)]))
+    putStrLn("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
+    putStrLn("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
+    putStrLn("add " ++ show(add ["Akim", "Akim", "Akim"] (testGame 0)))
 
-------------------------- Merge sort
+------------------------- Sorting
 
+-- Sorts and removes duplicates.
 merge :: Ord a => [a] -> [a] -> [a]
 merge xs [] = xs
 merge [] ys = ys
@@ -15,7 +23,12 @@ msort [x] = [x]
 msort xs  = msort (take n xs) `merge` msort (drop n xs)
   where
     n = length xs `div` 2
-    
+
+sortPair :: (Node, Node) -> (Node, Node)
+sortPair (p1,p2)
+    | p1 < p2 = (p1, p2)
+    | otherwise = (p2, p1)
+
 ------------------------- Game world types
 
 type Character = String
@@ -38,17 +51,26 @@ testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 
 ------------------------- Assignment 1: The game world
 
+
 connected :: Map -> Node -> [Node]
-connected = undefined
+connected m n = [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2]
+
+twoNodesConnected :: Node -> Node -> Map -> Bool
+twoNodesConnected i j m = foldr (||) False [ if n == j then True else False | n <- connected m i ]
 
 connect :: Node -> Node -> Map -> Map
-connect = undefined
+connect n1 n2 m
+    | not (twoNodesConnected n1 n2 m) = msort(sortPair (n1, n2) : m)
+    | otherwise = m
 
 disconnect :: Node -> Node -> Map -> Map
-disconnect = undefined
+disconnect n1 n2 m
+    | twoNodesConnected n1 n2 m = filter (/= sortPair (n1, n2)) m
+    | otherwise = m
 
 add :: Party -> Event
-add = undefined
+add [] (Game m n playerParty allParties) = (Game m n playerParty allParties)
+add (p:ps) (Game m n playerParty allParties) = add ps (Game m n (msort (p:playerParty)) allParties)
 
 addAt :: Node -> Party -> Event
 addAt = undefined
