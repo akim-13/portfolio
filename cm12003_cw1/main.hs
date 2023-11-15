@@ -4,7 +4,12 @@ main = do
     putStrLn("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
     putStrLn("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
     putStrLn("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
-    putStrLn("add " ++ show(add ["Akim", "Akim", "Akim"] (testGame 0)))
+    putStrLn("add " ++ show(add ["Akim", "Borat", "Ali"] (testGame 0)))
+    putStrLn("addAt " ++ show(addAt 1 ["Akim", "AAA"] (testGame 0)))
+    putStrLn("addHere " ++ show(addHere ["Newww", "cookoo"] (testGame 0)))
+    putStrLn("remove " ++ show(remove ["Akim", "Russell"] (testGame 0)))
+    putStrLn("removeAt " ++ show(removeAt 1 ["Akim", "Brouwer", "Heyting"] (testGame 0)))
+    putStrLn("removeHere " ++ show(removeHere ["Akim", "Heyting"] (testGame 1)))
 
 ------------------------- Sorting
 
@@ -49,6 +54,7 @@ testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 
 ------------------------- Assignment 1: The game world
 
+-- TODO: implement safety input filtering later if necessary.
 
 connected :: Map -> Node -> [Node]
 connected m n = [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2 ]
@@ -67,23 +73,38 @@ disconnect n1 n2 m
     | otherwise = m
 
 add :: Party -> Event
-add [] (Game m n playerParty allParties) = (Game m n playerParty allParties)
-add (p:ps) (Game m n playerParty allParties) = add ps (Game m n (msort (p:playerParty)) allParties)
+add p (Game m n playersParty allParties) = Game m n (msort (p ++ playersParty)) allParties
 
 addAt :: Node -> Party -> Event
-addAt = undefined
+addAt _ [] (Game m n playersParty allParties) = Game m n playersParty allParties
+addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars (Game m n playersParty (addToParty iNode char allParties))
+    where addToParty iNode char allParties = [ 
+                                               if i == iNode 
+                                               then msort (char:gameParty) 
+                                               else gameParty 
+                                               | (i, gameParty) <- zip [0..] allParties 
+                                             ]
 
 addHere :: Party -> Event
-addHere = undefined
+addHere p (Game m n playersParty allParties) = addAt n p (Game m n playersParty allParties)
+
+removeCharacters :: Party -> Party -> Party
+removeCharacters charsToRemove chars = msort [ char | char <- chars, not (elem char charsToRemove)]
 
 remove :: Party -> Event
-remove = undefined
+remove p (Game m n playersParty allParties) = Game m n (removeCharacters p playersParty) allParties
 
 removeAt :: Node -> Party -> Event
-removeAt = undefined
+removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty (removeFromParty iNode chars allParties)
+    where removeFromParty iNode chars allParties = [ 
+                                                     if i == iNode 
+                                                     then removeCharacters chars gameParty 
+                                                     else gameParty 
+                                                     | (i, gameParty) <- zip [0..] allParties 
+                                                   ]
 
 removeHere :: Party -> Event
-removeHere = undefined
+removeHere p (Game m n playersParty allParties) = removeAt n p (Game m n playersParty allParties)
 
 
 ------------------------- Assignment 2: Dialogues
