@@ -60,7 +60,7 @@ F & False  \\
         \begin{center}
         \begin{tabular}{|c|c|c|c|c|}
         \hline
-        $X$ & $Y$ & $P = X \vee Y$ & $Q = \neg (X \wedge Y)$ & $P \rightarrow Q$ \\
+        $X$ & $Y$ & $P = (X \vee Y)$ & $Q = \neg (X \wedge Y)$ & $P \rightarrow Q$ \\
         \hline
         T & T & T & F & F \\
         T & F & T & T & T \\
@@ -76,7 +76,7 @@ F & False  \\
         \begin{center}
         \begin{tabular}{|c|c|c|c|c|}
         \hline
-        $X$ & $Y$ & $P = X \vee Y$ & $Q = \neg X \wedge \neg Y$ & $P \rightarrow Q$ \\
+        $X$ & $Y$ & $P = (X \vee Y)$ & $Q = (\neg X \wedge \neg Y)$ & $P \rightarrow Q$ \\
         \hline
         T & T & T & F & F \\
         T & F & T & F & F \\
@@ -92,7 +92,7 @@ F & False  \\
         \begin{center}
         \begin{tabular}{|c|c|c|c|c|}
         \hline
-        $X$ & $Y$ & $P = X \rightarrow Y$ & $Q = (\neg X \vee Y) \wedge (\neg X \vee X)$ & $P \rightarrow Q$ \\
+        $X$ & $Y$ & $P = (X \rightarrow Y)$ & $Q = (\neg X \vee Y) \wedge (\neg X \vee X)$ & $P \rightarrow Q$ \\
         \hline
         T & T & T & T & T \\
         T & F & F & F & T \\
@@ -107,7 +107,7 @@ F & False  \\
         \begin{center}
         \begin{tabular}{|c|c|c|c|c|}
         \hline
-        $X$ & $Y$ & $P = X \rightarrow \neg Y$ & $Q = Y \rightarrow \neg X$ & $P \rightarrow Q$ \\
+        $X$ & $Y$ & $P = (X \rightarrow \neg Y)$ & $Q = (Y \rightarrow \neg X)$ & $P \rightarrow Q$ \\
         \hline
         T & T & F & F & T \\
         T & F & T & T & T \\
@@ -122,7 +122,7 @@ F & False  \\
         \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|}
         \hline
-        $X$ & $Y$ & $Z$ & $P = X \wedge (Y \vee Z)$ & $Q = (X \vee Y) \wedge (X \vee Z)$ & $P \rightarrow Q$ \\
+        $X$ & $Y$ & $Z$ & $P = (X \wedge (Y \vee Z))$ & $Q = ((X \vee Y) \wedge (X \vee Z))$ & $P \rightarrow Q$ \\
         \hline
         T & T & T & T & T & T \\
         T & T & F & T & T & T \\
@@ -142,7 +142,7 @@ F & False  \\
         \begin{center}
         \begin{tabular}{|c|c|c|c|c|}
         \hline
-        $X$ & $Y$ & $P = X \rightarrow Y$ & $Q = \neg X \rightarrow \neg Y$ & $P \rightarrow Q$ \\
+        $X$ & $Y$ & $P = (X \rightarrow Y)$ & $Q = (\neg X \rightarrow \neg Y)$ & $P \rightarrow Q$ \\
         \hline
         T & T & T & T & T \\
         T & F & F & T & T \\
@@ -158,7 +158,7 @@ F & False  \\
         \begin{center}
         \begin{tabular}{|c|c|c|c|c|}
         \hline
-        $X$ & $Y$ & $P = X \rightarrow Y$ & $Q = \neg (Y \rightarrow X)$ & $P \rightarrow Q$ \\
+        $X$ & $Y$ & $P = (X \rightarrow Y)$ & $Q = \neg (Y \rightarrow X)$ & $P \rightarrow Q$ \\
         \hline
         T & T & T & F & F \\
         T & F & F & F & T \\
@@ -173,7 +173,8 @@ F & False  \\
         \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|}
         \hline
-        $X$ & $Y$ & $Z$ & $P = (Y \rightarrow Z) \wedge (X \rightarrow Y) $ & $Q = X \rightarrow Z$ & $P \rightarrow Q$ \\
+        $X$ & $Y$ & $Z$ & $P = ((Y \rightarrow Z) \wedge (X \rightarrow Y)) $ & $Q = (X \rightarrow
+        Z)$ & $P \rightarrow Q$ \\
         \hline
         T & T & T & T & F & T \\
         T & T & F & F & F & T \\
@@ -189,6 +190,7 @@ F & False  \\
 
 \end{ps}
 
+\newpage
 
 \section*{2.}
 \begin{ps}
@@ -196,6 +198,7 @@ F & False  \\
     \p{a} There exist \textbf{16} different binary logical connectives. There are
     4 possible combinations of T and F that a binary connective can take in. Each
     combination can result in 2 outcomes (T or F), therefore \(2^4 = 16\).
+
 
     \p{b} This section will make use of the following identities:
 
@@ -374,11 +377,11 @@ F & False  \\
 \begin{ps}
     \p{a} This section will make use of the following theorem: \( |2^A| = 2^{|A|} \).
     \begin{align*}
-        & |2^\emptyset| = 2^{|\emptyset|} = 2^0 = 1 \\
-        & |2^{\{0\}}| = 2^1 = 2 \\
-        & |2^{\{0\} \cup \{1\}}| = |2^{\{0,1\}}| = 2^2 = 4 \\
-        & |2^{\{0\} \cap \{1\}}| = |2^\emptyset| = 1 \\
-        & |2^{\{\emptyset, 0, 1\}}| = 2^3 = 8 \\
+        & \left|2^\emptyset\right| = 2^{\left|\emptyset\right|} = 2^0 = 1 \\
+        & \left|2^{\{0\}}\right| = 2^1 = 2 \\
+        & \left|2^{\{0\} \cup \{1\}}\right| = \left|2^{\{0,1\}}\right| = 2^2 = 4 \\
+        & \left|2^{\{0\} \cap \{1\}}\right| = \left|2^\emptyset \right| = 1 \\
+        & \left|2^{\{\emptyset, 0, 1\}}\right| = 2^3 = 8 \\
         &\left|2^{2^{2^{\{0,1\}}}}\right| = 2^{\left|2^{2^{\{0, 1\}}}\right|} 
         = 2^{2^{\left| 2^{\{0, 1\}}\right|}} = 2^{2^4} = 2^{16} = 65536
     \end{align*}
@@ -515,7 +518,6 @@ F & False  \\
 \end{ps}
 
 
-
 \section*{5.}
 \begin{ps}
 
@@ -561,6 +563,7 @@ F & False  \\
         \end{center}
 
 \end{ps}
+
 
 \section*{6.}
 
@@ -744,7 +747,7 @@ This section will make use of the following structure:
 \]   
 \begin{enumerate}
 
-    \item Check if \( R \) is reflexive (for any \(x \in Z, x*x \)).
+    \item Check if \( R \) is reflexive (for any \(x \in \mathbb{Z}, x*x \)).
     \item Check if \( R \) is symmetric (if \( x*y \), then \( y*x \)).
     \item Check if \( R \) is transitive (if \( x*y \) and \( y*z \), then \( x*z \)).
 
@@ -783,6 +786,8 @@ Furthermore, the following facts will be utilized:
                 \implies x \nir z \implies R \)  is \textbf{intransitive}.
 
         \end{enumerate}
+
+    \newpage
 
     \p{ii}
         \[
@@ -826,34 +831,84 @@ Furthermore, the following facts will be utilized:
                 Therefore \( xz \in \mathbb{O} \implies x*z \implies R\) is \textbf{transitive}.
  
         \end{enumerate}
-    %
-    % \p{iv}
-    %     \[
-    %         R = \{ x*y \,|\, (x+xy) \in \mathbb{E} \}
-    %     \]   
-    %
-    %     \begin{enumerate}[label=\arabic*.]
-    %
-    %         \item \(\forall x \in \mathbb{Z} (x + x^2 = 2x \in \mathbb{E}) \implies x * x
-    %             \implies R \) is \textbf{reflexive}.
-    %
-    %         \item If \( (x+y) \in \mathbb{E} \), then \( x+y = (y+x) \in \mathbb{E} \implies
-    %             y*x \implies R \) is \textbf{symmetric}.
-    %         
-    %         \item Consider the case when \( x, y \in \mathbb{O} \). Then \( (x+y) \in \mathbb{E} \),
-    %             and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{O} \) must be true.
-    %             Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
-    %
-    %             Now consider an alternative case when \( x,y \in \mathbb{E} \). Then \( (x+y) \in
-    %             \mathbb{E} \), and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{E} \)
-    %             Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
-    %
-    %             Since both cases have shown that \( x*z \), \( R \) is \textbf{transitive}.
-    %
-    %     \end{enumerate}
+
+    \p{iv}
+        \[
+            R = \{ x*y \,|\, (x+xy) \in \mathbb{E} \}
+        \]   
+
+        \begin{enumerate}[label=\arabic*.]
+
+            \item Consider \( x \in \mathbb{E} \): \( x + x^2 = x(1 + x) \in \mathbb{E} \implies x*x
+                \). 
+
+                Now consider \( x \in \mathbb{O} \): \( x + x^2 = x(1+x) \in \mathbb{E} \) because
+                \( (1+x) \in \mathbb{E} \implies x*x \). 
+
+                Since both cases have shown that \( x*x\), \( R \) is \textbf{reflexive}.
+
+            \item Consider \( x \in \mathbb{E} \): if \( (x+xy) \in \mathbb{E} \) is true, then \( y
+                \in \mathbb{E} \) must also be true. Therefore \( y + yx = y(1+x) \in \mathbb{E}
+                \implies y*x \). 
+
+                Now consider \( x \in \mathbb{O} \): if \( (x+xy) \in \mathbb{E} \) is true, then \(
+                y \in \mathbb{O} \) must also be true. Therefore \( y+yx = y(1+x) \in \mathbb{E} \)
+                because \( (1+x) \in \mathbb{E} \implies y*x \). 
+
+                Since both cases have shown that \( y*x \), \( R \) is \textbf{symmetric}.
+            
+            \item Consider the case when \( x, y \in \mathbb{E} \). Then \( x+xy = x(1+y) \in
+                \mathbb{E}, y+yz = y(1+z) \in \mathbb{E} \text{ and } x + xz = x(1 + z) \in \mathbb{E} \implies
+                x*z \).
+
+                Moreover, consider the case when \( x, y \in \mathbb{O} \). Then \( x+xy = x(1+y) \in
+                \mathbb{E} \), and for \( y+yz = y(1+z) \in \mathbb{E} \) to be true, \( z \in
+                \mathbb{O} \) must be true. Therefore \( x+xz=x(1+z) \in \mathbb{E} \implies x*z \).
+
+                Furthermore, consider the case when \( x \in \mathbb{E}, y \in \mathbb{O} \). Then
+                \( x+xy = x(1+y) \in \mathbb{E} \), and for \( y+yz = y(1+z) \in \mathbb{E} \) to be
+                true, \( z \in \mathbb{O} \) must be true. Therefore \( x+xz = x(1+z) \in \mathbb{E}
+                \implies x*z \).
+
+                Lastly, consider the case when \( x \in \mathbb{O}, y \in \mathbb{E} \). Then
+                \( x+xy = x(1+y) \in \mathbb{O} \implies x \nir y\), therefore this case is invalid.
+
+                Since none of the cases have disproved that \( x*z \), \( R \) is
+                \textbf{transitive}.
+
+        \end{enumerate}
 
 \end{ps}
 
 \section*{8.}
+Consider the following relation \( R \) on the set \( A \):
+    \[
+        R = \{ X*Y \,|\, X \subset Y \}
+    \]   
+\begin{ps}
+
+    \p{a} Since every set is a subset of itself, \( X*X \implies R\) is reflexive. This implies that
+    \( R \) is not asymmetric, and consequently that it is \textbf{not strict partial order}.
+
+    Furthermore, if \( X \subset  Y\) and \( Y \subset X \), then \( X \) must be equal to \( Y \),
+    therefore \( R \) is antisymmetric.
+
+    Lastly, if \( X \subset Y \) and \( Y \subset Z \), then \( X \subset Z \implies X*Z \), hence \( R \) is
+    transitive.
+
+    Since \( R \) has been shown to be reflexive, antisymmetric and transitive, it is
+    \textbf{partial order}.
+
+    \p{b} Consider \( \{b\}, \{c\} \in A \). Since neither \( \{b\} \subset \{c\} \), nor \( \{c\}
+    \subset \{b\} \) is true, \( R \) is \textbf{not total order}.
+
+    \p{c} \( \{b\}, \{c\} \in A \) are the \textbf{minimal elements} because there are no elements
+    in \( A \) that are the subsets of these sets.
+
+    \( \{a,b,c\} \in A \) is the \textbf{maximal element} because there are no elements in \( A \)
+    that contain this set.
+
+
+\end{ps}
 
 \end{document}
