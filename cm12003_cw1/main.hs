@@ -1,14 +1,14 @@
 main :: IO ()
 main = do
     putStrLn("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
-    putStrLn("twoNodesConnected " ++ show(twoNodesConnected 8 9 [(0,2), (0, 1), (3, 4)]))
+    putStrLn("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
     putStrLn("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
     putStrLn("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
     putStrLn("add " ++ show(add ["Akim", "Akim", "Akim"] (testGame 0)))
 
 ------------------------- Sorting
 
--- Sorts and removes duplicates.
+-- Sort and remove duplicates.
 merge :: Ord a => [a] -> [a] -> [a]
 merge xs [] = xs
 merge [] ys = ys
@@ -25,9 +25,7 @@ msort xs  = msort (take n xs) `merge` msort (drop n xs)
     n = length xs `div` 2
 
 sortPair :: (Node, Node) -> (Node, Node)
-sortPair (p1,p2)
-    | p1 < p2 = (p1, p2)
-    | otherwise = (p2, p1)
+sortPair (p1,p2) = (min p1 p2, max p1 p2)
 
 ------------------------- Game world types
 
@@ -53,10 +51,10 @@ testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 
 
 connected :: Map -> Node -> [Node]
-connected m n = [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2]
+connected m n = [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2 ]
 
 twoNodesConnected :: Node -> Node -> Map -> Bool
-twoNodesConnected i j m = foldr (||) False [ if n == j then True else False | n <- connected m i ]
+twoNodesConnected n1 n2 m = elem n1 (connected m n2)
 
 connect :: Node -> Node -> Map -> Map
 connect n1 n2 m
