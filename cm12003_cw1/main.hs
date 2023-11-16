@@ -1,15 +1,24 @@
+import Text.Read (readMaybe)
+import Debug.Trace (traceShow)
+
 main :: IO ()
 main = do
-    putStrLn("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
-    putStrLn("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
-    putStrLn("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
-    putStrLn("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
-    putStrLn("add " ++ show(add ["Akim", "Borat", "Ali"] (testGame 0)))
-    putStrLn("addAt " ++ show(addAt 1 ["Akim", "AAA"] (testGame 0)))
-    putStrLn("addHere " ++ show(addHere ["Newww", "cookoo"] (testGame 0)))
-    putStrLn("remove " ++ show(remove ["Akim", "Russell"] (testGame 0)))
-    putStrLn("removeAt " ++ show(removeAt 1 ["Akim", "Brouwer", "Heyting"] (testGame 0)))
-    putStrLn("removeHere " ++ show(removeHere ["Akim", "Heyting"] (testGame 1)))
+    -- Q1
+    putStrLn ("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
+    putStrLn ("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
+    putStrLn ("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
+    putStrLn ("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
+    putStrLn ("add " ++ show(add ["Akim", "Borat", "Ali"] (testGame 0)))
+    putStrLn ("addAt " ++ show(addAt 1 ["Akim", "AAA"] (testGame 0)))
+    putStrLn ("addHere " ++ show(addHere ["Newww", "cookoo"] (testGame 0)))
+    putStrLn ("remove " ++ show(remove ["Akim", "Russell"] (testGame 0)))
+    putStrLn ("removeAt " ++ show(removeAt 1 ["Akim", "Brouwer", "Heyting"] (testGame 0)))
+    putStrLn ("removeHere " ++ show(removeHere ["Akim", "Heyting"] (testGame 1)))
+
+    -- Q2
+    putStrLn ("Move Brouwer " ++ show((add ["Brouwer"] . removeHere ["Brouwer"]) (testGame 1)))
+
+    -- putStrLn ("dialogue " ++ show( dialogue (testGame 1) testDialogue ))
 
 ------------------------- Sorting
 
@@ -64,7 +73,7 @@ twoNodesConnected n1 n2 m = elem n1 (connected m n2)
 
 connect :: Node -> Node -> Map -> Map
 connect n1 n2 m
-    | not (twoNodesConnected n1 n2 m) = msort(sortPair (n1, n2) : m)
+    | not (twoNodesConnected n1 n2 m) = msort (sortPair (n1, n2) : m)
     | otherwise = m
 
 disconnect :: Node -> Node -> Map -> Map
@@ -86,7 +95,9 @@ addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars 
                                              ]
 
 addHere :: Party -> Event
-addHere p (Game m n playersParty allParties) = addAt n p (Game m n playersParty allParties)
+-- The `@` is an "as-pattern". It allows to keep a
+-- reference to the entire pattern-matched value.
+addHere p game@(Game m n playersParty allParties) = addAt n p game
 
 removeCharacters :: Party -> Party -> Party
 removeCharacters charsToRemove chars = msort [ char | char <- chars, not (elem char charsToRemove)]
@@ -104,34 +115,112 @@ removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty 
                                                    ]
 
 removeHere :: Party -> Event
-removeHere p (Game m n playersParty allParties) = removeAt n p (Game m n playersParty allParties)
+removeHere p game@(Game m n playersParty allParties) = removeAt n p game
 
 
 ------------------------- Assignment 2: Dialogues
 
+--
+-- FIXME: actions are not applied properly, no clue why.
+--
 
 data Dialogue = Action  String  Event
               | Branch  (Game -> Bool) Dialogue Dialogue
               | Choice  String  [( String , Dialogue )]
 
 testDialogue :: Dialogue
-testDialogue = Branch ( isAtZero )
-  (Choice "Russell: Let's get our team together and head to Error." [])
-  (Choice "Brouwer: How can I help you?"
-    [ ("Could I get a haircut?", Choice "Brouwer: Of course." [])
-    , ("Could I get a pint?",    Choice "Brouwer: Of course. Which would you like?"
-      [ ("The Segmalt.",     Action "" id)
-      , ("The Null Pinter.", Action "" id)]
-      )
-    , ("Will you join us on a dangerous adventure?", Action "Brouwer: Of course." (add ["Brouwer"] . removeHere ["Brouwer"]))
-    ]
-  )
- where
-  isAtZero (Game _ n _ _) = n == 0
+testDialogue = Branch ( isAtZero )  -- Branch condition to choose the dialogue.
+    -- 1st dialogue branch.
+    ( Choice "Russell: Let's get our team together and head to Error." [] )
+    -- ( Action "Brouwer: Of course." (add ["Brouwer"] . removeHere ["Brouwer"]) )
+    -- 2nd dialogue branch.
+    (
+        Choice "Brouwer: How can I help you?"
+        [ 
+            -- 1st choice.
+            ( "Could I get a haircut?", Choice "Brouwer: Of course." [] ),
+            -- 2nd choice.
+            (
+                "Could I get a pint?", Choice "Brouwer: Of course. Which would you like?" 
+                    [ ("The Segmalt.", Action "" id), ("The Null Pinter.", Action "" id) ] 
+            ),
+            -- 3rd choice.
+            ( "Will you join us on a dangerous adventure?", Action "Brouwer: Of course." (add ["Brouwer"] . removeHere ["Brouwer"]) )
+        ]
+    )
+    where isAtZero (Game _ n _ _) = n == 0
+
+
+formatDialogueOpt :: Int -> String -> String
+formatDialogueOpt i str = "  " ++ show(i) ++ "." ++ " " ++ str
+
+
+displayDialogueOpts :: Game -> Dialogue -> Int -> IO ()
+displayDialogueOpts game@(Game m n playersParty allParties) 
+                    choice@(Choice choiceStr ((str, dialogue):[])) 
+                    i = do
+    putStrLn (formatDialogueOpt i str)
+    return ()
+
+displayDialogueOpts game@(Game m n playersParty allParties) 
+                    choice@(Choice choiceStr ((str, dialogue):opts)) 
+                    i = do
+    putStrLn (formatDialogueOpt i str)
+    displayDialogueOpts game (Choice choiceStr opts) (i+1)
 
 
 dialogue :: Game -> Dialogue -> IO Game
-dialogue = undefined
+dialogue game@(Game m n playersParty allParties) (Action str event) = do
+    putStrLn (str)
+    return (event game)
+
+dialogue game@(Game m n playersParty allParties) (Branch conditionMet d1 d2) = do
+    if conditionMet game then
+        dialogue game d1
+    else 
+        dialogue game d2
+
+dialogue game@(Game m n playersParty allParties) (Choice str []) = do
+    putStrLn (str)
+    return game
+
+dialogue game@(Game m n playersParty allParties) 
+         choice@(Choice choiceStr choices) = do
+    putStrLn (choiceStr)
+    displayDialogueOpts game choice 1
+    putStr (">> ")
+    inp <- getLine
+    
+    let intInp = readMaybe inp :: Maybe Int
+
+    case intInp of
+        Nothing -> do
+            putStrLn ("You shall not pass (invalid input).")
+            dialogue game choice
+        Just intInp -> do
+            pickedOptI <- pickOpt choices intInp
+            let pickedOpt = choices !! pickedOptI
+            let (responseStr, responseDialogue) = extractResponse pickedOpt
+
+            putStrLn responseStr
+            dialogue game responseDialogue
+            
+    return game
+    where 
+        pickOpt :: [( String , Dialogue )] -> Int -> IO Int
+        pickOpt choices intInp
+            -- Check if the user inputted a number outside of the given list of options.
+            | (intInp-1 < 0) || (intInp > (length choices)) = do
+                putStrLn ("You shall not pass (invalid input).")
+                dialogue game choice
+                -- This return is never reached but necessary
+                -- becuase otherwise Haskell gets confused.
+                return 0
+            | otherwise = do
+                return (intInp-1)
+
+        extractResponse (str, dialogue) = (str, dialogue)
+
 
 findDialogue :: Party -> Dialogue
 findDialogue = undefined
