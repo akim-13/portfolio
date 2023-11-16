@@ -1,5 +1,5 @@
 import Text.Read (readMaybe)
-import Debug.Trace (traceShow)
+import Debug.Trace (trace)
 
 main :: IO ()
 main = do
@@ -83,6 +83,8 @@ disconnect n1 n2 m
 
 add :: Party -> Event
 add p (Game m n playersParty allParties) = Game m n (msort (p ++ playersParty)) allParties
+-- add p game@(Game m n playersParty allParties) = trace ("add: " ++ show p ++ " " ++ show newGame) newGame
+--   where newGame = Game m n (msort (p ++ playersParty)) allParties
 
 addAt :: Node -> Party -> Event
 addAt _ [] (Game m n playersParty allParties) = Game m n playersParty allParties
@@ -121,7 +123,7 @@ removeHere p game@(Game m n playersParty allParties) = removeAt n p game
 ------------------------- Assignment 2: Dialogues
 
 --
--- FIXME: actions are not applied properly, no clue why.
+-- TODO: clean up.
 --
 
 data Dialogue = Action  String  Event
@@ -132,7 +134,6 @@ testDialogue :: Dialogue
 testDialogue = Branch ( isAtZero )  -- Branch condition to choose the dialogue.
     -- 1st dialogue branch.
     ( Choice "Russell: Let's get our team together and head to Error." [] )
-    -- ( Action "Brouwer: Of course." (add ["Brouwer"] . removeHere ["Brouwer"]) )
     -- 2nd dialogue branch.
     (
         Choice "Brouwer: How can I help you?"
@@ -169,6 +170,13 @@ displayDialogueOpts game@(Game m n playersParty allParties)
     displayDialogueOpts game (Choice choiceStr opts) (i+1)
 
 
+displayInpError :: IO ()
+displayInpError = do
+    putStrLn ("")
+    putStrLn ("You shall not pass! (invalid input)")
+    putStrLn ("")
+
+
 dialogue :: Game -> Dialogue -> IO Game
 dialogue game@(Game m n playersParty allParties) (Action str event) = do
     putStrLn (str)
@@ -195,7 +203,7 @@ dialogue game@(Game m n playersParty allParties)
 
     case intInp of
         Nothing -> do
-            putStrLn ("You shall not pass (invalid input).")
+            displayInpError
             dialogue game choice
         Just intInp -> do
             pickedOptI <- pickOpt choices intInp
@@ -204,19 +212,17 @@ dialogue game@(Game m n playersParty allParties)
 
             putStrLn responseStr
             dialogue game responseDialogue
-            
-    return game
     where 
         pickOpt :: [( String , Dialogue )] -> Int -> IO Int
-        pickOpt choices intInp
+        pickOpt choices intInp =
             -- Check if the user inputted a number outside of the given list of options.
-            | (intInp-1 < 0) || (intInp > (length choices)) = do
-                putStrLn ("You shall not pass (invalid input).")
+            if (intInp-1 < 0) || (intInp > (length choices)) then do
+                displayInpError
                 dialogue game choice
                 -- This return is never reached but necessary
                 -- becuase otherwise Haskell gets confused.
                 return 0
-            | otherwise = do
+            else do
                 return (intInp-1)
 
         extractResponse (str, dialogue) = (str, dialogue)
