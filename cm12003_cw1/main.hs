@@ -1,5 +1,5 @@
 import Text.Read (readMaybe)
-import Debug.Trace (trace)
+import Data.Maybe (listToMaybe)
 
 main :: IO ()
 main = do
@@ -17,6 +17,7 @@ main = do
 
     -- Q2
     putStrLn ("Move Brouwer " ++ show((add ["Brouwer"] . removeHere ["Brouwer"]) (testGame 1)))
+
 
 ------------------------- Sorting
 
@@ -63,6 +64,7 @@ testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 
 ------------------------- Assignment 1: The game world
 
+
 -- TODO: implement safety input filtering later if necessary.
 
 
@@ -71,7 +73,7 @@ connected m n = [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2
 
 
 twoNodesConnected :: Node -> Node -> Map -> Bool
-twoNodesConnected n1 n2 m = elem n1 (connected m n2)
+twoNodesConnected n1 n2 m = n1 `elem` (connected m n2)
 
 
 connect :: Node -> Node -> Map -> Map
@@ -87,10 +89,12 @@ disconnect n1 n2 m
 
 
 add :: Party -> Event
+add _ Over = Over
 add p (Game m n playersParty allParties) = Game m n (msort (p ++ playersParty)) allParties
 
 
 addAt :: Node -> Party -> Event
+addAt _ _ Over = Over
 addAt _ [] (Game m n playersParty allParties) = Game m n playersParty allParties
 addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars (Game m n playersParty (addToParty iNode char allParties))
     where addToParty iNode char allParties = [ 
@@ -104,18 +108,21 @@ addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars 
 -- The `@` is an "as-pattern". It allows to keep a
 -- reference to the entire pattern-matched value.
 addHere :: Party -> Event
+addHere _ Over = Over
 addHere p game@(Game m n playersParty allParties) = addAt n p game
 
 
 removeCharacters :: Party -> Party -> Party
-removeCharacters charsToRemove chars = msort [ char | char <- chars, not (elem char charsToRemove)]
+removeCharacters charsToRemove chars = msort [ char | char <- chars, not (char `elem` charsToRemove)]
 
 
 remove :: Party -> Event
+remove _ Over = Over
 remove p (Game m n playersParty allParties) = Game m n (removeCharacters p playersParty) allParties
 
 
 removeAt :: Node -> Party -> Event
+removeAt _ _ Over = Over
 removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty (removeFromParty iNode chars allParties)
     where removeFromParty iNode chars allParties = [ 
                                                      if i == iNode 
@@ -126,6 +133,7 @@ removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty 
 
 
 removeHere :: Party -> Event
+removeHere _ Over = Over
 removeHere p game@(Game m n playersParty allParties) = removeAt n p game
 
 
@@ -157,16 +165,18 @@ testDialogue = Branch ( isAtZero )  -- Branch condition to choose the dialogue.
     )
     where isAtZero (Game _ n _ _) = n == 0
 
+-- NOTE: the auxiliary functions are defined before they 
+-- are used, similarly to how they would be ordered in C.
 
 formatDialogueOpt :: Int -> String -> String
 formatDialogueOpt i str = "  " ++ show(i) ++ "." ++ " " ++ str
-
 
 displayDialogueOpts :: Game -> Dialogue -> Int -> IO ()
 -- Where `i` is the number of the option in the displayed list.
 displayDialogueOpts _ (Choice _ ((str, _):[])) i = do
     putStrLn (formatDialogueOpt i str)
     return ()
+
 displayDialogueOpts game (Choice choiceStr ((str, _):opts)) i = do
     putStrLn (formatDialogueOpt i str)
     displayDialogueOpts game (Choice choiceStr opts) (i+1)
@@ -231,10 +241,10 @@ dialogue game choice@(Choice choiceStr choices) = do
                 displayInpError
                 dialogue game choice
                 -- This return is never reached but necessary
-                -- becuase otherwise Haskell gets confused.
+                -- because otherwise Haskell gets confused.
                 return 0
-            -- Return the index of the picked option.
             else do
+                -- Return the index of the picked option.
                 return (intInp-1)
 
         extractResponse :: (String, Dialogue) -> (String, Dialogue)
@@ -242,8 +252,13 @@ dialogue game choice@(Choice choiceStr choices) = do
 
 
 findDialogue :: Party -> Dialogue
-findDialogue = undefined
-
+findDialogue inpP = 
+    case maybeFoundDialogue of
+        Just dialogue -> dialogue
+        Nothing -> Action "There is nothing we can do." id
+    -- I am assuming that `theDialogues` is defined correctly (with no identical parties),
+    -- so this list should have only one element at most.
+    where maybeFoundDialogue = listToMaybe [ givenDialogue | (givenP, givenDialogue) <- theDialogues, givenP == inpP ]
 
 
 ------------------------- Assignment 3: The game loop
