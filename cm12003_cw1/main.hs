@@ -18,8 +18,6 @@ main = do
     -- Q2
     putStrLn ("Move Brouwer " ++ show((add ["Brouwer"] . removeHere ["Brouwer"]) (testGame 1)))
 
-    -- putStrLn ("dialogue " ++ show( dialogue (testGame 1) testDialogue ))
-
 ------------------------- Sorting
 
 -- Sort and remove duplicates.
@@ -31,12 +29,14 @@ merge (x:xs) (y:ys)
     | x == y    = x : merge    xs    ys
     | otherwise = y : merge (x:xs)   ys
 
+
 msort :: Ord a => [a] -> [a]
 msort []  = []
 msort [x] = [x]
 msort xs  = msort (take n xs) `merge` msort (drop n xs)
   where
     n = length xs `div` 2
+
 
 sortPair :: (Node, Node) -> (Node, Node)
 sortPair (p1,p2) = (min p1 p2, max p1 p2)
@@ -65,26 +65,30 @@ testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 
 -- TODO: implement safety input filtering later if necessary.
 
+
 connected :: Map -> Node -> [Node]
 connected m n = [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2 ]
 
+
 twoNodesConnected :: Node -> Node -> Map -> Bool
 twoNodesConnected n1 n2 m = elem n1 (connected m n2)
+
 
 connect :: Node -> Node -> Map -> Map
 connect n1 n2 m
     | not (twoNodesConnected n1 n2 m) = msort (sortPair (n1, n2) : m)
     | otherwise = m
 
+
 disconnect :: Node -> Node -> Map -> Map
 disconnect n1 n2 m
     | twoNodesConnected n1 n2 m = filter (/= sortPair (n1, n2)) m
     | otherwise = m
 
+
 add :: Party -> Event
 add p (Game m n playersParty allParties) = Game m n (msort (p ++ playersParty)) allParties
--- add p game@(Game m n playersParty allParties) = trace ("add: " ++ show p ++ " " ++ show newGame) newGame
---   where newGame = Game m n (msort (p ++ playersParty)) allParties
+
 
 addAt :: Node -> Party -> Event
 addAt _ [] (Game m n playersParty allParties) = Game m n playersParty allParties
@@ -96,16 +100,20 @@ addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars 
                                                | (i, gameParty) <- zip [0..] allParties 
                                              ]
 
-addHere :: Party -> Event
+
 -- The `@` is an "as-pattern". It allows to keep a
 -- reference to the entire pattern-matched value.
+addHere :: Party -> Event
 addHere p game@(Game m n playersParty allParties) = addAt n p game
+
 
 removeCharacters :: Party -> Party -> Party
 removeCharacters charsToRemove chars = msort [ char | char <- chars, not (elem char charsToRemove)]
 
+
 remove :: Party -> Event
 remove p (Game m n playersParty allParties) = Game m n (removeCharacters p playersParty) allParties
+
 
 removeAt :: Node -> Party -> Event
 removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty (removeFromParty iNode chars allParties)
@@ -116,15 +124,13 @@ removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty 
                                                      | (i, gameParty) <- zip [0..] allParties 
                                                    ]
 
+
 removeHere :: Party -> Event
 removeHere p game@(Game m n playersParty allParties) = removeAt n p game
 
 
 ------------------------- Assignment 2: Dialogues
 
---
--- TODO: clean up.
---
 
 data Dialogue = Action  String  Event
               | Branch  (Game -> Bool) Dialogue Dialogue
@@ -157,74 +163,81 @@ formatDialogueOpt i str = "  " ++ show(i) ++ "." ++ " " ++ str
 
 
 displayDialogueOpts :: Game -> Dialogue -> Int -> IO ()
-displayDialogueOpts game@(Game m n playersParty allParties) 
-                    choice@(Choice choiceStr ((str, dialogue):[])) 
-                    i = do
+-- Where `i` is the number of the option in the displayed list.
+displayDialogueOpts _ (Choice _ ((str, _):[])) i = do
     putStrLn (formatDialogueOpt i str)
     return ()
-
-displayDialogueOpts game@(Game m n playersParty allParties) 
-                    choice@(Choice choiceStr ((str, dialogue):opts)) 
-                    i = do
+displayDialogueOpts game (Choice choiceStr ((str, _):opts)) i = do
     putStrLn (formatDialogueOpt i str)
     displayDialogueOpts game (Choice choiceStr opts) (i+1)
 
 
 displayInpError :: IO ()
 displayInpError = do
-    putStrLn ("")
     putStrLn ("You shall not pass! (invalid input)")
     putStrLn ("")
 
 
 dialogue :: Game -> Dialogue -> IO Game
-dialogue game@(Game m n playersParty allParties) (Action str event) = do
+-- Action case.
+dialogue game (Action str event) = do
     putStrLn (str)
+    -- Update the game state.
     return (event game)
 
-dialogue game@(Game m n playersParty allParties) (Branch conditionMet d1 d2) = do
+-- Branch case.
+dialogue game (Branch conditionMet d1 d2) = do
     if conditionMet game then
         dialogue game d1
     else 
         dialogue game d2
 
-dialogue game@(Game m n playersParty allParties) (Choice str []) = do
+-- Choice cases.
+dialogue game (Choice str []) = do
     putStrLn (str)
     return game
 
-dialogue game@(Game m n playersParty allParties) 
-         choice@(Choice choiceStr choices) = do
+dialogue game choice@(Choice choiceStr choices) = do
     putStrLn (choiceStr)
     displayDialogueOpts game choice 1
     putStr (">> ")
-    inp <- getLine
     
+    inp <- getLine
     let intInp = readMaybe inp :: Maybe Int
+    putStrLn ("")
 
+    -- `case <expr> of` is used for pattern matching inside a function.
     case intInp of
         Nothing -> do
             displayInpError
+            -- Prompt the user until valid input is provided.
             dialogue game choice
+
         Just intInp -> do
             pickedOptI <- pickOpt choices intInp
-            let pickedOpt = choices !! pickedOptI
-            let (responseStr, responseDialogue) = extractResponse pickedOpt
-
-            putStrLn responseStr
-            dialogue game responseDialogue
+            -- End the dialogue if the user enetered 0 (i.e. index == -1).
+            if pickedOptI == (-1) then do
+                return game
+            else do
+                let pickedOpt = choices !! pickedOptI
+                let (responseStr, responseDialogue) = extractResponse pickedOpt
+                putStrLn responseStr
+                dialogue game responseDialogue
     where 
-        pickOpt :: [( String , Dialogue )] -> Int -> IO Int
+        pickOpt :: [ (String, Dialogue) ] -> Int -> IO Int
         pickOpt choices intInp =
-            -- Check if the user inputted a number outside of the given list of options.
-            if (intInp-1 < 0) || (intInp > (length choices)) then do
+            -- Check if the user entered a number outside of the given list of options.
+            if (intInp < 0) || (intInp > (length choices)) then do
                 displayInpError
                 dialogue game choice
                 -- This return is never reached but necessary
                 -- becuase otherwise Haskell gets confused.
                 return 0
+            -- Return the index of the picked option.
             else do
                 return (intInp-1)
 
+        extractResponse :: (String, Dialogue) -> (String, Dialogue)
         extractResponse (str, dialogue) = (str, dialogue)
 
 
