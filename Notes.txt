@@ -1,0 +1,22 @@
+Multi-Room Disco System
+-=-=-=-=-=-=-=-=-=-=-=-
+One arduino used to process and control outputs to the other agent arduinos.
+
+Inputs:
+Buttons - Used to pause and play music.
+Infrafred/Motion Sensor - Turns off music when motion isn't detected for an extended period (saves energy).
+Potentiometer - Turn music up and down on each of the agent arudinos.
+Volume Sensor - Safety feature which turns down the volume if a new speaker is too loud. Failsafe to notify the parent arduino if a speaker is broken.
+
+Outputs:
+LEDs - Disco lights to BPM of any song.
+Speakers - Play music.
+LCD - Shows volume in each room. Warns when music is too loud. Announces songs in each room.
+
+Justification:
+Motion & volume detector arduino - When everyone leaves, turn off the music (saves energy).
+
+Questions:
+- How much justification to seperate Arduinos?
+- Can we hook up and SD card to an Arduino to play music?
+- Do they have all the sensorys necessary?
