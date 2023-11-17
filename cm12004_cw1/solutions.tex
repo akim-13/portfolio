@@ -176,7 +176,7 @@ F & False  \\
         $X$ & $Y$ & $Z$ & $P = ((Y \rightarrow Z) \wedge (X \rightarrow Y)) $ & $Q = (X \rightarrow
         Z)$ & $P \rightarrow Q$ \\
         \hline
-        T & T & T & T & F & T \\
+        T & T & T & T & T & T \\
         T & T & F & F & F & T \\
         T & F & T & F & T & T \\
         T & F & F & F & F & T \\
@@ -216,9 +216,8 @@ F & False  \\
 
         Let us transform equation \eqref{XOR} as follows:
         \begin{align*}
-            (X \vee Y) \wedge \neg(X \wedge Y) &\equiv (X \vee Y) \wedge (\neg X \vee \neg Y) \\
-                                               &\equiv \neg(\neg X \wedge \neg Y) \wedge \neg (X
-                                               \wedge Y)
+            (X \vee Y) \wedge \neg(X \wedge Y) &\equiv \neg(\neg X \wedge \neg Y) \wedge \neg (X
+                                                \wedge Y)
         \end{align*} \q
 
     \p{ii} Let us transform equation \eqref{XOR} as follows: 
@@ -226,7 +225,7 @@ F & False  \\
             \label{b ii}
             (X \vee Y) \wedge \neg(X \wedge Y) &\equiv (X \vee Y) \wedge (\neg X \vee \neg Y) \notag \\
                                                &\equiv \neg (\neg (X \vee Y) \vee \neg (\neg X
-                                               \vee Y ))
+                                               \vee \neg Y ))
         \end{align} \q
 
     \p{iii} Let us transform equation \eqref{b ii} as follows: 
@@ -259,7 +258,7 @@ F & False  \\
         Notice that \( X \uparrow X \equiv \neg X \). Hence: 
         \begin{align*}
             &\neg (X \uparrow Y) \equiv (X \uparrow Y) \uparrow (X \uparrow Y) \Leftrightarrow \\
-            &X \wedge Y \equiv (X \uparrow Y) \uparrow (X \uparrow Y)
+            &X \wedge Y \overset{d}{\equiv} (X \uparrow Y) \uparrow (X \uparrow Y)
         \end{align*}
         Similarly, using the second and third identities, the remaining two connectives can be
         expressed as follows: 
@@ -296,10 +295,10 @@ F & False  \\
         Notice that \( X \downarrow X \equiv \neg X \). Hence: 
         \begin{align*}
             &\neg (X \downarrow Y) \equiv (X \downarrow Y) \downarrow (X \downarrow Y) \Leftrightarrow \\
-            &X \vee Y \equiv (X \downarrow Y) \downarrow (X \downarrow Y)
+            &X \vee Y \overset{d}{\equiv} (X \downarrow Y) \downarrow (X \downarrow Y)
         \end{align*}
 
-        Similarly, using the second and third identities, the remaining two connectives can be
+        Similarly, using the first and third identities, the remaining two connectives can be
         expressed as follows: 
         \begin{align*}
             X \wedge Y &\equiv \neg (\neg X \vee \neg Y) \\
@@ -319,7 +318,7 @@ F & False  \\
 \begin{ps}
 
     \p{a}
-    \p{i} Let \( y = x^2 \), then the given predicate transforms into a tautology:
+    \p{i} Let \( y = x^2 \), then the given inequality transforms into a universally true statement:
         \[ 
             x^2 < x^2 + 1 \implies 0< 1 
         \]
@@ -351,22 +350,22 @@ F & False  \\
     \p{b}
     \p{i} Let \( x = -1, y = -1 \), then: 
     \[ 
-        (-1)^2 < -1 + 1 \Leftrightarrow 1 < 0 \text{ is false.}
+        (-1)^2 < -1 + 1 \Leftrightarrow 1 < 0 \text{ is universally false.}
     \]\q
 
     \p{ii} Let \( x = 2, y = 2 \), then:
     \[
-        2^2 < 4 + 1 \Leftrightarrow 4 < 5 \text{ is true.} 
+        2^2 < 4 + 1 \Leftrightarrow 4 < 5 \text{ is universally true.} 
     \]\q
 
     \p{iii} Let \( y = -1 \), then:
     \[
-        x^2 < -1 + 1 \Leftrightarrow x^2 < 0 \text{ is identically false.}
+        x^2 < -1 + 1 \Leftrightarrow x^2 < 0 \text{ is identically false for all given } x.
     \]\q
 
     \p{iv} Let \( x = 0 \), then:
     \[
-        (y > 0) \rightarrow (y^2 > 0) \text{ is a tautology.}
+        (y > 0) \rightarrow (y^2 > 0) \text{ is a tautology for all given } y.
     \]\q
 
 \end{ps}
@@ -402,7 +401,7 @@ F & False  \\
     the total contribution to \( B \) is \( 2 \binom{n}{2} \). \par
 
     Likewise, all subsets of \( A \) with three elements each, contribute \( 3 \binom{n}{3} \) pairs
-    to \( B \), those with four elements contribute \( 4 \binom{n}{4} \) pairs, etc. Thus,
+    to \( B \), those with four elements contribute \( 4 \binom{n}{4} \) pairs, and so on. Thus,
     generalizing the patter, the cardinality of \( B \) can be calculated as: 
 
     \begin{align} \label{card_B} 
@@ -410,7 +409,7 @@ F & False  \\
     \end{align}
 
     Notice that the sum starts at 0, since it corresponds to the empty set. When \( S = \emptyset
-    \), the statement \( x \in S \) is not valid, hence no pair is contributed to \( B \).
+    \), the statement \( x \in S \) is not valid, hence no pairs are contributed to \( B \).
 
     Now consider the binomial theorem: 
     \begin{align*}
@@ -710,7 +709,7 @@ This section will make use of the following structure:
         Hence, P(3) is true.
 
     \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N} \) is an arbitrary
-        fixed number.
+        fixed number greater or equal than three.
 
     \item Consider \( P(k) \):
     \begin{align*}
@@ -732,7 +731,7 @@ This section will make use of the following structure:
     Hence \( P(k+1) \) is true.
 
     \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
-        \mathbb{N} \) under the assumption that \( P(k) \) is true. Since \( P(3) \) has also been
+        \mathbb{N}, k \geq 3\) under the assumption that \( P(k) \) is true. Since \( P(3) \) has also been
         shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
         \mathbb{N}, n \geq 3 \).
 
@@ -806,9 +805,10 @@ Furthermore, the following facts will be utilized:
                 and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{O} \) must be true.
                 Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
 
-                Now consider an alternative case when \( x,y \in \mathbb{E} \). Then \( (x+y) \in
-                \mathbb{E} \), and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{E} \)
-                Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
+                Now consider an alternative case when \( x,y \in \mathbb{E} \).
+                Then \( (x+y) \in \mathbb{E} \), and for \( (y+z) \in
+                \mathbb{E} \) to be true, \( z \in \mathbb{E} \) must also be
+                true. Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
 
                 Since both cases have shown that \( x*z \), \( R \) is \textbf{transitive}.
 
@@ -847,15 +847,8 @@ Furthermore, the following facts will be utilized:
 
                 Since both cases have shown that \( x*x\), \( R \) is \textbf{reflexive}.
 
-            \item Consider \( x \in \mathbb{E} \): if \( (x+xy) \in \mathbb{E} \) is true, then \( y
-                \in \mathbb{E} \) must also be true. Therefore \( y + yx = y(1+x) \in \mathbb{E}
-                \implies y*x \). 
-
-                Now consider \( x \in \mathbb{O} \): if \( (x+xy) \in \mathbb{E} \) is true, then \(
-                y \in \mathbb{O} \) must also be true. Therefore \( y+yx = y(1+x) \in \mathbb{E} \)
-                because \( (1+x) \in \mathbb{E} \implies y*x \). 
-
-                Since both cases have shown that \( y*x \), \( R \) is \textbf{symmetric}.
+            \item Consider \( x \in \mathbb{E} \), then \( x+xy = x(1+y) \in \mathbb{E} \) is always true. Therefore if \( y
+                \in \mathbb{O} \), then \( y + yx = y(1+x) \in \mathbb{O} \implies y \nir x \implies R \) is \textbf{not symmetric}. 
             
             \item Consider the case when \( x, y \in \mathbb{E} \). Then \( x+xy = x(1+y) \in
                 \mathbb{E}, y+yz = y(1+z) \in \mathbb{E} \text{ and } x + xz = x(1 + z) \in \mathbb{E} \implies
@@ -880,6 +873,8 @@ Furthermore, the following facts will be utilized:
 
 \end{ps}
 
+\newpage
+
 \section*{8.}
 Consider the following relation \( R \) on the set \( A \):
     \[
@@ -888,7 +883,7 @@ Consider the following relation \( R \) on the set \( A \):
 \begin{ps}
 
     \p{a} Since every set is a subset of itself, \( X*X \implies R\) is reflexive. This implies that
-    \( R \) is not asymmetric, and consequently that it is \textbf{not strict partial order}.
+    \( R \) is not asymmetric, and consequently that it is \textbf{not a strict partial order}.
 
     Furthermore, if \( X \subset  Y\) and \( Y \subset X \), then \( X \) must be equal to \( Y \),
     therefore \( R \) is antisymmetric.
@@ -896,11 +891,11 @@ Consider the following relation \( R \) on the set \( A \):
     Lastly, if \( X \subset Y \) and \( Y \subset Z \), then \( X \subset Z \implies X*Z \), hence \( R \) is
     transitive.
 
-    Since \( R \) has been shown to be reflexive, antisymmetric and transitive, it is
+    Since \( R \) has been shown to be reflexive, antisymmetric and transitive, it is a
     \textbf{partial order}.
 
     \p{b} Consider \( \{b\}, \{c\} \in A \). Since neither \( \{b\} \subset \{c\} \), nor \( \{c\}
-    \subset \{b\} \) is true, \( R \) is \textbf{not total order}.
+    \subset \{b\} \) is true, \( R \) is \textbf{not a total order}.
 
     \p{c} \( \{b\}, \{c\} \in A \) are the \textbf{minimal elements} because there are no elements
     in \( A \) that are the subsets of these sets.
