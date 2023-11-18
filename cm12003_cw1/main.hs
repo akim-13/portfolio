@@ -22,6 +22,7 @@ main = do
 ------------------------- Sorting
 
 -- Sort and remove duplicates.
+
 merge :: Ord a => [a] -> [a] -> [a]
 merge xs [] = xs
 merge [] ys = ys
@@ -29,7 +30,6 @@ merge (x:xs) (y:ys)
     | x <  y    = x : merge    xs (y:ys)
     | x == y    = x : merge    xs    ys
     | otherwise = y : merge (x:xs)   ys
-
 
 msort :: Ord a => [a] -> [a]
 msort []  = []
@@ -59,7 +59,10 @@ type Event     = Game -> Game
 
 
 testGame :: Node -> Game
-testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
+-- testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Brouwer","Heyting"] [[],["Brouwer","Heyting"]]
+testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Russell"] [[],["Brouwer","Heyting"]]
+-- testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
+
 
 
 ------------------------- Assignment 1: The game world
@@ -168,17 +171,17 @@ testDialogue = Branch ( isAtZero )  -- Branch condition to choose the dialogue.
 -- NOTE: the auxiliary functions are defined before they 
 -- are used, similarly to how they would be ordered in C.
 
-formatDialogueOpt :: Int -> String -> String
-formatDialogueOpt i str = "  " ++ show(i) ++ "." ++ " " ++ str
+formatDisplayedOpt :: Int -> String -> String
+formatDisplayedOpt i str = "  " ++ show(i) ++ "." ++ " " ++ str
 
 displayDialogueOpts :: Game -> Dialogue -> Int -> IO ()
 -- Where `i` is the number of the option in the displayed list.
 displayDialogueOpts _ (Choice _ ((str, _):[])) i = do
-    putStrLn (formatDialogueOpt i str)
+    putStrLn (formatDisplayedOpt i str)
     return ()
 
 displayDialogueOpts game (Choice choiceStr ((str, _):opts)) i = do
-    putStrLn (formatDialogueOpt i str)
+    putStrLn (formatDisplayedOpt i str)
     displayDialogueOpts game (Choice choiceStr opts) (i+1)
 
 
@@ -258,16 +261,76 @@ findDialogue inpP =
         Nothing -> Action "There is nothing we can do." id
     -- I am assuming that `theDialogues` is defined correctly (with no identical parties),
     -- so this list should have only one element at most.
-    where maybeFoundDialogue = listToMaybe [ givenDialogue | (givenP, givenDialogue) <- theDialogues, givenP == inpP ]
+    where maybeFoundDialogue = listToMaybe [ dialogue | (givenP, dialogue) <- theDialogues, givenP == inpP ]
 
 
 ------------------------- Assignment 3: The game loop
 
+displayCurLocation :: Node -> IO ()
+displayCurLocation curLoc = do
+    putStr ("You are in ")
+    putStrLn (theDescriptions !! curLoc)
+    return ()
+
+displayTravelLocs :: Map -> Node -> IO Int
+displayTravelLocs m curLoc = do
+    let locs = connected m curLoc
+    let toBePrinted = [ putStrLn (formatDisplayedOpt i (theLocations !! locI)) | (i, locI) <- zip [1..] locs ]
+    putStrLn ("You can travel to:")
+    -- Print every `putStrLn` in the list.
+    sequence_ toBePrinted  
+    let nextI = (length locs) + 1
+    return nextI
+
+getCharsToDisplay :: Party -> Int -> [ IO () ]
+getCharsToDisplay p i = [ putStrLn (formatDisplayedOpt i char) | (i, char) <- zip [i..] p ]
+
+displayPlayersParty :: Party -> Int -> IO Int
+displayPlayersParty p i = do
+    let chars = getCharsToDisplay p i
+
+    if (length chars) > 0 then do
+        putStrLn ("With you are: ")
+        sequence_ chars
+    else do
+        putStrLn ("No man is an island, except for you (you're travelling alone).")
+
+    let nextI = i + (length p) + 1
+    return nextI
+
+displayCurLocParty :: Node -> [Party] -> Int -> IO ()
+displayCurLocParty curLoc allParties i = do
+    let p = allParties !! curLoc
+    let chars = getCharsToDisplay p i
+
+    if (length chars) > 0 then do
+        putStrLn ("You can see: ")
+        sequence_ chars
+    else do
+        putStrLn ("After hours of coding, it's like the world outside has vanished.")
+        putStrLn ("You can't see anybody else around.")
+
+    return ()
+
 step :: Game -> IO Game
-step = undefined
+step game@(Game m n playersParty allParties) = do
+
+    putStrLn ""
+
+    displayCurLocation n
+    i <- displayTravelLocs m n
+    i <- displayPlayersParty playersParty i
+    displayCurLocParty n allParties i
+
+    putStrLn ""
+
+    put
+
+    return game
 
 game :: IO ()
 game = undefined
+
 
 ------------------------- Assignment 4: Safety upgrades
 
