@@ -1,0 +1,909 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{cancel}
+
+% Page Geometry
+\geometry{a4paper, margin=1in, headheight=14.5pt}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Discrete Mathematics Problem Sheet}
+\rhead{CM12004}
+\cfoot{\thepage}
+
+% Custom Commands
+\newcommand{\p}[1]{\item[\textnormal{(#1)}]}
+\newcommand{\q}{\hfill $\blacksquare$}
+\newcommand{\nir}{\mathrel{\mathrlap{/}*}}
+
+\newenvironment{ps}
+{\begin{enumerate}[leftmargin=0em, itemindent=1.5em]}
+{\end{enumerate}}
+
+\begin{document}
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Notation} & \textbf{Meaning}  \\
+\hline
+
+T & True  \\
+F & False  \\
+\(\oplus\) & XOR \\
+\( \downarrow \) & NOR \\
+\( \uparrow \) & NAND \\
+\( \blacksquare \) & Indicates the end of proof/solution \\
+\( \overset{d}{\equiv} \) & Equivalent by definition \\
+\(\mathbb{E}\) & Set of all even integers \\
+\(\mathbb{O}\) & Set of all odd integers \\
+\( x*y \) & \( (x, y) \in R \) \\
+\(x \nir y \) & \( (x, y) \notin R \) \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\section*{1.}
+\begin{ps}
+
+    \p{i} The formula \(P \rightarrow Q\) is \textbf{neither} a tautology nor identically
+    false.
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $X$ & $Y$ & $P = (X \vee Y)$ & $Q = \neg (X \wedge Y)$ & $P \rightarrow Q$ \\
+        \hline
+        T & T & T & F & F \\
+        T & F & T & T & T \\
+        F & T & T & T & T \\
+        F & F & F & T & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+    \p{ii} The formula \(P \rightarrow Q\) is \textbf{neither} a tautology nor identically
+    false.
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $X$ & $Y$ & $P = (X \vee Y)$ & $Q = (\neg X \wedge \neg Y)$ & $P \rightarrow Q$ \\
+        \hline
+        T & T & T & F & F \\
+        T & F & T & F & F \\
+        F & T & T & F & F \\
+        F & F & F & T & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+    \p{iii} The formula \(P \rightarrow Q\) is a \textbf{tautology}. Note that the second
+    part of Q (\(\neg X \vee X\)) is also a tautology.
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $X$ & $Y$ & $P = (X \rightarrow Y)$ & $Q = (\neg X \vee Y) \wedge (\neg X \vee X)$ & $P \rightarrow Q$ \\
+        \hline
+        T & T & T & T & T \\
+        T & F & F & F & T \\
+        F & T & T & T & T \\
+        F & F & T & T & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+    \p{iv} The formula \(P \rightarrow Q\) is a \textbf{tautology}.
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $X$ & $Y$ & $P = (X \rightarrow \neg Y)$ & $Q = (Y \rightarrow \neg X)$ & $P \rightarrow Q$ \\
+        \hline
+        T & T & F & F & T \\
+        T & F & T & T & T \\
+        F & T & T & T & T \\
+        F & F & T & T & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+    \p{v} The formula \(P \rightarrow Q\) is a \textbf{tautology}.
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        $X$ & $Y$ & $Z$ & $P = (X \wedge (Y \vee Z))$ & $Q = ((X \vee Y) \wedge (X \vee Z))$ & $P \rightarrow Q$ \\
+        \hline
+        T & T & T & T & T & T \\
+        T & T & F & T & T & T \\
+        T & F & T & T & T & T \\
+        T & F & F & F & T & T \\
+        F & T & T & F & T & T \\
+        F & T & F & F & F & T \\
+        F & F & T & F & F & T \\
+        F & F & F & F & F & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+    \p{vi} The formula \(P \rightarrow Q\) is \textbf{neither} a tautology nor identically
+    false.
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $X$ & $Y$ & $P = (X \rightarrow Y)$ & $Q = (\neg X \rightarrow \neg Y)$ & $P \rightarrow Q$ \\
+        \hline
+        T & T & T & T & T \\
+        T & F & F & T & T \\
+        F & T & T & F & F \\
+        F & F & T & T & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+    \p{vii} The formula \(P \rightarrow Q\) is \textbf{neither} a tautology nor
+    identically false.
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $X$ & $Y$ & $P = (X \rightarrow Y)$ & $Q = \neg (Y \rightarrow X)$ & $P \rightarrow Q$ \\
+        \hline
+        T & T & T & F & F \\
+        T & F & F & F & T \\
+        F & T & T & T & T \\
+        F & F & T & F & F \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+    \p{viii} The formula \(P \rightarrow Q\) is a \textbf{tautology}.
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        $X$ & $Y$ & $Z$ & $P = ((Y \rightarrow Z) \wedge (X \rightarrow Y)) $ & $Q = (X \rightarrow
+        Z)$ & $P \rightarrow Q$ \\
+        \hline
+        T & T & T & T & T & T \\
+        T & T & F & F & F & T \\
+        T & F & T & F & T & T \\
+        T & F & F & F & F & T \\
+        F & T & T & T & T & T \\
+        F & T & F & F & T & T \\
+        F & F & T & T & T & T \\
+        F & F & F & T & T & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+\end{ps}
+
+\newpage
+
+\section*{2.}
+\begin{ps}
+
+    \p{a} There exist \textbf{16} different binary logical connectives. There are
+    4 possible combinations of T and F that a binary connective can take in. Each
+    combination can result in 2 outcomes (T or F), therefore \(2^4 = 16\).
+
+
+    \p{b} This section will make use of the following identities:
+
+        \begin{enumerate}[label=\arabic*.]
+            \item \( X \wedge Y \equiv \neg(\neg X \vee \neg Y) \)
+            \item \( X \vee Y \equiv \neg(\neg X \wedge \neg Y) \)
+            \item \( X \rightarrow Y \equiv \neg X \vee Y \)
+        \end{enumerate}
+
+    \p{i} Consider the definition of XOR: 
+        \begin{equation}
+            \label{XOR}
+            X \oplus Y \equiv (X \vee Y) \wedge \neg(X \wedge Y)
+        \end{equation}
+
+        Let us transform equation \eqref{XOR} as follows:
+        \begin{align*}
+            (X \vee Y) \wedge \neg(X \wedge Y) &\equiv \neg(\neg X \wedge \neg Y) \wedge \neg (X
+                                                \wedge Y)
+        \end{align*} \q
+
+    \p{ii} Let us transform equation \eqref{XOR} as follows: 
+        \begin{align}
+            \label{b ii}
+            (X \vee Y) \wedge \neg(X \wedge Y) &\equiv (X \vee Y) \wedge (\neg X \vee \neg Y) \notag \\
+                                               &\equiv \neg (\neg (X \vee Y) \vee \neg (\neg X
+                                               \vee \neg Y ))
+        \end{align} \q
+
+    \p{iii} Let us transform equation \eqref{b ii} as follows: 
+        \begin{align*}
+            \neg (\neg (X \vee Y) \vee \neg (\neg X \vee Y )) &\equiv \neg(\neg(\neg X \rightarrow
+            Y) \vee \neg(X \rightarrow \neg Y)) \\
+            &\equiv \neg ((\neg X \rightarrow Y) \rightarrow \neg (X \rightarrow \neg Y))
+        \end{align*} \q
+
+    \p{c} By definition of NAND: 
+        \[
+            X \wedge Y \equiv \neg (X \uparrow Y)
+        \]   
+
+        Consider the truth table for NAND:
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        $X$ & $Y$ & $X \uparrow Y$ \\
+        \hline
+        T & T & F \\
+        T & F & T \\
+        F & T & T \\
+        F & F & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+        Notice that \( X \uparrow X \equiv \neg X \). Hence: 
+        \begin{align*}
+            &\neg (X \uparrow Y) \equiv (X \uparrow Y) \uparrow (X \uparrow Y) \Leftrightarrow \\
+            &X \wedge Y \overset{d}{\equiv} (X \uparrow Y) \uparrow (X \uparrow Y)
+        \end{align*}
+        Similarly, using the second and third identities, the remaining two connectives can be
+        expressed as follows: 
+        \begin{align*}
+            X \vee Y &\equiv \neg (\neg X \wedge \neg Y) \\
+                     &\equiv \neg ((X \uparrow X) \wedge (Y \uparrow Y)) \\
+                     &\overset{d}{\equiv} (X \uparrow X) \uparrow (Y \uparrow Y) \\
+            X \rightarrow Y &\equiv \neg X \vee Y \\
+                            &\equiv \neg (X \wedge \neg Y) \\
+                            &\overset{d}{\equiv} X \uparrow \neg Y \\
+                            &\equiv X \uparrow (Y \uparrow Y)
+        \end{align*} \q
+
+    \p{d} By definition of NOR: 
+        \[
+            X \vee Y \equiv \neg (X \downarrow Y)
+        \]   
+
+        Consider the truth table for NOR:
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        $X$ & $Y$ & $X \downarrow Y$ \\
+        \hline
+        T & T & F \\
+        T & F & F \\
+        F & T & F \\
+        F & F & T \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+        Notice that \( X \downarrow X \equiv \neg X \). Hence: 
+        \begin{align*}
+            &\neg (X \downarrow Y) \equiv (X \downarrow Y) \downarrow (X \downarrow Y) \Leftrightarrow \\
+            &X \vee Y \overset{d}{\equiv} (X \downarrow Y) \downarrow (X \downarrow Y)
+        \end{align*}
+
+        Similarly, using the first and third identities, the remaining two connectives can be
+        expressed as follows: 
+        \begin{align*}
+            X \wedge Y &\equiv \neg (\neg X \vee \neg Y) \\
+                     &\overset{d}{\equiv} \neg X \downarrow \neg Y \\
+                     &\equiv (X \downarrow X) \downarrow (Y \downarrow Y) \\
+            X \rightarrow Y &\equiv \neg X \vee Y \\
+                            &\equiv \neg \neg (\neg X \vee Y) \\
+                            &\overset{d}{\equiv} \neg (\neg X \downarrow Y)\\
+                            &\equiv ((X \downarrow X) \downarrow Y) \downarrow ((X \downarrow X)
+                            \downarrow Y)
+        \end{align*} \q
+
+\end{ps}
+
+
+\section*{3.}
+\begin{ps}
+
+    \p{a}
+    \p{i} Let \( y = x^2 \), then the given inequality transforms into a universally true statement:
+        \[ 
+            x^2 < x^2 + 1 \implies 0< 1 
+        \]
+        Hence, the given statement is \textbf{true}.
+
+    \p{ii} The given statement is \textbf{false}. Consider a counterexample. Let \( y = -1 \), then: 
+    \[
+        x^2 < -1 + 1 \implies x^2 < 0
+    \]   
+    Since no such integer \( x \) exists, the above statement is false.
+    
+    \p{iii} The given statement is \textbf{false}. Suppose such \( y \) exists. Let \( x = y + 2 \),
+    then: 
+    \begin{align*}
+        (y + 2)^2 &< y + 1 \\
+        y^2 + 4y + 4 &< y + 1 \\
+        y^2 + 3y + 3 &< 0 \\
+    \end{align*}
+    However, the quadratic \( y^2 + 3y + 3 \) is always positive for all integer numbers \( y \),
+    therefore the assumption leads to a contradiction, and no such \( y \) exists.
+
+    \p{iv} Let \( y = 2x \), then:
+    \begin{align*}
+        (x < 2x) &\rightarrow (x^2 < 4x^2) \\
+        (x > 0) &\rightarrow (x^2 > 0)
+    \end{align*}
+    Since the above statement is a tautology, the given statement is \textbf{true}.
+
+    \p{b}
+    \p{i} Let \( x = -1, y = -1 \), then: 
+    \[ 
+        (-1)^2 < -1 + 1 \Leftrightarrow 1 < 0 \text{ is universally false.}
+    \]\q
+
+    \p{ii} Let \( x = 2, y = 2 \), then:
+    \[
+        2^2 < 4 + 1 \Leftrightarrow 4 < 5 \text{ is universally true.} 
+    \]\q
+
+    \p{iii} Let \( y = -1 \), then:
+    \[
+        x^2 < -1 + 1 \Leftrightarrow x^2 < 0 \text{ is identically false for all given } x.
+    \]\q
+
+    \p{iv} Let \( x = 0 \), then:
+    \[
+        (y > 0) \rightarrow (y^2 > 0) \text{ is a tautology for all given } y.
+    \]\q
+
+\end{ps}
+
+
+\section*{4.}
+
+\begin{ps}
+    \p{a} This section will make use of the following theorem: \( |2^A| = 2^{|A|} \).
+    \begin{align*}
+        & \left|2^\emptyset\right| = 2^{\left|\emptyset\right|} = 2^0 = 1 \\
+        & \left|2^{\{0\}}\right| = 2^1 = 2 \\
+        & \left|2^{\{0\} \cup \{1\}}\right| = \left|2^{\{0,1\}}\right| = 2^2 = 4 \\
+        & \left|2^{\{0\} \cap \{1\}}\right| = \left|2^\emptyset \right| = 1 \\
+        & \left|2^{\{\emptyset, 0, 1\}}\right| = 2^3 = 8 \\
+        &\left|2^{2^{2^{\{0,1\}}}}\right| = 2^{\left|2^{2^{\{0, 1\}}}\right|} 
+        = 2^{2^{\left| 2^{\{0, 1\}}\right|}} = 2^{2^4} = 2^{16} = 65536
+    \end{align*}
+
+    \p{b}
+
+    \p{i} Let \( B = \{(x, S) | x \in S, S \in 2^A \}\). Consider \( P \subset 2^A \), which
+    contains all subsets of \( A = \{1, 2, 3, \ldots, n\} \) with cardinality 2:
+
+    \[
+        P = \{ \{1, 2\}, \{1,3\}, \ldots, \{1, n\}, \{2, 3\}, \{2, 4\}, \ldots, \{n-1, n\} \}
+    \]
+
+    The cardinality of \( P \) is \( \binom{n}{2} \), representing the number of ways to choose
+    pairs from \( n \) elements. For an element of \( P \), such as \( S_1 = \{1,2\}\), two pairs
+    are contributed to \( B \): \( (1, S_1) \) and \( (2, S_1) \). Similarly, each element of \( P
+    \) contributes exactly two pairs to \( B \). Thus, with \( \binom{n}{2} \) elements in \( P \),
+    the total contribution to \( B \) is \( 2 \binom{n}{2} \). \par
+
+    Likewise, all subsets of \( A \) with three elements each, contribute \( 3 \binom{n}{3} \) pairs
+    to \( B \), those with four elements contribute \( 4 \binom{n}{4} \) pairs, and so on. Thus,
+    generalizing the patter, the cardinality of \( B \) can be calculated as: 
+
+    \begin{align} \label{card_B} 
+        |B| = \sum_{x=0}^{n} x\binom{n}{x} 
+    \end{align}
+
+    Notice that the sum starts at 0, since it corresponds to the empty set. When \( S = \emptyset
+    \), the statement \( x \in S \) is not valid, hence no pairs are contributed to \( B \).
+
+    Now consider the binomial theorem: 
+    \begin{align*}
+        (1 + a)^n = \sum_{x=0}^n a^x \binom{n}{x}
+    \end{align*}
+
+    Differentiating with respect to \( a \) gives: 
+    \begin{align*}
+        n(1+a)^{n-1} &= \sum_{x = 0}^n xa^{x-1} \binom{n}{x}
+    \end{align*}
+
+    Let \( a = 1 \), then:
+    \begin{align*}
+        n2^{n-1} &= \sum_{x = 0}^n x \binom{n}{x}
+    \end{align*}
+
+    The right hand side of the above equation is equal to \eqref{card_B}, hence the cardinality of \( B \)
+    is:
+    \[
+        |B| = n2^{n-1}
+    \] \q
+
+    
+    \p{ii} Let \( B = \{(S, T) | S \in 2^A, T \in 2^A, S \cap T = \emptyset \} \). 
+
+    Consider the smallest value of \( n = 2 \):
+    \begin{align*}
+        &A = \{1, 2\} \\
+        &2^A = \{\emptyset, \{1\}, \{2\}, \{1, 2\} \} 
+    \end{align*}
+    
+    Now consider all possible pairs \( (U, k) \), where \( U \in 2^A \) and \( k \in \mathbb{N} \)
+    represents the number of distinct subsets in \( 2^A \) with which \( U \) can be paired, such
+    that \( U \) and each of these subsets have an empty intersection:
+
+    \begin{enumerate}[label=\arabic*.]
+        \item \( (\emptyset, 4) \Leftrightarrow B = \{ (\emptyset, \emptyset), (\emptyset, \{1\}),
+            (\emptyset, \{2\}), (\emptyset, \{1,2\}) \), \dots \}
+        \item \( (\{1\}, 2) \Leftrightarrow B = \{ \dots ,(\{1\}, \emptyset), (\{1\}, \{2\}), \dots \} \)
+        \item \( (\{2\}, 2) \Leftrightarrow B = \{ \dots ,(\{2\}, \emptyset), (\{2\}, \{1\}), \dots \} \)
+        \item \( (\{1,2\}, 1) \Leftrightarrow B = \{ \dots ,(\{1,2\}, \emptyset) \} \)
+    \end{enumerate}
+
+    Let \( n = 3 \), then:
+    \begin{align*}
+        &A = \{1, 2, 3\} \\
+        &2^A = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1, 2\}, \{1,3\}, \{2, 3\}, \{1, 2, 3\} \} 
+    \end{align*}
+
+    The pairs \( (U, k) \) are:
+    \begin{enumerate}[label=\arabic*.]
+        \item \( (\emptyset, 8) \)
+        \item \( (\{1\}, 4) \)
+        \item \( (\{2\}, 4) \)
+        \item \( (\{3\}, 4) \)
+        \item \( (\{1,2\}, 2) \)
+        \item \( (\{1,3\}, 2) \)
+        \item \( (\{2,3\}, 2) \)
+        \item \( (\{1,2,3\}, 1) \)
+    \end{enumerate}
+
+    Observe the emerging common pattern. Since each element can always form at least one pair, the
+    total number of cases to be considered equals to \( |2^A| = 2^{|A|} \) (\( 2^2 = 4 \) when \( n
+    = 2 \), and \( 2^3 = 8 \) when \( n = 3 \)). Furthermore, notice that \( k \) goes down by the
+    factor of 2 with each extra element in \( U \). Lastly, there are \( \binom{n}{|U|} \) cases
+    which are considered for each cardinality of \( U \).
+
+    Thus, to calculate the cardinality of \( B \), we have to find the sum of the
+    product of \( k \) (the number of pairs for a given cardinality of \( U \)) and the number of
+    possible ways to choose \( |U| \) elements from the collection of \( n \) elements: 
+    \[
+        |B| = \sum_{|U|=0}^n 2^{|U|}\binom{n}{n - |U|}
+    \]
+    Let us denote \( |U| \) as \( x \), and simplify the above sum using the fact that the number of
+    ways to choose \( i \) elements from \( j \) elements equals to the number of ways to exclude \(
+    j - i \) elements from \( j \) elements:
+    
+    \begin{align}
+        \label{sum2x}
+        |B| = \sum_{x=0}^n 2^x \binom{n}{x}
+    \end{align}
+    
+    Now consider the binomial theorem:
+    \[
+        (a+b)^n = \sum_{x=0}^n a^{n-x} b^x \binom{n}{x}
+    \]   
+    Let \( a = 1 \) and \( b = 2 \):
+    
+    \begin{align*}
+        (1 + 2)^n &= \sum_{x=0}^n 1^{n-x}2^x \binom{n}{x}\\
+        3^n &= \sum_{x=0}^n 2^x \binom{n}{x}
+    \end{align*} 
+    Hence \eqref{sum2x} equals to \( 3^n \), leading to the final answer:
+    \[
+        |B| = 3^n 
+    \] \q
+    
+    \textit{Remark}. The result can be interpreted intuitively as being analogous to the power set.
+    Another way to calculate the cardinality of \( B \) is to find the number of triples of
+    pair-wise disjoint sets \( (S, T, A \backslash (S \cup T)) \), as indicated by the given hint. In this case,
+    there are three options for each element of \( A \): it is either in \( T \), \( S \) or it is
+    excluded. Since there are \( n \) elements and each one has three choices, the total number of
+    such triples is \( 3 \times 3 \time 3 \times \dots \times 3 \) \( n \) times, i.e. \( 3^n \).
+
+\end{ps}
+
+
+\section*{5.}
+\begin{ps}
+
+    \p{i} For each of the two arguments in the domain, there are three choices of images in the
+    range, therefore there are \( 3^2 = \mathbf{9} \) maps for the given sets.
+
+    \p{ii} The are \textbf{6} injective maps for the given sets.
+        \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        Function & Image of 1 & Image of 2 \\
+        \hline
+        $f_1$ & 1 & 2 \\
+        $f_2$ & 1 & 3 \\
+        $f_3$ & 2 & 1 \\
+        $f_4$ & 2 & 3 \\
+        $f_5$ & 3 & 1 \\
+        $f_6$ & 3 & 2 \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+    \p{iii} There are \textbf{0} bijective maps for the given sets, since the number of elements in
+    the domain does not match the number of elements in the range.
+
+    \p{iv} Similar to (i), there are \( 2^3 = \textbf{8} \) maps for the given sets. 
+
+    \p{v} There are \textbf{6} surjective maps for the given sets.
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+        \hline
+        Function & Image of 1 & Image of 2 & Image of 3 \\
+        \hline
+        $f_1$ & 1 & 2 & 1 \\
+        $f_2$ & 1 & 2 & 2 \\
+        $f_3$ & 2 & 1 & 1 \\
+        $f_4$ & 2 & 1 & 2 \\
+        $f_5$ & 1 & 1 & 2 \\
+        $f_6$ & 2 & 2 & 1 \\
+        \hline
+        \end{tabular}
+        \end{center}
+
+\end{ps}
+
+
+\section*{6.}
+
+This section will make use of the following structure:
+\[
+    \text{Proposition } P(n)
+\]   
+
+\begin{enumerate}
+    \item Base case.
+    \item Inductive hypothesis.
+    \item Inductive step.
+    \item Conclusion.
+\end{enumerate}
+
+\begin{ps}
+
+    \p{a} \[ P(n) = \sum_{1 \leq i \leq n} (2i - 1) = n^2, \forall n \in \mathbb{N} \]
+    \begin{enumerate}[label=\arabic*.]
+        \item Let \( n = 1 \), then: 
+        \begin{align*}
+            2 \times 1 - 1 &= 1^2 \\
+            1 &= 1
+        \end{align*}
+        Hence, P(1) is true.
+
+    \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N} \) is an arbitrary
+        fixed number.
+
+    \item Let n = k + 1, then:
+    \begin{align*}
+        \sum_{1 \leq i \leq k+1} (2i-1) &= (k+1)^2 \\
+        \sum_{1 \leq i \leq k} (2i-1) + 2(k+1) - 1 &= (k+1)^2 
+    \end{align*}
+    Using the inductive hypothesis:
+    \begin{align*}
+            k^2 + 2k + 2 - 1 &= k^2 + 2k + 1 \\
+            k^2 + 2k + 1 &= k^2 + 2k + 1
+    \end{align*}
+    Hence \( P(k+1) \) is true.
+
+    \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
+        \mathbb{N} \) under the assumption that \( P(k) \) is true. Since \( P(1) \) has also been
+        shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
+        \mathbb{N} \).
+
+    \end{enumerate} \q
+
+    \p{b} \[ P(n) = \sum_{1 \leq i \leq n} i^2 = \frac{1}{6}n(n+1)(2n+1), \forall n \in
+    \mathbb{N} \]
+
+    \begin{enumerate}[label=\arabic*.]
+        \item Let \( n = 1 \), then: 
+        \begin{align*}
+            1^2 &= \frac{1}{6}(1)(1+1)(2(1) + 1) \\
+            1 &= 1
+        \end{align*}
+        Hence, P(1) is true.
+
+    \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N} \) is an arbitrary
+        fixed number.
+
+    \item Let n = k + 1, then:
+    \begin{align*}
+        \sum_{1 \leq i \leq k+1} i^2 &= \frac{1}{6}(k+1)(k+2)(2k+3) \\
+        \sum_{1 \leq i \leq k} i^2 + (k+1)^2 &= \frac{1}{6}(2k^3 + 9k^2 + 13k + 6)
+    \end{align*}
+    Using the inductive hypothesis:
+    \begin{align*}
+        \frac{1}{6}k(k+1)(2k+1) + k^2 + 2k + 1 &= \frac{1}{3}k^3 + \frac{3}{2}k^2 + \frac{13}{6}k + 1 \\
+         \frac{1}{3}k^3 + \frac{3}{2}k^2 + \frac{13}{6}k + 1 &= \frac{1}{3}k^3 + \frac{3}{2}k^2 + \frac{13}{6}k + 1
+    \end{align*}
+    Hence \( P(k+1) \) is true.
+
+    \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
+        \mathbb{N} \) under the assumption that \( P(k) \) is true. Since \( P(1) \) has also been
+        shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
+        \mathbb{N} \).
+
+    \end{enumerate} \q
+    
+    \p{c}
+    \begin{align*}
+        \sum_{3 \leq i \leq n-2} i^2 =
+        \sum_{1 \leq i \leq n-2} i^2 - \sum_{1 \leq i \leq 2} i^2 =
+        \sum_{1 \leq i \leq n-2} i^2 - 5
+    \end{align*}
+    Using the result from part (b), the equation above transforms into:
+    \begin{align*}
+        &\frac{1}{6}(n-2)(n-1)(2n-3) - 5 = \\
+        &\frac{1}{6}(2n^3 - 9n^2 + 13n - 6) - 5 = \\
+        &\frac{1}{3}n^3 - \frac{3}{2}n^2 + \frac{13}{6}n - 6, \forall n \in \mathbb{N}, n \geq 5
+    \end{align*} \q
+
+    \p{d} 
+    \[
+        P(n): 7^n - 1 \text{ is divisible by 6 for all } n \in \mathbb{N}_0.
+    \]   
+
+    \begin{enumerate}[label=\arabic*.]
+        \item Let \( n = 0 \), then: 
+        \begin{align*}
+            7^0 - 1 = 1 - 1 = 0
+        \end{align*}
+        Since 0 is divisible by 6, P(0) is true.
+
+    \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N}_0 \) is an arbitrary
+        fixed number. Therefore, \( P(k) \) can be expressed as \( P(k) = 6m \), where \( m \in \mathbb{N}_0 \).
+
+    \item Consider \( P(k+1) - P(k) \):
+    \begin{align*}
+        7^{k+1} - 1 - 7^k + 1 &= \\
+        7^k (7-1) &= \\
+        6(7^k)
+    \end{align*}
+    Thus \( P(k+1) \) can be expressed as follows:
+    \begin{align*}
+        P(k+1) = 6(7^k) + P(k)
+    \end{align*}
+    Using the inductive hypothesis: 
+    \begin{align*}
+        P(k+1) = 6(7^k) + 6m = 6(7^k + m) \text{ is divisible by 6.}
+    \end{align*}
+
+    Hence \( P(k+1) \) is true.
+
+    \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
+        \mathbb{N}_0 \) under the assumption that \( P(k) \) is true. Since \( P(0) \) has also been
+        shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
+        \mathbb{N}_0 \).
+
+    \end{enumerate} \q
+
+    \p{e}
+    \[
+        P(n): 2n + 1 \leq 2^n, \forall n \in \mathbb{N}, n \geq 3
+    \]   
+    \begin{enumerate}[label=\arabic*.]
+        \item Let \( n = 3 \), then: 
+        \begin{align*}
+            2(3) + 1 &\leq 2^3 \\
+            7 &\leq 8
+        \end{align*}
+        Hence, P(3) is true.
+
+    \item Let us assume that \( P(k) \text{ is true, where } k \in \mathbb{N} \) is an arbitrary
+        fixed number greater or equal than three.
+
+    \item Consider \( P(k) \):
+    \begin{align*}
+        2k + 1 &\leq 2^k \quad \biggr| \times 2 \\
+        4k + 2 &\leq 2^{k+1}
+    \end{align*}
+    Now consider the statement \( 2k+3 \leq 4k + 2 \):
+    \begin{align*}
+        2k + 3 &\leq 4k + 2 \\
+        2k &\geq 1 \\
+        k &\geq \frac{1}{2}
+    \end{align*}
+    Thus, the above statement is true for all \( k \in \mathbb{N}, k \geq 3 \).
+    Therefore, using the principle of transitivity:
+    \begin{align*}
+        2k+3 &\leq 2^{k+1} \\
+        2(k+1) + 1 &\leq 2^{k+1}
+    \end{align*}
+    Hence \( P(k+1) \) is true.
+
+    \item The proposition \( P(k+1) \) has been proven to be true for some arbitrary \( k \in
+        \mathbb{N}, k \geq 3\) under the assumption that \( P(k) \) is true. Since \( P(3) \) has also been
+        shown to be true, by the principles of mathematical induction, \( P(n) \) is true for all \( n \in
+        \mathbb{N}, n \geq 3 \).
+
+    \end{enumerate} \q
+
+\end{ps}
+
+\section*{7.}
+This section will make use of the following structure:
+\[
+    \text{Relation } R \text{ on } \mathbb{Z}.
+\]   
+\begin{enumerate}
+
+    \item Check if \( R \) is reflexive (for any \(x \in \mathbb{Z}, x*x \)).
+    \item Check if \( R \) is symmetric (if \( x*y \), then \( y*x \)).
+    \item Check if \( R \) is transitive (if \( x*y \) and \( y*z \), then \( x*z \)).
+
+\end{enumerate}
+
+Furthermore, the following facts will be utilized:
+\begin{enumerate}
+
+    \item If \(a \in \mathbb{E} \text{ and } a = b + c \), then it must be the case that either both
+        \( b,c \in \mathbb{E} \) or both \( b,c \in \mathbb{O} \).
+
+    \item If \(a \in \mathbb{E} \text{ and } a = bc \), then it must be the case that either
+        \( b \in \mathbb{E} \text{ or } c \in \mathbb{E} \).
+
+\end{enumerate}
+
+
+\begin{ps}
+
+    \p{i}
+        \[
+            R = \{ x*y \,|\, (x+y) \in \mathbb{O} \}
+        \]   
+
+        \begin{enumerate}[label=\arabic*.]
+
+            \item \(\forall x \in \mathbb{Z} (x + x = 2x \in \mathbb{E}) \implies x \nir x \implies
+                R \) is \textbf{irreflexive}.
+
+            \item If \( (x+y) \in \mathbb{O} \), then \( x+y = (y+x) \in \mathbb{O} \implies y*x
+                \implies R \) is \textbf{symmetric}.
+
+            % CLARIFY
+            \item Suppose \( x \in \mathbb{E} \) and \( (x+y) \in \mathbb{O} \). Moreover, suppose
+                \( z \in \mathbb{E} \) and \( (y+z) \in \mathbb{O} \). Then \( (x+z) \in \mathbb{E}
+                \implies x \nir z \implies R \)  is \textbf{intransitive}.
+
+        \end{enumerate}
+
+    \newpage
+
+    \p{ii}
+        \[
+            R = \{ x*y \,|\, (x+y) \in \mathbb{E} \}
+        \]   
+
+        \begin{enumerate}[label=\arabic*.]
+
+            \item \(\forall x \in \mathbb{Z} (x + x = 2x \in \mathbb{E}) \implies x * x
+                \implies R \) is \textbf{reflexive}.
+
+            \item If \( (x+y) \in \mathbb{E} \), then \( x+y = (y+x) \in \mathbb{E} \implies
+                y*x \implies R \) is \textbf{symmetric}.
+            
+            \item Consider the case when \( x, y \in \mathbb{O} \). Then \( (x+y) \in \mathbb{E} \),
+                and for \( (y+z) \in \mathbb{E} \) to be true, \( z \in \mathbb{O} \) must be true.
+                Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
+
+                Now consider an alternative case when \( x,y \in \mathbb{E} \).
+                Then \( (x+y) \in \mathbb{E} \), and for \( (y+z) \in
+                \mathbb{E} \) to be true, \( z \in \mathbb{E} \) must also be
+                true. Therefore, \( (x+z) \in \mathbb{E} \implies x*z \).
+
+                Since both cases have shown that \( x*z \), \( R \) is \textbf{transitive}.
+
+        \end{enumerate}
+
+    \p{iii}
+        \[
+            R = \{ x*y \,|\, xy \in \mathbb{O} \}
+        \]   
+
+        \begin{enumerate}[label=\arabic*.]
+
+            \item Let \(x = 2 \text{, then } x^2 = 4 \in \mathbb{E} \implies x \nir x \implies
+                R \) is \textbf{irreflexive}.
+
+            \item If \( xy \in \mathbb{O} \), then \( xy = yx \in \mathbb{O} \implies y*x
+                \implies R \) is \textbf{symmetric}.
+
+            \item If \( xy, yz \in \mathbb{O} \), then \( x, y, z \in \mathbb{O} \) must be true.
+                Therefore \( xz \in \mathbb{O} \implies x*z \implies R\) is \textbf{transitive}.
+ 
+        \end{enumerate}
+
+    \p{iv}
+        \[
+            R = \{ x*y \,|\, (x+xy) \in \mathbb{E} \}
+        \]   
+
+        \begin{enumerate}[label=\arabic*.]
+
+            \item Consider \( x \in \mathbb{E} \): \( x + x^2 = x(1 + x) \in \mathbb{E} \implies x*x
+                \). 
+
+                Now consider \( x \in \mathbb{O} \): \( x + x^2 = x(1+x) \in \mathbb{E} \) because
+                \( (1+x) \in \mathbb{E} \implies x*x \). 
+
+                Since both cases have shown that \( x*x\), \( R \) is \textbf{reflexive}.
+
+            \item Consider \( x \in \mathbb{E} \), then \( x+xy = x(1+y) \in \mathbb{E} \) is always true. Therefore if \( y
+                \in \mathbb{O} \), then \( y + yx = y(1+x) \in \mathbb{O} \implies y \nir x \implies R \) is \textbf{not symmetric}. 
+            
+            \item Consider the case when \( x, y \in \mathbb{E} \). Then \( x+xy = x(1+y) \in
+                \mathbb{E}, y+yz = y(1+z) \in \mathbb{E} \text{ and } x + xz = x(1 + z) \in \mathbb{E} \implies
+                x*z \).
+
+                Moreover, consider the case when \( x, y \in \mathbb{O} \). Then \( x+xy = x(1+y) \in
+                \mathbb{E} \), and for \( y+yz = y(1+z) \in \mathbb{E} \) to be true, \( z \in
+                \mathbb{O} \) must be true. Therefore \( x+xz=x(1+z) \in \mathbb{E} \implies x*z \).
+
+                Furthermore, consider the case when \( x \in \mathbb{E}, y \in \mathbb{O} \). Then
+                \( x+xy = x(1+y) \in \mathbb{E} \), and for \( y+yz = y(1+z) \in \mathbb{E} \) to be
+                true, \( z \in \mathbb{O} \) must be true. Therefore \( x+xz = x(1+z) \in \mathbb{E}
+                \implies x*z \).
+
+                Lastly, consider the case when \( x \in \mathbb{O}, y \in \mathbb{E} \). Then
+                \( x+xy = x(1+y) \in \mathbb{O} \implies x \nir y\), therefore this case is invalid.
+
+                Since none of the cases have disproved that \( x*z \), \( R \) is
+                \textbf{transitive}.
+
+        \end{enumerate}
+
+\end{ps}
+
+\newpage
+
+\section*{8.}
+Consider the following relation \( R \) on the set \( A \):
+    \[
+        R = \{ X*Y \,|\, X \subset Y \}
+    \]   
+\begin{ps}
+
+    \p{a} Since every set is a subset of itself, \( X*X \implies R\) is reflexive. This implies that
+    \( R \) is not asymmetric, and consequently that it is \textbf{not a strict partial order}.
+
+    Furthermore, if \( X \subset  Y\) and \( Y \subset X \), then \( X \) must be equal to \( Y \),
+    therefore \( R \) is antisymmetric.
+
+    Lastly, if \( X \subset Y \) and \( Y \subset Z \), then \( X \subset Z \implies X*Z \), hence \( R \) is
+    transitive.
+
+    Since \( R \) has been shown to be reflexive, antisymmetric and transitive, it is a
+    \textbf{partial order}.
+
+    \p{b} Consider \( \{b\}, \{c\} \in A \). Since neither \( \{b\} \subset \{c\} \), nor \( \{c\}
+    \subset \{b\} \) is true, \( R \) is \textbf{not a total order}.
+
+    \p{c} \( \{b\}, \{c\} \in A \) are the \textbf{minimal elements} because there are no elements
+    in \( A \) that are the subsets of these sets.
+
+    \( \{a,b,c\} \in A \) is the \textbf{maximal element} because there are no elements in \( A \)
+    that contain this set.
+
+
+\end{ps}
+
+\end{document}
