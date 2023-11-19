@@ -3,18 +3,18 @@ import Data.Maybe (listToMaybe)
 
 main :: IO ()
 main = do
-    game
+    -- game
     -- -- Q1
-    -- putStrLn ("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
-    -- putStrLn ("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
-    -- putStrLn ("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
-    -- putStrLn ("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
-    -- putStrLn ("add " ++ show(add ["Akim", "Borat", "Ali"] (testGame 0)))
-    -- putStrLn ("addAt " ++ show(addAt 1 ["Akim", "AAA"] (testGame 0)))
-    -- putStrLn ("addHere " ++ show(addHere ["Newww", "cookoo"] (testGame 0)))
-    -- putStrLn ("remove " ++ show(remove ["Akim", "Russell"] (testGame 0)))
-    -- putStrLn ("removeAt " ++ show(removeAt 1 ["Akim", "Brouwer", "Heyting"] (testGame 0)))
-    -- putStrLn ("removeHere " ++ show(removeHere ["Akim", "Heyting"] (testGame 1)))
+    putStrLn ("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
+    putStrLn ("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
+    putStrLn ("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
+    putStrLn ("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
+    putStrLn ("add " ++ show(add ["Akim", "Borat", "Ali"] (testGame 0)))
+    putStrLn ("addAt " ++ show(addAt 1 ["Akim", "AAA"] (testGame 0)))
+    putStrLn ("addHere " ++ show(addHere ["Newww", "cookoo"] (testGame 0)))
+    putStrLn ("remove " ++ show(remove ["Akim", "Russell"] (testGame 0)))
+    putStrLn ("removeAt " ++ show(removeAt 1 ["Akim", "Brouwer", "Heyting"] (testGame 0)))
+    putStrLn ("removeHere " ++ show(removeHere ["Akim", "Heyting"] (testGame 1)))
     --
     -- -- Q2
     -- putStrLn ("Move Brouwer " ++ show((add ["Brouwer"] . removeHere ["Brouwer"]) (testGame 1)))
@@ -66,11 +66,7 @@ testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Russell"] [[],["Brouwer", "He
 -- testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 
 
-
 ------------------------- Assignment 1: The game world
-
-
--- TODO: implement safety input filtering later if necessary.
 
 
 connected :: Map -> Node -> [Node]
@@ -83,24 +79,26 @@ twoNodesConnected n1 n2 m = n1 `elem` (connected m n2)
 
 connect :: Node -> Node -> Map -> Map
 connect n1 n2 m
-    | not (twoNodesConnected n1 n2 m) = msort (sortPair (n1, n2) : m)
+    -- `$` basically means "apply the result of the RHS operation to the LHS".
+    -- It helps to reduce the number of `()` to increase readability.
+    | not (twoNodesConnected n1 n2 m) = msort $ sortPair(n1, n2) : m
     | otherwise = m
 
 
 disconnect :: Node -> Node -> Map -> Map
 disconnect n1 n2 m
-    | twoNodesConnected n1 n2 m = filter (/= sortPair (n1, n2)) m
+    | twoNodesConnected n1 n2 m = filter (/= sortPair(n1, n2)) m
     | otherwise = m
 
 
 add :: Party -> Event
-add _ Over = Over
+add _ Over                               = Over
 add p (Game m n playersParty allParties) = Game m n (msort (p ++ playersParty)) allParties
 
 
 addAt :: Node -> Party -> Event
-addAt _ _ Over = Over
-addAt _ [] (Game m n playersParty allParties) = Game m n playersParty allParties
+addAt _     _            Over                               = Over
+addAt _     []           (Game m n playersParty allParties) = Game m n playersParty allParties
 addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars (Game m n playersParty (addToParty iNode char allParties))
     where addToParty iNode char allParties = [ 
                                                if i == iNode 
@@ -112,7 +110,7 @@ addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars 
 -- The `@` is an "as-pattern". It allows to keep a
 -- reference to the entire pattern-matched value.
 addHere :: Party -> Event
-addHere _ Over = Over
+addHere _ Over                                    = Over
 addHere p game@(Game m n playersParty allParties) = addAt n p game
 
 
@@ -121,12 +119,12 @@ removeCharacters charsToRemove chars = msort [ char | char <- chars, not (char `
 
 
 remove :: Party -> Event
-remove _ Over = Over
+remove _ Over                               = Over
 remove p (Game m n playersParty allParties) = Game m n (removeCharacters p playersParty) allParties
 
 
 removeAt :: Node -> Party -> Event
-removeAt _ _ Over = Over
+removeAt _     _     Over                               = Over
 removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty (removeFromParty iNode chars allParties)
     where removeFromParty iNode chars allParties = [ 
                                                      if i == iNode 
@@ -137,7 +135,7 @@ removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty 
 
 
 removeHere :: Party -> Event
-removeHere _ Over = Over
+removeHere _ Over                                    = Over
 removeHere p game@(Game m n playersParty allParties) = removeAt n p game
 
 
@@ -222,9 +220,9 @@ dialogue game choice@(Choice choiceStr choices) = do
 
     -- `case <expr> of` is used for pattern matching inside a function.
     case intInp of
+        -- Prompt the user until valid input is provided.
         Nothing -> do
             displayInpError
-            -- Prompt the user until valid input is provided.
             dialogue game choice
 
         Just intInp -> do
@@ -269,63 +267,9 @@ findDialogue inpP =
 
 data LocOrChr = Loc Node | Chr Character
 
-displayCurLocation :: Node -> IO ()
-displayCurLocation curLoc = do
-    putStr ("You are in ")
-    putStrLn (theDescriptions !! curLoc)
-    return ()
 
-displayTravelLocs :: Map -> Node -> IO Int
-displayTravelLocs m curLoc = do
-    let locs = connected m curLoc
-    let toBePrinted = [ putStrLn $ formatDisplayedOpt i (theLocations !! locI) | (i, locI) <- zip [1..] locs ]
-    if (length toBePrinted) == 0 then do
-        putStrLn ("Your left toe hurts, you can't travel anywhere.")
-        return 1
-    else do
-        putStrLn ("You can travel to:")
-        -- Print every `putStrLn` in the list.
-        sequence_ toBePrinted  
-        let nextI = (length locs) + 1
-        return nextI
-
-getCharsToDisplay :: Party -> Int -> [ IO () ]
-getCharsToDisplay p i = [ putStrLn (formatDisplayedOpt i char) | (i, char) <- zip [i..] p ]
-
-displayPlayersParty :: Party -> Int -> IO Int
-displayPlayersParty p i = do
-    let chars = getCharsToDisplay p i
-
-    if (length chars) > 0 then do
-        putStrLn ("With you are: ")
-        sequence_ chars
-    else do
-        putStrLn ("No man is an island, except for you (you're travelling alone).")
-
-    let nextI = i + (length p)
-    return nextI
-
-displayCurLocParty :: Node -> [Party] -> Int -> IO ()
-displayCurLocParty curLoc allParties i = do
-    let p = allParties !! curLoc
-    let chars = getCharsToDisplay p i
-
-    if (length chars) > 0 then do
-        putStrLn ("You can see: ")
-        sequence_ chars
-    else do
-        putStrLn ("After hours of coding, it's like the world outside has vanished.")
-        putStrLn ("You can't see anybody else around.")
-
-    return ()
-
--- TODO: clean up.
-
-step :: Game -> IO Game
-step Over = do
-    return Over
-step game@(Game m n playersParty allParties) = do
-
+displayMenu :: Game -> IO ()
+displayMenu game@(Game m n playersParty allParties) = do
     putStrLn ""
 
     displayCurLocation n
@@ -334,6 +278,64 @@ step game@(Game m n playersParty allParties) = do
     displayCurLocParty n allParties nextI
 
     putStrLn ""
+    -- It is a big `where` block, however it does not harm the 
+    -- readability, since all functions are now below the definition.
+    where 
+        displayCurLocation :: Node -> IO ()
+        displayCurLocation curLoc = do
+            putStr ("You are in ")
+            putStrLn (theDescriptions !! curLoc)
+            return ()
+
+        displayTravelLocs :: Map -> Node -> IO Int
+        displayTravelLocs m curLoc = do
+            let locs = connected m curLoc
+            let toBePrinted = [ putStrLn $ formatDisplayedOpt i (theLocations !! locI) | (i, locI) <- zip [1..] locs ]
+            if (length toBePrinted) /= 0 then do
+                putStrLn ("You can travel to:")
+                -- Print every `putStrLn` in the list.
+                sequence_ toBePrinted  
+                let nextI = (length locs) + 1
+                return nextI
+            else do
+                putStrLn ("Your left toe hurts, you can't travel anywhere.")
+                return 1
+
+        getCharsToDisplay :: Party -> Int -> [ IO () ]
+        getCharsToDisplay p i = [ putStrLn (formatDisplayedOpt i char) | (i, char) <- zip [i..] p ]
+
+        displayPlayersParty :: Party -> Int -> IO Int
+        displayPlayersParty p i = do
+            let chars = getCharsToDisplay p i
+
+            if (length chars) > 0 then do
+                putStrLn ("With you are: ")
+                sequence_ chars
+            else do
+                putStrLn ("No man is an island, except for you (you're travelling alone).")
+
+            let nextI = i + (length p)
+            return nextI
+
+        displayCurLocParty :: Node -> [Party] -> Int -> IO ()
+        displayCurLocParty curLoc allParties i = do
+            let p = allParties !! curLoc
+            let chars = getCharsToDisplay p i
+
+            if (length chars) > 0 then do
+                putStrLn ("You can see: ")
+                sequence_ chars
+            else do
+                putStrLn ("After hours of coding, it's like the world outside has vanished.")
+                putStrLn ("You can't see anybody else around.")
+
+            return ()
+
+step :: Game -> IO Game
+step Over = return Over
+step game@(Game m n playersParty allParties) = do
+
+    displayMenu game
 
     let opts = map Loc (connected m n) ++ map Chr playersParty ++ map Chr (allParties !! n)
 
@@ -345,29 +347,32 @@ step game@(Game m n playersParty allParties) = do
     -- It's possible to check for empty input before assigning `maybeInp`, however I don't
     -- think it's worth it to nest `if-else` or write another `case` just for that.
     if (Nothing `elem` maybeInp) || (null inp) then do
-        displayInpError
-        step game
+        errorPromptAgain
     else do
-        -- Sort and remove duplicates to make make an "auto-correction"
-        -- system, e.g. turn input "5 5 3 4" into "3 4 5".
+        -- Convert, sort and remove duplicates to make make an "auto-correction"
+        -- system, e.g. turn input "5 3 3 4" into "3 4 5".
         let intsInp = msort $ map (\(Just int) -> int) maybeInp
         let iOutOfRange = (head intsInp < 0) || (last intsInp > length opts)
         if iOutOfRange then do 
-            displayInpError
-            step game
-        else if (head intsInp) == 0 then do
+            errorPromptAgain
+        -- Entering 0 quits the game immediately (if not in a dialogue).
+        else if intsInp == [0] then do
             step Over
         else do
             let inpOpts = [ opt | (optI, opt) <- zip [1..] opts, i <- intsInp, optI == i ]
             let containsBothLocsAndChars = (any isLoc inpOpts) && (any isChr inpOpts)
             let containsMultipleLocs = (all isLoc inpOpts) && (length inpOpts > 1)
             if containsBothLocsAndChars || containsMultipleLocs then do
-                displayInpError
-                step game
+                errorPromptAgain
             else
                 applyInpAction inpOpts
 
     where 
+        errorPromptAgain :: IO Game
+        errorPromptAgain = do
+            displayInpError
+            step game
+
         isLoc :: LocOrChr -> Bool
         isLoc (Loc _) = True
         isLoc _       = False
@@ -404,7 +409,7 @@ game = do
 
 
 ------------------------- Assignment 4: Safety upgrades
-
+-- Safety upgrades have been implemented within assignments 2 and 3.
 
 ------------------------- Assignment 5: Solving the game
 
@@ -586,3 +591,148 @@ theDialogues = let
     )
   ]
 
+-- TODO: review 0 behaviour iside a dialuge.
+
+-- GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
+-- [1 of 2] Compiling Main             ( main.hs, interpreted )
+-- Ok, one module loaded.
+-- ghci> game
+--
+-- You are in your own home. It is very cosy.
+-- Your left toe hurts, you can't travel anywhere.
+-- No man is an island, except for you (you're travelling alone).
+-- You can see: 
+--   1. Bertrand Russell
+--
+-- >> 23
+-- You shall not pass! (invalid input)
+--
+--
+-- You are in your own home. It is very cosy.
+-- Your left toe hurts, you can't travel anywhere.
+-- No man is an island, except for you (you're travelling alone).
+-- You can see: 
+--   1. Bertrand Russell
+--
+-- >> 1
+-- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
+--
+-- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
+--
+-- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
+-- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
+--   1. What is the power of the Loop?
+--   2. Let's go!
+-- >> 9
+--
+-- You shall not pass! (invalid input)
+--
+-- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
+--
+-- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
+--
+-- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
+-- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
+--   1. What is the power of the Loop?
+--   2. Let's go!
+-- >> 0
+--
+-- What is the power of the Loop?
+-- Russell: for you, if you put it on, you become referentially transparent. For the Imperator, there is no end to its power. If he gets it in his possession, he will vanquish us all.
+--   1. Let's go!
+-- >> 0^?^?^?^?
+--
+-- You shall not pass! (invalid input)
+--
+-- Russell: for you, if you put it on, you become referentially transparent. For the Imperator, there is no end to its power. If he gets it in his possession, he will vanquish us all.
+--   1. Let's go!
+-- >> 0
+--
+--
+-- You are in your own home. It is very cosy.
+-- Your left toe hurts, you can't travel anywhere.
+-- No man is an island, except for you (you're travelling alone).
+-- You can see: 
+--   1. Bertrand Russell
+--
+-- >> 1
+-- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
+--
+-- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
+--
+-- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
+-- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
+--   1. What is the power of the Loop?
+--   2. Let's go!
+-- >> 0
+--
+--
+-- You are in your own home. It is very cosy.
+-- Your left toe hurts, you can't travel anywhere.
+-- No man is an island, except for you (you're travelling alone).
+-- You can see: 
+--   1. Bertrand Russell
+--
+-- >> 0
+-- GAME OVER!
+-- ghci> 
+-- ghci> game
+--
+-- You are in your own home. It is very cosy.
+-- Your left toe hurts, you can't travel anywhere.
+-- No man is an island, except for you (you're travelling alone).
+-- You can see: 
+--   1. Bertrand Russell
+--
+-- >> 0
+-- GAME OVER!
+-- ghci> game
+--
+-- You are in your own home. It is very cosy.
+-- Your left toe hurts, you can't travel anywhere.
+-- No man is an island, except for you (you're travelling alone).
+-- You can see: 
+--   1. Bertrand Russell
+--
+-- >> 1
+-- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
+--
+-- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
+--
+-- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
+-- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
+--   1. What is the power of the Loop?
+--   2. Let's go!
+-- >> 0
+--
+--
+-- You are in your own home. It is very cosy.
+-- Your left toe hurts, you can't travel anywhere.
+-- No man is an island, except for you (you're travelling alone).
+-- You can see: 
+--   1. Bertrand Russell
+--
+-- >> 1
+-- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
+--
+-- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
+--
+-- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
+-- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
+--   1. What is the power of the Loop?
+--   2. Let's go!
+-- >> 1
+--
+-- What is the power of the Loop?
+-- Russell: for you, if you put it on, you become referentially transparent. For the Imperator, there is no end to its power. If he gets it in his possession, he will vanquish us all.
+--   1. Let's go!
+-- >> 0
+--
+--
+-- You are in your own home. It is very cosy.
+-- Your left toe hurts, you can't travel anywhere.
+-- No man is an island, except for you (you're travelling alone).
+-- You can see: 
+--   1. Bertrand Russell
+--
+-- >> 
