@@ -59,8 +59,9 @@ type Event     = Game -> Game
 
 
 testGame :: Node -> Game
+testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Russell"] [[],["Brouwer", "Heyting"]]
 -- testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Brouwer","Heyting"] [[],["Brouwer","Heyting"]]
-testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Russell"] [[],["Brouwer","Heyting"]]
+-- testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Russell"] [[],["Brouwer","Arend Heyting"]]
 -- testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 
 
@@ -275,7 +276,7 @@ displayCurLocation curLoc = do
 displayTravelLocs :: Map -> Node -> IO Int
 displayTravelLocs m curLoc = do
     let locs = connected m curLoc
-    let toBePrinted = [ putStrLn (formatDisplayedOpt i (theLocations !! locI)) | (i, locI) <- zip [1..] locs ]
+    let toBePrinted = [ putStrLn $ formatDisplayedOpt i (theLocations !! locI) | (i, locI) <- zip [1..] locs ]
     putStrLn ("You can travel to:")
     -- Print every `putStrLn` in the list.
     sequence_ toBePrinted  
@@ -295,7 +296,7 @@ displayPlayersParty p i = do
     else do
         putStrLn ("No man is an island, except for you (you're travelling alone).")
 
-    let nextI = i + (length p) + 1
+    let nextI = i + (length p)
     return nextI
 
 displayCurLocParty :: Node -> [Party] -> Int -> IO ()
@@ -312,6 +313,9 @@ displayCurLocParty curLoc allParties i = do
 
     return ()
 
+-- TODO: clean up.
+-- FIXME: accumulated input (try enetering invalid input multiple times before something valid)
+
 step :: Game -> IO Game
 step game@(Game m n playersParty allParties) = do
 
@@ -319,14 +323,65 @@ step game@(Game m n playersParty allParties) = do
 
     displayCurLocation n
     i <- displayTravelLocs m n
-    i <- displayPlayersParty playersParty i
-    displayCurLocParty n allParties i
+    nextI <- displayPlayersParty playersParty i
+    displayCurLocParty n allParties nextI
 
     putStrLn ""
 
-    put
+    let opts = map Loc (connected m n) ++ map Chr playersParty ++ map Chr (allParties !! n)
 
-    return game
+    putStr (">> ")
+    
+    inp <- getLine
+    let maybeInp = map readMaybe (words inp) :: [Maybe Int]
+
+    -- It's possible to check for empty input before assigning `maybeInp`, however I don't
+    -- think it's worth it to nest `if-else` or write another `case` just for that.
+    inpOpts <- if (Nothing `elem` maybeInp) || (null inp) then do
+        displayInpError
+        step game
+        -- Never reached.
+        return []
+    else do
+        let intsInp = msort $ map (\(Just int) -> int) maybeInp
+        let iOutOfRange = (head intsInp < 0) || (last intsInp > length opts)
+        if iOutOfRange then do 
+            displayInpError
+            step game
+            -- Never reached.
+            return []
+        else do
+            let chosenOptions = [ opt | (optI, opt) <- zip [1..] opts, i <- intsInp, optI == i ]
+            return chosenOptions
+
+    let containsBothLocsAndChars = (any isLoc inpOpts) && (any isChr inpOpts)
+    let containsMultipleLocs = (all isLoc inpOpts) && (length inpOpts > 1)
+    if containsBothLocsAndChars || containsMultipleLocs then do
+        displayInpError
+        step game
+        -- return game
+    else
+        applyInpAction inpOpts
+    -- return game
+    where 
+        isLoc :: LocOrChr -> Bool
+        isLoc (Loc _) = True
+        isLoc _       = False
+
+        isChr :: LocOrChr -> Bool
+        isChr (Chr _) = True
+        isChr _       = False
+
+        applyInpAction :: [LocOrChr] -> IO Game
+        applyInpAction (Loc newLoc:[]) = do
+            return (Game m newLoc playersParty allParties)
+        -- Since all the other options have been eliminated,
+        -- the only one remaining is a list of characters.
+        applyInpAction chrs = do 
+            let party = msort $ map (\(Chr chr) -> chr) chrs
+            dialogue game (findDialogue party)
+
+data LocOrChr = Loc Node | Chr Character
 
 game :: IO ()
 game = undefined
