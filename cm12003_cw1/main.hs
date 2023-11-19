@@ -3,20 +3,21 @@ import Data.Maybe (listToMaybe)
 
 main :: IO ()
 main = do
-    -- Q1
-    putStrLn ("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
-    putStrLn ("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
-    putStrLn ("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
-    putStrLn ("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
-    putStrLn ("add " ++ show(add ["Akim", "Borat", "Ali"] (testGame 0)))
-    putStrLn ("addAt " ++ show(addAt 1 ["Akim", "AAA"] (testGame 0)))
-    putStrLn ("addHere " ++ show(addHere ["Newww", "cookoo"] (testGame 0)))
-    putStrLn ("remove " ++ show(remove ["Akim", "Russell"] (testGame 0)))
-    putStrLn ("removeAt " ++ show(removeAt 1 ["Akim", "Brouwer", "Heyting"] (testGame 0)))
-    putStrLn ("removeHere " ++ show(removeHere ["Akim", "Heyting"] (testGame 1)))
-
-    -- Q2
-    putStrLn ("Move Brouwer " ++ show((add ["Brouwer"] . removeHere ["Brouwer"]) (testGame 1)))
+    game
+    -- -- Q1
+    -- putStrLn ("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
+    -- putStrLn ("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
+    -- putStrLn ("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
+    -- putStrLn ("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
+    -- putStrLn ("add " ++ show(add ["Akim", "Borat", "Ali"] (testGame 0)))
+    -- putStrLn ("addAt " ++ show(addAt 1 ["Akim", "AAA"] (testGame 0)))
+    -- putStrLn ("addHere " ++ show(addHere ["Newww", "cookoo"] (testGame 0)))
+    -- putStrLn ("remove " ++ show(remove ["Akim", "Russell"] (testGame 0)))
+    -- putStrLn ("removeAt " ++ show(removeAt 1 ["Akim", "Brouwer", "Heyting"] (testGame 0)))
+    -- putStrLn ("removeHere " ++ show(removeHere ["Akim", "Heyting"] (testGame 1)))
+    --
+    -- -- Q2
+    -- putStrLn ("Move Brouwer " ++ show((add ["Brouwer"] . removeHere ["Brouwer"]) (testGame 1)))
 
 
 ------------------------- Sorting
@@ -107,7 +108,6 @@ addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars 
                                                else gameParty 
                                                | (i, gameParty) <- zip [0..] allParties 
                                              ]
-
 
 -- The `@` is an "as-pattern". It allows to keep a
 -- reference to the entire pattern-matched value.
@@ -267,6 +267,8 @@ findDialogue inpP =
 
 ------------------------- Assignment 3: The game loop
 
+data LocOrChr = Loc Node | Chr Character
+
 displayCurLocation :: Node -> IO ()
 displayCurLocation curLoc = do
     putStr ("You are in ")
@@ -277,11 +279,15 @@ displayTravelLocs :: Map -> Node -> IO Int
 displayTravelLocs m curLoc = do
     let locs = connected m curLoc
     let toBePrinted = [ putStrLn $ formatDisplayedOpt i (theLocations !! locI) | (i, locI) <- zip [1..] locs ]
-    putStrLn ("You can travel to:")
-    -- Print every `putStrLn` in the list.
-    sequence_ toBePrinted  
-    let nextI = (length locs) + 1
-    return nextI
+    if (length toBePrinted) == 0 then do
+        putStrLn ("Your left toe hurts, you can't travel anywhere.")
+        return 1
+    else do
+        putStrLn ("You can travel to:")
+        -- Print every `putStrLn` in the list.
+        sequence_ toBePrinted  
+        let nextI = (length locs) + 1
+        return nextI
 
 getCharsToDisplay :: Party -> Int -> [ IO () ]
 getCharsToDisplay p i = [ putStrLn (formatDisplayedOpt i char) | (i, char) <- zip [i..] p ]
@@ -314,9 +320,10 @@ displayCurLocParty curLoc allParties i = do
     return ()
 
 -- TODO: clean up.
--- FIXME: accumulated input (try enetering invalid input multiple times before something valid)
 
 step :: Game -> IO Game
+step Over = do
+    return Over
 step game@(Game m n playersParty allParties) = do
 
     putStrLn ""
@@ -337,32 +344,29 @@ step game@(Game m n playersParty allParties) = do
 
     -- It's possible to check for empty input before assigning `maybeInp`, however I don't
     -- think it's worth it to nest `if-else` or write another `case` just for that.
-    inpOpts <- if (Nothing `elem` maybeInp) || (null inp) then do
+    if (Nothing `elem` maybeInp) || (null inp) then do
         displayInpError
         step game
-        -- Never reached.
-        return []
     else do
+        -- Sort and remove duplicates to make make an "auto-correction"
+        -- system, e.g. turn input "5 5 3 4" into "3 4 5".
         let intsInp = msort $ map (\(Just int) -> int) maybeInp
         let iOutOfRange = (head intsInp < 0) || (last intsInp > length opts)
         if iOutOfRange then do 
             displayInpError
             step game
-            -- Never reached.
-            return []
+        else if (head intsInp) == 0 then do
+            step Over
         else do
-            let chosenOptions = [ opt | (optI, opt) <- zip [1..] opts, i <- intsInp, optI == i ]
-            return chosenOptions
+            let inpOpts = [ opt | (optI, opt) <- zip [1..] opts, i <- intsInp, optI == i ]
+            let containsBothLocsAndChars = (any isLoc inpOpts) && (any isChr inpOpts)
+            let containsMultipleLocs = (all isLoc inpOpts) && (length inpOpts > 1)
+            if containsBothLocsAndChars || containsMultipleLocs then do
+                displayInpError
+                step game
+            else
+                applyInpAction inpOpts
 
-    let containsBothLocsAndChars = (any isLoc inpOpts) && (any isChr inpOpts)
-    let containsMultipleLocs = (all isLoc inpOpts) && (length inpOpts > 1)
-    if containsBothLocsAndChars || containsMultipleLocs then do
-        displayInpError
-        step game
-        -- return game
-    else
-        applyInpAction inpOpts
-    -- return game
     where 
         isLoc :: LocOrChr -> Bool
         isLoc (Loc _) = True
@@ -375,16 +379,28 @@ step game@(Game m n playersParty allParties) = do
         applyInpAction :: [LocOrChr] -> IO Game
         applyInpAction (Loc newLoc:[]) = do
             return (Game m newLoc playersParty allParties)
-        -- Since all the other options have been eliminated,
-        -- the only one remaining is a list of characters.
-        applyInpAction chrs = do 
+        applyInpAction chrs@(Chr _:_) = do 
             let party = msort $ map (\(Chr chr) -> chr) chrs
             dialogue game (findDialogue party)
+        -- Catches all unexpected cases, if any.
+        applyInpAction _ = do
+            return game
 
-data LocOrChr = Loc Node | Chr Character
 
 game :: IO ()
-game = undefined
+game = do
+    startState <- step start
+    loop startState
+    where
+        loop s = do
+            newState <- step s
+            case newState of
+                Over -> do 
+                    putStrLn ("GAME OVER!")
+                    return ()
+                game@(Game m n playersParty allParties) -> do
+                    return game
+                    loop game
 
 
 ------------------------- Assignment 4: Safety upgrades
