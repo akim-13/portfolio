@@ -1,6 +1,8 @@
 import Text.Read (readMaybe)
 import Data.Maybe (listToMaybe)
 
+-- TODO: implement safe `!!` function.
+
 main :: IO ()
 main = do
     -- game
@@ -142,9 +144,9 @@ removeHere p game@(Game m n playersParty allParties) = removeAt n p game
 ------------------------- Assignment 2: Dialogues
 
 
-data Dialogue = Action  String  Event
+data Dialogue = Action  String Event
               | Branch  (Game -> Bool) Dialogue Dialogue
-              | Choice  String  [( String , Dialogue )]
+              | Choice  String [( String, Dialogue )]
 
 testDialogue :: Dialogue
 testDialogue = Branch ( isAtZero )  -- Branch condition to choose the dialogue.
@@ -187,14 +189,13 @@ displayDialogueOpts game (Choice choiceStr ((str, _):opts)) i = do
 displayInpError :: IO ()
 displayInpError = do
     putStrLn ("You shall not pass! (invalid input)")
-    putStrLn ("")
+    putStrLn ""
 
 
 dialogue :: Game -> Dialogue -> IO Game
 -- Action case.
 dialogue game (Action str event) = do
     putStrLn (str)
-    -- Update the game state.
     return (event game)
 
 -- Branch case.
@@ -418,8 +419,16 @@ data Command  = Travel [Int] | Select Party | Talk [Int]
 
 type Solution = [Command]
 
-talk ::Game -> Dialogue -> [(Game,[Int])]
-talk = undefined
+join :: [(Game,[Int])] -> [(Game,[Int])] -> [(Game,[Int])]
+-- e.g. [ (gameL, [intsL]) ] `join` [ (gameR, [intsR]) ] == [ (gameR, [intsL]++[intsR]) ]
+join ((gameL,intsL):[]) ((gameR,intsR):[]) = [ (gameR, intsL++intsR) ]
+
+talk :: Game -> Dialogue -> [(Game,[Int])]
+talk game (Branch _ d1 d2) = concat [ [(game, [i])] `join` talk game d | (i, d) <- zip [1..] [d1,d2] ]
+-- Add case for Choice with []
+talk game@(Game m n playersParty allParties) dial@(Choice _ ((_, d):_)) = undefined
+talk game@(Game m n playersParty allParties) dial@(Action _ event) = undefined 
+
 
 select :: Game -> [Party]
 select = undefined
@@ -446,7 +455,8 @@ walkthrough = (putStrLn . unlines . filter (not . null) . map format . solve) st
 ------------------------- Game data
 
 start :: Game
-start = Game theMap 0 [] theCharacters
+-- start = Game theMap 0 [] theCharacters
+start = Game [(0,1),(1,3),(1,4),(2,3)] 1 ["Russell"] [[],["Brouwer","Heyting"]]
 
 theMap :: Map
 theMap = [(1,2),(1,6),(2,4)]
@@ -590,6 +600,7 @@ theDialogues = let
   , ( ["Bertrand Russell","Haskell Curry","Luitzen Brouwer"] , Branch ((==7).here) (end "Road trip! Road trip! Road trip!") (end "Let's head for Error!")
     )
   ]
+
 
 -- TODO: review 0 behaviour iside a dialuge.
 
