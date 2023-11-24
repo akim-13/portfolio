@@ -1,30 +1,13 @@
+import Data.Maybe
 import Text.Read (readMaybe)
-import Data.Maybe (listToMaybe)
 
 -- TODO: implement safe `!!` function.
 
 main :: IO ()
 main = do
-    -- game
-    -- -- Q1
-    putStrLn ("Connected " ++ show(connected [(0,2), (0, 1), (3, 4)] 0))
-    putStrLn ("twoNodesConnected " ++ show(twoNodesConnected 1 0 [(0,2), (0, 1), (3, 4)]))
-    putStrLn ("Connect " ++ show(connect 6 3 [(0,2), (0, 1), (3, 4)]))
-    putStrLn ("disconnect " ++ show(disconnect 1 0 [(0,2), (0, 1), (3, 4)]))
-    putStrLn ("add " ++ show(add ["Akim", "Borat", "Ali"] (testGame 0)))
-    putStrLn ("addAt " ++ show(addAt 1 ["Akim", "AAA"] (testGame 0)))
-    putStrLn ("addHere " ++ show(addHere ["Newww", "cookoo"] (testGame 0)))
-    putStrLn ("remove " ++ show(remove ["Akim", "Russell"] (testGame 0)))
-    putStrLn ("removeAt " ++ show(removeAt 1 ["Akim", "Brouwer", "Heyting"] (testGame 0)))
-    putStrLn ("removeHere " ++ show(removeHere ["Akim", "Heyting"] (testGame 1)))
-    --
-    -- -- Q2
-    -- putStrLn ("Move Brouwer " ++ show((add ["Brouwer"] . removeHere ["Brouwer"]) (testGame 1)))
-
+    game
 
 ------------------------- Sorting
-
--- Sort and remove duplicates.
 
 merge :: Ord a => [a] -> [a] -> [a]
 merge xs [] = xs
@@ -34,6 +17,7 @@ merge (x:xs) (y:ys)
     | x == y    = x : merge    xs    ys
     | otherwise = y : merge (x:xs)   ys
 
+-- Sort and remove duplicates.
 msort :: Ord a => [a] -> [a]
 msort []  = []
 msort [x] = [x]
@@ -62,34 +46,29 @@ type Event     = Game -> Game
 
 
 testGame :: Node -> Game
-testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Russell"] [[],["Brouwer", "Heyting"]]
--- testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Brouwer","Heyting"] [[],["Brouwer","Heyting"]]
--- testGame i = Game [(0,1), (1,3), (1,4), (2,3)] i ["Russell"] [[],["Brouwer","Arend Heyting"]]
--- testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
-
+testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 
 ------------------------- Assignment 1: The game world
-
 
 connected :: Map -> Node -> [Node]
 connected m n = [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2 ]
 
 
 twoNodesConnected :: Node -> Node -> Map -> Bool
-twoNodesConnected n1 n2 m = n1 `elem` (connected m n2)
+twoNodesConnected n1 n2 m = n1 `elem` connected m n2
 
 
 connect :: Node -> Node -> Map -> Map
 connect n1 n2 m
     -- `$` basically means "apply the result of the RHS operation to the LHS".
     -- It helps to reduce the number of `()` to increase readability.
-    | not (twoNodesConnected n1 n2 m) = msort $ sortPair(n1, n2) : m
+    | not (twoNodesConnected n1 n2 m) = msort $ sortPair (n1, n2) : m
     | otherwise = m
 
 
 disconnect :: Node -> Node -> Map -> Map
 disconnect n1 n2 m
-    | twoNodesConnected n1 n2 m = filter (/= sortPair(n1, n2)) m
+    | twoNodesConnected n1 n2 m = filter (/= sortPair (n1, n2)) m
     | otherwise = m
 
 
@@ -102,11 +81,11 @@ addAt :: Node -> Party -> Event
 addAt _     _            Over                               = Over
 addAt _     []           (Game m n playersParty allParties) = Game m n playersParty allParties
 addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars (Game m n playersParty (addToParty iNode char allParties))
-    where addToParty iNode char allParties = [ 
-                                               if i == iNode 
-                                               then msort (char:gameParty) 
-                                               else gameParty 
-                                               | (i, gameParty) <- zip [0..] allParties 
+    where addToParty iNode char allParties = [
+                                               if i == iNode
+                                               then msort (char:gameParty)
+                                               else gameParty
+                                               | (i, gameParty) <- zip [0..] allParties
                                              ]
 
 -- The `@` is an "as-pattern". It allows to keep a
@@ -117,7 +96,7 @@ addHere p game@(Game m n playersParty allParties) = addAt n p game
 
 
 removeCharacters :: Party -> Party -> Party
-removeCharacters charsToRemove chars = msort [ char | char <- chars, not (char `elem` charsToRemove)]
+removeCharacters charsToRemove chars = msort [ char | char <- chars, notElem char charsToRemove]
 
 
 remove :: Party -> Event
@@ -128,11 +107,11 @@ remove p (Game m n playersParty allParties) = Game m n (removeCharacters p playe
 removeAt :: Node -> Party -> Event
 removeAt _     _     Over                               = Over
 removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty (removeFromParty iNode chars allParties)
-    where removeFromParty iNode chars allParties = [ 
-                                                     if i == iNode 
-                                                     then removeCharacters chars gameParty 
-                                                     else gameParty 
-                                                     | (i, gameParty) <- zip [0..] allParties 
+    where removeFromParty iNode chars allParties = [
+                                                     if i == iNode
+                                                     then removeCharacters chars gameParty
+                                                     else gameParty
+                                                     | (i, gameParty) <- zip [0..] allParties
                                                    ]
 
 
@@ -140,13 +119,12 @@ removeHere :: Party -> Event
 removeHere _ Over                                    = Over
 removeHere p game@(Game m n playersParty allParties) = removeAt n p game
 
-
 ------------------------- Assignment 2: Dialogues
-
 
 data Dialogue = Action  String Event
               | Branch  (Game -> Bool) Dialogue Dialogue
               | Choice  String [( String, Dialogue )]
+
 
 testDialogue :: Dialogue
 testDialogue = Branch ( isAtZero )  -- Branch condition to choose the dialogue.
@@ -154,14 +132,14 @@ testDialogue = Branch ( isAtZero )  -- Branch condition to choose the dialogue.
     ( Choice "Russell: Let's get our team together and head to Error." [] )
     -- 2nd dialogue branch.
     (
-        Choice "Brouwer: How can I help you?"
-        [ 
+        Choice "Brouwer: How can  help you?"
+        [
             -- 1st choice.
-            ( "Could I get a haircut?", Choice "Brouwer: Of course." [] ),
+            ( "Could  get a haircut?", Choice "Brouwer: Of course." [] ),
             -- 2nd choice.
             (
-                "Could I get a pint?", Choice "Brouwer: Of course. Which would you like?" 
-                    [ ("The Segmalt.", Action "" id), ("The Null Pinter.", Action "" id) ] 
+                "Could  get a pint?", Choice "Brouwer: Of course. Which would you like?"
+                    [ ("The Segmalt.", Action "" id), ("The Null Pinter.", Action "" id) ]
             ),
             -- 3rd choice.
             ( "Will you join us on a dangerous adventure?", Action "Brouwer: Of course." (add ["Brouwer"] . removeHere ["Brouwer"]) )
@@ -169,26 +147,24 @@ testDialogue = Branch ( isAtZero )  -- Branch condition to choose the dialogue.
     )
     where isAtZero (Game _ n _ _) = n == 0
 
+
 -- NOTE: the auxiliary functions are defined before they 
 -- are used, similarly to how they would be ordered in C.
 
+
 formatDisplayedOpt :: Int -> String -> String
-formatDisplayedOpt i str = "  " ++ show(i) ++ "." ++ " " ++ str
+formatDisplayedOpt i str = "  " ++ show (i) ++ "." ++ " " ++ str
 
-displayDialogueOpts :: Game -> Dialogue -> Int -> IO ()
--- Where `i` is the number of the option in the displayed list.
-displayDialogueOpts _ (Choice _ ((str, _):[])) i = do
-    putStrLn (formatDisplayedOpt i str)
-    return ()
 
-displayDialogueOpts game (Choice choiceStr ((str, _):opts)) i = do
-    putStrLn (formatDisplayedOpt i str)
-    displayDialogueOpts game (Choice choiceStr opts) (i+1)
+-- The prompt appears in multiple places, therefore make it
+-- into a function to be able to easily change in the future.
+displayPrompt :: IO ()
+displayPrompt = putStr ">>"
 
 
 displayInpError :: IO ()
 displayInpError = do
-    putStrLn ("You shall not pass! (invalid input)")
+    putStrLn "You shall not pass! (invalid input)"
     putStrLn ""
 
 
@@ -202,75 +178,71 @@ dialogue game (Action str event) = do
 dialogue game (Branch conditionMet d1 d2) = do
     if conditionMet game then
         dialogue game d1
-    else 
+    else
         dialogue game d2
 
 -- Choice cases.
 dialogue game (Choice str []) = do
-    putStrLn (str)
+    putStrLn str
     return game
 
 dialogue game choice@(Choice choiceStr choices) = do
-    putStrLn (choiceStr)
+    putStrLn choiceStr
     displayDialogueOpts game choice 1
-    putStr (">> ")
-    
+    displayPrompt
+
     inp <- getLine
     let intInp = readMaybe inp :: Maybe Int
-    putStrLn ("")
+
+    putStrLn ""
 
     -- `case <expr> of` is used for pattern matching inside a function.
     case intInp of
-        -- Prompt the user until valid input is provided.
-        Nothing -> do
+        Nothing -> handleInvalidInp game choice
+        Just intInp -> processChoice intInp
+
+    where
+        -- Where `Int` is the number of the option in the displayed list.
+        displayDialogueOpts :: Game -> Dialogue -> Int -> IO ()
+        displayDialogueOpts _    (Choice _         ((str, _): [] )) i = putStrLn (formatDisplayedOpt i str)
+        displayDialogueOpts game (Choice choiceStr ((str, _):opts)) i = do
+            putStrLn (formatDisplayedOpt i str)
+            displayDialogueOpts game (Choice choiceStr opts) (i+1)
+
+        handleInvalidInp :: Game -> Dialogue -> IO Game
+        handleInvalidInp game dial = do
             displayInpError
-            dialogue game choice
+            dialogue game dial
 
-        Just intInp -> do
-            pickedOptI <- pickOpt choices intInp
-            -- End the dialogue if the user enetered 0 (i.e. index == -1).
-            if pickedOptI == (-1) then do
-                return game
-            else do
-                let pickedOpt = choices !! pickedOptI
-                let (responseStr, responseDialogue) = extractResponse pickedOpt
-                putStrLn responseStr
-                dialogue game responseDialogue
-    where 
-        pickOpt :: [ (String, Dialogue) ] -> Int -> IO Int
-        pickOpt choices intInp =
-            -- Check if the user entered a number outside of the given list of options.
-            if (intInp < 0) || (intInp > (length choices)) then do
-                displayInpError
-                dialogue game choice
-                -- This return is never reached but necessary
-                -- because otherwise Haskell gets confused.
-                return 0
-            else do
-                -- Return the index of the picked option.
-                return (intInp-1)
+        continueDialogue :: (String, Dialogue) -> IO Game
+        continueDialogue (responseStr, responseDialogue) = do
+                    putStrLn responseStr
+                    dialogue game responseDialogue
 
-        extractResponse :: (String, Dialogue) -> (String, Dialogue)
-        extractResponse (str, dialogue) = (str, dialogue)
+        processChoice :: Int -> IO Game
+        processChoice intInp
+            | outOfBounds = handleInvalidInp game choice
+            | intInp == 0 = return game
+            | otherwise = continueDialogue $ choices !! (intInp - 1)
+            where outOfBounds = (intInp < 0) || (intInp > length choices)
 
 
+-- `fromMaybe <defaultValueIfNothing> <JustValue>` returns `<value>`.
 findDialogue :: Party -> Dialogue
-findDialogue inpP = 
-    case maybeFoundDialogue of
-        Just dialogue -> dialogue
-        Nothing -> Action "There is nothing we can do." id
-    -- I am assuming that `theDialogues` is defined correctly (with no identical parties),
-    -- so this list should have only one element at most.
+findDialogue inpP = fromMaybe (Action "There is nothing we can do." id) maybeFoundDialogue
+    -- `listToMaybe :: [a] -> Maybe a`.
     where maybeFoundDialogue = listToMaybe [ dialogue | (givenP, dialogue) <- theDialogues, givenP == inpP ]
-
 
 ------------------------- Assignment 3: The game loop
 
+-- More descriptive than `Either`.
 data LocOrChr = Loc Node | Chr Character
 
-
+-- This and `processUsersInpStep` functions are only used inside `step`,
+-- however they aren't in its `where` clause for better readability.
 displayMenu :: Game -> IO ()
 displayMenu game@(Game m n playersParty allParties) = do
+
     putStrLn ""
 
     displayCurLocation n
@@ -279,27 +251,28 @@ displayMenu game@(Game m n playersParty allParties) = do
     displayCurLocParty n allParties nextI
 
     putStrLn ""
-    -- It is a big `where` block, however it does not harm the 
-    -- readability, since all functions are now below the definition.
-    where 
+
+    where
         displayCurLocation :: Node -> IO ()
         displayCurLocation curLoc = do
-            putStr ("You are in ")
+            putStr "You are in "
             putStrLn (theDescriptions !! curLoc)
-            return ()
 
         displayTravelLocs :: Map -> Node -> IO Int
         displayTravelLocs m curLoc = do
+
             let locs = connected m curLoc
             let toBePrinted = [ putStrLn $ formatDisplayedOpt i (theLocations !! locI) | (i, locI) <- zip [1..] locs ]
+
             if (length toBePrinted) /= 0 then do
-                putStrLn ("You can travel to:")
+                putStrLn "You can travel to:"
                 -- Print every `putStrLn` in the list.
-                sequence_ toBePrinted  
+                sequence_ toBePrinted
                 let nextI = (length locs) + 1
                 return nextI
+
             else do
-                putStrLn ("Your left toe hurts, you can't travel anywhere.")
+                putStrLn "Your left toe hurts, you can't travel anywhere."
                 return 1
 
         getCharsToDisplay :: Party -> Int -> [ IO () ]
@@ -310,10 +283,10 @@ displayMenu game@(Game m n playersParty allParties) = do
             let chars = getCharsToDisplay p i
 
             if (length chars) > 0 then do
-                putStrLn ("With you are: ")
+                putStrLn "With you are: "
                 sequence_ chars
-            else do
-                putStrLn ("No man is an island, except for you (you're travelling alone).")
+            else 
+                putStrLn "No man is an island, except for you (you're travelling alone)."
 
             let nextI = i + (length p)
             return nextI
@@ -324,53 +297,50 @@ displayMenu game@(Game m n playersParty allParties) = do
             let chars = getCharsToDisplay p i
 
             if (length chars) > 0 then do
-                putStrLn ("You can see: ")
+                putStrLn "You can see: "
                 sequence_ chars
             else do
-                putStrLn ("After hours of coding, it's like the world outside has vanished.")
-                putStrLn ("You can't see anybody else around.")
+                putStrLn "After hours of coding, it's like the world outside has vanished."
+                putStrLn "You can't see anybody else around."
 
-            return ()
 
-step :: Game -> IO Game
-step Over = return Over
-step game@(Game m n playersParty allParties) = do
+processUsersInpStep :: [Maybe Int] -> Game -> IO Game
+processUsersInpStep maybeIntsInp game@(Game m n playersParty allParties) = do
 
-    displayMenu game
+    let inpIsEmpty = (length maybeIntsInp == 0)
+    let inpIsNonInt = Nothing `elem` maybeIntsInp
 
-    let opts = map Loc (connected m n) ++ map Chr playersParty ++ map Chr (allParties !! n)
+    if inpIsEmpty || inpIsNonInt then
+        handleInvalidInp
 
-    putStr (">> ")
-    
-    inp <- getLine
-    let maybeInp = map readMaybe (words inp) :: [Maybe Int]
-
-    -- It's possible to check for empty input before assigning `maybeInp`, however I don't
-    -- think it's worth it to nest `if-else` or write another `case` just for that.
-    if (Nothing `elem` maybeInp) || (null inp) then do
-        errorPromptAgain
     else do
+        -- A single list of either Locations, Characters or both. The order of
+        -- elements corresponds to the order of options displayed to the user.
+        let opts = map Loc (connected m n) ++ map Chr playersParty ++ map Chr (allParties !! n)
         -- Convert, sort and remove duplicates to make make an "auto-correction"
         -- system, e.g. turn input "5 3 3 4" into "3 4 5".
-        let intsInp = msort $ map (\(Just int) -> int) maybeInp
+        let intsInp = msort $ map (\(Just int) -> int) maybeIntsInp
         let iOutOfRange = (head intsInp < 0) || (last intsInp > length opts)
-        if iOutOfRange then do 
-            errorPromptAgain
-        -- Entering 0 quits the game immediately (if not in a dialogue).
+
+        if iOutOfRange then do
+            handleInvalidInp
+
+        -- Entering 0 ends the game immediately (if not in a dialogue).
         else if intsInp == [0] then do
             step Over
+
         else do
             let inpOpts = [ opt | (optI, opt) <- zip [1..] opts, i <- intsInp, optI == i ]
             let containsBothLocsAndChars = (any isLoc inpOpts) && (any isChr inpOpts)
             let containsMultipleLocs = (all isLoc inpOpts) && (length inpOpts > 1)
             if containsBothLocsAndChars || containsMultipleLocs then do
-                errorPromptAgain
+                handleInvalidInp
             else
-                applyInpAction inpOpts
+                handleValidInp inpOpts
 
-    where 
-        errorPromptAgain :: IO Game
-        errorPromptAgain = do
+    where
+        handleInvalidInp :: IO Game
+        handleInvalidInp = do
             displayInpError
             step game
 
@@ -382,15 +352,30 @@ step game@(Game m n playersParty allParties) = do
         isChr (Chr _) = True
         isChr _       = False
 
-        applyInpAction :: [LocOrChr] -> IO Game
-        applyInpAction (Loc newLoc:[]) = do
+        handleValidInp :: [LocOrChr] -> IO Game
+        -- Go to a single location.
+        handleValidInp (Loc newLoc:[]) = do
             return (Game m newLoc playersParty allParties)
-        applyInpAction chrs@(Chr _:_) = do 
+        -- Talk to multiple characters.
+        handleValidInp chrs@(Chr _:_) = do
             let party = msort $ map (\(Chr chr) -> chr) chrs
             dialogue game (findDialogue party)
-        -- Catches all unexpected cases, if any.
-        applyInpAction _ = do
+        -- Catch all unexpected cases, if any.
+        handleValidInp _ = do
             return game
+
+
+step :: Game -> IO Game
+step Over = return Over
+step game@(Game m n playersParty allParties) = do
+
+    displayMenu game
+    displayPrompt
+
+    inp <- getLine
+    let maybeInp = map readMaybe (words inp) :: [Maybe Int]
+
+    processUsersInpStep maybeInp game 
 
 
 game :: IO ()
@@ -401,16 +386,11 @@ game = do
         loop s = do
             newState <- step s
             case newState of
-                Over -> do 
-                    putStrLn ("GAME OVER!")
-                    return ()
-                game@(Game m n playersParty allParties) -> do
-                    return game
-                    loop game
-
+                game@(Game m n playersParty allParties) -> loop game
+                Over -> putStrLn "GAME OVER!"
 
 ------------------------- Assignment 4: Safety upgrades
--- Safety upgrades have been implemented within assignments 2 and 3.
+-- Safety upgrades have been implemented in assignments 2 and 3.
 
 ------------------------- Assignment 5: Solving the game
 
@@ -421,14 +401,27 @@ type Solution = [Command]
 
 join :: [(Game,[Int])] -> [(Game,[Int])] -> [(Game,[Int])]
 -- e.g. [ (gameL, [intsL]) ] `join` [ (gameR, [intsR]) ] == [ (gameR, [intsL]++[intsR]) ]
-join ((gameL,intsL):[]) ((gameR,intsR):[]) = [ (gameR, intsL++intsR) ]
+join ( (gameL,intsL):[] ) ( (gameR,intsR):[] ) = [ (gameR, intsL++intsR) ]
+-- FIXME: this shouldn't catch anything but it does.
+join _ _ = []
 
+-- FIXME: doesn't give the expected result.
 talk :: Game -> Dialogue -> [(Game,[Int])]
-talk game (Branch _ d1 d2) = concat [ [(game, [i])] `join` talk game d | (i, d) <- zip [1..] [d1,d2] ]
--- Add case for Choice with []
-talk game@(Game m n playersParty allParties) dial@(Choice _ ((_, d):_)) = undefined
-talk game@(Game m n playersParty allParties) dial@(Action _ event) = undefined 
+talk game (Branch conditionMet d1 d2)
+    | conditionMet game = talk game d1
+    | otherwise         = talk game d2
+talk game (Choice _ listOfPairs) = concat [ [(game, [i])] `join` talk game d | (i, d) <- zip [1..] (extractDialogues listOfPairs) ]
+    where
+        extractDialogues :: [(String, Dialogue)] -> [Dialogue]
+        extractDialogues listOfPairs = [ 
+                                         d
+                                         | (_, d) <- listOfPairs, 
+                                         case talk game d of
+                                            [(Game {}, [])] -> True
+                                            _ -> False 
+                                       ]
 
+talk game (Action _ event) = [ (event game, []) ]
 
 select :: Game -> [Party]
 select = undefined
@@ -455,8 +448,8 @@ walkthrough = (putStrLn . unlines . filter (not . null) . map format . solve) st
 ------------------------- Game data
 
 start :: Game
--- start = Game theMap 0 [] theCharacters
-start = Game [(0,1),(1,3),(1,4),(2,3)] 1 ["Russell"] [[],["Brouwer","Heyting"]]
+start = Game theMap 0 [] theCharacters
+-- start = Game [(0,1),(1,3),(1,4),(2,3)] 1 ["Russell"] [[],["Brouwer","Heyting"]]
 
 theMap :: Map
 theMap = [(1,2),(1,6),(2,4)]
@@ -517,17 +510,17 @@ theDialogues = let
     )
   , ( ["Heyting","Russell"] , end "Heyting: Hi Russell, what are you drinking?\nRussell: The strong stuff, as usual." )
   , ( ["Bertrand Russell"] , Branch (isAt 0 "Bertrand Russell") ( let
-      intro = "A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.\n\nRussell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.\n\nDo you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it."
+      intro = "A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.\n\nRussell:  am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.\n\nDo you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it."
       re1   = ("What is the power of the Loop?" , Choice "Russell: for you, if you put it on, you become referentially transparent. For the Imperator, there is no end to its power. If he gets it in his possession, he will vanquish us all." [re2])
       re2   = ("Let's go!" , Action "Let's put our team together and head for Error." (updateMap (connect 1 0) . add ["Bertrand Russell"] . removeHere ["Bertrand Russell"]) )
       in Choice intro [re1,re2]
       ) ( Branch ( (==7).here) (end "Russell: Let me speak to him and Brouwer."
       ) (end "Russell: We should put our team together and head for Error." ) )
     )
-  , ( ["Arend Heyting"] , Choice "Heyting: What can I get you?"
+  , ( ["Arend Heyting"] , Choice "Heyting: What can  get you?"
       [ ( "A pint of Ex Falso Quodbibet, please." , end "There you go." )
       , ( "The Hop Erat Demonstrandum, please."   , end "Excellent choice." )
-      , ( "Could I get a Maltus Ponens?"          , end "Mind, that's a strong one." )
+      , ( "Could  get a Maltus Ponens?"          , end "Mind, that's a strong one." )
       ]
     )
   , ( ["Luitzen Brouwer"] , Branch (isAt 1 "Luitzen Brouwer")
@@ -539,9 +532,9 @@ theDialogues = let
           d  i  | i == 0    = Choice intro [r2]
                 | otherwise = Choice intro [r1 (i-1),r2]
         in d 100)
-        , ( "Actually, could you do a close shave?" , end "Of course. I shave everyone who doesn't shave themselves." )
-        , ( "I'm really looking for help." , Choice "Brouwer: Hmmm. What with? Is it mysterious?"
-          [ ( "Ooh yes, very. And dangerous." , Action "Brouwer: I'm in!" (add ["Luitzen Brouwer"] . removeHere ["Luitzen Brouwer"]) )
+        , ( "Actually, could you do a close shave?" , end "Of course.  shave everyone who doesn't shave themselves." )
+        , ( "'m really looking for help." , Choice "Brouwer: Hmmm. What with? Is it mysterious?"
+          [ ( "Ooh yes, very. And dangerous." , Action "Brouwer: 'm in!" (add ["Luitzen Brouwer"] . removeHere ["Luitzen Brouwer"]) )
           ] )
         ]
       )
@@ -549,16 +542,16 @@ theDialogues = let
     )
   , ( ["David Hilbert"] , Branch (not . isconn 2 3) (let
         intro = "You wait your turn in the queue. The host, David Hilbert, puts up the first guest in Room 1, and points the way to the stairs.\n\nYou seem to hear that the next couple are also put up in Room 1. You decide you must have misheard. It is your turn next.\n\nHilbert: Lodging and breakfast? Room 1 is free."
-        re1   = ("Didn't you put up the previous guests in Room 1, too?" , Choice "Hilbert: I did. But everyone will move up one room to make room for you if necessary. There is always room at the Hilbert Hotel & Resort." [("But what about the last room? Where do the guests in the last room go?" , Choice "Hilbert: There is no last room. There are always more rooms." [("How can there be infinite rooms? Is the hotel infinitely long?" , Choice "Hilbert: No, of course not! It was designed by the famous architect Zeno Hadid. Every next room is half the size of the previous." [re2])])])
-        re2   =  ("Actually, I am looking for someone." , Action "Hilbert: Yes, someone is staying here. You'll find them in Room n+1. Through the doors over there, up the stairs, then left." (updateMap (connect 2 3)))
+        re1   = ("Didn't you put up the previous guests in Room 1, too?" , Choice "Hilbert:  did. But everyone will move up one room to make room for you if necessary. There is always room at the Hilbert Hotel & Resort." [("But what about the last room? Where do the guests in the last room go?" , Choice "Hilbert: There is no last room. There are always more rooms." [("How can there be infinite rooms? Is the hotel infinitely long?" , Choice "Hilbert: No, of course not! It was designed by the famous architect Zeno Hadid. Every next room is half the size of the previous." [re2])])])
+        re2   =  ("Actually,  am looking for someone." , Action "Hilbert: Yes, someone is staying here. You'll find them in Room n+1. Through the doors over there, up the stairs, then left." (updateMap (connect 2 3)))
       in Choice intro [re1,re2]
       ) (end "Hilbert seems busy. You hear him muttering to himself: Problems, problems, nothing but problems. You decide he has enough on his plate and leave." )
     )
   , ( ["William Howard"] ,  Branch (isAt 3 "William Howard")
       (Choice "Howard: Yes? Are we moving up again?" [("Quick, we need your help. We need to travel to Error." , Action "Howard: Fine. My bags are packed anyway, and this room is tiny. Let's go!" (add ["William Howard"] . removeAt 3 ["William Howard"]))]
-      ) (Branch (isAt 6 "William Howard") (Choice "Howard: What can I get you?"
+      ) (Branch (isAt 6 "William Howard") (Choice "Howard: What can  get you?"
         [ ("The Lambda Rogan Josh with the Raita Monad for starter, please." , end "Coming right up.")
-        , ("The Vindaloop with NaN bread on the side." , Choice "Howard: It's quite spicy." [("I can handle it." , end "Excellent." ) ] )
+        , ("The Vindaloop with NaN bread on the side." , Choice "Howard: It's quite spicy." [(" can handle it." , end "Excellent." ) ] )
         , ("The Chicken Booleani with a stack of poppadums, please.", end "Good choice." )
         ]
       ) (end "Howard: We need to find Curry. He'll know the way.")
@@ -576,20 +569,20 @@ theDialogues = let
   , ( ["Jean-Louis Krivine"] , end "Looking through the open kitchen door, you see the chef doing the dishes. He is rinsing and stacking plates, but it's not a very quick job because he only has one stack. You also notice he never passes any plates to the front. On second thought, that makes sense - it's a takeaway, after all, and everything is packed in cardboard boxes. He seems very busy, so you decide to leave him alone."
     )
   , ( ["Haskell Curry"] , Branch (isAt 6 "Haskell Curry")
-      (Choice "Curry: What can I get you?"
+      (Choice "Curry: What can  get you?"
         [ ("The Lambda Rogan Josh with the Raita Monad for starter, please." , end "Coming right up.")
-        , ("The Vindaloop with NaN bread on the side." , Choice "Curry: It's quite spicy." [("I can handle it." , end "Excellent." ) ] )
+        , ("The Vindaloop with NaN bread on the side." , Choice "Curry: It's quite spicy." [(" can handle it." , end "Excellent." ) ] )
         , ("The Chicken Booleani with a stack of poppadums, please.", end "Good choice." )
-        , ("Actually, I am looking for help getting to Error." , end "Curry: Hmm. I may be able to help, but I'll need to speak to William Howard.")
+        , ("Actually,  am looking for help getting to Error." , end "Curry: Hmm. I may be able to help, but I'll need to speak to William Howard.")
         ]
       ) (end "Nothing")
     )
-  , ( ["Haskell Curry","William Howard"] , Branch (not . isconn 6 7) (Action "Curry:  You know the way to Error, right?\nHoward: I thought you did?\nCurry:  Not really. Do we go via Computerborough?\nHoward: Yes, I think so. Is that along the I-50?\nCurry:  Yes, third exit. Shall I go with them?\nHoward: sure. I can watch the shop while you're away." (add ["Haskell Curry"] . removeAt 6 ["Haskell Curry"] . addAt 6 ["William Howard"] . remove ["William Howard"] . updateMap (connect 6 7) )) (end "It's easy, just take the third exit on I-50.")
+  , ( ["Haskell Curry","William Howard"] , Branch (not . isconn 6 7) (Action "Curry:  You know the way to Error, right?\nHoward:  thought you did?\nCurry:  Not really. Do we go via Computerborough?\nHoward: Yes, I think so. Is that along the I-50?\nCurry:  Yes, third exit. Shall I go with them?\nHoward: sure. I can watch the shop while you're away." (add ["Haskell Curry"] . removeAt 6 ["Haskell Curry"] . addAt 6 ["William Howard"] . remove ["William Howard"] . updateMap (connect 6 7) )) (end "It's easy, just take the third exit on I-50.")
     )
   , ( ["Gottlob Frege"] , end "A person who appears to be the leader of the mob approaches your vehicle. When he gets closer, you recognise him as Gottlob Frege. You start backing away, and he starts yelling at you.\n\nFrege: Give us the Loop! We can control it! We can wield its power!\n\nYou don't see a way forward. Perhaps Russell has a plan." )
   , ( ["Bertrand Russell","Gottlob Frege","Luitzen Brouwer"] , let
         intro = "Frege is getting closer, yelling at you to hand over the Loop, with the mob on his heels, slowly surrounding you. The tension in the car is mounting. But Russell calmly steps out to confront Frege.\n\nRussell:"
-        re1   = ( "You cannot control its power! Even the very wise cannot see all ends!" , Choice "Frege: I can and I will! The power is mine!\n\nRussell:" [re2,re3] )
+        re1   = ( "You cannot control its power! Even the very wise cannot see all ends!" , Choice "Frege:  can and I will! The power is mine!\n\nRussell:" [re2,re3] )
         re2   = ( "Brouwer, whom do you shave?" , Choice "Brouwer: Those who do not shave themselves. Obviously. Why?\n\nRussell:" [re3] )
         re3   = ( "Frege, answer me this: DOES BROUWER SHAVE HIMSELF?" , Action
                   "Frege opens his mouth to shout a reply. But no sound passes his lips. His eyes open wide in a look of bewilderment. Then he looks at the ground, and starts walking in circles, muttering to himself and looking anxiously at Russell. The mob is temporarily distracted by the display, uncertain what is happening to their leader, but slowly enclosing both Frege and Russell. Out of the chaos, Russell shouts:\n\nDRIVE, YOU FOOLS!\n\nYou floor it, and with screeching tires you manage to circle around the mob. You have made it across.\n\nEND OF ACT 1. To be continued..."
@@ -601,149 +594,3 @@ theDialogues = let
     )
   ]
 
-
--- TODO: review 0 behaviour iside a dialuge.
-
--- GHCi, version 9.4.7: https://www.haskell.org/ghc/  :? for help
--- [1 of 2] Compiling Main             ( main.hs, interpreted )
--- Ok, one module loaded.
--- ghci> game
---
--- You are in your own home. It is very cosy.
--- Your left toe hurts, you can't travel anywhere.
--- No man is an island, except for you (you're travelling alone).
--- You can see: 
---   1. Bertrand Russell
---
--- >> 23
--- You shall not pass! (invalid input)
---
---
--- You are in your own home. It is very cosy.
--- Your left toe hurts, you can't travel anywhere.
--- No man is an island, except for you (you're travelling alone).
--- You can see: 
---   1. Bertrand Russell
---
--- >> 1
--- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
---
--- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
---
--- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
--- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
---   1. What is the power of the Loop?
---   2. Let's go!
--- >> 9
---
--- You shall not pass! (invalid input)
---
--- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
---
--- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
---
--- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
--- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
---   1. What is the power of the Loop?
---   2. Let's go!
--- >> 0
---
--- What is the power of the Loop?
--- Russell: for you, if you put it on, you become referentially transparent. For the Imperator, there is no end to its power. If he gets it in his possession, he will vanquish us all.
---   1. Let's go!
--- >> 0^?^?^?^?
---
--- You shall not pass! (invalid input)
---
--- Russell: for you, if you put it on, you become referentially transparent. For the Imperator, there is no end to its power. If he gets it in his possession, he will vanquish us all.
---   1. Let's go!
--- >> 0
---
---
--- You are in your own home. It is very cosy.
--- Your left toe hurts, you can't travel anywhere.
--- No man is an island, except for you (you're travelling alone).
--- You can see: 
---   1. Bertrand Russell
---
--- >> 1
--- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
---
--- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
---
--- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
--- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
---   1. What is the power of the Loop?
---   2. Let's go!
--- >> 0
---
---
--- You are in your own home. It is very cosy.
--- Your left toe hurts, you can't travel anywhere.
--- No man is an island, except for you (you're travelling alone).
--- You can see: 
---   1. Bertrand Russell
---
--- >> 0
--- GAME OVER!
--- ghci> 
--- ghci> game
---
--- You are in your own home. It is very cosy.
--- Your left toe hurts, you can't travel anywhere.
--- No man is an island, except for you (you're travelling alone).
--- You can see: 
---   1. Bertrand Russell
---
--- >> 0
--- GAME OVER!
--- ghci> game
---
--- You are in your own home. It is very cosy.
--- Your left toe hurts, you can't travel anywhere.
--- No man is an island, except for you (you're travelling alone).
--- You can see: 
---   1. Bertrand Russell
---
--- >> 1
--- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
---
--- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
---
--- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
--- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
---   1. What is the power of the Loop?
---   2. Let's go!
--- >> 0
---
---
--- You are in your own home. It is very cosy.
--- Your left toe hurts, you can't travel anywhere.
--- No man is an island, except for you (you're travelling alone).
--- You can see: 
---   1. Bertrand Russell
---
--- >> 1
--- A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.
---
--- Russell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.
---
--- Do you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our 
--- finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it.
---   1. What is the power of the Loop?
---   2. Let's go!
--- >> 1
---
--- What is the power of the Loop?
--- Russell: for you, if you put it on, you become referentially transparent. For the Imperator, there is no end to its power. If he gets it in his possession, he will vanquish us all.
---   1. Let's go!
--- >> 0
---
---
--- You are in your own home. It is very cosy.
--- Your left toe hurts, you can't travel anywhere.
--- No man is an island, except for you (you're travelling alone).
--- You can see: 
---   1. Bertrand Russell
---
--- >> 
