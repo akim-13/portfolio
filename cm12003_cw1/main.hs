@@ -399,32 +399,26 @@ data Command  = Travel [Int] | Select Party | Talk [Int]
 
 type Solution = [Command]
 
-join :: [(Game,[Int])] -> [(Game,[Int])] -> [(Game,[Int])]
--- e.g. [ (gameL, [intsL]) ] `join` [ (gameR, [intsR]) ] == [ (gameR, [intsL]++[intsR]) ]
-join ( (gameL,intsL):[] ) ( (gameR,intsR):[] ) = [ (gameR, intsL++intsR) ]
--- FIXME: this shouldn't catch anything but it does.
-join _ _ = []
 
--- FIXME: doesn't give the expected result.
-talk :: Game -> Dialogue -> [(Game,[Int])]
-talk game (Branch conditionMet d1 d2)
-    | conditionMet game = talk game d1
-    | otherwise         = talk game d2
-talk game (Choice _ listOfPairs) = concat [ [(game, [i])] `join` talk game d | (i, d) <- zip [1..] (extractDialogues listOfPairs) ]
-    where
-        extractDialogues :: [(String, Dialogue)] -> [Dialogue]
-        extractDialogues listOfPairs = [ 
-                                         d
-                                         | (_, d) <- listOfPairs, 
-                                         case talk game d of
-                                            [(Game {}, [])] -> True
-                                            _ -> False 
-                                       ]
+talk :: Game -> Dialogue -> [(Game, [Int])]
+talk game dialogue = traverse game dialogue []
+  where
+    traverse :: Game -> Dialogue -> [Int] -> [(Game, [Int])]
+    traverse game (Branch conditionMet d1 d2) accum 
+        | conditionMet game = traverse game d1 accum 
+        | otherwise         = traverse game d2 accum
 
-talk game (Action _ event) = [ (event game, []) ]
+    traverse game (Choice _ choices) accum = 
+        concat [ traverse game d (i:accum) | (i, (_, d)) <- zip [1..] choices ]
 
+    traverse game (Action _ event) accum = [(event game, reverse accum)]
+
+
+-- `select` is just the power set.
 select :: Game -> [Party]
-select = undefined
+select game@(Game m n playersParty allParties) = foldl (\accum char -> accum ++ map (char:) accum) [[]] chars
+    where chars = playersParty ++ (allParties !! n)
+
 
 travel :: Map -> Node -> [(Node,[Int])]
 travel = undefined
