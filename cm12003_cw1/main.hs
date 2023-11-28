@@ -1,8 +1,6 @@
 import Data.Maybe
 import Text.Read (readMaybe)
 
--- TODO: implement safe `!!` function.
-
 main :: IO ()
 main = do
     game
@@ -51,7 +49,7 @@ testGame i = Game [(0,1)] i ["Russell"] [[],["Brouwer","Heyting"]]
 ------------------------- Assignment 1: The game world
 
 connected :: Map -> Node -> [Node]
-connected m n = [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2 ]
+connected m n = msort [ if n == p1 then p2 else p1 | (p1, p2) <- m, n == p1 || n == p2 ]
 
 
 twoNodesConnected :: Node -> Node -> Map -> Bool
@@ -159,7 +157,7 @@ formatDisplayedOpt i str = "  " ++ show (i) ++ "." ++ " " ++ str
 -- The prompt appears in multiple places, therefore make it
 -- into a function to be able to easily change in the future.
 displayPrompt :: IO ()
-displayPrompt = putStr ">>"
+displayPrompt = putStr ">> "
 
 
 displayInpError :: IO ()
@@ -194,13 +192,11 @@ dialogue game choice@(Choice choiceStr choices) = do
     inp <- getLine
     let intInp = readMaybe inp :: Maybe Int
 
-    putStrLn ""
-
     -- `case <expr> of` is used for pattern matching inside a function.
     case intInp of
         Nothing -> handleInvalidInp game choice
         Just intInp -> processChoice intInp
-
+    
     where
         -- Where `Int` is the number of the option in the displayed list.
         displayDialogueOpts :: Game -> Dialogue -> Int -> IO ()
@@ -216,13 +212,13 @@ dialogue game choice@(Choice choiceStr choices) = do
 
         continueDialogue :: (String, Dialogue) -> IO Game
         continueDialogue (responseStr, responseDialogue) = do
-                    putStrLn responseStr
+                    putStrLn ""
                     dialogue game responseDialogue
 
         processChoice :: Int -> IO Game
         processChoice intInp
             | outOfBounds = handleInvalidInp game choice
-            | intInp == 0 = return game
+            | intInp == 0 = do { putStrLn ""; return game }
             | otherwise = continueDialogue $ choices !! (intInp - 1)
             where outOfBounds = (intInp < 0) || (intInp > length choices)
 
@@ -243,14 +239,10 @@ data LocOrChr = Loc Node | Chr Character
 displayMenu :: Game -> IO ()
 displayMenu game@(Game m n playersParty allParties) = do
 
-    putStrLn ""
-
     displayCurLocation n
     i <- displayTravelLocs m n
     nextI <- displayPlayersParty playersParty i
     displayCurLocParty n allParties nextI
-
-    putStrLn ""
 
     where
         displayCurLocation :: Node -> IO ()
@@ -375,6 +367,7 @@ step game@(Game m n playersParty allParties) = do
     inp <- getLine
     let maybeInp = map readMaybe (words inp) :: [Maybe Int]
 
+    putStrLn ""
     processUsersInpStep maybeInp game 
 
 
@@ -386,7 +379,7 @@ game = do
         loop s = do
             newState <- step s
             case newState of
-                game@(Game m n playersParty allParties) -> loop game
+                game@(Game _ _ _ _) -> loop game
                 Over -> putStrLn "GAME OVER!"
 
 ------------------------- Assignment 4: Safety upgrades
@@ -443,7 +436,6 @@ walkthrough = (putStrLn . unlines . filter (not . null) . map format . solve) st
 
 start :: Game
 start = Game theMap 0 [] theCharacters
--- start = Game [(0,1),(1,3),(1,4),(2,3)] 1 ["Russell"] [[],["Brouwer","Heyting"]]
 
 theMap :: Map
 theMap = [(1,2),(1,6),(2,4)]
