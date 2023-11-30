@@ -1,33 +1,41 @@
 #include <Wire.h>
 
-const int enterLed = 4; 
-const int exitLed = 5;  
+const int enterLED = 4; 
+const int exitLED = 5;  
 
-int lastPeopleCInRoom = 0; 
+int lastPeopleInRoom = 0; 
 
-void setup() {
-  pinMode(enterLed, OUTPUT);
-  pinMode(exitLed, OUTPUT);
-  Wire.begin(); 
-  Serial.begin(9600);
+void setup() 
+{
+    pinMode(enterLED, OUTPUT);
+    pinMode(exitLED, OUTPUT);
+    Wire.begin(); 
+    Serial.begin(9600);
 }
 
-void loop() {
-  Wire.requestFrom(4, 1); //request 1 byte from slave device with address 4
-  
-  if (Wire.available()) {
-    int peopleInRoom = Wire.read(); //read the count from the slave
-    if (peopleInRoom > lastPeopleCount) {
-      digitalWrite(enterLed, HIGH);
-      delay(500);
-      digitalWrite(enterLed, LOW);
-    } else if (peopleInRoom < lastPeopleCount) {
-      digitalWrite(exitLed, HIGH);
-      delay(500);
-      digitalWrite(exitLed, LOW);
-    }
-    lastPeopleInRoom = peopleInRoom; 
-  }
+void flashLED (int pinLED)
+{
+    digitalWrite(pinLED, HIGH);
+    delay(500);
+    digitalWrite(pinLED, LOW);
+}
 
-  delay(1000); 
+void loop() 
+{
+    // Request 1 byte from the slave board with address 4.
+    Wire.requestFrom(4, 1); 
+  
+    if (Wire.available()) 
+    {
+        // Read the count from the slave board.
+        int peopleInRoom = Wire.read(); 
+        if (peopleInRoom > lastPeopleInRoom) 
+            flashLED (enterLED);
+        else 
+            flashLED (exitLED);
+
+        lastPeopleInRoom = peopleInRoom; 
+    }
+
+    delay(1000); 
 }
