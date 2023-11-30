@@ -1,9 +1,10 @@
 import Data.Maybe
 import Text.Read (readMaybe)
 
+-- Disclaimer: every "bug" in this program is a feature...
+
 main :: IO ()
-main = do
-    game
+main = game
 
 ------------------------- Sorting
 
@@ -56,27 +57,27 @@ twoNodesConnected :: Node -> Node -> Map -> Bool
 twoNodesConnected n1 n2 m = n1 `elem` connected m n2
 
 
+-- `$` basically means "apply the result of the RHS operation to the LHS".
+-- It helps to reduce the number of `()` for better readability.
 connect :: Node -> Node -> Map -> Map
 connect n1 n2 m
-    -- `$` basically means "apply the result of the RHS operation to the LHS".
-    -- It helps to reduce the number of `()` to increase readability.
     | not (twoNodesConnected n1 n2 m) = msort $ sortPair (n1, n2) : m
-    | otherwise = m
+    | otherwise                       = m
 
 
 disconnect :: Node -> Node -> Map -> Map
 disconnect n1 n2 m
     | twoNodesConnected n1 n2 m = filter (/= sortPair (n1, n2)) m
-    | otherwise = m
+    | otherwise                 = m
 
 
 add :: Party -> Event
-add _ Over                               = Over
+add _  Over                              = Over
 add p (Game m n playersParty allParties) = Game m n (msort (p ++ playersParty)) allParties
 
 
 addAt :: Node -> Party -> Event
-addAt _     _            Over                               = Over
+addAt _     _             Over                              = Over
 addAt _     []           (Game m n playersParty allParties) = Game m n playersParty allParties
 addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars (Game m n playersParty (addToParty iNode char allParties))
     where addToParty iNode char allParties = [
@@ -89,8 +90,8 @@ addAt iNode (char:chars) (Game m n playersParty allParties) = addAt iNode chars 
 -- The `@` is an "as-pattern". It allows to keep a
 -- reference to the entire pattern-matched value.
 addHere :: Party -> Event
-addHere _ Over                                    = Over
-addHere p game@(Game m n playersParty allParties) = addAt n p game
+addHere _       Over          = Over
+addHere p game@(Game _ n _ _) = addAt n p game
 
 
 removeCharacters :: Party -> Party -> Party
@@ -98,12 +99,12 @@ removeCharacters charsToRemove chars = msort [ char | char <- chars, notElem cha
 
 
 remove :: Party -> Event
-remove _ Over                               = Over
+remove _  Over                              = Over
 remove p (Game m n playersParty allParties) = Game m n (removeCharacters p playersParty) allParties
 
 
 removeAt :: Node -> Party -> Event
-removeAt _     _     Over                               = Over
+removeAt _     _      Over                              = Over
 removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty (removeFromParty iNode chars allParties)
     where removeFromParty iNode chars allParties = [
                                                      if i == iNode
@@ -114,8 +115,8 @@ removeAt iNode chars (Game m n playersParty allParties) = Game m n playersParty 
 
 
 removeHere :: Party -> Event
-removeHere _ Over                                    = Over
-removeHere p game@(Game m n playersParty allParties) = removeAt n p game
+removeHere _       Over          = Over
+removeHere p game@(Game _ n _ _) = removeAt n p game
 
 ------------------------- Assignment 2: Dialogues
 
@@ -167,6 +168,12 @@ displayInpError = do
 
 
 dialogue :: Game -> Dialogue -> IO Game
+-- This case is not mentioned in the spec, added for robustness.
+dialogue Over _ = do
+    -- Print "Game Over"
+    putStr "Game "
+    return Over
+
 -- Action case.
 dialogue game (Action str event) = do
     putStrLn (str)
@@ -212,14 +219,14 @@ dialogue game choice@(Choice choiceStr choices) = do
 
         continueDialogue :: (String, Dialogue) -> IO Game
         continueDialogue (responseStr, responseDialogue) = do
-                    putStrLn ""
-                    dialogue game responseDialogue
+            putStrLn ""
+            dialogue game responseDialogue
 
         processChoice :: Int -> IO Game
         processChoice intInp
             | outOfBounds = handleInvalidInp game choice
-            | intInp == 0 = do { putStrLn ""; return game }
-            | otherwise = continueDialogue $ choices !! (intInp - 1)
+            | intInp == 0 = do { putStrLn ""; return game }  -- Exit the dialogue if 0 is entered.
+            | otherwise   = continueDialogue $ choices !! (intInp - 1)
             where outOfBounds = (intInp < 0) || (intInp > length choices)
 
 
@@ -300,9 +307,9 @@ processUsersInpStep :: [Maybe Int] -> Game -> IO Game
 processUsersInpStep maybeIntsInp game@(Game m n playersParty allParties) = do
 
     let inpIsEmpty = (length maybeIntsInp == 0)
-    let inpIsNonInt = Nothing `elem` maybeIntsInp
+    let inpIsNotInt = Nothing `elem` maybeIntsInp
 
-    if inpIsEmpty || inpIsNonInt then
+    if inpIsEmpty || inpIsNotInt then
         handleInvalidInp
 
     else do
@@ -318,10 +325,12 @@ processUsersInpStep maybeIntsInp game@(Game m n playersParty allParties) = do
             handleInvalidInp
 
         -- Entering 0 ends the game immediately (if not in a dialogue).
-        else if intsInp == [0] then do
+        else if intsInp == [0] then
             step Over
 
         else do
+            -- Descriptively naming the variables instead of commenting 
+            -- everything for better clarity and readability.
             let inpOpts = [ opt | (optI, opt) <- zip [1..] opts, i <- intsInp, optI == i ]
             let containsBothLocsAndChars = (any isLoc inpOpts) && (any isChr inpOpts)
             let containsMultipleLocs = (all isLoc inpOpts) && (length inpOpts > 1)
@@ -346,20 +355,18 @@ processUsersInpStep maybeIntsInp game@(Game m n playersParty allParties) = do
 
         handleValidInp :: [LocOrChr] -> IO Game
         -- Go to a single location.
-        handleValidInp (Loc newLoc:[]) = do
-            return (Game m newLoc playersParty allParties)
+        handleValidInp (Loc newLoc:[]) = return (Game m newLoc playersParty allParties)
         -- Talk to multiple characters.
         handleValidInp chrs@(Chr _:_) = do
             let party = msort $ map (\(Chr chr) -> chr) chrs
             dialogue game (findDialogue party)
         -- Catch all unexpected cases, if any.
-        handleValidInp _ = do
-            return game
+        handleValidInp _ = return game
 
 
 step :: Game -> IO Game
-step Over = return Over
-step game@(Game m n playersParty allParties) = do
+step       Over          = return Over
+step game@(Game _ _ _ _) = do
 
     displayMenu game
     displayPrompt
@@ -380,7 +387,7 @@ game = do
             newState <- step s
             case newState of
                 game@(Game _ _ _ _) -> loop game
-                Over -> putStrLn "GAME OVER!"
+                Over                -> putStrLn "GAME OVER!"
 
 ------------------------- Assignment 4: Safety upgrades
 -- Safety upgrades have been implemented in assignments 2 and 3.
@@ -392,10 +399,11 @@ data Command  = Travel [Int] | Select Party | Talk [Int]
 
 type Solution = [Command]
 
-
 talk :: Game -> Dialogue -> [(Game, [Int])]
+talk Over _        = []
 talk game dialogue = traverse game dialogue []
   where
+    -- Traverse and accumulate the choices (in reverse order) until `Action` is reached.
     traverse :: Game -> Dialogue -> [Int] -> [(Game, [Int])]
     traverse game (Branch conditionMet d1 d2) accum 
         | conditionMet game = traverse game d1 accum 
@@ -409,10 +417,12 @@ talk game dialogue = traverse game dialogue []
 
 -- `select` is just the power set.
 select :: Game -> [Party]
-select game@(Game m n playersParty allParties) = foldl (\accum char -> accum ++ map (char:) accum) [[]] chars
+select  Over                              = []
+select (Game _ n playersParty allParties) = msort $ foldl (\accum char -> accum ++ map (char:) accum) [[]] chars
     where chars = playersParty ++ (allParties !! n)
 
 
+-- Nooo, thanks.
 travel :: Map -> Node -> [(Node,[Int])]
 travel = undefined
 
@@ -481,13 +491,16 @@ theDialogues :: [(Party,Dialogue)]
 theDialogues = let
   always _ = True
   end str  = Choice str []
-  here        (Game _ n _ _ ) = n
   isconn  _ _  Over           = False
   isconn  i j (Game m _ _ _ ) = elem i (connected m j)
-  isAt    n c (Game _ _ _ ps) = elem c (ps !! n)
+  here         Over           = 0
+  here        (Game _ n _ _ ) = n
+  inParty   _  Over           = False
   inParty   c (Game _ _ p _ ) = elem c p
+  isAt    _ _  Over           = False
+  isAt    n c (Game _ _ _ ps) = elem c (ps !! n)
+  updateMap _  Over           = Over
   updateMap f (Game m n p ps) = Game (f m) n p ps
-  updateMap _ Over = Over
  in
   [ ( ["Russell"] , Choice "Russell: Let's go on an adventure!"
       [ ("Sure." , end "You pack your bags and go with Russell.")
@@ -496,17 +509,17 @@ theDialogues = let
     )
   , ( ["Heyting","Russell"] , end "Heyting: Hi Russell, what are you drinking?\nRussell: The strong stuff, as usual." )
   , ( ["Bertrand Russell"] , Branch (isAt 0 "Bertrand Russell") ( let
-      intro = "A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.\n\nRussell:  am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.\n\nDo you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it."
+      intro = "A tall, slender, robed character approaches your home. When he gets closer, you recognise him as Bertrand Russell, an old friend you haven't seen in ages. You invite him in.\n\nRussell: I am here with a important message. The future of Excluded-Middle Earth hangs in the balance. The dark forces of the Imperator are stirring, and this time, they might not be contained.\n\nDo you recall the artefact you recovered in your quest in the forsaken land of Error? The Loop, the One Loop, the Loop of Power? It must be destroyed. I need you to bring together a team of our finest Logicians, to travel deep into Error and cast the Loop into lake Bottom. It is the only way to terminate it."
       re1   = ("What is the power of the Loop?" , Choice "Russell: for you, if you put it on, you become referentially transparent. For the Imperator, there is no end to its power. If he gets it in his possession, he will vanquish us all." [re2])
       re2   = ("Let's go!" , Action "Let's put our team together and head for Error." (updateMap (connect 1 0) . add ["Bertrand Russell"] . removeHere ["Bertrand Russell"]) )
       in Choice intro [re1,re2]
       ) ( Branch ( (==7).here) (end "Russell: Let me speak to him and Brouwer."
       ) (end "Russell: We should put our team together and head for Error." ) )
     )
-  , ( ["Arend Heyting"] , Choice "Heyting: What can  get you?"
+  , ( ["Arend Heyting"] , Choice "Heyting: What can I get you?"
       [ ( "A pint of Ex Falso Quodbibet, please." , end "There you go." )
       , ( "The Hop Erat Demonstrandum, please."   , end "Excellent choice." )
-      , ( "Could  get a Maltus Ponens?"          , end "Mind, that's a strong one." )
+      , ( "Could I get a Maltus Ponens?"          , end "Mind, that's a strong one." )
       ]
     )
   , ( ["Luitzen Brouwer"] , Branch (isAt 1 "Luitzen Brouwer")
@@ -518,9 +531,9 @@ theDialogues = let
           d  i  | i == 0    = Choice intro [r2]
                 | otherwise = Choice intro [r1 (i-1),r2]
         in d 100)
-        , ( "Actually, could you do a close shave?" , end "Of course.  shave everyone who doesn't shave themselves." )
-        , ( "'m really looking for help." , Choice "Brouwer: Hmmm. What with? Is it mysterious?"
-          [ ( "Ooh yes, very. And dangerous." , Action "Brouwer: 'm in!" (add ["Luitzen Brouwer"] . removeHere ["Luitzen Brouwer"]) )
+        , ( "Actually, could you do a close shave?" , end "Of course. I shave everyone who doesn't shave themselves." )
+        , ( "I'm really looking for help." , Choice "Brouwer: Hmmm. What with? Is it mysterious?"
+          [ ( "Ooh yes, very. And dangerous." , Action "Brouwer: I'm in!" (add ["Luitzen Brouwer"] . removeHere ["Luitzen Brouwer"]) )
           ] )
         ]
       )
@@ -528,21 +541,21 @@ theDialogues = let
     )
   , ( ["David Hilbert"] , Branch (not . isconn 2 3) (let
         intro = "You wait your turn in the queue. The host, David Hilbert, puts up the first guest in Room 1, and points the way to the stairs.\n\nYou seem to hear that the next couple are also put up in Room 1. You decide you must have misheard. It is your turn next.\n\nHilbert: Lodging and breakfast? Room 1 is free."
-        re1   = ("Didn't you put up the previous guests in Room 1, too?" , Choice "Hilbert:  did. But everyone will move up one room to make room for you if necessary. There is always room at the Hilbert Hotel & Resort." [("But what about the last room? Where do the guests in the last room go?" , Choice "Hilbert: There is no last room. There are always more rooms." [("How can there be infinite rooms? Is the hotel infinitely long?" , Choice "Hilbert: No, of course not! It was designed by the famous architect Zeno Hadid. Every next room is half the size of the previous." [re2])])])
-        re2   =  ("Actually,  am looking for someone." , Action "Hilbert: Yes, someone is staying here. You'll find them in Room n+1. Through the doors over there, up the stairs, then left." (updateMap (connect 2 3)))
+        re1   = ("Didn't you put up the previous guests in Room 1, too?" , Choice "Hilbert: I did. But everyone will move up one room to make room for you if necessary. There is always room at the Hilbert Hotel & Resort." [("But what about the last room? Where do the guests in the last room go?" , Choice "Hilbert: There is no last room. There are always more rooms." [("How can there be infinite rooms? Is the hotel infinitely long?" , Choice "Hilbert: No, of course not! It was designed by the famous architect Zeno Hadid. Every next room is half the size of the previous." [re2])])])
+        re2   =  ("Actually, I am looking for someone." , Action "Hilbert: Yes, someone is staying here. You'll find them in Room n+1. Through the doors over there, up the stairs, then left." (updateMap (connect 2 3)))
       in Choice intro [re1,re2]
       ) (end "Hilbert seems busy. You hear him muttering to himself: Problems, problems, nothing but problems. You decide he has enough on his plate and leave." )
     )
   , ( ["William Howard"] ,  Branch (isAt 3 "William Howard")
       (Choice "Howard: Yes? Are we moving up again?" [("Quick, we need your help. We need to travel to Error." , Action "Howard: Fine. My bags are packed anyway, and this room is tiny. Let's go!" (add ["William Howard"] . removeAt 3 ["William Howard"]))]
-      ) (Branch (isAt 6 "William Howard") (Choice "Howard: What can  get you?"
+      ) (Branch (isAt 6 "William Howard") (Choice "Howard: What can I get you?"
         [ ("The Lambda Rogan Josh with the Raita Monad for starter, please." , end "Coming right up.")
-        , ("The Vindaloop with NaN bread on the side." , Choice "Howard: It's quite spicy." [(" can handle it." , end "Excellent." ) ] )
+        , ("The Vindaloop with NaN bread on the side." , Choice "Howard: It's quite spicy." [("I can handle it." , end "Excellent." ) ] )
         , ("The Chicken Booleani with a stack of poppadums, please.", end "Good choice." )
         ]
       ) (end "Howard: We need to find Curry. He'll know the way.")
     ) )
-  , ( ["Jean-Yves Girard"] , Branch (isconn 4 5) (Action "Raised on a large platform in the centre of the temple, Girard is preaching the Linearity Gospel. He seems in some sort of trance, so it is hard to make sense of, but you do pick up some interesting snippets. `Never Throw Anything Away' - you gather they must be environmentalists - `We Will Solve Church's Problems', `Only This Place Matters'... Perhaps, while he is speaking, now is a good time to take a peek behind the temple..." (updateMap (connect 4 5) )) (end "You have seen enough here.")
+  , ( ["Jean-Yves Girard"] , Branch (isconn 4 5)  (end "You have seen enough here.") (Action "Raised on a large platform in the centre of the temple, Girard is preaching the Linearity Gospel. He seems in some sort of trance, so it is hard to make sense of, but you do pick up some interesting snippets. `Never Throw Anything Away' - you gather they must be environmentalists - `We Will Solve Church's Problems', `Only This Place Matters'... Perhaps, while he is speaking, now is a good time to take a peek behind the temple..." (updateMap (connect 4 5) ))
     )
   , ( ["Vending machine"] , Choice "The walls of the Temple of Linearity are lined with vending machines. Your curiosity gets the better of you, and you inspect one up close. It sells the following items:"
       [ ( "Broccoli"  , end "You don't like broccoli." )
@@ -555,20 +568,20 @@ theDialogues = let
   , ( ["Jean-Louis Krivine"] , end "Looking through the open kitchen door, you see the chef doing the dishes. He is rinsing and stacking plates, but it's not a very quick job because he only has one stack. You also notice he never passes any plates to the front. On second thought, that makes sense - it's a takeaway, after all, and everything is packed in cardboard boxes. He seems very busy, so you decide to leave him alone."
     )
   , ( ["Haskell Curry"] , Branch (isAt 6 "Haskell Curry")
-      (Choice "Curry: What can  get you?"
+      (Choice "Curry: What can I get you?"
         [ ("The Lambda Rogan Josh with the Raita Monad for starter, please." , end "Coming right up.")
-        , ("The Vindaloop with NaN bread on the side." , Choice "Curry: It's quite spicy." [(" can handle it." , end "Excellent." ) ] )
+        , ("The Vindaloop with NaN bread on the side." , Choice "Curry: It's quite spicy." [("I can handle it." , end "Excellent." ) ] )
         , ("The Chicken Booleani with a stack of poppadums, please.", end "Good choice." )
-        , ("Actually,  am looking for help getting to Error." , end "Curry: Hmm. I may be able to help, but I'll need to speak to William Howard.")
+        , ("Actually, I am looking for help getting to Error." , end "Curry: Hmm. I may be able to help, but I'll need to speak to William Howard.")
         ]
       ) (end "Nothing")
     )
-  , ( ["Haskell Curry","William Howard"] , Branch (not . isconn 6 7) (Action "Curry:  You know the way to Error, right?\nHoward:  thought you did?\nCurry:  Not really. Do we go via Computerborough?\nHoward: Yes, I think so. Is that along the I-50?\nCurry:  Yes, third exit. Shall I go with them?\nHoward: sure. I can watch the shop while you're away." (add ["Haskell Curry"] . removeAt 6 ["Haskell Curry"] . addAt 6 ["William Howard"] . remove ["William Howard"] . updateMap (connect 6 7) )) (end "It's easy, just take the third exit on I-50.")
+  , ( ["Haskell Curry","William Howard"] , Branch (not . isconn 6 7) (Action "Curry:  You know the way to Error, right?\nHoward: I thought you did?\nCurry:  Not really. Do we go via Computerborough?\nHoward: Yes, I think so. Is that along the I-50?\nCurry:  Yes, third exit. Shall I go with them?\nHoward: sure. I can watch the shop while you're away." (add ["Haskell Curry"] . removeAt 6 ["Haskell Curry"] . addAt 6 ["William Howard"] . remove ["William Howard"] . updateMap (connect 6 7) )) (end "It's easy, just take the third exit on I-50.")
     )
   , ( ["Gottlob Frege"] , end "A person who appears to be the leader of the mob approaches your vehicle. When he gets closer, you recognise him as Gottlob Frege. You start backing away, and he starts yelling at you.\n\nFrege: Give us the Loop! We can control it! We can wield its power!\n\nYou don't see a way forward. Perhaps Russell has a plan." )
   , ( ["Bertrand Russell","Gottlob Frege","Luitzen Brouwer"] , let
         intro = "Frege is getting closer, yelling at you to hand over the Loop, with the mob on his heels, slowly surrounding you. The tension in the car is mounting. But Russell calmly steps out to confront Frege.\n\nRussell:"
-        re1   = ( "You cannot control its power! Even the very wise cannot see all ends!" , Choice "Frege:  can and I will! The power is mine!\n\nRussell:" [re2,re3] )
+        re1   = ( "You cannot control its power! Even the very wise cannot see all ends!" , Choice "Frege: I can and I will! The power is mine!\n\nRussell:" [re2,re3] )
         re2   = ( "Brouwer, whom do you shave?" , Choice "Brouwer: Those who do not shave themselves. Obviously. Why?\n\nRussell:" [re3] )
         re3   = ( "Frege, answer me this: DOES BROUWER SHAVE HIMSELF?" , Action
                   "Frege opens his mouth to shout a reply. But no sound passes his lips. His eyes open wide in a look of bewilderment. Then he looks at the ground, and starts walking in circles, muttering to himself and looking anxiously at Russell. The mob is temporarily distracted by the display, uncertain what is happening to their leader, but slowly enclosing both Frege and Russell. Out of the chaos, Russell shouts:\n\nDRIVE, YOU FOOLS!\n\nYou floor it, and with screeching tires you manage to circle around the mob. You have made it across.\n\nEND OF ACT 1. To be continued..."
