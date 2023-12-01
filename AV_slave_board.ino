@@ -9,16 +9,27 @@ void setup()
 {
     pinMode(irEnterPin, INPUT);
     pinMode(irExitPin, INPUT);
-    Wire.begin(4); 
+    Wire.begin(2); 
 
     Serial.begin(9600);
-    attachInterrupt(digitalPinToInterrupt(irEnterPin), personEntered, FALLING);
-    attachInterrupt(digitalPinToInterrupt(irExitPin), personExited, FALLING);
+    //attachInterrupt(digitalPinToInterrupt(irEnterPin), personEntered, FALLING);
+    //attachInterrupt(digitalPinToInterrupt(irExitPin), personExited, FALLING);
 
     Wire.onRequest(requestEvent); 
 }
 
-void loop() {}
+void loop() {
+  delay(500);
+  if (digitalRead(irEnterPin) == HIGH) {
+    personEntered();
+    digitalWrite(irEnterPin, LOW);
+  }
+  delay(100);
+  if (digitalRead(irExitPin) == HIGH) {
+    personExited();
+    digitalWrite(irExitPin, LOW);
+  }
+}
 
 void personEntered() 
 {
