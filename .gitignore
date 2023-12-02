@@ -5,6 +5,8 @@
 !.gitignore
 !cm12002_cw1/
 !cm12003_cw1/
+!cm12004_cw1/
+
 
 # Exclude all archives.
 *.zip
