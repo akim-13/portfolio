@@ -2,10 +2,9 @@
 /*
 
 # Except for the following:
-!.gitignore
-!cm12002_cw1/
 !cm12003_cw1/
 !cm12004_cw1/
+!.gitignore
 
 # Exclude all archives.
 *.zip
