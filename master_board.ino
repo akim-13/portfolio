@@ -15,6 +15,9 @@ bool audioPaused = false; // Initialise variable representing pause state
 int buttonPin = 2;
 int lastPeopleInRoom = 0; 
 bool manualPause = false;
+// Deboncing.
+unsigned long lastPressTime = 0;
+const int debounceDelay = 200;
 
 // initialise consants
 TMRpcm audio; // creates an instance of the TMRpcm object named "audio"
@@ -176,15 +179,24 @@ void loop() {
   }
 }
 
-void pauseAudio() {
-  Serial.print("Toggling Pause...\n");
-  audio.pause();
-  audioPaused = not(audioPaused);
-  if (audioPaused) {
-    manualPause = true;
-  } else {
-    manualPause = false;
-  }
+void pauseAudio() 
+{
+    // The number of milliseconds passed since the Arduino board began running the current program. 
+    unsigned long currentTime = millis();
+    // Condition for debouncing.
+    if (currentTime - lastPressTime > debounceDelay) 
+    {
+        lastPressTime = currentTime;
+
+        Serial.print("Toggling Pause...\n");
+        audio.pause();
+        audioPaused = not(audioPaused);
+
+        if (audioPaused)
+            manualPause = true;
+        else
+            manualPause = false;
+    }
 }
 
 void autoTurnOff() {
