@@ -30,9 +30,9 @@
     - ~~**Monday**~~ — start working on your systems.
     - ~~**Friday**~~ — meet up at the lab to discuss progress and further plans. Continue working on the systems.
 - **Week 3** (*Nov 27th to Dec 3rd*):
-    - ~**Tuesday or Wednesday**~ — finish working on your system. Each team should have both hardware and software working. *Importantly*, no time should be wasted on optimizing the software or making it look as good as possible, since it'll probably become a mess after merging anyway. However, obviously, it has to make sense and be somewhat readable and understandable. 
-    - ~**Wednesday or Thursday**~ — meet up and merge hardware (3 Arduinos) together. It's important to do this before the Friday lab, since we'll probably have questions when we start merging code and figuring out how it should all work together.
-    - **Friday** — meet up at the lab to start merging code.
+    - ~~**Tuesday or Wednesday**~~ — finish working on your system. Each team should have both hardware and software working. *Importantly*, no time should be wasted on optimizing the software or making it look as good as possible, since it'll probably become a mess after merging anyway. However, obviously, it has to make sense and be somewhat readable and understandable. 
+    - ~~**Wednesday or Thursday**~~ — meet up and merge hardware (3 Arduinos) together. It's important to do this before the Friday lab, since we'll probably have questions when we start merging code and figuring out how it should all work together.
+    - ~~**Friday**~~ — meet up at the lab to start merging code.
 - **Week 4** (*Dec 3rd to 10th*):
     - **Wednesday** — finish merging code and have the entire system working. We might need to meet up before Wednesday in case there are some issues that cannot be resolved remotely.
     - **Thursday** — start working on the report and video.
