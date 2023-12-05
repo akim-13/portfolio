@@ -1,48 +1,51 @@
 #include <Wire.h>
 
-const int irEnterPin = 3; 
-const int irExitPin = 2;  
+// Initiate global variables.
+const int IREntrancePin = 3;    // Infrared sensor at the entrance.
+const int IRExitPin = 2;        // Infrared sensor at the exit.
+volatile int peopleInRoom = 0;  // Number of people in the room. 
 
-volatile int peopleInRoom = 0; 
 
+void sendInfoToMaster() 
+{
+    // Send the number of people in the room to the master board.
+    Wire.write(peopleInRoom);
+}
+
+
+// Standard setup function.
 void setup() 
 {
-    pinMode(irEnterPin, INPUT);
-    pinMode(irExitPin, INPUT);
+    // Set the pins of the IR sensors to behave as input.
+    pinMode(IREntrancePin, INPUT);
+    pinMode(IRExitPin, INPUT);
+
+    // Initialize the I2C communication with address `2`.
     Wire.begin(2); 
+    // Send information to the master board when requested.
+    Wire.onRequest(sendInfoToMaster); 
 
+    // Initialize serial communication at 9600 bits per second.
     Serial.begin(9600);
-    //attachInterrupt(digitalPinToInterrupt(irEnterPin), personEntered, FALLING);
-    //attachInterrupt(digitalPinToInterrupt(irExitPin), personExited, FALLING);
-
-    Wire.onRequest(requestEvent); 
 }
 
-void loop() {
-  delay(500);
-  if (digitalRead(irEnterPin) == HIGH) {
-    personEntered();
-    digitalWrite(irEnterPin, LOW);
-  }
-  delay(100);
-  if (digitalRead(irExitPin) == HIGH) {
-    personExited();
-    digitalWrite(irExitPin, LOW);
-  }
-}
 
-void personEntered() 
+void handleEnteringPerson() 
 {
+    // Increment the counter of people.
     peopleInRoom++;
     // For debugging.
     Serial.print("+: ");
     Serial.println(peopleInRoom);
 }
 
-void personExited() 
+
+void handleExitingPerson() 
 {
+    // Don't allow the counter to go negative.
     if (peopleInRoom > 0) 
     { 
+        // Decrement the counter of people.
         peopleInRoom--; 
         // For debugging.
         Serial.print("-: ");
@@ -50,7 +53,30 @@ void personExited()
     }
 }
 
-void requestEvent() 
+
+// Standard main loop.
+void loop() 
 {
-    Wire.write(peopleInRoom);
+    // Check for a person every half a second.
+    delay(500);
+
+    // If the IR sensor at the entrance has activated.
+    if (digitalRead(IREntrancePin) == HIGH) 
+    {
+        handleEnteringPerson();
+        // Deactivate the entrance IR sensor.
+        digitalWrite(IREntrancePin, LOW);
+    }
+
+    // TODO: check whether we need this delay.
+    delay(100);
+
+    // If the IR sensor at the exit has activated.
+    if (digitalRead(IRExitPin) == HIGH) 
+    {
+        handleExitingPerson();
+        // Deactivate the exit IR sensor.
+        digitalWrite(IRExitPin, LOW);
+    }
 }
+
