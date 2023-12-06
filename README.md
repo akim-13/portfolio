@@ -22,7 +22,7 @@ Before commencing work on the project, multiple meetings were organized with the
 ### 3.2 Hardware Development Phase
 The system comprises three Arduino boards: two "slave" boards and one "master". For autonomous operation, each group was allocated one slave and one master board, with the plan to later merge the two masters together. The master board, intended for placement in the club's DJ booth (refer to "Master", fig. 1), was initially designed to include five components: a speaker outside the booth, a play/pause button, manual volume control, an SD card reader, and an LCD screen displaying the current volume level. However, due to space constraints on the master board, the LCD screen was relocated to one of the slave boards (refer to "Slave 1", fig. 1). This slave board also features an array of LEDs for the lighting ("disco") system and a microphone for noise level monitoring. The second slave board (refer to "Slave 2", fig. 1) is equipped with two infrared sensors to count the number of people in the room, one at the entrance and one at the exit. While this setup may pose challenges in real-world scenarios with a single entrance, it can be addressed by placing a delimiter in the middle and allowing people to pass through one at a time after ID verification.
 
-![](./attachments/overview.jpg)
+![](./media/overview.jpg)
 *Figure 1.*
 
 
@@ -32,7 +32,7 @@ Initially, the infrared sensors were set up using two interrupts. However, this 
 
 ## 4.0. Final Implementation
 
-![](./attachment/schematic.png)
+![](./media/schematic.png)
 *Figure 2.*
 
 
