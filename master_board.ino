@@ -1,144 +1,175 @@
-#include <SPI.h> // enables communication with SPI devices (the SD card module)
-#include <SD.h> // enables reading from SD card
-#include <stdbool.h> // provides boolean data type
-#include <TMRpcm.h> // enables processing of .wav files
-#include <stdlib.h> // provides the rand() function
-#include <Wire.h> // enables I2C communication
+#include <SPI.h>      // Enables communication with SPI devices (the SD card module).
+#include <SD.h>       // Enables reading from SD card.
+#include <stdbool.h>  // Provides boolean data type.
+#include <TMRpcm.h>   // Enables processing of .wav files.
+#include <stdlib.h>   // Provides the rand() function.
+#include <Wire.h>     // Enables I2C communication.
 
-// initialise variables 
-unsigned int numSongs = 0;
-int userInput;
-byte receivedValue; // stores the byte value received from slaves
-unsigned long previousTime = 0; // stores the last time the volume was checked
-int autoVol = 7; // allows the arduino to change the volume if it's too high
-bool audioPaused = false; // creating variable representing pause state
-int buttonPin = 2; // assigning variable to button pin number
-int lastPeopleInRoom = 0; // setting the number of people in the room to 0
-bool manualPause = false; // settings the manual pause state to 0 (prevents conflicts with auto pausing)
-// Variables to prevent button debounce
-unsigned long lastPressTime = 0;
-const int debounceDelay = 200;
+// Initialize variables.
+unsigned int numSongs = 0;        // Total number of songs.
+int userInput;                    // User input for song selection.
+byte receivedValue;               // Stores the byte value received from slaves.
+unsigned long previousTime = 0;   // Stores the last time the volume was checked.
+int autoVol = 7;                  // Default volume level.
+bool audioPaused = false;         // Represents whether audio is paused.
+int lastPeopleInRoom = 0;         // Number of people in the room.
+bool manualPause = false;         // Flag for manual pause state.
+unsigned long lastPressTime = 0;  // Timer for button debounce.
 
-// initialise consants
-TMRpcm audio; // creates an instance of the TMRpcm object named "audio"
-const int timeBetweenVolChecks = 10000; // volume is checked every 5 seconds
+// Initialize constants.
+const int buttonPin = 2;                 // Pin number for the button.
+const int debounceDelay = 200;           // Delay for button debounce in milliseconds.
+const int timeBetweenVolChecks = 10000;  // Interval for volume checks in milliseconds.
+TMRpcm audio;                            // Instance of TMRpcm for audio playback.
 
-void setup() {
-  Wire.begin();       // initialises I2C communication (no address because master)
-  Serial.begin(9600); // initialises serial output
-  Serial.println("Initialising SD card."); // Shows the SD initialisation process has been started
+// Standard setup function.
+void setup() 
+{
+    // Initializes I2C communication (master).
+    Wire.begin();       
+    // Initialize serial communication at 9600 bits per second.
+    Serial.begin(9600);
+    // Attache interrupt to the button.
+    attachInterrupt(0, pauseAudio, RISING); 
+    // Set button pin to input with pull-up resistor.
+    pinMode(buttonPin, INPUT_PULLUP);       
 
-  attachInterrupt(0, pauseAudio, RISING); // Attatches a rising interrupt to the button, allowing it to trigger the toggleAudio function
-  pinMode(buttonPin, INPUT_PULLUP); // Setting the button pin to an input
+    Serial.println("Initializing SD card...");
 
-// if the SD card can't be accessed then the program will not execute. no parameter needed for begin() as it's in the default (pin 9)
-  if (SD.begin() == false) {
-    Serial.println("Initialisation failed."); 
-    while (true); // If initialisation fails, an infinite loop starts preventing other parts of the program from running
-  }
-
-// if the SD card can be accessed, this branch is executed
-  else {
-    
-    audio.speakerPin = 9; // sets the speakerpin to 9
-
-    Serial.println("Enter the corresponding number to play a song: ");
-    
-    File directory = SD.open("/");            // stores the root directory, which is an instance of the file object, in "directory"
-    File file = directory.openNextFile();     // discards the first file in the directory because it's there by default
-    
-    while (true) {                            // repeats until all files have been output
-      File file = directory.openNextFile();   // stores the next file in "directory", which is an instance of the file object, in "file"
-      if (!file) break;                       // breaks the loop when there are no more files to output
-      numSongs += 1;                          // counts the song
-      Serial.print(numSongs);
-      Serial.print(". ");
-      Serial.println(file.name());            // displays the filenames and their corresponding numbers
-      file.close();
+    // Check if the SD card failed to initialize.
+    if (!SD.begin()) 
+    {
+        Serial.println("ERROR: Initialization failed."); 
+        // Enter infinite loop to halt further execution on failure.
+        while (true); 
     }
+    else 
+    {
+        // The user will be prompted in the main `loop`.
+        Serial.println("Enter the corresponding number to play a song:");
 
-    directory.close();                        // close the open directory
+        audio.speakerPin = 9;
 
-  }
+        // Open the root directory.
+        File directory = SD.open("/"); 
+
+        while (true) 
+        {
+            // Get the next file from the directory.
+            File file = directory.openNextFile();
+
+            // Break the loop when there are no more files.
+            if (!file) 
+                break; 
+            else
+                numSongs++;
+
+            // Displays the filenames with corresponding numbers.
+            Serial.print(numSongs);
+            Serial.print(". ");
+            Serial.println(file.name()); 
+
+            // Closes the file to avoid memory issues.
+            file.close(); 
+        }
+
+        // Account for one of the read files (not a song), which is in the directory by default.
+        numSongs--;
+
+        directory.close();
+    }
 }
 
-void loop() {              
 
-  // if user input available
-  if (Serial.available()) {                      
+void loop() 
+{              
+    // If user input is available.
+    if (Serial.available()) 
+    {                      
+        String songNames[numSongs];
 
-    String songNames[numSongs];                  // initialises the array songNames which will store the song names
-    
-    userInput = Serial.parseInt();               // gather user input
-    
-    char c = Serial.read(); // read and discard any extra characters
+        // Get user's input.
+        userInput = Serial.parseInt();               
 
-    // if the input is a valid song number
-    if (userInput <= numSongs) {
-      audio.disable();                             // turn audio off
+        // Read and discard any extra characters.
+        char c = Serial.read(); 
 
-      File directoryAgain = SD.open("/");        // stores the root directory, which is an instance of the file object, in "directoryAgain" as a directory instance was previously opened
-      File file = directoryAgain.openNextFile(); // discard the first file because it's there by default
+        // If the input is a valid song number.
+        if (userInput > 0 && userInput <= numSongs) 
+        {
+            // Turn off audio.
+            audio.disable();
 
-      // loop which adds every filename to the array songNames
-      for (unsigned int i = 0; i < numSongs; i++) {
-        File file = directoryAgain.openNextFile();  // stores the next file in "directory", which is an instance of the file object, in "file"
-        songNames[i] = file.name();                 // adds to the array
-        file.close();                               
-      }
+            // Open the root directory.
+            File directory = SD.open("/");
+            // Discard the first non-song file because it is there by default.
+            File file = directory.openNextFile(); 
 
-      directoryAgain.close();                       // closes the directory instance
+            // Add every filename to the array songNames.
+            for (unsigned int i = 0; i < numSongs; i++) 
+            {
+                File file = directory.openNextFile(); 
+                // Adds to the array.
+                songNames[i] = file.name();                 
+                file.close();                               
+            }
 
-      String song = songNames[userInput - 1];  // stores the name of the song the user selected in "song"
-        
-      const char* songFileName = song.c_str(); // converts to a c style string
+            directory.close();
 
-      // music is played and the filename is output
-      audio.play(songFileName);
-      Serial.print("Playing: ");               
-      Serial.println(songFileName);
+            // Stores the name of the song the user selected in "song".
+            String song = songNames[userInput - 1];  
+
+            // Converts to a c style string.
+            const char* songFileName = song.c_str(); 
+            // Music is played and the filename is output.
+            audio.play(songFileName);
+            Serial.print("Playing: ");               
+            Serial.println(songFileName);
+        }
+
+        // If the user input is invalid.
+        else 
+            Serial.println("ERROR: invalid integer entered.");
     }
 
-    // if the user input is invalid 
-    else {
-      Serial.println("Error: invalid integer entered.");
-    }
-  }
+    // If nothing is playing and the audio hasn't been paused, randomly select a song.
+    if (!audio.isPlaying() && not(audioPaused)) 
+    {
+        // Default volume value is 4
+        autoVol = 4;              
+        audio.setVolume(autoVol); 
 
-  // if nothing is playing and the audio hasn't been paused, randomly select a song
-  if (!audio.isPlaying() && not(audioPaused)) {
+        String songNames[numSongs];
 
-    autoVol = 4;              // Default volume value is 4
-    audio.setVolume(autoVol); // set the volume to 4
+        // Randomly generate a number to pick a random track.
+        unsigned int random = rand();
+        unsigned int randomTrackNum = random % numSongs;
 
-    String songNames[numSongs]; // initialises the array songNames which will store the song names
+        // Open the root directory.
+        File directory = SD.open("/");
+        // Discard the first file because it's there by default
+        File file = directory.openNextFile(); 
 
-    // randomly generate a number to pick a random track
-    unsigned int random = rand();
-    unsigned int randomTrackNum = random % numSongs;
+        // Add every filename to the array songNames.
+        for (unsigned int i = 0; i < numSongs; i++) 
+        {
+            File file = directory.openNextFile();
+            songNames[i] = file.name();                 // adds to the array
+            file.close();                               // closes the open file
+        }
 
-    File directoryAgain = SD.open("/"); // stores the root directory, which is an instance of the file object, in "directoryAgain"
-    File file = directoryAgain.openNextFile(); // discard the first file because it's there by default
+        directory.close();                       // closes the open directory
 
-    // loop which adds every filename to the array songNames
-    for (unsigned int i = 0; i < numSongs; i++) {
-      File file = directoryAgain.openNextFile();  // stores the next file in "directory", which is an instance of the file object, in "file"
-      songNames[i] = file.name();                 // adds to the array
-      file.close();                               // closes the open file
-    }
+        String song = songNames[randomTrackNum]; // stores the name of the song
+            
+        const char* songFileName = song.c_str(); // converts to a c style string
 
-    directoryAgain.close();                       // closes the open directory
+        // music is played and the filename is output
+        audio.play(songFileName);
+        Serial.print("Playing: ");
+        Serial.println(songFileName);
 
-    String song = songNames[randomTrackNum]; // stores the name of the song
-        
-    const char* songFileName = song.c_str(); // converts to a c style string
-
-    // music is played and the filename is output
-    audio.play(songFileName);
-    Serial.print("Playing: ");
-    Serial.println(songFileName);
-    
-  } 
+    } 
   else if (millis() - previousTime >= timeBetweenVolChecks) { // if audio is playing and 5 seconds has passed since the volume was last checked
     // if 5 seconds has passed since the volume was last checked
     previousTime = millis();                             // resets the last time the volume was checked
@@ -173,6 +204,7 @@ void loop() {
     autoTurnOn();                                         // Turn the audio back on
   }
 }
+
 
 void pauseAudio() // Pause audio function (BUTTON PRESS)
 {
