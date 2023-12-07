@@ -6,7 +6,7 @@ const int IRExitPin = 2;        // Infrared sensor at the exit.
 volatile int peopleInRoom = 0;  // Number of people in the room. 
 
 
-void sendInfoToMaster() 
+void sendDataToMaster() 
 {
     // Send the number of people in the room to the master board.
     Wire.write(peopleInRoom);
@@ -20,10 +20,10 @@ void setup()
     pinMode(IREntrancePin, INPUT);
     pinMode(IRExitPin, INPUT);
 
-    // Initialize the I2C communication with address `2`.
+    // Initialize I2C communication (slave address `2`).
     Wire.begin(2); 
-    // Send information to the master board when requested.
-    Wire.onRequest(sendInfoToMaster); 
+    // Send data to the master board when requested.
+    Wire.onRequest(sendDataToMaster); 
 
     // Initialize serial communication at 9600 bits per second.
     Serial.begin(9600);
@@ -42,7 +42,7 @@ void handleEnteringPerson()
 
 void handleExitingPerson() 
 {
-    // Don't allow the counter to go negative.
+    // Do not allow the counter to go negative.
     if (peopleInRoom > 0) 
     { 
         // Decrement the counter of people.

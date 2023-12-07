@@ -1,101 +1,131 @@
 #include <Wire.h>
-#include <Thread.h>
-#include <ThreadController.h>
-#include <LiquidCrystal.h>     // Incorporates the LCD library for display functionality.
-#include <math.h>              // Includes the math library for mathematical functions.
+#include <math.h>
+#include <LiquidCrystal.h>     // LCD library for display functionality.
+#include <ThreadController.h>  // Threading.
+#include <Thread.h>           
 
-// Assigning pins to components
-const int micPin = A0; // Pin assignment for MAX4466 (Microphone).
+// LCD display pins.
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+const int numOfLEDs = 4;
+// LEDs pins.
+const int ledPins[numOfLEDs] = {10, 9, 8, 7};
+// Pin for MAX4466 (microphone).
+const int micPin = A0;
 
-const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2; // Pins for the LCD display.
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);                  // Initializing the LCD object.
+// Initialize the LCD object.
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
-// Initializing constants
-const int pickupWindow = 2000; // Time window for audio pickup in milliseconds.
+// Time window for audio pickup in milliseconds.
+const int pickupWindow = 2000;
 
-// Initializing variables
+// Initialize other variables.
 unsigned int voltage;
 byte eventValue;
 unsigned int vol;
 
-// Assigning LED pins
-int ledPins[] = {10, 9, 8, 7};
+void sendDataToMaster() 
+{
+    // Filter and manage volume levels.
+    if (vol > 100 && vol < 400) 
+    {
+        eventValue = 1; 
+        // Inform the master to lower the volume.
+        Wire.write(eventValue);               
+        // Positions the cursor at the beginning of the second row on the LCD.
+        lcd.setCursor(0, 1);
+        // Update LCD display.
+        lcd.println("Lowering Volume!     "); 
+    }
+    else 
+    {
+        eventValue = 0;
+        // Master board interprets 0 as no volume adjustment needed
+        Wire.write(eventValue); 
+    }
+}
 
-// Initializing threading variables
-bool threadCompleted = true; // Flag to check if the thread loop is completed.
-const Thread volumeCheckThread(getVolume); // Creating the volume checking thread.
 
+// Standard setup function.
 void setup() 
+{     
+    // Set the mode of LED pins to output.
+    for (int i = 0; i < numOfLEDs; i++) 
+        pinMode(ledPins[i], OUTPUT);
+
+    // Initialize serial communication at 9600 bits per second.
+    Serial.begin(9600);
+
+    // Initialize I2C communication (slave address `1`).
+    Wire.begin(1);
+    // Send data to the master board when requested.
+    Wire.onRequest(sendDataToMaster);
+
+    // Set LCD size to 16x2.
+    lcd.begin(16, 2);                     
+    // Display message on LCD.
+    lcd.println("Now Playing!        ");
+}
+
+
+// Turn on (state HIGH) or off (state LOW) specified LEDs.
+void changeLEDsState(int state, int startingFromLED, int step)
 {
-    for (int i = 0; i < 4; i++) 
+    for (int i = startingFromLED; i < numOfLEDs; i += step) 
     {
-        pinMode(ledPins[i], OUTPUT);     // Setting the mode of LED pins to output.
-    }
-
-    Serial.begin(9600);                  // Initialize serial communication.
-    Wire.begin(1);                       // Initialize I2C communication with slave address 1.
-    Wire.onRequest(sendData);            // Initialize the request function.
-
-    lcd.begin(16, 2);                    // Set LCD size to 16x2.
-    lcd.println("Now Playing!        "); // Display message on LCD.
-}
-
-// Main program loop
-void loop() 
-{
-    volumeCheckThread.run(); // Run the volume level checking thread.
-    updateLCD();             // Update the LCD with volume level.
-    doLEDs();                // Execute LED lighting effects.
-}
-
-// Update the LCD to display the normalized volume level.
-void updateLCD() 
-{
-    lcd.setCursor(0, 1);
-    lcd.println("Volume Lvl: " + String(ceil(((float)vol) / 1023.0 * 100.0)) + "     ");
-}
-
-// Threading function for volume management.
-void getVolume(Thread* thread) 
-{
-    if (threadCompleted) 
-    {
-        threadCompleted = false;            // Lock thread execution.
-        unsigned int maxVoltage = 0;
-        unsigned int minVoltage = 1024;
-        unsigned long startTime = millis(); // Record start time.
-
-        // Collect data for a specific time window.
-        while (millis() - startTime < pickupWindow) 
-        {
-            voltage = analogRead(micPin); // Read voltage from the microphone.
-
-            // Filter and record voltage fluctuations.
-            if (voltage < 1024) 
-            {
-                if (voltage > maxVoltage) 
-                {
-                    maxVoltage = voltage;
-                }
-                else if (voltage < minVoltage) 
-                {
-                    minVoltage = voltage;
-                }
-            }
-        }
-        threadCompleted = true;        // Unlock thread for next execution.
-        vol = maxVoltage - minVoltage; // Calculate volume level.
-        Serial.println(vol);           // Output volume for debugging.
+        digitalWrite(ledPins[i], state);
+        delay(40);
     }
 }
+
+
+// Alternating lighting effect using LEDs.
+void alternatingLightEffect() 
+{
+    for (int x = 0; x < 2; x++) 
+    {
+        // Turn on LEDs 0 and 2.
+        changeLEDsState(HIGH, 0, 2);
+
+        delay(200);
+
+        // Turn off LEDs 0 and 2.
+        changeLEDsState(LOW, 0, 2);
+        // Turn on LEDs 1 and 3.
+        changeLEDsState(HIGH, 1, 2);
+
+        delay(200);
+
+        // Turn off LEDs 1 and 3.
+        changeLEDsState(LOW, 1, 2);
+
+        delay(100);
+    }
+}
+
+
+// Sequence lighting effect using LEDs.
+void sequenceLightEffect() 
+{
+    for (int x = 0; x < numOfLEDs; x++) 
+    {
+        // Turn on all LEDs.
+        changeLEDsState(HIGH, 0, 1);
+
+        delay(200);
+
+        // Turn off all LEDs.
+        changeLEDsState(LOW, 0, 1);
+    }
+}
+
 
 // Function to manage LED lighting effects.
 void doLEDs() 
 {
     // Record the start time of the function.
-    long startTime = millis(); 
+    unsigned long startTime = millis(); 
     
-    // Run LED effects for a specified duration.
+    // Run LED effects for 5 seconds.
     while ((millis() - startTime) < 5000) 
     {
         sequenceLightEffect();
@@ -103,71 +133,67 @@ void doLEDs()
     }
 }
 
-// Sequence lighting effect using LEDs.
-void sequenceLightEffect() 
+
+// Update the LCD to display the normalized volume level.
+void updateLCD() 
 {
-    for (int x = 0; x < 4; x++) 
-    {
-        for (int i = 0; i < 4; i++) 
+    float normalizedVolumeLvl = ceil(((float)vol) / 1023.0 * 100.0)
+
+    // Positions the cursor at the beginning of the second row on the LCD.
+    lcd.setCursor(0, 1);
+    lcd.print("Volume Lvl: ");
+    lcd.print(String(normalizedVolumeLvl));
+    lcd.println("%    ");
+}
+
+
+// Threading function for volume management.
+void getVolume(Thread* thread) 
+{
+    if (threadCompleted) 
+    {            
+        // Lock thread execution.
+        threadCompleted = false;
+        unsigned int maxVoltage = 0;
+        unsigned int minVoltage = 1024;
+        // Record start time.
+        unsigned long startTime = millis();
+
+        // Collect data for a specific time window.
+        while (millis() - startTime < pickupWindow) 
         {
-            digitalWrite(ledPins[i], HIGH);
-            delay(40);
+            // Read voltage from the microphone.
+            voltage = analogRead(micPin);
+
+            // Filter and record voltage fluctuations.
+            if (voltage < 1024) 
+            {
+                maxVoltage = max(voltage, maxVoltage);
+                minVoltage = min(voltage, minVoltage);
+            }
         }
-        delay(200);
-        for (int i = 0; i < 4; i++) 
-        {
-            digitalWrite(ledPins[i], LOW);
-            delay(40);
-        }
+
+        // Unlock thread for next execution.
+        threadCompleted = true;        
+        // Calculate volume level.
+        vol = maxVoltage - minVoltage; 
+        // Output volume for debugging.
+        Serial.println(vol);           
     }
 }
 
-// Alternating lighting effect using LEDs.
-void alternatingLightEffect() 
-{
-    for (int x = 0; x < 2; x++) 
-    {
-        for (int i = 0; i < 4; i += 2) 
-        {
-            digitalWrite(ledPins[i], HIGH);
-            delay(40);
-        }
-        delay(200);
-        for (int i = 0; i < 4; i += 2) 
-        {
-            digitalWrite(ledPins[i], LOW);
-            delay(40);
-        }
-        for (int i = 1; i < 4; i += 2) 
-        {
-            digitalWrite(ledPins[i], HIGH);
-            delay(40);
-        }
-        delay(200);
-        for (int i = 1; i < 4; i += 2) 
-        {
-            digitalWrite(ledPins[i], LOW);
-            delay(40);
-        }
-        delay(100);
-    }
-}
+// Threading.
+bool threadCompleted = true;                // Flag to check if the thread loop is completed.
+const Thread volumeCheckThread(getVolume);  // Create the volume checking thread.
 
-// Function to handle data requests.
-void sendData() 
+// Standard main loop.
+void loop() 
 {
-    // Filter and manage volume levels.
-    if (vol > 100 && vol < 400) 
-    {
-        eventValue = 1; 
-        Wire.write(eventValue);               // Inform the master to lower the volume.
-        lcd.setCursor(0, 1);
-        lcd.println("Lowering Volume!     "); // Update LCD display.
-    }
-    else 
-    {
-        eventValue = 0;
-        Wire.write(eventValue); // No adjustment needed.
-    }
+    // Run the volume level checking thread.
+    volumeCheckThread.run(); 
+    // Update the LCD with volume level.
+    updateLCD();             
+    // Execute LED lighting effects.
+    doLEDs();                
 }
 

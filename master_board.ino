@@ -115,7 +115,7 @@ void loop() {
 
     // randomly generate a number to pick a random track
     unsigned int random = rand();
-    unsigned int randomTrackNum = random % 6;
+    unsigned int randomTrackNum = random % numSongs;
 
     File directoryAgain = SD.open("/"); // stores the root directory, which is an instance of the file object, in "directoryAgain"
     File file = directoryAgain.openNextFile(); // discard the first file because it's there by default
