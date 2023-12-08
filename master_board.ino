@@ -1,180 +1,31 @@
-#include <SPI.h> // enables communication with SPI devices (the SD card module)
-#include <SD.h> // enables reading from SD card
-#include <stdbool.h> // provides boolean data type
-#include <TMRpcm.h> // enables processing of .wav files
-#include <stdlib.h> // provides the rand() function
-#include <Wire.h> // enables I2C communication
+#include <SPI.h>      // Enables communication with SPI devices (the SD card module).
+#include <SD.h>       // Enables reading from SD card.
+#include <stdbool.h>  // Provides boolean data type.
+#include <TMRpcm.h>   // Enables processing of .wav files.
+#include <stdlib.h>   // Provides the rand() function.
+#include <Wire.h>     // Enables I2C communication.
 
-// initialise variables 
-unsigned int numSongs = 0;
-int userInput;
-byte receivedValue; // stores the byte value received from slaves
-unsigned long previousTime = 0; // stores the last time the volume was checked
-int autoVol = 7; // allows the arduino to change the volume if it's too high
-bool audioPaused = false; // creating variable representing pause state
-int buttonPin = 2; // assigning variable to button pin number
-int lastPeopleInRoom = 0; // setting the number of people in the room to 0
-bool manualPause = false; // settings the manual pause state to 0 (prevents conflicts with auto pausing)
-// Variables to prevent button debounce
-unsigned long lastPressTime = 0;
-const int debounceDelay = 200;
+// Initialize variables.
+unsigned int numSongs = 0;        // Total number of songs.
+int userInput;                    // User input for song selection.
+byte receivedValue;               // Stores the byte value received from slaves.
+unsigned long previousTime = 0;   // Stores the last time the volume was checked.
+int autoVol = 7;                  // Default volume level.
+int lastPeopleInRoom = 0;         // Number of people in the room.
+unsigned long lastPressTime = 0;  // Timer for button debounce.
+bool audioIsPaused = false;         // Represents whether audio is paused.
+bool audioIsManuallyPaused = false;         // Flag for manual pause state.
+bool roomIsEmpty = true;          // Start with an empty room.
+bool volumeIsTooLoud = false;     // Indicates whether the volume has to be lowered.
 
-// initialise consants
-TMRpcm audio; // creates an instance of the TMRpcm object named "audio"
-const int timeBetweenVolChecks = 10000; // volume is checked every 5 seconds
+// Initialize constants.
+const int buttonPin = 2;                 // Pin number for the button.
+const int debounceDelay = 200;           // Delay for button debounce in milliseconds.
+const int timeBetweenVolChecks = 10000;  // Interval for volume checks in milliseconds.
+TMRpcm audio;                            // Instance of TMRpcm for audio playback.
 
-void setup() {
-  Wire.begin();       // initialises I2C communication (no address because master)
-  Serial.begin(9600); // initialises serial output
-  Serial.println("Initialising SD card."); // Shows the SD initialisation process has been started
-
-  attachInterrupt(0, pauseAudio, RISING); // Attatches a rising interrupt to the button, allowing it to trigger the toggleAudio function
-  pinMode(buttonPin, INPUT_PULLUP); // Setting the button pin to an input
-
-// if the SD card can't be accessed then the program will not execute. no parameter needed for begin() as it's in the default (pin 9)
-  if (SD.begin() == false) {
-    Serial.println("Initialisation failed."); 
-    while (true); // If initialisation fails, an infinite loop starts preventing other parts of the program from running
-  }
-
-// if the SD card can be accessed, this branch is executed
-  else {
-    
-    audio.speakerPin = 9; // sets the speakerpin to 9
-
-    Serial.println("Enter the corresponding number to play a song: ");
-    
-    File directory = SD.open("/");            // stores the root directory, which is an instance of the file object, in "directory"
-    File file = directory.openNextFile();     // discards the first file in the directory because it's there by default
-    
-    while (true) {                            // repeats until all files have been output
-      File file = directory.openNextFile();   // stores the next file in "directory", which is an instance of the file object, in "file"
-      if (!file) break;                       // breaks the loop when there are no more files to output
-      numSongs += 1;                          // counts the song
-      Serial.print(numSongs);
-      Serial.print(". ");
-      Serial.println(file.name());            // displays the filenames and their corresponding numbers
-      file.close();
-    }
-
-    directory.close();                        // close the open directory
-
-  }
-}
-
-void loop() {              
-
-  // if user input available
-  if (Serial.available()) {                      
-
-    String songNames[numSongs];                  // initialises the array songNames which will store the song names
-    
-    userInput = Serial.parseInt();               // gather user input
-    
-    char c = Serial.read(); // read and discard any extra characters
-
-    // if the input is a valid song number
-    if (userInput <= numSongs) {
-      audio.disable();                             // turn audio off
-
-      File directoryAgain = SD.open("/");        // stores the root directory, which is an instance of the file object, in "directoryAgain" as a directory instance was previously opened
-      File file = directoryAgain.openNextFile(); // discard the first file because it's there by default
-
-      // loop which adds every filename to the array songNames
-      for (unsigned int i = 0; i < numSongs; i++) {
-        File file = directoryAgain.openNextFile();  // stores the next file in "directory", which is an instance of the file object, in "file"
-        songNames[i] = file.name();                 // adds to the array
-        file.close();                               
-      }
-
-      directoryAgain.close();                       // closes the directory instance
-
-      String song = songNames[userInput - 1];  // stores the name of the song the user selected in "song"
-        
-      const char* songFileName = song.c_str(); // converts to a c style string
-
-      // music is played and the filename is output
-      audio.play(songFileName);
-      Serial.print("Playing: ");               
-      Serial.println(songFileName);
-    }
-
-    // if the user input is invalid 
-    else {
-      Serial.println("Error: invalid integer entered.");
-    }
-  }
-
-  // if nothing is playing and the audio hasn't been paused, randomly select a song
-  if (!audio.isPlaying() && not(audioPaused)) {
-
-    autoVol = 4;              // Default volume value is 4
-    audio.setVolume(autoVol); // set the volume to 4
-
-    String songNames[numSongs]; // initialises the array songNames which will store the song names
-
-    // randomly generate a number to pick a random track
-    unsigned int random = rand();
-    unsigned int randomTrackNum = random % numSongs;
-
-    File directoryAgain = SD.open("/"); // stores the root directory, which is an instance of the file object, in "directoryAgain"
-    File file = directoryAgain.openNextFile(); // discard the first file because it's there by default
-
-    // loop which adds every filename to the array songNames
-    for (unsigned int i = 0; i < numSongs; i++) {
-      File file = directoryAgain.openNextFile();  // stores the next file in "directory", which is an instance of the file object, in "file"
-      songNames[i] = file.name();                 // adds to the array
-      file.close();                               // closes the open file
-    }
-
-    directoryAgain.close();                       // closes the open directory
-
-    String song = songNames[randomTrackNum]; // stores the name of the song
-        
-    const char* songFileName = song.c_str(); // converts to a c style string
-
-    // music is played and the filename is output
-    audio.play(songFileName);
-    Serial.print("Playing: ");
-    Serial.println(songFileName);
-    
-  } 
-  else if (millis() - previousTime >= timeBetweenVolChecks) { // if audio is playing and 5 seconds has passed since the volume was last checked
-    // if 5 seconds has passed since the volume was last checked
-    previousTime = millis();                             // resets the last time the volume was checked
-
-    Wire.requestFrom(1, 1);                                 // requests 1 byte from slave 1
-
-    while (Wire.available()) {                           // whilst the communication channel is open (if a value is recieved)
-      int micRec = Wire.read();                          // set a variable to the value given from the slave
-      if (micRec == 1 and autoVol != 1) {               //  if a 1 was recieved, it means the volume is too high
-        autoVol -= 1;                                   //  will turn down the volume if the volume isn't already at its lowest
-        audio.setVolume(autoVol);
-      }
-    }
-  }
-  // getting info from slave 2
-  Wire.requestFrom(2, 1);                               // requests a byte from slave 2
-  delay(5);                                             
-  if (Wire.available()) {                               // if the communication channel is open (if a value is recieved)
-      int peopleInRoom = Wire.read();                   
-      lastPeopleInRoom = peopleInRoom;                  // Read the value given by the slave, states the number of people in the room currently
-  }
-  else {                                                // If the communciation channel isn't available, output it in the serial monitor
-      Serial.println("No data available from slave");     
-  }
-
-
-
-  if (lastPeopleInRoom == 0 && audioPaused == false) {  // If there are no people in the room and the audio isn't already paused
-    autoTurnOff();                                      // Pause the audio
-  }
-  else if (lastPeopleInRoom > 0 && audioPaused == true) { // If there are any people in the room and the audio is currently paused
-    autoTurnOn();                                         // Turn the audio back on
-  }
-}
-
-void pauseAudio() // Pause audio function (BUTTON PRESS)
+// Pause audio function (BUTTON PRESS)
+void pauseAudio() 
 {
     // The number of milliseconds passed since the Arduino board began running the current program. 
     unsigned long currentTime = millis();
@@ -184,31 +35,256 @@ void pauseAudio() // Pause audio function (BUTTON PRESS)
         lastPressTime = currentTime;
 
         Serial.print("Toggling Pause...\n");
-        audio.pause();                      // Pause the audio (still keeps the song data prior to pause)
-        audioPaused = not(audioPaused);     // Negate the audioPaused flag to show the audio is now paused
+        // Pause the audio (still keeps the song data prior to pause).
+        audio.pause();                      
+        audioIsPaused = true;
 
-        if (audioPaused)
-            manualPause = true;             // If the audio is now paused, set the manualPause flag to true
+        if (audioIsPaused)
+            // If the audio is now paused, set the `audioIsManuallyPaused` flag to true.
+            audioIsManuallyPaused = true;             
         else
-            manualPause = false;            // If the audio isn't paused anymore, set the flag to false
+            // If the audio is not paused anymore, set the flag to false.
+            audioIsManuallyPaused = false;            
     }
 }
 
-void autoTurnOff() { // Automatic audio pause function (not triggered by button press, triggered by no one in room) 
-  Serial.print("Toggling Pause...\n");
-  if (not (audioPaused)) {
-    audio.pause();                // If the audio isn't paused, pause it.
-  }
-  audioPaused = not(audioPaused); // Negate the flag
+
+// Handle SD card files.
+void listAndCountSongs() 
+{
+    // Open the root directory.
+    File directory = SD.open("/"); 
+
+    while (true) 
+    {
+        // Get the next file from the directory.
+        File file = directory.openNextFile();
+
+        // Break the loop when there are no more files.
+        if (!file) 
+            break; 
+        else
+            numSongs++;
+
+        // Displays the filenames with corresponding numbers.
+        Serial.print(numSongs);
+        Serial.print(". ");
+        Serial.println(file.name()); 
+
+        // Closes the file to avoid memory issues.
+        file.close(); 
+    }
+
+    // Account for one of the read files (not a song), which is in the directory by default.
+    numSongs--;
+
+    directory.close();
 }
 
-void autoTurnOn() {              
-  if (manualPause == true) {      // If the audio is currently paused manually (by button press), don't unpause it as manual pausing takes precendence
-    return;
-  }
-  Serial.print("Toggling Pause...\n");
-  if (audioPaused) {                    // Otherwise, if the audio is currently paused, unpause it.
-    audio.pause();
-  }
-  audioPaused = not(audioPaused);       // Negate the current flag value
+
+// Standard setup function.
+void setup() 
+{
+    // Initializes I2C communication (master).
+    Wire.begin();       
+    // Initialize serial communication at 9600 bits per second.
+    Serial.begin(9600);
+
+    // Attach interrupt to the button.
+    attachInterrupt(0, pauseAudio, RISING); 
+    // Set button pin to input with pull-up resistor.
+    pinMode(buttonPin, INPUT_PULLUP);       
+
+    Serial.println("Initializing SD card...");
+
+    // Check if the SD card failed to initialize.
+    if (!SD.begin()) 
+    {
+        Serial.println("ERROR: Initialization failed."); 
+        // Enter infinite loop to halt further execution on failure.
+        while (true); 
+    }
+
+    // The user will be prompted in the main `loop()`.
+    Serial.println("Enter the corresponding number to play a song:");
+
+    // Assign the speaker pin.
+    audio.speakerPin = 9;
+
+    listAndCountSongs();
 }
+
+
+void autoPlayAudio() 
+{              
+    // If the audio is currently paused manually (by button press), don't unpause it as manual pausing takes precedence.
+    if (audioIsManuallyPaused)
+        return;
+
+    Serial.println("Toggling Pause...");
+
+    // If the audio is paused, unpause it.
+    if (audioIsPaused)
+        // The `pause()` function (rather confusingly) toggles the pause.
+        audio.pause();
+
+    audioIsPaused = false;
+}
+
+
+// Automatic audio pause function (not triggered by button press, triggered by no one in room) 
+void autoPauseAudio() 
+{ 
+    Serial.println("Toggling Pause...");
+
+    // If the audio isn't paused, pause it.
+    if (!audioIsPaused) 
+        audio.pause();                
+
+    audioIsPaused = true;
+}
+
+
+// Communicate with the IR slave.
+void toggleAudioByOccupancy()
+{
+    // Requests a byte from slave 2.
+    Wire.requestFrom(2, 1);                               
+
+    // TODO: What is this 5ms delay, do we need it?
+    delay(5);                                             
+
+    // If the communication channel is open (if a value is received)
+    if (Wire.available()) 
+        roomIsEmpty = Wire.read();                   
+    else 
+        Serial.println("No data available from the slave.");     
+
+    // If there are no people in the room and the audio isn't already paused.
+    if (roomIsEmpty && !audioIsPaused) 
+        // Pause the audio.
+        autoPauseAudio();                                      
+    // If there are any people in the room and the audio is currently paused.
+    else if (!roomIsEmpty && audioIsPaused)
+        // Turn the audio back on
+        autoPlayAudio();                                         
+}
+
+
+// Communicate with the LCD/microphone slave.
+void lowerVolumeIfTooLoud()
+{
+    // Requests 1 byte from slave 1.
+    Wire.requestFrom(1, 1);                                 
+
+    // While the communication channel is open (if a value is received).
+    while (Wire.available()) 
+    {                           
+        // Set a variable to the value given from the slave.
+        volumeIsTooLoud = Wire.read();                          
+        //  If a 1 was received, it means the volume is too high.
+        if (volumeIsTooLoud and autoVol != 1) 
+        {               
+            // Turn down the volume if the it is not already at its lowest.
+            autoVol -= 1;                                   
+            audio.setVolume(autoVol);
+        }
+    }
+}
+
+
+String* getSongsFromRootDir() 
+{
+    // Open the root directory.
+    File directory = SD.open("/");
+    // Discard the first file, which is there by default and not a song.
+    directory.openNextFile(); 
+
+    // Dynamically allocate an array of Strings.
+    String* songNames = new String[numSongs];
+
+    // Add every filename to the array `songNames`.
+    for (int i = 0; i < numSongs; i++) 
+    {
+        File file = directory.openNextFile();
+        songNames[i] = file.name();                 
+        file.close();
+    }
+
+    directory.close();
+
+    return songNames;
+}
+
+
+void playSelectedSong(int songIndex)
+{
+    // Add songs to `songNames` from the root directory.
+    String* songNames[numSongs] = getSongsFromRootDir();
+    // Stores the name of the song the user selected in "song".
+    String song = songNames[songIndex];  
+
+    // Free the dynamically allocated memory.
+    delete[] songNames;
+
+    // Convert to a C style string.
+    const char* songFileName = song.c_str(); 
+    // Music is played and the filename is output.
+    audio.play(songFileName);
+    Serial.print("Playing: ");               
+    Serial.println(songFileName);
+}
+
+
+void selectRandomSong()
+{
+    // Default volume value is 4.
+    autoVol = 4;              
+    audio.setVolume(autoVol); 
+
+    // Randomly generate a number to play a random track.
+    unsigned int randomTrackNum = rand() % numSongs;
+    playSelectedSong(randomTrackNum);
+}
+
+
+void selectUsersSong()
+{
+    // Get user's input.
+    userInput = Serial.parseInt();               
+
+    // Read and discard any extra characters.
+    char c = Serial.read(); 
+
+    // If the input is a valid song number.
+    if (userInput > 0 && userInput <= numSongs) 
+    {
+        // Turn off audio.
+        audio.disable();
+        playSelectedSong(userInput - 1);
+    }
+    else 
+        Serial.println("ERROR: invalid integer entered.");
+}
+
+
+void loop() 
+{              
+    // If user input is available.
+    if (Serial.available()) 
+        selectUsersSong();
+
+    // If nothing is playing and the audio has not been paused, randomly select a song.
+    if (!audio.isPlaying() && !audioIsPaused) 
+        selectRandomSong();
+    // If audio is playing and a number of seconds have passed since the volume was last checked.
+    else if (millis() - previousTime >= timeBetweenVolChecks) 
+    { 
+        // Resets the last time the volume was checked.
+        previousTime = millis();                             
+        lowerVolumeIfTooLoud();
+    }
+
+    toggleAudioByOccupancy();
+}
+

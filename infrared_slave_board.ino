@@ -4,12 +4,18 @@
 const int IREntrancePin = 3;    // Infrared sensor at the entrance.
 const int IRExitPin = 2;        // Infrared sensor at the exit.
 volatile int peopleInRoom = 0;  // Number of people in the room. 
+bool roomIsEmpty = true;        // The room is either empty or not.
 
 
 void sendDataToMaster() 
 {
-    // Send the number of people in the room to the master board.
-    Wire.write(peopleInRoom);
+    if (peopleInRoom > 0)
+        roomIsEmpty = false;
+    else
+        roomIsEmpty = true;
+
+    // Send the state of the room to the master board.
+    Wire.write(roomIsEmpty);
 }
 
 

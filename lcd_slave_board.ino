@@ -20,7 +20,7 @@ const int pickupWindow = 2000;
 
 // Initialize other variables.
 unsigned int voltage;
-byte eventValue;
+bool volumeIsTooLoud;
 unsigned int vol;
 
 void sendDataToMaster() 
@@ -28,9 +28,9 @@ void sendDataToMaster()
     // Filter and manage volume levels.
     if (vol > 100 && vol < 400) 
     {
-        eventValue = 1; 
+        volumeIsTooLoud = true; 
         // Inform the master to lower the volume.
-        Wire.write(eventValue);               
+        Wire.write(volumeIsTooLoud);               
         // Positions the cursor at the beginning of the second row on the LCD.
         lcd.setCursor(0, 1);
         // Update LCD display.
@@ -38,9 +38,9 @@ void sendDataToMaster()
     }
     else 
     {
-        eventValue = 0;
-        // Master board interprets 0 as no volume adjustment needed
-        Wire.write(eventValue); 
+        volumeIsTooLoud = false;
+        // Communicate to the master that no volume adjustment is needed.
+        Wire.write(volumeIsTooLoud); 
     }
 }
 
