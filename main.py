@@ -25,7 +25,30 @@ def e(log):
 # Shortcuts for using SQL.
 db = sqlite3.connect('airline.db') 
 cursor = db.cursor()
-sql = lambda query: cursor.execute(query)
+sql = lambda query, params=(): cursor.execute(query, params)
+
+
+def prompt_for_valid_input(lower_bound, upper_bound):
+    inp = None
+    while True:
+        inp = input('>>> ')
+        inp = verify_input(inp, lower_bound, upper_bound)
+        if inp == None:
+            continue
+        else:
+            break
+    return inp
+
+
+def verify_input(inp, lower_bound, upper_bound):
+    try:
+        inp = int(inp)
+        if (inp < lower_bound) or (inp > upper_bound): 
+            raise
+        return inp
+    except:
+        print("ERROR: Please enter a valid integer.")
+        return None
 
 
 def create_tables():
@@ -74,7 +97,7 @@ def create_tables():
 
 
 def display_menu(options):
-    print('Available options:')
+    print('\nAvailable options:')
     for key, value in sorted(options.items()):
         print(f'{key}. - {value[0]}')
 
@@ -84,8 +107,36 @@ def quit_app():
     return
 
 
+def view_table():
+    sql('SELECT name FROM sqlite_master WHERE type="table"')    
+    tables = cursor.fetchall()
+
+    available_tables = {}
+    print('Please choose a table:')
+
+    for i, table in enumerate(tables, 1):
+        table_name = table[0]
+
+        # Skip the bridging table.
+        if table_name == 'AssignedPilots': 
+            continue
+
+        print(f'{i}. {table_name}')
+        available_tables[i] = table_name
+
+    inp = prompt_for_valid_input(0, max(available_tables.keys()))
+    if inp == 0:
+        print("Returning to main menu...")
+        return
+
+    # Safe from SQL injections, since user provides a number, not the table name.
+    sql(f'SELECT * FROM {table_name}')
+    # TODO: Format the output when actual data is available.
+    print(cursor.fetchall())
+
+
 def insert_data():
-    pass
+   pass 
 
 
 def search_data():
@@ -114,13 +165,14 @@ def extra2():
 
 options = {
     0: ("Quit", quit_app),
-    1: ("Insert", insert_data),
-    2: ("Search", search_data),
-    3: ("Update", update_data),
-    4: ("Delete", delete_data),
-    5: ("Summary Statistics", choose_summary_statistics),
-    6: ("Extra 1", extra1),
-    7: ("Extra 2", extra2)
+    1: ("View Table", view_table),
+    2: ("Insert", insert_data),
+    3: ("Search", search_data),
+    4: ("Update", update_data),
+    5: ("Delete", delete_data),
+    6: ("Summary Statistics", choose_summary_statistics),
+    7: ("Extra 1", extra1),
+    8: ("Extra 2", extra2)
 }
 
 
@@ -132,14 +184,8 @@ def main():
         display_menu(options)
 
         inp = input('>> ')
-
-        # Verify that the input is valid.
-        try:
-            inp = int(inp)
-            num_of_options = len(options)
-            if (inp < 0) or (inp >= num_of_options): raise
-        except:
-            print("ERROR: Please enter a valid integer.\n")
+        inp = verify_input(inp, min(options.keys()), max(options.keys()))
+        if inp == None: 
             continue
 
         selected_option = options.get(inp)
