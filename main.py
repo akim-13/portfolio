@@ -1,29 +1,9 @@
 import sqlite3
-import logging
 from datetime import datetime
-import inspect
+from my_logger import d, i, w, e
 
 # Define a very large "number".
 INFINITY = float('inf')
-
-#################### DEBUGGING ####################
-lvl = logging.DEBUG 
-fmt = '%(lineno)s: [%(levelname)s] %(msg)s'
-logging.basicConfig(level = lvl, format = fmt)
-def d(log):
-    frame = inspect.currentframe().f_back
-    logging.getLogger().debug(log, stacklevel=2)
-def i(log):
-    frame = inspect.currentframe().f_back
-    logging.getLogger().info(log, stacklevel=2)
-def w(log):
-    frame = inspect.currentframe().f_back
-    logging.getLogger().warning(log, stacklevel=2)
-def e(log):
-    frame = inspect.currentframe().f_back
-    logging.getLogger().error(log, stacklevel=2)
-###################################################
-
 
 # Shortcuts for using SQL.
 db = sqlite3.connect('airline.db') 
