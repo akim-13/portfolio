@@ -1,5 +1,6 @@
 import sqlite3
 import random
+import pandas
 from datetime import datetime
 from my_logger import d, i, w, e
 
@@ -122,8 +123,16 @@ def view_table():
 
     # Safe from SQL injections, since the user provides a number, not the table name.
     sql(f'SELECT * FROM {table_name}')
-    # TODO: Format the output when actual data is available.
-    print(cursor.fetchall())
+
+    rows = cursor.fetchall()
+    columns = [ column[0] for column in cursor.description ]
+
+    # Create a DataFrame from the rows and columns.
+    dataframe = pandas.DataFrame(rows, columns=columns)
+    # Start numbering rows from 1 instead of 0.
+    dataframe.index = range(1, len(dataframe) + 1)
+
+    print(dataframe)
 
 
 def convert_to_unix_time(inp):
@@ -315,8 +324,42 @@ def delete_data():
     pass
 
 
-def choose_summary_statistics():
-    pass
+def show_summary_statistics():
+    # Total number of flights.
+    sql('SELECT COUNT(*) FROM Flights')
+    total_flights = cursor.fetchone()[0]
+    print(f"Total number of flights: {total_flights}")
+
+    # Average number of passengers per flight.
+    sql('SELECT AVG(numOfPassengers) FROM Flights')
+    avg_passengers = cursor.fetchone()[0]
+    print(f"Average number of passengers per flight: {avg_passengers:.2f}")
+
+    # Average flight duration.
+    # Query to calculate the total sum of flight durations.
+    sql('''
+        SELECT SUM(landingTime - departureTime)
+        FROM Flights
+        WHERE departureTime IS NOT NULL AND landingTime IS NOT NULL
+    ''')
+    total_duration = cursor.fetchone()[0]
+
+    # Query to count the number of flights with valid departure and landing times.
+    sql('''
+        SELECT COUNT(*)
+        FROM Flights
+        WHERE departureTime IS NOT NULL AND landingTime IS NOT NULL
+    ''')
+    total_flights = cursor.fetchone()[0]
+
+    if (total_flights > 0) and (total_duration is not None):
+        average_duration = total_duration / total_flights
+        # Convert average duration from seconds to a more readable format.
+        hours, remainder = divmod(average_duration, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        print(f"Average flight time: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds")
+    else:
+        print("No valid data available to calculate average flight time.")
 
 
 def extra1():
@@ -334,7 +377,7 @@ options = {
     3: ("Search", search_data),
     4: ("Update", update_data),
     5: ("Delete", delete_data),
-    6: ("Summary Statistics", choose_summary_statistics),
+    6: ("Summary Statistics", show_summary_statistics),
     7: ("Extra 1", extra1),
     8: ("Extra 2", extra2)
 }
