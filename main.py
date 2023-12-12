@@ -28,7 +28,7 @@ def verify_input(inp, lower_bound, upper_bound):
     return None
 
 
-def prompt_for_valid_input(lower_bound, upper_bound):
+def prompt_int_until_valid(lower_bound, upper_bound):
     while True:
         inp = input(' >>> ')
         inp = verify_input(inp, lower_bound, upper_bound)
@@ -95,6 +95,38 @@ def quit_app():
     return
 
 
+def get_first_primary_key(table_name):
+    sql(f'PRAGMA table_info({table_name})')
+    columns = cursor.fetchall()
+    primary_key = None
+    for column in columns:
+        _, column_name, _, _, _, column_is_pk = column
+        if column_is_pk:
+            pk = column_name
+            break
+    return pk
+
+
+def display_table(table_name):
+    pk = get_first_primary_key(table_name)
+    # Safe from SQL injections, since the user provides a number, not the table name.
+    sql(f'SELECT * FROM {table_name} ORDER BY {pk}')
+    rows = cursor.fetchall()
+
+    if not rows:
+        print(f'Table "{table_name}" is empty.')
+        return
+
+    columns = [ column[0] for column in cursor.description ]
+
+    # Create a DataFrame from the rows and columns.
+    dataframe = pandas.DataFrame(rows, columns=columns)
+    # Start numbering rows from 1 instead of 0.
+    dataframe.index = range(1, len(dataframe) + 1)
+
+    print(dataframe)
+
+
 def select_table_name(tables):
     available_tables = {}
     print('Please choose a table:')
@@ -105,7 +137,7 @@ def select_table_name(tables):
         print(f'{i}. {table_name}')
         available_tables[i] = table_name
 
-    inp = prompt_for_valid_input(0, max(available_tables.keys()))
+    inp = prompt_int_until_valid(0, max(available_tables.keys()))
     if inp == 0:
         print("Returning to main menu...")
         return None
@@ -113,7 +145,7 @@ def select_table_name(tables):
         return available_tables[inp]
 
 
-def view_table():
+def choose_table_to_display():
     sql('SELECT name FROM sqlite_master WHERE type="table"')    
     tables = cursor.fetchall()
     table_name = select_table_name(tables)
@@ -121,18 +153,7 @@ def view_table():
     if table_name == None:
         return
 
-    # Safe from SQL injections, since the user provides a number, not the table name.
-    sql(f'SELECT * FROM {table_name}')
-
-    rows = cursor.fetchall()
-    columns = [ column[0] for column in cursor.description ]
-
-    # Create a DataFrame from the rows and columns.
-    dataframe = pandas.DataFrame(rows, columns=columns)
-    # Start numbering rows from 1 instead of 0.
-    dataframe.index = range(1, len(dataframe) + 1)
-
-    print(dataframe)
+    display_table(table_name)
 
 
 def convert_to_unix_time(inp):
@@ -147,6 +168,85 @@ def convert_to_unix_time(inp):
         return unix_time
     except ValueError:
         return None
+
+
+def prompt_and_validate_text(column):
+    inp = input(' >>> ')
+
+    input_is_valid = False
+    _, column_name, _, column_notnull, _, _ = column
+
+    # Check if -1 has been entered.
+    try:
+        inp = int(inp)
+        if (inp == -1):
+            # Check if the value can be assigned NULL.
+            if not column_notnull:
+                inp = None
+                input_is_valid = True
+            else:
+                print(f'ERROR: "{column_name}" cannot be NULL. No data has been saved.')
+                input_is_valid = False
+        else:
+            inp = str(inp)
+            input_is_valid = True
+    # Any other input is valid, since it is a string.
+    except ValueError:
+        input_is_valid = True
+
+    return (inp, input_is_valid)
+
+
+def prompt_and_validate_int(column):
+    inp = prompt_int_until_valid(-1, INFINITY)
+
+    input_is_valid = False
+    _, column_name, _, column_notnull, _, _ = column
+
+    if (inp == -1):
+        # Check if the value can be assigned NULL.
+        if not column_notnull:
+            inp = None
+            input_is_valid = True
+        else:
+            print(f'ERROR: "{column_name}" cannot be NULL. No data has been saved.')
+            input_is_valid = False
+    else:
+        input_is_valid = True
+
+    return (inp, input_is_valid)
+
+
+def prompt_and_validate_datetime(column):
+    inp = input(" >>> ")
+
+    input_is_valid = False
+    _, column_name, _, column_notnull, _, _ = column
+
+    # Check if -1 has been entered.
+    try:
+        inp = int(inp)
+        if (inp == -1):
+            # Check if the value can be assigned NULL.
+            if not column_notnull:
+                inp = None
+                input_is_valid = True
+            else:
+                print(f'ERROR: "{column_name}" cannot be NULL. No data has been saved.')
+                input_is_valid = False
+        else:
+            print("ERROR: Invalid date format. No data has been saved.")
+            input_is_valid = False
+    # Otherwise handle the entered date.
+    except ValueError:
+        inp = convert_to_unix_time(inp)
+        if inp == None:
+            print("ERROR: Invalid date format. No data has been saved.")
+            input_is_valid = False
+        else:
+            input_is_valid = True
+
+    return (inp, input_is_valid)
 
 
 def insert_data():
@@ -206,31 +306,7 @@ def insert_data():
                     # DOB will also include `hh:mm`, however the user can just enter `00:00` or anything else.
                     print(' (exactly "DD/MM/YYYY hh:mm" or -1 for NULL).')
                 is_first_attempt = False
-
-                inp = input(" >>> ")
-
-                # Check if -1 has been entered.
-                try:
-                    inp = int(inp)
-                    if (inp == -1):
-                        # Check if the value can be assigned NULL.
-                        if not column_notnull:
-                            inp = None
-                            input_is_valid = True
-                        else:
-                            print(f'ERROR: "{column_name}" cannot be NULL. No data has been saved.')
-                            input_is_valid = False
-                    else:
-                        print("ERROR: Invalid date format. No data has been saved.")
-                        input_is_valid = False
-                # Otherwise handle the entered date.
-                except ValueError:
-                    inp = convert_to_unix_time(inp)
-                    if inp == None:
-                        print("ERROR: Invalid date format. No data has been saved.")
-                        input_is_valid = False
-                    else:
-                        input_is_valid = True
+                inp, input_is_valid = prompt_and_validate_datetime(column)
 
             # Handle `INTEGER` data type.
             # Account for both "INT" and "INTEGER", same with "BOOL".
@@ -239,24 +315,12 @@ def insert_data():
                 if is_first_attempt:
                     print(' (or -1 for NULL).')
                 is_first_attempt = False
-
-                inp = prompt_for_valid_input(-1, INFINITY)
-
-                if (inp == -1):
-                    # Check if the value can be assigned NULL.
-                    if not column_notnull:
-                        inp = None
-                        input_is_valid = True
-                    else:
-                        print(f'ERROR: "{column_name}" cannot be NULL. No data has been saved.')
-                        input_is_valid = False
-                else:
-                    input_is_valid = True
+                inp, input_is_valid = prompt_and_validate_int(column)
 
             # Handle `BOOLEAN` data type.
             elif column_type.startswith('bool'):
                 print(' (1 - TRUE, 0 - FALSE).')
-                inp = prompt_for_valid_input(0, 1)
+                inp = prompt_int_until_valid(0, 1)
                 input_is_valid = True
                 
             # Handle `TEXT` data type.
@@ -264,26 +328,7 @@ def insert_data():
                 if is_first_attempt:
                     print(" (or -1 for NULL).")
                 is_first_attempt = False
-
-                inp = input(' >>> ')
-
-                # Check if -1 has been entered.
-                try:
-                    inp = int(inp)
-                    if (inp == -1):
-                        # Check if the value can be assigned NULL.
-                        if not column_notnull:
-                            inp = None
-                            input_is_valid = True
-                        else:
-                            print(f'ERROR: "{column_name}" cannot be NULL. No data has been saved.')
-                            input_is_valid = False
-                    else:
-                        inp = str(inp)
-                        input_is_valid = True
-                # Any other input is valid, since it is a string.
-                except ValueError:
-                    input_is_valid = True
+                inp, input_is_valid = prompt_and_validate_text(column)
 
             # Check if the column is a foreign key and validate the input.
             if column_name in foreign_key_references:
@@ -292,6 +337,10 @@ def insert_data():
                 exists = cursor.fetchone()[0]
                 if not exists:
                     print(f'ERROR: "{inp}" does not exist in referenced table "{referenced_table}".')
+                    choice_y_n = input(f'Display "{referenced_table}"? [y/N] ').lower()
+                    if choice_y_n == 'y':
+                        print()
+                        display_table(referenced_table)
                     input_is_valid = False
                 else:
                     input_is_valid = True
@@ -308,8 +357,11 @@ def insert_data():
         sql(f'INSERT INTO {table_name} ({column_names}) VALUES ({placeholders})', values_to_be_inserted)
     except Exception as e:
         print(f'ERROR: {e}. Please try again.')
+        return
 
+    print('Saving...')
     db.commit()
+    print('All data has been saved successfully.')
 
 
 def search_data():
@@ -321,7 +373,54 @@ def update_data():
 
 
 def delete_data():
-    pass
+    sql('SELECT name FROM sqlite_master WHERE type="table"')    
+    tables = cursor.fetchall()
+    table_name = select_table_name(tables)
+    if table_name == None:
+        return
+
+    primary_key = get_first_primary_key(table_name)
+
+    if not primary_key:
+        print(f'ERROR: No primary key found for "{table_name}". Cannot safely delete rows.')
+        return
+
+    sql(f'SELECT COUNT(*) FROM {table_name}')
+    row_count = cursor.fetchone()[0]
+    if row_count == 0:
+        print(f'ERROR: "{table_name}" table is empty.')
+        return
+
+    choice_y_n = input(f'Display "{table_name}"? [y/N] ').lower()
+    if choice_y_n == 'y':
+        print()
+        display_table(table_name)
+
+    print('Which row would you like to delete? (0 to quit)')
+    row_choice = prompt_int_until_valid(0, row_count)
+    if row_choice == 0:
+        print('Operation cancelled.')
+        return
+
+    # Retrieve the primary key of the row to be deleted.
+    sql(f'SELECT {primary_key} FROM {table_name} ORDER BY {primary_key} LIMIT 1 OFFSET {row_choice - 1}')
+    pk_of_row_to_delete = cursor.fetchone()
+
+    if pk_of_row_to_delete:
+        if table_name == 'Aircraft':
+            # Check if the aircraft is referenced in the Flights table.
+            sql(f'SELECT COUNT(*) FROM Flights WHERE aircraftID = ?', (pk_of_row_to_delete[0],))
+            if cursor.fetchone()[0] > 0:
+                print(f"ERROR: Aircraft ID {pk_of_row_to_delete[0]} is referenced in the Flights table. Cannot delete.")
+                return
+        try:
+            sql(f'DELETE FROM {table_name} WHERE {primary_key} = ?', (pk_of_row_to_delete[0],))
+            db.commit()
+            print(f"Row {row_choice} has been deleted from {table_name}.")
+        except Exception as e:
+            print(f'ERROR: {e}. Please try again.')
+    else:
+        print("ERROR: Invalid row selection. No data has been saved.")
 
 
 def show_summary_statistics():
@@ -334,7 +433,6 @@ def show_summary_statistics():
     sql('SELECT AVG(numOfPassengers) FROM Flights')
     avg_passengers = cursor.fetchone()[0]
     print(f"Average number of passengers per flight: {avg_passengers:.2f}")
-
     # Average flight duration.
     # Query to calculate the total sum of flight durations.
     sql('''
@@ -372,7 +470,7 @@ def extra2():
 
 options = {
     0: ("Quit", quit_app),
-    1: ("View Table", view_table),
+    1: ("View Table", choose_table_to_display),
     2: ("Insert", insert_data),
     3: ("Search", search_data),
     4: ("Update", update_data),
