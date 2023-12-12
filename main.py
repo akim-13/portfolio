@@ -1,6 +1,8 @@
 import sqlite3
 import random
 import pandas
+import csv
+import hashlib
 from datetime import datetime
 from my_logger import d, i, w, e
 
@@ -11,6 +13,8 @@ INFINITY = float('inf')
 db = sqlite3.connect('airline.db') 
 cursor = db.cursor()
 sql = lambda query, params=(): cursor.execute(query, params)
+# This is supposed to enforce FK constraints but it does not for some reason.
+sql('PRAGMA foreign_keys = 1')
 
 
 def verify_input(inp, lower_bound, upper_bound):
@@ -77,8 +81,8 @@ def create_tables():
         pilotID INT,
         flightID INT,
         PRIMARY KEY (pilotID, flightID),
-        FOREIGN KEY (pilotID) REFERENCES Pilots(pilotID) ON UPDATE CASCADE,
-        FOREIGN KEY (flightID) REFERENCES Flights(flightID) ON UPDATE CASCADE)
+        FOREIGN KEY (pilotID) REFERENCES Pilots(pilotID) ON UPDATE CASCADE ON DELETE CASCADE,      -- As mentioned in one of the Q&A posts, these
+        FOREIGN KEY (flightID) REFERENCES Flights(flightID) ON UPDATE CASCADE ON DELETE CASCADE)   -- constraints aren't being enforced, not sure why.
     ''')
 
     db.commit()
@@ -127,13 +131,15 @@ def display_table(table_name):
     print(dataframe)
 
 
-def select_table_name(tables):
+def select_table_name():
+    sql('SELECT name FROM sqlite_master WHERE type="table"')    
+    tables = cursor.fetchall()
+
     available_tables = {}
-    print('Please choose a table:')
+    print('Please choose a table (or 0 to quit):')
 
     for i, table in enumerate(tables, 1):
         table_name = table[0]
-
         print(f'{i}. {table_name}')
         available_tables[i] = table_name
 
@@ -146,9 +152,7 @@ def select_table_name(tables):
 
 
 def choose_table_to_display():
-    sql('SELECT name FROM sqlite_master WHERE type="table"')    
-    tables = cursor.fetchall()
-    table_name = select_table_name(tables)
+    table_name = select_table_name()
 
     if table_name == None:
         return
@@ -250,9 +254,7 @@ def prompt_and_validate_datetime(column):
 
 
 def insert_data():
-    sql('SELECT name FROM sqlite_master WHERE type="table"')    
-    tables = cursor.fetchall()
-    table_name = select_table_name(tables)
+    table_name = select_table_name()
 
     # Query for table schema.
     sql(f'PRAGMA table_info({table_name})')
@@ -337,8 +339,11 @@ def insert_data():
                 exists = cursor.fetchone()[0]
                 if not exists:
                     print(f'ERROR: "{inp}" does not exist in referenced table "{referenced_table}".')
-                    choice_y_n = input(f'Display "{referenced_table}"? [y/N] ').lower()
-                    if choice_y_n == 'y':
+                    choice_inp = input(f'Display "{referenced_table}", Quit or Continue? [d/q/C] ').lower()
+                    if choice_inp == 'q':
+                        print('Returning to main menu...')
+                        return
+                    elif choice_inp == 'd':
                         print()
                         display_table(referenced_table)
                     input_is_valid = False
@@ -365,7 +370,49 @@ def insert_data():
 
 
 def search_data():
-    pass
+    # Step 1: Choose a table
+    sql('SELECT name FROM sqlite_master WHERE type="table"')
+    tables = cursor.fetchall()
+    table_name = select_table_name()
+    if table_name is None:
+        return
+
+    # Step 2: Display columns and let user pick
+    sql(f'PRAGMA table_info({table_name})')
+    columns = cursor.fetchall()
+    column_names = [column[1] for column in columns]
+    print("Choose columns to search by (comma-separated numbers):")
+    for i, col in enumerate(column_names, 1):
+        print(f"{i}. {col}")
+    column_indices = input(">>> ").split(',')
+
+    # Convert user input into column names
+    try:
+        selected_columns = [column_names[int(index.strip()) - 1] for index in column_indices]
+    except (IndexError, ValueError):
+        print("Invalid column selection. Operation cancelled.")
+        return
+
+    # Step 3: Enter search values
+    print(f"Enter search values for {', '.join(selected_columns)} (comma-separated):")
+    search_values = input(">>> ").split(',')
+    if len(search_values) != len(selected_columns):
+        print("Number of search values and columns do not match. Operation cancelled.")
+        return
+
+    # Step 4: Perform search and display results
+    query = f"SELECT * FROM {table_name} WHERE " + \
+            " AND ".join([f"{col} LIKE ?" for col in selected_columns])
+    sql(query, tuple(f"%{val.strip()}%" for val in search_values))
+    rows = cursor.fetchall()
+
+    if not rows:
+        print('Search query returned 0 results.')
+        return
+
+    # Use Pandas to format the output.
+    dataframe = pandas.DataFrame(rows, columns=[column[0] for column in cursor.description])
+    print(dataframe)
 
 
 def update_data():
@@ -373,9 +420,7 @@ def update_data():
 
 
 def delete_data():
-    sql('SELECT name FROM sqlite_master WHERE type="table"')    
-    tables = cursor.fetchall()
-    table_name = select_table_name(tables)
+    table_name = select_table_name()
     if table_name == None:
         return
 
@@ -427,12 +472,16 @@ def show_summary_statistics():
     # Total number of flights.
     sql('SELECT COUNT(*) FROM Flights')
     total_flights = cursor.fetchone()[0]
-    print(f"Total number of flights: {total_flights}")
+    print(f'Total number of flights: {total_flights}')
 
     # Average number of passengers per flight.
     sql('SELECT AVG(numOfPassengers) FROM Flights')
     avg_passengers = cursor.fetchone()[0]
-    print(f"Average number of passengers per flight: {avg_passengers:.2f}")
+    if not avg_passengers:
+        print('ERROR: No valid data available to calculate average number of passengers per flight.')
+    else:
+        print(f'Average number of passengers per flight: {avg_passengers:.2f}')
+
     # Average flight duration.
     # Query to calculate the total sum of flight durations.
     sql('''
@@ -455,18 +504,80 @@ def show_summary_statistics():
         # Convert average duration from seconds to a more readable format.
         hours, remainder = divmod(average_duration, 3600)
         minutes, seconds = divmod(remainder, 60)
-        print(f"Average flight time: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds")
+        print(f'Average flight time: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds')
     else:
-        print("No valid data available to calculate average flight time.")
+        print('ERROR: No valid data available to calculate average flight time.')
 
 
-def extra1():
-    pass
+def export_to_csv():
+    table_name = select_table_name()
+    if table_name == None:
+        return
+
+    sql(f'SELECT * FROM {table_name}')
+    data = cursor.fetchall()
+    headers = [ description[0] for description in cursor.description ]
+
+    filename = f'{table_name}.csv'
+    with open(filename, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(headers)
+        writer.writerows(data)
+
+    print(f'Data from "{table_name}" has been exported to "{filename}".')
 
 
-def extra2():
-    pass
+def anonymize_data():
+    """
+    This function replaces all data in selected columns with random strings.
     
+    It can be useful for analysis, testing, or sharing data externally,
+    when data protection and privacy have to be accounted for.
+    """
+    table_name = select_table_name()
+    if table_name is None:
+        return
+
+    # Fetch column names for the selected table.
+    sql(f'PRAGMA table_info({table_name})')
+    columns = cursor.fetchall()
+    column_names = [ column[1] for column in columns ]
+
+    print('Which columns would you like to anonymize? (comma-separated list)')
+    for i, column in enumerate(column_names, 1):
+        print(f'{i}. {column}')
+    columns_to_anonymize = input(">>> ").split(',')
+
+    try:
+        selected_columns = [ column_names[int(column.strip()) - 1] for column in columns_to_anonymize ]
+    except (IndexError, ValueError):
+        print('ERROR: Invalid column selection. Operation cancelled.')
+        return
+
+    warning_choice = input('WARNING: This operation is irreversible, would you like to proceed? [y/N] ').lower()
+    if warning_choice != 'y':
+        print('Operation cancelled.')
+        print('Returning to main menu...')
+        return
+
+    # Anonymize data in the selected columns.
+    for column in selected_columnumns:
+        sql(f'SELECT {column} FROM {table_name}')
+        entries = cursor.fetchall()
+
+        for entry in entries:
+            original_value = entry[0]
+            encoded_value = hashlib.sha256(str(original_value).encode())
+            # Represent in HEX and truncate to display.
+            anonymized_value = encoded_value.hexdigest()[:10]
+            try:
+                sql(f'UPDATE {table_name} SET {column} = ? WHERE {column} = ?', (anonymized_value, original_value))
+            except Exception as e:
+                print(f'ERROR: {e}. Please try again.')
+
+    db.commit()
+    print(f'Data in "{table_name}" has been anonymized in the following columns: {", ".join(selected_columns)}.')
+
 
 options = {
     0: ("Quit", quit_app),
@@ -476,8 +587,8 @@ options = {
     4: ("Update", update_data),
     5: ("Delete", delete_data),
     6: ("Summary Statistics", show_summary_statistics),
-    7: ("Extra 1", extra1),
-    8: ("Extra 2", extra2)
+    7: ("Export Table", export_to_csv),
+    8: ("Anonymize Data", anonymize_data)
 }
 
 
