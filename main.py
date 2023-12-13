@@ -370,40 +370,46 @@ def insert_data():
 
 
 def search_data():
-    # Step 1: Choose a table
-    sql('SELECT name FROM sqlite_master WHERE type="table"')
-    tables = cursor.fetchall()
     table_name = select_table_name()
     if table_name is None:
         return
 
-    # Step 2: Display columns and let user pick
     sql(f'PRAGMA table_info({table_name})')
     columns = cursor.fetchall()
-    column_names = [column[1] for column in columns]
-    print("Choose columns to search by (comma-separated numbers):")
-    for i, col in enumerate(column_names, 1):
-        print(f"{i}. {col}")
-    column_indices = input(">>> ").split(',')
+    column_names = [ column[1] for column in columns ]
 
-    # Convert user input into column names
+    # Display columns and let user pick.
+    print('Choose columns to search by (comma-separated numbers): ')
+    for i, col in enumerate(column_names, 1):
+        print(f'{i}. {col}')
+    column_indices = input(" >>> ").split(',')
+
+    # Convert user input into column names.
     try:
-        selected_columns = [column_names[int(index.strip()) - 1] for index in column_indices]
+        selected_columns = [ column_names[int(index.strip()) - 1] for index in column_indices ]
     except (IndexError, ValueError):
-        print("Invalid column selection. Operation cancelled.")
+        print('ERROR: Invalid column selection. Operation cancelled.')
         return
 
-    # Step 3: Enter search values
-    print(f"Enter search values for {', '.join(selected_columns)} (comma-separated):")
+    # Prompt for values.
+    print(f'Enter search values for {", ".join(selected_columns)} (comma-separated):')
     search_values = input(">>> ").split(',')
     if len(search_values) != len(selected_columns):
-        print("Number of search values and columns do not match. Operation cancelled.")
+        print('ERROR: Number of search values and columns do not match. Operation cancelled.')
         return
 
-    # Step 4: Perform search and display results
-    query = f"SELECT * FROM {table_name} WHERE " + \
-            " AND ".join([f"{col} LIKE ?" for col in selected_columns])
-    sql(query, tuple(f"%{val.strip()}%" for val in search_values))
+    ## Perform search and display results
+    # Build the WHERE clause of the SQL query.
+    where_clauses = []
+    for column in selected_columns:
+        # `LIKE` allows for pattern matching.
+        where_clauses.append(f"{column} LIKE ?")
+    where_statement = " AND ".join(where_clauses)
+
+    # Prepare the values for the query. `%` allow for substring match.
+    values = [ f'%{value.strip()}%' for value in search_values ]
+
+    sql(f'SELECT * FROM {table_name} WHERE {where_statement}', tuple(values))
     rows = cursor.fetchall()
 
     if not rows:
@@ -411,12 +417,71 @@ def search_data():
         return
 
     # Use Pandas to format the output.
-    dataframe = pandas.DataFrame(rows, columns=[column[0] for column in cursor.description])
+    dataframe = pandas.DataFrame(rows, columns = [ column[0] for column in cursor.description ])
     print(dataframe)
 
 
 def update_data():
-    pass
+    table_name = select_table_name()
+    if table_name is None:
+        return
+
+    primary_key = get_first_primary_key(table_name)
+    if not primary_key:
+        print(f'ERROR: No primary key found for "{table_name}". Cannot safely update rows.')
+        return
+
+    sql(f'SELECT COUNT(*) FROM {table_name}')
+    row_count = cursor.fetchone()[0]
+    if row_count == 0:
+        print(f'ERROR: "{table_name}" table is empty.')
+        return
+
+    choice_y_n = input(f'Display "{table_name}"? [y/N] ').lower()
+    if choice_y_n == 'y':
+        display_table(table_name)
+
+    print('Which row would you like to update? (0 to quit)')
+    row_choice = prompt_int_until_valid(0, row_count)
+    if row_choice == 0:
+        print('Operation cancelled.')
+        return
+
+    # Retrieve the primary key of the row to be updated.
+    sql(f'SELECT {primary_key} FROM {table_name} ORDER BY {primary_key} LIMIT 1 OFFSET {row_choice - 1}')
+    pk_of_row_to_update = cursor.fetchone()[0]
+
+    # Display columns and let user pick for updating.
+    sql(f'PRAGMA table_info({table_name})')
+    columns = cursor.fetchall()
+    print('Choose columns to update (comma-separated numbers): ')
+    for i, col in enumerate(columns, 1):
+        print(f'{i}. {col[1]}')
+    update_columns_indices = input(" >>> ").split(',')
+
+    # Convert indices to column names for updating.
+    try:
+        update_columns = [columns[int(index.strip()) - 1][1] for index in update_columns_indices]
+    except (IndexError, ValueError):
+        print('ERROR: Invalid column selection. Operation cancelled.')
+        return
+
+    # Enter new values.
+    print('Enter new values for each selected column (comma-separated): ')
+    new_values = input(' >>> ').split(',')
+
+    # Constructing the SET part of the SQL query
+    set_statement = ", ".join([f"{col} = ?" for col in update_columns])
+
+    # Execute the query.
+    try:
+        sql(f'UPDATE {table_name} SET {set_statement} WHERE {primary_key} = ?', tuple(new_values + [pk_of_row_to_update]))
+    except Exception as e:
+        print(f'ERROR: {e}. Please try again.')
+        return
+
+    db.commit()
+    print(f'Row in {table_name} has been updated.')
 
 
 def delete_data():
@@ -561,7 +626,7 @@ def anonymize_data():
         return
 
     # Anonymize data in the selected columns.
-    for column in selected_columnumns:
+    for column in selected_columns:
         sql(f'SELECT {column} FROM {table_name}')
         entries = cursor.fetchall()
 
@@ -574,6 +639,7 @@ def anonymize_data():
                 sql(f'UPDATE {table_name} SET {column} = ? WHERE {column} = ?', (anonymized_value, original_value))
             except Exception as e:
                 print(f'ERROR: {e}. Please try again.')
+                return
 
     db.commit()
     print(f'Data in "{table_name}" has been anonymized in the following columns: {", ".join(selected_columns)}.')
