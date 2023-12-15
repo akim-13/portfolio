@@ -8,6 +8,11 @@ from my_logger import d, i, w, e
 
 # Define a very large "number".
 INFINITY = float('inf')
+# Define the range for randomly generated IDs (PKs).
+# Set to 9999 for testing purposes, in production
+# it would be something like a 10 digit number.
+MIN_ID = 1000
+MAX_ID = 9999
 
 # Shortcuts for using SQL.
 db = sqlite3.connect('airline.db') 
@@ -15,33 +20,6 @@ cursor = db.cursor()
 sql = lambda query, params=(): cursor.execute(query, params)
 # This is supposed to enforce FK constraints but it does not for some reason.
 sql('PRAGMA foreign_keys = 1')
-
-
-def verify_input(inp, lower_bound, upper_bound):
-    try:
-        inp = int(inp)
-        if (inp < lower_bound) or (inp > upper_bound): 
-            raise IndexError
-        return inp
-    except ValueError:
-        print(f'ERROR: "{inp}" is not an integer.', end=' ')
-    except IndexError:
-        print(f'ERROR: {inp} is is out of range.', end=' ')
-
-    print('No data has been saved.')
-    return None
-
-
-def prompt_int_until_valid(lower_bound, upper_bound):
-    while True:
-        inp = input(' >>> ')
-        inp = verify_input(inp, lower_bound, upper_bound)
-        if inp == None:
-            continue
-        else:
-            break
-    return inp
-
 
 def create_tables():
     # Create table Aircraft.
@@ -94,26 +72,46 @@ def display_menu(options):
         print(f'{key}. {value[0]}')
 
 
-def quit_app():
-    print("Thank you for using AirlineDB!")
-    return
+def verify_int_within_bounds(inp, lower_bound, upper_bound):
+    try:
+        inp = int(inp)
+        if (inp < lower_bound) or (inp > upper_bound): 
+            raise IndexError
+        return inp
+    except ValueError:
+        print(f'ERROR: "{inp}" is not an integer.')
+    except IndexError:
+        print(f'ERROR: {inp} is is out of range.')
+
+    return None
+
+
+def prompt_int_until_valid(lower_bound, upper_bound):
+    while True:
+        inp = input(' >>> ')
+        inp = verify_int_within_bounds(inp, lower_bound, upper_bound)
+        if inp == None:
+            continue
+        else:
+            break
+    return inp
 
 
 def get_first_primary_key(table_name):
     sql(f'PRAGMA table_info({table_name})')
     columns = cursor.fetchall()
-    primary_key = None
+
     for column in columns:
         _, column_name, _, _, _, column_is_pk = column
         if column_is_pk:
-            pk = column_name
+            primary_key = column_name
             break
-    return pk
+
+    return primary_key
 
 
 def display_table(table_name):
     pk = get_first_primary_key(table_name)
-    # Safe from SQL injections, since the user provides a number, not the table name.
     sql(f'SELECT * FROM {table_name} ORDER BY {pk}')
     rows = cursor.fetchall()
 
@@ -121,10 +119,19 @@ def display_table(table_name):
         print(f'Table "{table_name}" is empty.')
         return
 
-    columns = [ column[0] for column in cursor.description ]
+    columns = [column[0] for column in cursor.description]
 
     # Create a DataFrame from the rows and columns.
     dataframe = pandas.DataFrame(rows, columns=columns)
+
+    # Convert Unix timestamps to human-readable dates
+    try:
+        for column_name in dataframe.columns:
+            if (column_name == 'dob') or (column_name.endswith("Time")):
+                dataframe[column_name] = dataframe[column_name].apply(lambda x: datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M') if pandas.notnull(x) else x)
+    except:
+        pass
+
     # Start numbering rows from 1 instead of 0.
     dataframe.index = range(1, len(dataframe) + 1)
 
@@ -151,15 +158,6 @@ def select_table_name():
         return available_tables[inp]
 
 
-def choose_table_to_display():
-    table_name = select_table_name()
-
-    if table_name == None:
-        return
-
-    display_table(table_name)
-
-
 def convert_to_unix_time(inp):
     try:
         # Ensure that the format is correct.
@@ -168,7 +166,6 @@ def convert_to_unix_time(inp):
         unix_time = int(valid_datetime.timestamp())
         if unix_time < 0:
             raise ValueError
-
         return unix_time
     except ValueError:
         return None
@@ -253,6 +250,20 @@ def prompt_and_validate_datetime(column):
     return (inp, input_is_valid)
 
 
+def quit_app():
+    print("Thank you for using AirlineDB!")
+    return
+
+
+def choose_table_to_display():
+    table_name = select_table_name()
+
+    if table_name == None:
+        return
+
+    display_table(table_name)
+
+
 def insert_data():
     table_name = select_table_name()
 
@@ -282,9 +293,7 @@ def insert_data():
         # All primary keys (unless also a FK) are auto generated random integers.
         if (column_is_pk) and (column_name not in foreign_key_references):
             while (True):
-                # TODO: Change back, for testing purposes only.
-                generated_primary_key = random.randint(1, 100)
-                # generated_primary_key = random.randint(1000000000, 9999999999)
+                generated_primary_key = random.randint(MIN_ID, MAX_ID)
                 sql(f'SELECT {column_name} FROM {table_name}')
                 # Flatten the list of fetched tuples.
                 primary_keys = { key[0] for key in cursor.fetchall() }
@@ -426,11 +435,13 @@ def update_data():
     if table_name is None:
         return
 
+    # Check for PK.
     primary_key = get_first_primary_key(table_name)
     if not primary_key:
         print(f'ERROR: No primary key found for "{table_name}". Cannot safely update rows.')
         return
 
+    # Check if the table is empty.
     sql(f'SELECT COUNT(*) FROM {table_name}')
     row_count = cursor.fetchone()[0]
     if row_count == 0:
@@ -470,7 +481,7 @@ def update_data():
     print('Enter new values for each selected column (comma-separated): ')
     new_values = input(' >>> ').split(',')
 
-    # Constructing the SET part of the SQL query
+    # Construct the SET part of the SQL query.
     set_statement = ", ".join([f"{col} = ?" for col in update_columns])
 
     # Execute the query.
@@ -481,7 +492,7 @@ def update_data():
         return
 
     db.commit()
-    print(f'Row in {table_name} has been updated.')
+    print(f'Row in "{table_name}" has been updated.')
 
 
 def delete_data():
@@ -542,12 +553,12 @@ def show_summary_statistics():
     # Average number of passengers per flight.
     sql('SELECT AVG(numOfPassengers) FROM Flights')
     avg_passengers = cursor.fetchone()[0]
-    if not avg_passengers:
-        print('ERROR: No valid data available to calculate average number of passengers per flight.')
-    else:
+    if avg_passengers:
         print(f'Average number of passengers per flight: {avg_passengers:.2f}')
+    else:
+        print('ERROR: No valid data available to calculate average number of passengers per flight.')
 
-    # Average flight duration.
+    ## Average flight duration.
     # Query to calculate the total sum of flight durations.
     sql('''
         SELECT SUM(landingTime - departureTime)
@@ -648,10 +659,10 @@ def anonymize_data():
 options = {
     0: ("Quit", quit_app),
     1: ("View Table", choose_table_to_display),
-    2: ("Insert", insert_data),
-    3: ("Search", search_data),
-    4: ("Update", update_data),
-    5: ("Delete", delete_data),
+    2: ("Insert data", insert_data),
+    3: ("Search data (partial matching)", search_data),
+    4: ("Update data", update_data),
+    5: ("Delete data", delete_data),
     6: ("Summary Statistics", show_summary_statistics),
     7: ("Export Table", export_to_csv),
     8: ("Anonymize Data", anonymize_data)
@@ -666,7 +677,7 @@ def main():
         display_menu(options)
 
         inp = input(' >> ')
-        inp = verify_input(inp, min(options.keys()), max(options.keys()))
+        inp = verify_int_within_bounds(inp, 0, max(options.keys()))
         if inp == None: 
             continue
 
