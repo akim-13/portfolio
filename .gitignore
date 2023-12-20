@@ -1,9 +1,2 @@
-# Ignore everything.
-/*
-
-# Except for the following:
-!cm12004_cw2/
-!.gitignore
-
-# Exclude all archives.
 *.zip
+__pycache__/
