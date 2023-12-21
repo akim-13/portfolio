@@ -35,7 +35,7 @@ def file_has_txt_extension(filename):
         return True
 
 
-def validate_input_file(filename):
+def validate_input_file_accessibility(filename):
     file_exists = os.path.isfile(filename)
     if not file_exists:
         print(f'ERROR: The input file "{filename}" does not exist.')
@@ -52,7 +52,7 @@ def validate_input_file(filename):
     return filename
 
 
-def validate_output_file(filename):
+def validate_output_file_accessibility(filename):
     file_exists = os.path.exists(filename)
     file_is_writable = os.access(filename, os.W_OK)
 
@@ -61,7 +61,7 @@ def validate_output_file(filename):
             sys.exit(OUTPUT_FILE_ISSUE)
 
         if not file_is_writable:
-            print(f'ERROR: The output file {filename} is not writable.')
+            print(f'ERROR: The output file "{filename}" is not writable.')
             sys.exit(OUTPUT_FILE_ISSUE)
 
     else:
@@ -70,7 +70,7 @@ def validate_output_file(filename):
             with open(filename, 'w'):
                 pass
         except IOError:
-            print(f'ERROR: The output file {filename} cannot be created.')
+            print(f'ERROR: The output file "{filename}" cannot be created.')
             sys.exit(OUTPUT_FILE_ISSUE)
 
     return filename
@@ -93,13 +93,43 @@ def main(args):
         print('Usage: python Mastermind.py InputFile OutputFile [CodeLength] [MaximumGuesses] [AvailableColours]*')
         sys.exit(INVALID_ARGS)
     
-    input_file = validate_input_file(args[1])
-    output_file = validate_output_file(args[2])
+    input_filename = validate_input_file_accessibility(args[1])
+    output_filename = validate_output_file_accessibility(args[2])
     code_length = validate_int_within_bounds(args[3], 1, MAX_CODE_LENGTH) if len(args) > 3 else DEFAULT_CODE_LENGTH
     maximum_guesses = validate_int_within_bounds(args[4], 1, MAX_GUESSES) if len(args) > 4 else DEFAULT_MAX_GUESSES
     available_colours = args[5:] if len(args) > 5 else DEFAULT_AVAILABLE_COLOURS
 
+    output_lines = []
+    with open(f'{input_filename}', 'r') as file:
+        lines = file.readlines()
+        num_of_lines = len(lines)
+
+        code_line_exists = num_of_lines > 0
+        if not code_line_exists:
+            output_lines.append('No or ill-formed code provided')
+            # TODO: write output_lines to the output file before exiting.
+            d(output_lines)
+            sys.exit(CODE_ISSUE)
+
+        code_line = lines[0]
+        code_keyword = 'code'
+        code_keyword_is_present = code_line.startswith(f'{code_keyword} ')
+        # +1 because of the space after the keyword.
+        code_keyword_offset = len(code_keyword) + 1
+        code_colours = code_line[code_keyword_offset:].strip().split()
+        code_is_right_length = len(code_colours) == code_length
+        code_colours_are_valid = all(code_colour in available_colours for code_colour in code_colours)
+        code_is_valid = code_keyword_is_present and code_is_right_length and code_colours_are_valid
+         
+        if not code_is_valid:
+            output_lines.append('No or ill-formed code provided')
+            # TODO: write output_lines to the output file before exiting.
+            d(output_lines)
+            sys.exit(CODE_ISSUE)
+
+        d(code_colours)
     
+
 if __name__ == "__main__":
     try:
         main(sys.argv)
