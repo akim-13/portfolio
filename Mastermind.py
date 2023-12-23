@@ -9,6 +9,8 @@ MAX_GUESSES = 65536
 DEFAULT_CODE_LENGTH = 5
 DEFAULT_MAX_GUESSES = 12
 DEFAULT_AVAILABLE_COLOURS = ['red', 'blue', 'yellow', 'green', 'orange']
+CORRECT_COLOUR_GUESS = 'white'
+CORRECT_POSITION_GUESS = 'black'
 
 # Define exit codes as constants for clarity.
 SUCCESS            = 0
@@ -85,6 +87,7 @@ def validate_int_within_bounds(num, lower_bound, upper_bound):
     except ValueError:
         print(f'ERROR: "{num}" is not an integer.')
         sys.exit(GENERAL_ERROR)
+    return num
 
 
 def main(args):
@@ -103,22 +106,18 @@ def main(args):
     with open(f'{input_filename}', 'r') as file:
         lines = file.readlines()
         num_of_lines = len(lines)
-
-        code_line_exists = num_of_lines > 0
-        if not code_line_exists:
-            output_lines.append('No or ill-formed code provided')
-            # TODO: write output_lines to the output file before exiting.
-            d(output_lines)
-            sys.exit(CODE_ISSUE)
+        if num_of_lines < 2:
+            print('ERROR: Ill-formed input file provided.')
+            sys.exit(INPUT_FILE_ISSUE)
 
         code_line = lines[0]
         code_keyword = 'code'
         code_keyword_is_present = code_line.startswith(f'{code_keyword} ')
         # +1 because of the space after the keyword.
         code_keyword_offset = len(code_keyword) + 1
-        code_colours = code_line[code_keyword_offset:].strip().split()
-        code_is_right_length = len(code_colours) == code_length
-        code_colours_are_valid = all(code_colour in available_colours for code_colour in code_colours)
+        code = code_line[code_keyword_offset:].strip().split()
+        code_is_right_length = len(code) == code_length
+        code_colours_are_valid = all(code_colour in available_colours for code_colour in code)
         code_is_valid = code_keyword_is_present and code_is_right_length and code_colours_are_valid
          
         if not code_is_valid:
@@ -127,8 +126,64 @@ def main(args):
             d(output_lines)
             sys.exit(CODE_ISSUE)
 
-        d(code_colours)
-    
+        player_line = lines[1].strip()
+        if player_line == 'player human':
+            guess_lines = lines[2:]
+            # TODO: Consider the case when `guess_lines == []` and the loop is skipped.
+            for i, line in enumerate(guess_lines, 1):
+                guesses = line.strip().split()
+                num_of_guesses = len(guesses)
+                num_of_guesses_within_bounds = (num_of_guesses > 0) and (num_of_guesses <= code_length)
+                guess_colours_are_valid = all(guess in available_colours for guess in guesses)
+                all_guesses_are_valid = num_of_guesses_within_bounds and guess_colours_are_valid
+
+                if not all_guesses_are_valid:
+                    output_lines.append(f'Guess {i}: Ill-formed guess provided')
+                    continue
+                
+                current_line_output = f'Guess {i}: '
+                # Prepend a newline every time after the first guess.
+                if i > 1:
+                    current_line_output = '\n' + current_line_output
+
+                correct_position_guesses = 0
+                for guess, code_colour in zip(guesses, code):
+                    if guess == code_colour:
+                        current_line_output += CORRECT_POSITION_GUESS + ' '
+                        correct_position_guesses += 1
+                    elif guess in code:
+                        current_line_output += CORRECT_COLOUR_GUESS + ' '
+
+                # Remove the last space only when `current_line_output` has been changed.
+                if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
+                    current_line_output = current_line_output.strip()
+
+                output_lines.append(current_line_output)
+
+                if correct_position_guesses == code_length:
+                    output_lines.append(f'You won in {i} guesses. Congratulations!')
+                    if i < maximum_guesses:
+                        output_lines.append('The game was completed. Further lines were ignored.')
+                    break
+                elif i == maximum_guesses:
+                    output_lines.append('You lost. Please try again.')
+                    break
+                    
+            # TODO: Write to the output file and quit.
+            for line in output_lines:
+                print(line)
+
+            # TODO: Fix example 1 output.
+
+        elif player_line == 'player computer':
+            raise
+        else:
+            output_lines.append('No or ill-formed player provided')
+            # TODO: write output_lines to the output file before exiting.
+            d(output_lines)
+            sys.exit(PLAYER_ISSUE)
+
+
 
 if __name__ == "__main__":
     try:
