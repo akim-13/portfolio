@@ -1,11 +1,11 @@
 from my_logger import d, i, w, e
-import sys
 import os
+import sys
 import shlex
 
 INF = float('inf')
 
-# Do not set too high, since the number of possible
+# Do not set too high since the number of possible
 # combinations = `num_of_colours**MAX_CODE_LENGTH`.
 MAX_CODE_LENGTH = 32
 MAX_GUESSES = 65536
@@ -26,6 +26,18 @@ KEYBOARD_INTERRUPT = 6
 GENERAL_ERROR      = 7
 UNEXPECTED_ERROR   = 8
 
+# TODO: Add docstrings everywhere.
+
+class ContinueException(Exception):
+    """Exception raised to continue in the loop."""
+    pass
+
+
+class BreakException(Exception):
+    """Exception raised to break from the loop."""
+    pass
+
+
 class InputArgs:
     def __init__(self, args):
         self.input_filename  = self._validate_input_file_accessibility(args[1])
@@ -36,6 +48,7 @@ class InputArgs:
         available_colours_str = ' '.join(args[5:]) if len(args) > 5 else ' '.join(DEFAULT_AVAILABLE_COLOURS)
         # Split the string into a list using `shlex` to handle quotes and double quotes like the shell does.
         self.available_colours = shlex.split(available_colours_str)
+
 
     @staticmethod
     def _file_has_txt_extension(filename):
@@ -50,6 +63,7 @@ class InputArgs:
             return False
         else:
             return True
+
 
     def _validate_input_file_accessibility(self, filename):
         file_exists = os.path.isfile(filename)
@@ -66,6 +80,7 @@ class InputArgs:
             sys.exit(INPUT_FILE_ISSUE)
 
         return filename
+
 
     def _validate_output_file_accessibility(self, filename):
         file_exists = os.path.exists(filename)
@@ -89,6 +104,7 @@ class InputArgs:
 
         return filename
 
+
     @staticmethod
     def validate_int_within_bounds(num, lower_bound=-INF, upper_bound=INF):
         try:
@@ -104,87 +120,119 @@ class InputArgs:
 
 class GameProcessor:
     def __init__(self, input_args):
-        self.output_lines = []
         self.input_args = input_args
+        self.code = []
+        self.guess_lines = []
+        self.output_lines = []
+        self.out_of_guesses = True
+
+
+    def _generate_guess_based_feedback(self, guesses, current_guess_num):
+        current_line_output = f'Guess {current_guess_num}: '
+        correct_position_guesses = 0
+        for i, code_colour in enumerate(self.code):
+            for j, guess in enumerate(guesses):
+                if guess == code_colour:
+                    if i == j:
+                        current_line_output += CORRECT_POSITION_GUESS + ' '
+                        correct_position_guesses += 1
+                    else:
+                        current_line_output += CORRECT_COLOUR_GUESS + ' '
+                    # Nullify the guess to ensure it is not used in further iterations.
+                    guesses[j] = None
+                    break
+
+        # Remove the last space only when `current_line_output` has been modified.
+        if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
+            current_line_output = current_line_output.strip()
+
+        return (current_line_output, correct_position_guesses)
+
+
+    def _game_is_over(self, correct_position_guesses, current_guess_num):
+        if correct_position_guesses == self.input_args.code_length:
+            self.output_lines.append(f'You won in {current_guess_num} guesses. Congratulations!')
+            if current_guess_num < maximum_guesses:
+                self.output_lines.append('The game was completed. Further lines were ignored.')
+            return True
+        elif self.out_of_guesses:
+            self.output_lines.append('You lost. Please try again.')
+            return True
+        else:
+            return False
+
+
+    def _validate_current_guesses(self, current_guess_num):
+        current_guess_line = self.guess_lines[current_guess_num - 1]
+        guesses = current_guess_line.strip().split()
+        num_of_guesses_is_correct = len(guesses) == self.input_args.code_length
+        guess_colours_are_valid = all(guess in self.input_args.available_colours for guess in guesses)
+        all_guesses_are_valid = num_of_guesses_is_correct and guess_colours_are_valid
+
+        if not all_guesses_are_valid:
+            self.output_lines.append(f'Guess {current_guess_num}: Ill-formed guess provided')
+            if self.out_of_guesses:
+                self.output_lines.append('You lost. Please try again.')
+                raise BreakException
+            else:
+                raise ContinueException
+
+        return guesses
+
+
+    def _process_line_of_guesses(self, current_guess_num):
+        self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.maximum_guesses)
+        guesses = self._validate_current_guesses(current_guess_num)
+
+        (current_line_output, correct_position_guesses) = self._generate_guess_based_feedback(guesses, current_guess_num)
+        self.output_lines.append(current_line_output)
+
+        if self._game_is_over(correct_position_guesses, current_guess_num):
+            raise BreakException
+
+
+    def _process_all_guess_lines(self):
+        no_guesses_provided = not self.guess_lines
+        if no_guesses_provided:
+            self.output_lines.append('You lost. Please try again.')
+
+        for current_guess_num,_ in enumerate(self.guess_lines, 1):
+            try:
+                self._process_line_of_guesses(current_guess_num)
+            except ContinueException:
+                continue
+            except BreakException:
+                break
+                
+        self._write_to_output_file()
+
+
+    @staticmethod
+    def _validate_num_of_lines(num_of_lines):
+        if num_of_lines < 2:
+            print('ERROR: Ill-formed input file provided.')
+            sys.exit(INPUT_FILE_ISSUE)
+
 
     def execute_input_file(self):
         with open(self.input_args.input_filename, 'r') as file:
             lines = file.readlines()
-            num_of_lines = len(lines)
-            if num_of_lines < 2:
-                print('ERROR: Ill-formed input file provided.')
-                sys.exit(INPUT_FILE_ISSUE)
-
-            code = self._validate_code(lines[0], 'code')
-
-            # TODO: Continue refactoring.
-            d(code)
-            sys.exit(SUCCESS)
+            self._validate_num_of_lines(len(lines))
+            self._validate_code(lines[0], 'code')
 
             player_line = lines[1].strip()
+            self.guess_lines = lines[2:]
             if player_line == 'player human':
-                guess_lines = lines[2:]
-                no_guesses_provided = guess_lines == []
-                if no_guesses_provided:
-                    output_lines.append('You lost. Please try again.')
-
-                for current_guess_num, line in enumerate(guess_lines, 1):
-                    guesses = line.strip().split()
-                    num_of_guesses = len(guesses)
-                    num_of_guesses_is_correct = num_of_guesses == code_length
-                    guess_colours_are_valid = all(guess in available_colours for guess in guesses)
-                    all_guesses_are_valid = num_of_guesses_is_correct and guess_colours_are_valid
-                    out_of_guesses = current_guess_num >= len(guess_lines) or current_guess_num >= maximum_guesses
-
-                    if not all_guesses_are_valid:
-                        output_lines.append(f'Guess {current_guess_num}: Ill-formed guess provided')
-                        if out_of_guesses:
-                            output_lines.append('You lost. Please try again.')
-                            break
-                        else:
-                            continue
-                    
-                    current_line_output = f'Guess {current_guess_num}: '
-
-                    correct_position_guesses = 0
-                    for i, code_colour in enumerate(code):
-                        for j, guess in enumerate(guesses):
-                            if guess == code_colour:
-                                if i == j:
-                                    current_line_output += CORRECT_POSITION_GUESS + ' '
-                                    correct_position_guesses += 1
-                                else:
-                                    current_line_output += CORRECT_COLOUR_GUESS + ' '
-                                # Nullify the guess to ensure it is not used in further iterations.
-                                guesses[j] = None
-                                break
-
-                    # Remove the last space only when `current_line_output` has been modified.
-                    if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
-                        current_line_output = current_line_output.strip()
-
-                    output_lines.append(current_line_output)
-
-                    if correct_position_guesses == code_length:
-                        output_lines.append(f'You won in {current_guess_num} guesses. Congratulations!')
-                        if current_guess_num < maximum_guesses:
-                            output_lines.append('The game was completed. Further lines were ignored.')
-                        break
-                    elif out_of_guesses:
-                        output_lines.append('You lost. Please try again.')
-                        break
-                        
-                write_to_output_file(input_args.output_filename, output_lines)
-
+                self._process_all_guess_lines()
             elif player_line == 'player computer':
                 pass
             else:
-                output_lines.append('No or ill-formed player provided')
-                write_to_output_file(input_args.output_filename, output_lines)
+                self.output_lines.append('No or ill-formed player provided')
+                self._write_to_output_file()
                 sys.exit(PLAYER_ISSUE)
 
 
-    def write_to_output_file(self):
+    def _write_to_output_file(self):
         with open(self.input_args.output_filename, 'w') as file:
             for line in self.output_lines:
                 file.write(line + '\n')
@@ -194,17 +242,15 @@ class GameProcessor:
         code_keyword_is_present = code_line.startswith(f'{code_keyword} ')
         # +1 because of the space after the keyword.
         code_keyword_offset = len(code_keyword) + 1
-        code = code_line[code_keyword_offset:].strip().split()
-        code_is_right_length = len(code) == self.input_args.code_length
-        code_colours_are_valid = all(code_colour in self.input_args.available_colours for code_colour in code)
+        self.code = code_line[code_keyword_offset:].strip().split()
+        code_is_right_length = len(self.code) == self.input_args.code_length
+        code_colours_are_valid = all(code_colour in self.input_args.available_colours for code_colour in self.code)
         code_is_valid = code_keyword_is_present and code_is_right_length and code_colours_are_valid
          
         if not code_is_valid:
             self.output_lines.append('No or ill-formed code provided')
-            self.write_to_output_file()
+            self._write_to_output_file()
             sys.exit(CODE_ISSUE)
-
-        return code
 
 
 def validate_num_of_args(args):
