@@ -28,18 +28,9 @@ UNEXPECTED_ERROR   = 8
 
 # TODO: Add docstrings everywhere.
 
-class ContinueException(Exception):
-    """Exception raised to continue in the loop."""
-    pass
-
-
-class BreakException(Exception):
-    """Exception raised to break from the loop."""
-    pass
-
-
 class InputArgs:
     def __init__(self, args):
+        self._validate_num_of_args(args)
         self.input_filename  = self._validate_input_file_accessibility(args[1])
         self.output_filename = self._validate_output_file_accessibility(args[2])
         self.code_length     = self.validate_int_within_bounds(args[3], 1, MAX_CODE_LENGTH) if len(args) > 3 else DEFAULT_CODE_LENGTH
@@ -51,18 +42,11 @@ class InputArgs:
 
 
     @staticmethod
-    def _file_has_txt_extension(filename):
-        try:
-            filename_ends_with_txt = filename.lower().endswith('.txt')
-        except:
-            print(f'ERROR: Invalid filename or file does not exist.')
-            sys.exit(GENERAL_ERROR)
-
-        if not filename_ends_with_txt:
-            print(f'ERROR: The file "{filename}" does not have a .txt extension.')
-            return False
-        else:
-            return True
+    def _validate_num_of_args(args):
+        if len(args) < 3:
+            print('ERROR: Not enough arguments provided.')
+            print('Usage: python Mastermind.py InputFile OutputFile [CodeLength] [MaximumGuesses] [AvailableColours]*')
+            sys.exit(INVALID_ARGS)
 
 
     def _validate_input_file_accessibility(self, filename):
@@ -80,6 +64,21 @@ class InputArgs:
             sys.exit(INPUT_FILE_ISSUE)
 
         return filename
+
+
+    @staticmethod
+    def _file_has_txt_extension(filename):
+        try:
+            filename_ends_with_txt = filename.lower().endswith('.txt')
+        except:
+            print(f'ERROR: Invalid filename or file does not exist.')
+            sys.exit(GENERAL_ERROR)
+
+        if not filename_ends_with_txt:
+            print(f'ERROR: The file "{filename}" does not have a .txt extension.')
+            return False
+        else:
+            return True
 
 
     def _validate_output_file_accessibility(self, filename):
@@ -118,48 +117,100 @@ class InputArgs:
         return num
 
 
+class ContinueException(Exception):
+    """Exception raised to continue in the loop."""
+    pass
+
+
+class BreakException(Exception):
+    """Exception raised to break from the loop."""
+    pass
+
+
 class GameProcessor:
     def __init__(self, input_args):
-        self.input_args = input_args
-        self.code = []
-        self.guess_lines = []
-        self.output_lines = []
+        self.input_args     = input_args
         self.out_of_guesses = True
+        self.output_lines   = []
+        self.guess_lines    = []
+        self.code           = []
 
 
-    def _generate_guess_based_feedback(self, guesses, current_guess_num):
-        current_line_output = f'Guess {current_guess_num}: '
-        correct_position_guesses = 0
-        for i, code_colour in enumerate(self.code):
-            for j, guess in enumerate(guesses):
-                if guess == code_colour:
-                    if i == j:
-                        current_line_output += CORRECT_POSITION_GUESS + ' '
-                        correct_position_guesses += 1
-                    else:
-                        current_line_output += CORRECT_COLOUR_GUESS + ' '
-                    # Nullify the guess to ensure it is not used in further iterations.
-                    guesses[j] = None
-                    break
-
-        # Remove the last space only when `current_line_output` has been modified.
-        if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
-            current_line_output = current_line_output.strip()
-
-        return (current_line_output, correct_position_guesses)
+    def execute_input_file(self):
+        with open(self.input_args.input_filename, 'r') as file:
+            lines = file.readlines()
+            self._validate_num_of_lines(len(lines))
+            self._validate_code(lines[0], 'code')
+            player_line = lines[1]
+            self.guess_lines = lines[2:]
+            self._choose_player_mode(player_line)
 
 
-    def _game_is_over(self, correct_position_guesses, current_guess_num):
-        if correct_position_guesses == self.input_args.code_length:
-            self.output_lines.append(f'You won in {current_guess_num} guesses. Congratulations!')
-            if current_guess_num < maximum_guesses:
-                self.output_lines.append('The game was completed. Further lines were ignored.')
-            return True
-        elif self.out_of_guesses:
-            self.output_lines.append('You lost. Please try again.')
-            return True
+    @staticmethod
+    def _validate_num_of_lines(num_of_lines):
+        if num_of_lines < 2:
+            print('ERROR: Ill-formed input file provided.')
+            sys.exit(INPUT_FILE_ISSUE)
+
+
+    def _validate_code(self, code_line, code_keyword):
+        code_keyword_is_present = code_line.startswith(f'{code_keyword} ')
+        # +1 because of the space after the keyword.
+        code_keyword_offset = len(code_keyword) + 1
+        self.code = code_line[code_keyword_offset:].strip().split()
+        code_is_right_length = len(self.code) == self.input_args.code_length
+        code_colours_are_valid = all(code_colour in self.input_args.available_colours for code_colour in self.code)
+        code_is_valid = code_keyword_is_present and code_is_right_length and code_colours_are_valid
+         
+        if not code_is_valid:
+            self.output_lines.append('No or ill-formed code provided')
+            self._write_to_output_file()
+            sys.exit(CODE_ISSUE)
+
+
+    def _write_to_output_file(self):
+        with open(self.input_args.output_filename, 'w') as file:
+            for line in self.output_lines:
+                file.write(line + '\n')
+
+
+    def _choose_player_mode(self, player_line):
+        player_line = player_line.strip()
+        if player_line == 'player human':
+            self._process_all_guess_lines()
+        elif player_line == 'player computer':
+            pass
         else:
-            return False
+            self.output_lines.append('No or ill-formed player provided')
+            self._write_to_output_file()
+            sys.exit(PLAYER_ISSUE)
+
+
+    def _process_all_guess_lines(self):
+        no_guesses_provided = not self.guess_lines
+        if no_guesses_provided:
+            self.output_lines.append('You lost. Please try again.')
+
+        for current_guess_num,_ in enumerate(self.guess_lines, 1):
+            try:
+                self._process_line_of_guesses(current_guess_num)
+            except ContinueException:
+                continue
+            except BreakException:
+                break
+                
+        self._write_to_output_file()
+
+
+    def _process_line_of_guesses(self, current_guess_num):
+        self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.maximum_guesses)
+        guesses = self._validate_current_guesses(current_guess_num)
+
+        (current_line_output, correct_position_guesses) = self._generate_guess_based_feedback(guesses, current_guess_num)
+        self.output_lines.append(current_line_output)
+
+        if self._game_is_over(correct_position_guesses, current_guess_num):
+            raise BreakException
 
 
     def _validate_current_guesses(self, current_guess_num):
@@ -180,88 +231,42 @@ class GameProcessor:
         return guesses
 
 
-    def _process_line_of_guesses(self, current_guess_num):
-        self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.maximum_guesses)
-        guesses = self._validate_current_guesses(current_guess_num)
+    def _generate_guess_based_feedback(self, guesses, current_guess_num):
+        current_line_output = f'Guess {current_guess_num}: '
+        correct_position_guesses = 0
+        for i, code_colour in enumerate(self.code):
+            for j, guess in enumerate(guesses):
+                if guess == code_colour:
+                    if i == j:
+                        current_line_output += CORRECT_POSITION_GUESS + ' '
+                        correct_position_guesses += 1
+                    else:
+                        current_line_output += CORRECT_COLOUR_GUESS + ' '
+                    # Nullify the current guess to ensure that it is not used in further iterations.
+                    guesses[j] = None
+                    break
 
-        (current_line_output, correct_position_guesses) = self._generate_guess_based_feedback(guesses, current_guess_num)
-        self.output_lines.append(current_line_output)
+        # Remove the last space only when `current_line_output` has been modified.
+        if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
+            current_line_output = current_line_output.strip()
 
-        if self._game_is_over(correct_position_guesses, current_guess_num):
-            raise BreakException
+        return (current_line_output, correct_position_guesses)
 
 
-    def _process_all_guess_lines(self):
-        no_guesses_provided = not self.guess_lines
-        if no_guesses_provided:
+    def _game_is_over(self, correct_position_guesses, current_guess_num):
+        if correct_position_guesses == self.input_args.code_length:
+            self.output_lines.append(f'You won in {current_guess_num} guesses. Congratulations!')
+            if not self.out_of_guesses:
+                self.output_lines.append('The game was completed. Further lines were ignored.')
+            return True
+        elif self.out_of_guesses:
             self.output_lines.append('You lost. Please try again.')
-
-        for current_guess_num,_ in enumerate(self.guess_lines, 1):
-            try:
-                self._process_line_of_guesses(current_guess_num)
-            except ContinueException:
-                continue
-            except BreakException:
-                break
-                
-        self._write_to_output_file()
-
-
-    @staticmethod
-    def _validate_num_of_lines(num_of_lines):
-        if num_of_lines < 2:
-            print('ERROR: Ill-formed input file provided.')
-            sys.exit(INPUT_FILE_ISSUE)
-
-
-    def execute_input_file(self):
-        with open(self.input_args.input_filename, 'r') as file:
-            lines = file.readlines()
-            self._validate_num_of_lines(len(lines))
-            self._validate_code(lines[0], 'code')
-
-            player_line = lines[1].strip()
-            self.guess_lines = lines[2:]
-            if player_line == 'player human':
-                self._process_all_guess_lines()
-            elif player_line == 'player computer':
-                pass
-            else:
-                self.output_lines.append('No or ill-formed player provided')
-                self._write_to_output_file()
-                sys.exit(PLAYER_ISSUE)
-
-
-    def _write_to_output_file(self):
-        with open(self.input_args.output_filename, 'w') as file:
-            for line in self.output_lines:
-                file.write(line + '\n')
-
-
-    def _validate_code(self, code_line, code_keyword):
-        code_keyword_is_present = code_line.startswith(f'{code_keyword} ')
-        # +1 because of the space after the keyword.
-        code_keyword_offset = len(code_keyword) + 1
-        self.code = code_line[code_keyword_offset:].strip().split()
-        code_is_right_length = len(self.code) == self.input_args.code_length
-        code_colours_are_valid = all(code_colour in self.input_args.available_colours for code_colour in self.code)
-        code_is_valid = code_keyword_is_present and code_is_right_length and code_colours_are_valid
-         
-        if not code_is_valid:
-            self.output_lines.append('No or ill-formed code provided')
-            self._write_to_output_file()
-            sys.exit(CODE_ISSUE)
-
-
-def validate_num_of_args(args):
-    if len(args) < 3:
-        print('ERROR: Not enough arguments provided.')
-        print('Usage: python Mastermind.py InputFile OutputFile [CodeLength] [MaximumGuesses] [AvailableColours]*')
-        sys.exit(INVALID_ARGS)
+            return True
+        else:
+            return False
 
 
 def main(args):
-    validate_num_of_args(args)
     input_args = InputArgs(args)
     game_processor = GameProcessor(input_args)
     game_processor.execute_input_file()
