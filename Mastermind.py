@@ -2,6 +2,7 @@ from my_logger import d, i, w, e
 import os
 import sys
 import shlex
+import itertools
 
 INF = float('inf')
 
@@ -14,6 +15,7 @@ DEFAULT_MAX_GUESSES = 12
 DEFAULT_AVAILABLE_COLOURS = ['red', 'blue', 'yellow', 'green', 'orange']
 CORRECT_COLOUR_GUESS = 'white'
 CORRECT_POSITION_GUESS = 'black'
+COMPUTER_GENERATED_FILENAME = 'computerGame.txt'
 
 # Define exit codes as constants for clarity.
 SUCCESS            = 0
@@ -32,7 +34,7 @@ class InputArgs:
     def __init__(self, args):
         self._validate_num_of_args(args)
         self.input_filename  = self._validate_input_file_accessibility(args[1])
-        self.output_filename = self._validate_output_file_accessibility(args[2])
+        self.output_filename = self.validate_output_file_accessibility(args[2])
         self.code_length     = self.validate_int_within_bounds(args[3], 1, MAX_CODE_LENGTH) if len(args) > 3 else DEFAULT_CODE_LENGTH
         self.maximum_guesses = self.validate_int_within_bounds(args[4], 1, MAX_GUESSES) if len(args) > 4 else DEFAULT_MAX_GUESSES
         # Join the rest of the arguments (available colours) into a string.
@@ -81,25 +83,24 @@ class InputArgs:
             return True
 
 
-    def _validate_output_file_accessibility(self, filename):
+    def validate_output_file_accessibility(self, filename):
         file_exists = os.path.exists(filename)
-        file_is_writable = os.access(filename, os.W_OK)
 
-        if file_exists:
-            if not self._file_has_txt_extension(filename):
-                sys.exit(OUTPUT_FILE_ISSUE)
-
-            if not file_is_writable:
-                print(f'ERROR: The output file "{filename}" is not writable.')
+        if (file_exists) and (not self._file_has_txt_extension(filename)):
                 sys.exit(OUTPUT_FILE_ISSUE)
         else:
             try:
-                # Attempt to create a file.
+                # Attempt to create the file.
                 with open(filename, 'w'):
                     pass
             except IOError:
                 print(f'ERROR: The output file "{filename}" cannot be created.')
                 sys.exit(OUTPUT_FILE_ISSUE)
+
+        file_is_writable = os.access(filename, os.W_OK)
+        if not file_is_writable:
+            print(f'ERROR: The output file "{filename}" is not writable.')
+            sys.exit(OUTPUT_FILE_ISSUE)
 
         return filename
 
@@ -134,6 +135,7 @@ class GameProcessor:
         self.output_lines   = []
         self.guess_lines    = []
         self.code           = []
+        self.computer_guesses = []
 
 
     def execute_input_file(self):
@@ -164,12 +166,12 @@ class GameProcessor:
          
         if not code_is_valid:
             self.output_lines.append('No or ill-formed code provided')
-            self._write_to_output_file()
+            self._write_to_output_file(self.input_args.output_filename)
             sys.exit(CODE_ISSUE)
 
 
-    def _write_to_output_file(self):
-        with open(self.input_args.output_filename, 'w') as file:
+    def _write_to_output_file(self, filename):
+        with open(filename, 'w') as file:
             for line in self.output_lines:
                 file.write(line + '\n')
 
@@ -179,10 +181,10 @@ class GameProcessor:
         if player_line == 'player human':
             self._process_all_guess_lines()
         elif player_line == 'player computer':
-            pass
+            self._handle_computer_player()
         else:
             self.output_lines.append('No or ill-formed player provided')
-            self._write_to_output_file()
+            self._write_to_output_file(self.input_args.output_filename)
             sys.exit(PLAYER_ISSUE)
 
 
@@ -199,16 +201,17 @@ class GameProcessor:
             except BreakException:
                 break
                 
-        self._write_to_output_file()
+        self._write_to_output_file(self.input_args.output_filename)
 
 
     def _process_line_of_guesses(self, current_guess_num):
         self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.maximum_guesses)
         guesses = self._validate_current_guesses(current_guess_num)
 
-        (current_line_output, correct_position_guesses) = self._generate_guess_based_feedback(guesses, current_guess_num)
+        current_line_output = self._generate_guess_based_feedback(guesses, current_guess_num)
         self.output_lines.append(current_line_output)
 
+        correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
         if self._game_is_over(correct_position_guesses, current_guess_num):
             raise BreakException
 
@@ -250,7 +253,7 @@ class GameProcessor:
         if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
             current_line_output = current_line_output.strip()
 
-        return (current_line_output, correct_position_guesses)
+        return current_line_output
 
 
     def _game_is_over(self, correct_position_guesses, current_guess_num):
@@ -266,6 +269,56 @@ class GameProcessor:
             return False
 
 
+    def _handle_computer_player(self):
+        self.input_args.validate_output_file_accessibility(COMPUTER_GENERATED_FILENAME)
+        # Create an iterator containing all possible combinations of available colours.
+        all_possible_codes = itertools.product(self.input_args.available_colours, repeat=len(self.code))
+        initial_guess = self._generate_initial_guess()
+        d(initial_guess)
+        possible_codes = self._remove_wrong_codes(all_possible_codes, initial_guess)
+
+        # correct_position_guesses = 0
+        # while correct_position_guesses != len(self.code):
+        #     pass
+        d(possible_codes)
+
+
+    def _generate_initial_guess(self):
+        initial_guess = []
+        color_index = 0
+        while len(initial_guess) < len(self.code):
+            # Add the same color twice, if possible, before moving to the next color.
+            initial_guess.append(self.input_args.available_colours[color_index])
+            if len(initial_guess) < len(self.code):
+                initial_guess.append(self.input_args.available_colours[color_index])
+            
+            # Move to the next color and reset to the start if necessary.
+            color_index = (color_index + 1) % len(self.input_args.available_colours)
+
+        return initial_guess
+
+
+    def _remove_wrong_codes(self, possible_codes, guess):
+        # TODO: Replace 1, placeholder.
+        current_line_output = self._generate_guess_based_feedback(guess, 1)
+        correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
+        correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
+        d(correct_position_guesses)
+        d(correct_colour_guesses)
+        updated_possible_codes = []
+        for possible_code in possible_codes:
+            current_line_output = self._generate_guess_based_feedback(list(possible_code), 1)
+            current_correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
+            current_correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
+            if (current_correct_position_guesses == correct_position_guesses) and (current_correct_colour_guesses == correct_colour_guesses):
+                updated_possible_codes.append(list(possible_code))
+                
+        return updated_possible_codes
+
+
+
+
+
 def main(args):
     input_args = InputArgs(args)
     game_processor = GameProcessor(input_args)
@@ -278,6 +331,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print('\nKEYBOARD INTERRUPT INITIATED.')
         sys.exit(KEYBOARD_INTERRUPT)
-    except Exception as e:
-        print(f'UNEXPECTED ERROR:\n{e}')
-        sys.exit(UNEXPECTED_ERROR)
+    # except Exception as e:
+    #     print(f'UNEXPECTED ERROR:\n{e}')
+    #     sys.exit(UNEXPECTED_ERROR)
