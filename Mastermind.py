@@ -208,7 +208,7 @@ class GameProcessor:
         self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.maximum_guesses)
         guesses = self._validate_current_guesses(current_guess_num)
 
-        current_line_output = self._generate_guess_based_feedback(guesses, current_guess_num)
+        current_line_output = self._generate_guess_based_feedback(guesses, current_guess_num, self.code)
         self.output_lines.append(current_line_output)
 
         correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
@@ -234,20 +234,27 @@ class GameProcessor:
         return guesses
 
 
-    def _generate_guess_based_feedback(self, guesses, current_guess_num):
+    def _generate_guess_based_feedback(self, guesses, current_guess_num, code):
         current_line_output = f'Guess {current_guess_num}: '
-        correct_position_guesses = 0
-        for i, code_colour in enumerate(self.code):
-            for j, guess in enumerate(guesses):
-                if guess == code_colour:
-                    if i == j:
-                        current_line_output += CORRECT_POSITION_GUESS + ' '
-                        correct_position_guesses += 1
-                    else:
-                        current_line_output += CORRECT_COLOUR_GUESS + ' '
-                    # Nullify the current guess to ensure that it is not used in further iterations.
-                    guesses[j] = None
-                    break
+        # Make copies of the lists in order to preserve the originals.
+        code_copy = code.copy()
+        guesses_copy = guesses.copy()
+
+        # Find all pegs that are in the right position.
+        for i, (guess, code_colour) in enumerate(zip(guesses_copy, code_copy)):
+            if guess == code_colour:
+                current_line_output += CORRECT_POSITION_GUESS + ' '
+                # Nullify the current guess and corresponding code to ensure that they are not used later on.
+                guesses_copy[i] = None
+                code_copy[i] = None
+
+        # Find all the remaining pegs that are in the wrong position but of the right colour.
+        for i, code_colour in enumerate(code_copy):
+            if (code_colour is not None) and (code_colour in guesses_copy):
+                current_line_output += CORRECT_COLOUR_GUESS + ' '
+                j = guesses_copy.index(code_colour)
+                code_copy[i] = None
+                guesses_copy[j] = None
 
         # Remove the last space only when `current_line_output` has been modified.
         if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
@@ -274,13 +281,83 @@ class GameProcessor:
         # Create an iterator containing all possible combinations of available colours.
         all_possible_codes = itertools.product(self.input_args.available_colours, repeat=len(self.code))
         initial_guess = self._generate_initial_guess()
-        d(initial_guess)
-        possible_codes = self._remove_wrong_codes(all_possible_codes, initial_guess)
+        d(f'Initial guess: {initial_guess}')
 
-        # correct_position_guesses = 0
-        # while correct_position_guesses != len(self.code):
-        #     pass
-        d(possible_codes)
+        correct_position_guesses = 0
+        while correct_position_guesses != len(self.code):
+            # TODO: Rename `s`.
+            possible_codes = itertools.product(self.input_args.available_colours, repeat=len(self.code))
+            s = self._remove_wrong_codes(possible_codes, initial_guess)
+            possible_codes = itertools.product(self.input_args.available_colours, repeat=len(self.code))
+            next_guess = self._generate_next_guess(possible_codes, s)
+            current_line_output = self._generate_guess_based_feedback(next_guess, 1, self.code)
+            correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
+
+            d(f'next guess: {next_guess}')
+
+        d('hooray')
+
+    def _generate_next_guess(self, possible_codes, s):
+        potential_guesses = []
+        min_score = INF
+
+        for guess in possible_codes:
+            num_of_pos_and_colour_occurences = {}
+
+            for code in s:
+                current_line_output = self._generate_guess_based_feedback(list(guess), 1, code)
+                correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
+                correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
+                key = (correct_position_guesses, correct_colour_guesses)
+
+                num_of_pos_and_colour_occurences[key] = num_of_pos_and_colour_occurences.get(key, 0) + 1
+
+            max_num_of_occurences = max(num_of_pos_and_colour_occurences.values())
+            if max_num_of_occurences < min_score:
+                min_score = max_num_of_occurences
+                potential_guesses = [guess]
+            elif max_num_of_occurences == min_score:
+                potential_guesses.append(guess)
+
+        for potential_guess in potential_guesses:
+            if potential_guess in s:
+                return list(potential_guess)
+
+        return list(potential_guesses[0]) if potential_guesses else None
+
+
+
+    # def _generate_next_guess(self, possible_codes, s):
+    #     next_guess = None
+    #     potential_guesses = []
+    #     num_of_pos_and_colour_occurences = {}
+    #     scores = {}
+    #     for guess in possible_codes:
+    #         for code in s:
+    #             current_line_output = self._generate_guess_based_feedback(guess, 1, code)
+    #             correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
+    #             correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
+    #             key = (correct_position_guesses, correct_colour_guesses)
+    #             if key not in num_of_pos_and_colour_occurences:
+    #                 num_of_pos_and_colour_occurences[key] = 1
+    #             else:
+    #                 num_of_pos_and_colour_occurences[key] += 1
+    #
+    #         max_num_of_occurences = max(num_of_pos_and_colour_occurences.values())
+    #         scores[guess] = max_num_of_occurences
+    #     min_score = min(scores.values())
+    #
+    #     for guess in possible_codes:
+    #         if scores[code] == min_score:
+    #             potential_guesses.append(guess)
+    #
+    #     for potential_guess in potential_guesses:
+    #         if potential_guess in s:
+    #             next_guess = potential_guess
+    #             return next_guess
+    #
+    #     next_guess = potential_guesses[0]
+    #     return next_guess
 
 
     def _generate_initial_guess(self):
@@ -300,23 +377,22 @@ class GameProcessor:
 
     def _remove_wrong_codes(self, possible_codes, guess):
         # TODO: Replace 1, placeholder.
-        current_line_output = self._generate_guess_based_feedback(guess, 1)
+        current_line_output = self._generate_guess_based_feedback(guess, 1, self.code)
         correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
         correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
-        d(correct_position_guesses)
-        d(correct_colour_guesses)
+        d(f'Guess: {guess}')
+        d(f'pos: {correct_position_guesses}')
+        d(f'col: {correct_colour_guesses}')
         updated_possible_codes = []
         for possible_code in possible_codes:
-            current_line_output = self._generate_guess_based_feedback(list(possible_code), 1)
+            possible_code = list(possible_code)
+            current_line_output = self._generate_guess_based_feedback(possible_code, 1, guess)
             current_correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
             current_correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
             if (current_correct_position_guesses == correct_position_guesses) and (current_correct_colour_guesses == correct_colour_guesses):
-                updated_possible_codes.append(list(possible_code))
-                
+                updated_possible_codes.append(possible_code)
+
         return updated_possible_codes
-
-
-
 
 
 def main(args):
