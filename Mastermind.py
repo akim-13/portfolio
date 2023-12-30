@@ -8,13 +8,17 @@ INF = float('inf')
 
 # Do not set too high since the number of possible
 # combinations = `num_of_colours**MAX_CODE_LENGTH`.
-MAX_CODE_LENGTH = 32
-MAX_GUESSES = 65536
+MAX_CODE_LENGTH = 8
+MAX_GUESSES = 1024
 DEFAULT_CODE_LENGTH = 5
 DEFAULT_MAX_GUESSES = 12
 DEFAULT_AVAILABLE_COLOURS = ['red', 'blue', 'yellow', 'green', 'orange']
 CORRECT_COLOUR_GUESS = 'white'
 CORRECT_POSITION_GUESS = 'black'
+
+CODE_KEYWORD = 'code'
+HUMAN_PLAYER_KEYWORDS = 'player human'
+COMPUTER_PLAYER_KEYWORDS = 'player computer'
 COMPUTER_GENERATED_FILENAME = 'computerGame.txt'
 
 # Define exit codes as constants for clarity.
@@ -119,30 +123,30 @@ class InputArgs:
 
 
 class ContinueException(Exception):
-    """Exception raised to continue in the loop."""
+    """Exception raised to continue in a loop."""
     pass
 
 
 class BreakException(Exception):
-    """Exception raised to break from the loop."""
+    """Exception raised to break from a loop."""
     pass
 
 
 class GameProcessor:
     def __init__(self, input_args):
-        self.input_args     = input_args
-        self.out_of_guesses = True
-        self.output_lines   = []
-        self.guess_lines    = []
-        self.code           = []
-        self.computer_guesses = []
+        self.input_args           = input_args
+        self.out_of_guesses       = False
+        self.player_mode_is_human = True
+        self.output_lines         = []
+        self.guess_lines          = []
+        self.code                 = []
 
 
     def execute_input_file(self):
         with open(self.input_args.input_filename, 'r') as file:
             lines = file.readlines()
             self._validate_num_of_lines(len(lines))
-            self._validate_code(lines[0], 'code')
+            self._validate_code(lines[0])
             player_line = lines[1]
             self.guess_lines = lines[2:]
             self._choose_player_mode(player_line)
@@ -155,10 +159,10 @@ class GameProcessor:
             sys.exit(INPUT_FILE_ISSUE)
 
 
-    def _validate_code(self, code_line, code_keyword):
-        code_keyword_is_present = code_line.startswith(f'{code_keyword} ')
+    def _validate_code(self, code_line):
+        code_keyword_is_present = code_line.startswith(f'{CODE_KEYWORD} ')
         # +1 because of the space after the keyword.
-        code_keyword_offset = len(code_keyword) + 1
+        code_keyword_offset = len(CODE_KEYWORD) + 1
         self.code = code_line[code_keyword_offset:].strip().split()
         code_is_right_length = len(self.code) == self.input_args.code_length
         code_colours_are_valid = all(code_colour in self.input_args.available_colours for code_colour in self.code)
@@ -166,25 +170,26 @@ class GameProcessor:
          
         if not code_is_valid:
             self.output_lines.append('No or ill-formed code provided')
-            self._write_to_output_file(self.input_args.output_filename)
+            self.write_lines_to_file(self.output_lines, self.input_args.output_filename)
             sys.exit(CODE_ISSUE)
 
 
-    def _write_to_output_file(self, filename):
+    def write_lines_to_file(self, lines, filename):
         with open(filename, 'w') as file:
-            for line in self.output_lines:
+            for line in lines:
                 file.write(line + '\n')
 
 
     def _choose_player_mode(self, player_line):
         player_line = player_line.strip()
-        if player_line == 'player human':
+        if player_line == HUMAN_PLAYER_KEYWORDS:
             self._process_all_guess_lines()
-        elif player_line == 'player computer':
+        elif player_line == COMPUTER_PLAYER_KEYWORDS:
+            self.player_mode_is_human = False
             self._handle_computer_player()
         else:
             self.output_lines.append('No or ill-formed player provided')
-            self._write_to_output_file(self.input_args.output_filename)
+            self.write_lines_to_file(self.output_lines, self.input_args.output_filename)
             sys.exit(PLAYER_ISSUE)
 
 
@@ -201,7 +206,7 @@ class GameProcessor:
             except BreakException:
                 break
                 
-        self._write_to_output_file(self.input_args.output_filename)
+        self.write_lines_to_file(self.output_lines, self.input_args.output_filename)
 
 
     def _process_line_of_guesses(self, current_guess_num):
@@ -234,12 +239,15 @@ class GameProcessor:
         return guesses
 
 
+    # TODO: Optimize for Knuth's algorithm. Allow for extra `only_count_pos_and_color` parameter
+    # and implement `_get_pos_and_colour_feedback` functionality to replace the latter function.
     def _generate_guess_based_feedback(self, guesses, current_guess_num, code):
         current_line_output = f'Guess {current_guess_num}: '
         # Make copies of the lists in order to preserve the originals.
         code_copy = code.copy()
         guesses_copy = guesses.copy()
 
+        # TODO: Put each loop in a separate function if possible.
         # Find all pegs that are in the right position.
         for i, (guess, code_colour) in enumerate(zip(guesses_copy, code_copy)):
             if guess == code_colour:
@@ -264,9 +272,10 @@ class GameProcessor:
 
 
     def _game_is_over(self, correct_position_guesses, current_guess_num):
-        if correct_position_guesses == self.input_args.code_length:
+        # `>=` instead of `==` because it is better to be safe than sorry (stuck in an infinite loop).
+        if correct_position_guesses >= self.input_args.code_length:
             self.output_lines.append(f'You won in {current_guess_num} guesses. Congratulations!')
-            if not self.out_of_guesses:
+            if (self.player_mode_is_human) and (not self.out_of_guesses):
                 self.output_lines.append('The game was completed. Further lines were ignored.')
             return True
         elif self.out_of_guesses:
@@ -277,126 +286,115 @@ class GameProcessor:
 
 
     def _handle_computer_player(self):
-        self.input_args.validate_output_file_accessibility(COMPUTER_GENERATED_FILENAME)
-
-        # Create an iterator containing all possible combinations of available colours.
+        # Generate all possible codes from the available colours.
         all_possible_codes = itertools.product(self.input_args.available_colours, repeat=len(self.code))
-        possible_codes = []
-        for code in all_possible_codes:
-            possible_codes.append(list(code))
+        possible_codes = [ list(code) for code in all_possible_codes ]
+        possible_solutions = possible_codes.copy()
+        computer_guesses = []
 
-        initial_guess = self._generate_initial_guess()
-        next_guess = initial_guess
-        s = possible_codes
+        print('Generating solutions...')
 
-        d(f'Secret Code: {self.code}')
-        d(f'Initial guess: {initial_guess}')
+        current_guess = self._generate_initial_guess()
+        current_guess_num = 1
 
-        tmp = 1
-        d(tmp)
-        correct_position_guesses = 0
-        code_has_been_cracked = False
-        while not code_has_been_cracked:
-            s = self._remove_wrong_codes(s, next_guess)
+        while True:
+            computer_guesses.append(current_guess)
 
-            next_guess = self._generate_next_guess(possible_codes, s)
-            # i(possible_codes)
-            # i(next_guess)
-            possible_codes.remove(next_guess)
-
-            current_line_output = self._generate_guess_based_feedback(next_guess, 1, self.code)
+            current_line_output = self._generate_guess_based_feedback(current_guess, current_guess_num, self.code)
+            self.output_lines.append(current_line_output)
             correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
-            code_has_been_cracked = correct_position_guesses >= len(self.code)
 
-            d(f'Correct positions: {correct_position_guesses}')
-            d(f'Next guess: {next_guess}')
-            d(f'Cracked: {code_has_been_cracked}')
+            if self._game_is_over(correct_position_guesses, current_guess_num):
+                break
 
-            tmp += 1
-            # if tmp == 5:
-            #     break
+            possible_solutions = self._filter_possible_solutions(possible_solutions, current_guess)
+            current_guess = self._generate_next_guess(possible_codes, possible_solutions)
+            current_guess_num += 1
+            self.out_of_guesses = current_guess_num == MAX_GUESSES
 
-            d('')
-            d(tmp)
-
-        d('hooray')
+        self.write_lines_to_file(self.output_lines, self.input_args.output_filename)
+        self._write_computer_guesses_to_file(computer_guesses)
 
 
-    def _generate_next_guess(self, possible_codes, s):
+    def _generate_initial_guess(self):
+        initial_guess = []
+        colour_index = 0
+        finished_generating_initial_guess = False
+
+        while not finished_generating_initial_guess:
+            # Add the same colour twice, if possible, before moving to the next colour.
+            initial_guess.append(self.input_args.available_colours[colour_index])
+            finished_generating_initial_guess = len(initial_guess) >= len(self.code)
+            if not finished_generating_initial_guess:
+                initial_guess.append(self.input_args.available_colours[colour_index])
+            
+            # Move to the next colour and reset to the start if necessary.
+            colour_index = (colour_index + 1) % len(self.input_args.available_colours)
+
+        return initial_guess
+
+
+    def _filter_possible_solutions(self, possible_solutions, guess):
+        new_possible_solutions = []
+
+        current_line_output = self.output_lines[-1] if self.output_lines else None
+        correct_position_guesses, correct_colour_guesses = self._get_pos_and_colour_feedback(None, None, current_line_output)
+
+        for possible_solution in possible_solutions:
+            current_correct_position_guesses, current_correct_colour_guesses = self._get_pos_and_colour_feedback(possible_solution, guess)
+
+            feedback_is_the_same = (current_correct_position_guesses == correct_position_guesses) and (current_correct_colour_guesses == correct_colour_guesses)
+            if feedback_is_the_same:
+                new_possible_solutions.append(possible_solution)
+
+        return new_possible_solutions
+
+
+    def _get_pos_and_colour_feedback(self, guesses, code, current_line_output=None):
+        if current_line_output is None:
+            current_line_output = self._generate_guess_based_feedback(guesses, None, code)
+        correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
+        correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
+        return (correct_position_guesses, correct_colour_guesses)
+
+
+    def _generate_next_guess(self, possible_codes, possible_solutions):
         potential_guesses = []
-        min_score = INF
+        min_score_of_a_guess = INF
 
-
-        tmp = 0
         for guess in possible_codes:
-            tmp += 1
-            # d(f'tmp: {tmp}')
-            # if tmp == 3:
-            #     break
-            num_of_pos_and_colour_occurences = {}
+            num_of_pos_and_colour_occurrences = {}
+            current_max_occurrences = 0
 
-            for code in s:
-                # d('')
-                # d(f'current guess: {guess}')
-                # d(f'code: {code}')
-                current_line_output = self._generate_guess_based_feedback(guess, 1, code)
-                # d(f'{current_line_output}')
-                correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
-                correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
-                key = (correct_position_guesses, correct_colour_guesses)
-                # d(f'key (pos, col): {key}')
+            for code in possible_solutions:
+                pos_and_color_combo = self._get_pos_and_colour_feedback(guess, code)
+                occurrence_count = num_of_pos_and_colour_occurrences.get(pos_and_color_combo, 0) + 1
+                num_of_pos_and_colour_occurrences[pos_and_color_combo] = occurrence_count
+                current_max_occurrences = max(current_max_occurrences, occurrence_count)
 
-                num_of_pos_and_colour_occurences[key] = num_of_pos_and_colour_occurences.get(key, 0) + 1
-                # d(f'count for {key}: {num_of_pos_and_colour_occurences[key]}')
-
-            # d(num_of_pos_and_colour_occurences.keys())
-            # d(num_of_pos_and_colour_occurences.values())
-            max_num_of_occurences = max(num_of_pos_and_colour_occurences.values())
-            if max_num_of_occurences < min_score:
-                min_score = max_num_of_occurences
+            if current_max_occurrences < min_score_of_a_guess:
+                min_score_of_a_guess = current_max_occurrences
                 potential_guesses = [guess]
-            elif max_num_of_occurences == min_score:
+            elif current_max_occurrences == min_score_of_a_guess:
                 potential_guesses.append(guess)
 
+        # It is preferable for a guess to be a possible solution, but not necessary.
         for potential_guess in potential_guesses:
-            if potential_guess in s:
+            if potential_guess in possible_solutions:
                 return potential_guess
 
         return potential_guesses[0] if potential_guesses else None
 
 
-    def _generate_initial_guess(self):
-        initial_guess = []
-        color_index = 0
-        while len(initial_guess) < len(self.code):
-            # Add the same color twice, if possible, before moving to the next color.
-            initial_guess.append(self.input_args.available_colours[color_index])
-            if len(initial_guess) < len(self.code):
-                initial_guess.append(self.input_args.available_colours[color_index])
-            
-            # Move to the next color and reset to the start if necessary.
-            color_index = (color_index + 1) % len(self.input_args.available_colours)
+    def _write_computer_guesses_to_file(self, computer_guesses):
+        self.input_args.validate_output_file_accessibility(COMPUTER_GENERATED_FILENAME)
 
-        return initial_guess
+        computer_aux_file_lines = []
+        code_line = f'{CODE_KEYWORD} {" ".join(self.code)}'
+        computer_guess_lines = [ ' '.join(guess) for guess in computer_guesses ]
+        computer_aux_file_lines += [code_line, HUMAN_PLAYER_KEYWORDS] + computer_guess_lines
 
-
-    def _remove_wrong_codes(self, possible_codes, guess):
-        # TODO: Replace 1, placeholder.
-        current_line_output = self._generate_guess_based_feedback(guess, 1, self.code)
-        correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
-        correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
-        d(f'Current guess: {guess}')
-        # d(f'pos: {correct_position_guesses}')
-        # d(f'col: {correct_colour_guesses}')
-        updated_possible_codes = []
-        for possible_code in possible_codes:
-            current_line_output = self._generate_guess_based_feedback(possible_code, 1, guess)
-            current_correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
-            current_correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
-            if (current_correct_position_guesses == correct_position_guesses) and (current_correct_colour_guesses == correct_colour_guesses):
-                updated_possible_codes.append(possible_code)
-
-        return updated_possible_codes
+        self.write_lines_to_file(computer_aux_file_lines, COMPUTER_GENERATED_FILENAME)
 
 
 def main(args):
@@ -411,6 +409,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print('\nKEYBOARD INTERRUPT INITIATED.')
         sys.exit(KEYBOARD_INTERRUPT)
-    # except Exception as e:
-    #     print(f'UNEXPECTED ERROR:\n{e}')
-    #     sys.exit(UNEXPECTED_ERROR)
+    except Exception as e:
+        print(f'UNEXPECTED ERROR:\n{e}')
+        sys.exit(UNEXPECTED_ERROR)
