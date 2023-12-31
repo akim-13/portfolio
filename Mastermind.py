@@ -34,13 +34,77 @@ UNEXPECTED_ERROR   = 8
 
 # TODO: Add docstrings everywhere.
 
+class FileHandler():
+    def __init__(self, filename):
+        self.filename = filename
+
+
+    def write_lines_to_file(self, lines):
+        with open(self.filename, 'w') as file:
+            for line in lines:
+                file.write(line + '\n')
+
+
+    def _file_has_txt_extension(self):
+        try:
+            filename_ends_with_txt = self.filename.lower().endswith('.txt')
+        except:
+            print(f'ERROR: Invalid filename or file does not exist.')
+            sys.exit(GENERAL_ERROR)
+
+        if not filename_ends_with_txt:
+            print(f'ERROR: The file "{self.filename}" does not have a .txt extension.')
+            return False
+        else:
+            return True
+
+
+    def validate_input_file_accessibility(self):
+        file_exists = os.path.isfile(self.filename)
+        if not file_exists:
+            print(f'ERROR: The input file "{self.filename}" does not exist.')
+            sys.exit(INPUT_FILE_ISSUE)
+
+        file_is_readable = os.access(self.filename, os.R_OK)
+        if not file_is_readable:
+            print(f'ERROR: The input file "{self.filename}" is not readable.')
+            sys.exit(INPUT_FILE_ISSUE)
+
+        if not self._file_has_txt_extension():
+            sys.exit(INPUT_FILE_ISSUE)
+
+        return self.filename
+
+
+    def validate_output_file_accessibility(self):
+        file_exists = os.path.exists(self.filename)
+
+        if (file_exists) and (not self._file_has_txt_extension()):
+                sys.exit(OUTPUT_FILE_ISSUE)
+        else:
+            try:
+                # Attempt to create the file.
+                with open(self.filename, 'w'):
+                    pass
+            except IOError:
+                print(f'ERROR: The output file "{self.filename}" cannot be created.')
+                sys.exit(OUTPUT_FILE_ISSUE)
+
+        file_is_writable = os.access(self.filename, os.W_OK)
+        if not file_is_writable:
+            print(f'ERROR: The output file "{self.filename}" is not writable.')
+            sys.exit(OUTPUT_FILE_ISSUE)
+
+        return self.filename
+
+
 class InputArgs:
     def __init__(self, args):
         self._validate_num_of_args(args)
-        self.input_filename  = self._validate_input_file_accessibility(args[1])
-        self.output_filename = self.validate_output_file_accessibility(args[2])
-        self.code_length     = self.validate_int_within_bounds(args[3], 1, MAX_CODE_LENGTH) if len(args) > 3 else DEFAULT_CODE_LENGTH
-        self.maximum_guesses = self.validate_int_within_bounds(args[4], 1, MAX_GUESSES) if len(args) > 4 else DEFAULT_MAX_GUESSES
+        self.input_filename  = FileHandler(args[1]).validate_input_file_accessibility()
+        self.output_filename = FileHandler(args[2]).validate_output_file_accessibility()
+        self.code_length     = self._validate_arg_is_valid_int(args[3], 1, MAX_CODE_LENGTH) if len(args) > 3 else DEFAULT_CODE_LENGTH
+        self.maximum_guesses = self._validate_arg_is_valid_int(args[4], 1, MAX_GUESSES) if len(args) > 4 else DEFAULT_MAX_GUESSES
         # Join the rest of the arguments (available colours) into a string.
         available_colours_str = ' '.join(args[5:]) if len(args) > 5 else ' '.join(DEFAULT_AVAILABLE_COLOURS)
         # Split the string into a list using `shlex` to handle quotes and double quotes like the shell does.
@@ -55,70 +119,16 @@ class InputArgs:
             sys.exit(INVALID_ARGS)
 
 
-    def _validate_input_file_accessibility(self, filename):
-        file_exists = os.path.isfile(filename)
-        if not file_exists:
-            print(f'ERROR: The input file "{filename}" does not exist.')
-            sys.exit(INPUT_FILE_ISSUE)
-
-        file_is_readable = os.access(filename, os.R_OK)
-        if not file_is_readable:
-            print(f'ERROR: The input file "{filename}" is not readable.')
-            sys.exit(INPUT_FILE_ISSUE)
-
-        if not self._file_has_txt_extension(filename):
-            sys.exit(INPUT_FILE_ISSUE)
-
-        return filename
-
-
     @staticmethod
-    def _file_has_txt_extension(filename):
-        try:
-            filename_ends_with_txt = filename.lower().endswith('.txt')
-        except:
-            print(f'ERROR: Invalid filename or file does not exist.')
-            sys.exit(GENERAL_ERROR)
-
-        if not filename_ends_with_txt:
-            print(f'ERROR: The file "{filename}" does not have a .txt extension.')
-            return False
-        else:
-            return True
-
-
-    def validate_output_file_accessibility(self, filename):
-        file_exists = os.path.exists(filename)
-
-        if (file_exists) and (not self._file_has_txt_extension(filename)):
-                sys.exit(OUTPUT_FILE_ISSUE)
-        else:
-            try:
-                # Attempt to create the file.
-                with open(filename, 'w'):
-                    pass
-            except IOError:
-                print(f'ERROR: The output file "{filename}" cannot be created.')
-                sys.exit(OUTPUT_FILE_ISSUE)
-
-        file_is_writable = os.access(filename, os.W_OK)
-        if not file_is_writable:
-            print(f'ERROR: The output file "{filename}" is not writable.')
-            sys.exit(OUTPUT_FILE_ISSUE)
-
-        return filename
-
-
-    @staticmethod
-    def validate_int_within_bounds(num, lower_bound=-INF, upper_bound=INF):
+    def _validate_arg_is_valid_int(num, lower_bound=-INF, upper_bound=INF):
         try:
             num = int(num)
             if num < lower_bound or num > upper_bound:
                 print(f'ERROR: {num} is out of bounds (must be between {lower_bound} and {upper_bound}).')
-                sys.exit(GENERAL_ERROR)
+                sys.exit(INVALID_ARGS)
         except ValueError:
             print(f'ERROR: "{num}" is not an integer.')
-            sys.exit(GENERAL_ERROR)
+            sys.exit(INVALID_ARGS)
         return num
 
 
@@ -170,14 +180,8 @@ class GameProcessor:
          
         if not code_is_valid:
             self.output_lines.append('No or ill-formed code provided')
-            self.write_lines_to_file(self.output_lines, self.input_args.output_filename)
+            FileHandler(self.input_args.output_filename).write_lines_to_file(self.output_lines)
             sys.exit(CODE_ISSUE)
-
-
-    def write_lines_to_file(self, lines, filename):
-        with open(filename, 'w') as file:
-            for line in lines:
-                file.write(line + '\n')
 
 
     def _choose_player_mode(self, player_line):
@@ -189,7 +193,7 @@ class GameProcessor:
             self._handle_computer_player()
         else:
             self.output_lines.append('No or ill-formed player provided')
-            self.write_lines_to_file(self.output_lines, self.input_args.output_filename)
+            FileHandler(self.input_args.output_filename).write_lines_to_file(self.output_lines)
             sys.exit(PLAYER_ISSUE)
 
 
@@ -206,7 +210,7 @@ class GameProcessor:
             except BreakException:
                 break
                 
-        self.write_lines_to_file(self.output_lines, self.input_args.output_filename)
+        FileHandler(self.input_args.output_filename).write_lines_to_file(self.output_lines)
 
 
     def _process_line_of_guesses(self, current_guess_num):
@@ -239,36 +243,72 @@ class GameProcessor:
         return guesses
 
 
-    # TODO: Optimize for Knuth's algorithm. Allow for extra `only_count_pos_and_color` parameter
-    # and implement `_get_pos_and_colour_feedback` functionality to replace the latter function.
-    def _generate_guess_based_feedback(self, guesses, current_guess_num, code):
+    # FIXME: Getting stuck in an infinite loop after refactoring. Do not return different types, split in two functions.
+    def _generate_guess_based_feedback(self, guesses, current_guess_num, code, only_count_pos_and_color=False):
         current_line_output = f'Guess {current_guess_num}: '
+        right_pos_counter = 0
+        right_colour_counter = 0
         # Make copies of the lists in order to preserve the originals.
         code_copy = code.copy()
         guesses_copy = guesses.copy()
 
-        # TODO: Put each loop in a separate function if possible.
-        # Find all pegs that are in the right position.
-        for i, (guess, code_colour) in enumerate(zip(guesses_copy, code_copy)):
-            if guess == code_colour:
-                current_line_output += CORRECT_POSITION_GUESS + ' '
-                # Nullify the current guess and corresponding code to ensure that they are not used later on.
-                guesses_copy[i] = None
-                code_copy[i] = None
-
-        # Find all the remaining pegs that are in the wrong position but of the right colour.
-        for i, code_colour in enumerate(code_copy):
-            if (code_colour is not None) and (code_colour in guesses_copy):
-                current_line_output += CORRECT_COLOUR_GUESS + ' '
-                j = guesses_copy.index(code_colour)
-                guesses_copy[j] = None
-                code_copy[i] = None
+        if only_count_pos_and_color:
+            current_line_output += self._generate_right_pos_pegs_feedback(guesses_copy, code_copy, only_count_pos_and_color)
+            current_line_output += self._generate_right_colour_pegs_feedback(guesses_copy, code_copy, only_count_pos_and_color)
+        else:
+            right_pos_counter = self._generate_right_pos_pegs_feedback(guesses_copy, code_copy, only_count_pos_and_color)
+            right_colour_counter = self._generate_right_colour_pegs_feedback(guesses_copy, code_copy, only_count_pos_and_color)
 
         # Remove the last space only when `current_line_output` has been modified.
         if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
             current_line_output = current_line_output.strip()
 
-        return current_line_output
+        if only_count_pos_and_color:
+            return (right_pos_counter, right_colour_counter)
+        else:
+            return current_line_output
+
+
+    @staticmethod
+    def _generate_right_pos_pegs_feedback(guesses, code, only_count_pos_and_color):
+        right_pos_pegs_str = ''
+        right_pos_counter = 0
+
+        for i, (guess, code_colour) in enumerate(zip(guesses, code)):
+            if guess == code_colour:
+                if only_count_pos_and_color:
+                    right_pos_counter += 1
+                else:
+                    right_pos_pegs_str += CORRECT_POSITION_GUESS + ' '
+                # Nullify the current guess and corresponding code to ensure that they are not used later on.
+                guesses[i] = None
+                code[i] = None
+
+        if only_count_pos_and_color:
+            return right_pos_counter
+        else:
+            return right_pos_pegs_str
+
+
+    @staticmethod
+    def _generate_right_colour_pegs_feedback(guesses, code, only_count_pos_and_color):
+        right_colour_pegs_str = ''
+        right_colour_counter = 0
+
+        for i, code_colour in enumerate(code):
+            if (code_colour is not None) and (code_colour in guesses):
+                if only_count_pos_and_color:
+                    right_colour_counter += 1
+                else:
+                    right_colour_pegs_str += CORRECT_COLOUR_GUESS + ' '
+                j = guesses.index(code_colour)
+                guesses[j] = None
+                code[i] = None
+
+        if only_count_pos_and_color:
+            return right_colour_counter
+        else:
+            return right_colour_pegs_str
 
 
     def _game_is_over(self, correct_position_guesses, current_guess_num):
@@ -312,7 +352,7 @@ class GameProcessor:
             current_guess_num += 1
             self.out_of_guesses = current_guess_num == MAX_GUESSES
 
-        self.write_lines_to_file(self.output_lines, self.input_args.output_filename)
+        FileHandler(self.input_args.output_filename).write_lines_to_file(self.output_lines)
         self._write_computer_guesses_to_file(computer_guesses)
 
 
@@ -387,14 +427,14 @@ class GameProcessor:
 
 
     def _write_computer_guesses_to_file(self, computer_guesses):
-        self.input_args.validate_output_file_accessibility(COMPUTER_GENERATED_FILENAME)
+        FileHandler(COMPUTER_GENERATED_FILENAME).validate_output_file_accessibility()
 
         computer_aux_file_lines = []
         code_line = f'{CODE_KEYWORD} {" ".join(self.code)}'
         computer_guess_lines = [ ' '.join(guess) for guess in computer_guesses ]
         computer_aux_file_lines += [code_line, HUMAN_PLAYER_KEYWORDS] + computer_guess_lines
 
-        self.write_lines_to_file(computer_aux_file_lines, COMPUTER_GENERATED_FILENAME)
+        FileHandler(COMPUTER_GENERATED_FILENAME).write_lines_to_file(computer_aux_file_lines)
 
 
 def main(args):
