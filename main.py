@@ -4,7 +4,6 @@ import time
 class ContradictionException(Exception):
     pass
 
-
 # (1, 1) (1, 2) (1, 3)   (1, 4) (1, 5) (1, 6)   (1, 7) (1, 8) (1, 9)
 # (2, 1) (2, 2) (2, 3)   (2, 4) (2, 5) (2, 6)   (2, 7) (2, 8) (2, 9)
 # (3, 1) (3, 2) (3, 3)   (3, 4) (3, 5) (3, 6)   (3, 7) (3, 8) (3, 9)
@@ -20,7 +19,7 @@ class ContradictionException(Exception):
 # `cells = [(1, 1), (1, 2), ..., (9, 8), (9, 9)]`.
 cells = [ (row, column) for row in range(1, 10) for column in range(1, 10) ]
 units = { cell: [] for cell in cells }
-peers = dict()
+peers = {}
 
 # Populate `units`.
 for cell in cells:
@@ -63,18 +62,48 @@ def assign_and_propagate(digit, cell, grid):
     # When the cell is empty (`digit == 0`) it has to keep the default `available_digits` value.
     if digit != '0':
         grid[cell] = digit
+
+    if len(digit) > 1:
+        grid[cell] = digit
+        return grid
     
     cell_has_one_possible_value = len(grid[cell]) == 1
     if cell_has_one_possible_value:
         grid = remove_digit_from_peers(digit, cell, grid)
 
-    digits_counter = {digit: {'count': 0, 'cell': None} for digit in '123456789'}
+    digits_counter = { digit: {'count': 0, 'cell': None} for digit in '123456789' }
     # Insert a digit if a unit has one possible place for a value.
     for unit in units[cell]:
+        potential_naked_twins = {}
+        potential_naked_twins_counter = {}
+
         for cell_iter in unit:
             for digit_iter in grid[cell_iter]:
                 digits_counter[digit_iter]['count'] += 1
                 digits_counter[digit_iter]['cell'] = cell_iter
+
+            cell_has_two_possible_values = len(grid[cell_iter]) == 2
+            if cell_has_two_possible_values:
+                potential_naked_twins[cell_iter] = grid[cell_iter]
+
+        for cell, digits in potential_naked_twins.items():
+            potential_naked_twins_counter.setdefault(digits, []).append(cell)
+
+        # Filter `potential_naked_twins_counter` to include only those digit pairs that occur exactly twice.
+        naked_twins = { digits: cells for digits, cells in potential_naked_twins_counter.items() if len(cells) == 2 }
+        if naked_twins:
+            for digits, cells in naked_twins.items():
+                first_twin   = cells[0]
+                second_twin  = cells[1]
+                first_digit  = digits[0]
+                second_digit = digits[1]
+                for cell in unit:
+                    # TODO: May be redundant.
+                    if not grid[cell]:
+                        raise ContradictionException
+                    if (cell != first_twin) and (cell != second_twin):
+                        grid[cell] = grid[cell].replace(first_digit, '')
+                        grid[cell] = grid[cell].replace(second_digit, '')
 
         for digit_key, value in digits_counter.items():
             unit_missing_possible_digit = value['count'] == 0
@@ -89,6 +118,7 @@ def assign_and_propagate(digit, cell, grid):
             # Reset the values for the iteration over the next unit.
             digits_counter[digit_key]['count'] = 0
             digits_counter[digit_key]['cell'] = None
+
                 
 
 def generate_solution(numpy_arrays):
@@ -109,7 +139,6 @@ def convert_grid_to_np_array(grid):
     for (row, col), available_digits in grid.items():
         try:
             available_digits = int(available_digits)
-            # print(available_digits)
         except:
             available_digits = '●'
         np_grid[row-1, col-1] = available_digits
@@ -134,47 +163,45 @@ def main():
     sudokus = np.load(f'data/{difficulty}_puzzle.npy')
     sudokus_solutions = np.load(f'data/{difficulty}_solution.npy')
 
-    # for x, i in enumerate(sudokus_solutions):
-    #     for y, j in enumerate(i):
-    #         for z, k in enumerate(j):
-    #             sudokus_solutions[x][y][z] = int(k)
-
-    # Convert solutions to int if necessary
+    # Convert solutions to int if necessary.
     sudokus_solutions = sudokus_solutions.astype(int)
 
     solving_times = []
 
-    for i in range(0, 15):
-        print('Sudoku:')
-        display_sudoku(sudokus[i])
+    print('Generating solutions...')
+    output = False
+    for j in range(25):
+        for i in range(0, 15):
+            if output:
+                print('Sudoku:')
+                display_sudoku(sudokus[i])
 
-        start_time = time.time()
+            start_time = time.time()
 
-        try:
-            solution = generate_solution(sudokus[i])
-            solution = convert_grid_to_np_array(solution)
-        except ContradictionException:
-            solution = np.full((9, 9), -1)
+            try:
+                solution = generate_solution(sudokus[i])
+                solution = convert_grid_to_np_array(solution)
+            except ContradictionException:
+                solution = np.full((9, 9), -1)
 
-        end_time = time.time()
-        solving_time = end_time - start_time
-        solving_times.append(solving_time)
+            end_time = time.time()
+            solving_time = end_time - start_time
+            solving_times.append(solving_time)
 
-        print(f'Solving time: {solving_time} seconds')
-        print('Generated solution:')
-        display_sudoku(solution)
+            if output:
+                print(f'Solving time: {solving_time} seconds')
+                print('Generated solution:')
+                display_sudoku(solution)
+                print('Actual solution:')
+                display_sudoku(sudokus_solutions[i])
+                print('---------------------------------------------------------------------------------')
 
-        print('Actual solution:')
-        display_sudoku(sudokus_solutions[i])
+            if not np.array_equal(solution, sudokus_solutions[i]):
+                raise ContradictionException
 
-        if not np.array_equal(solution, sudokus_solutions[i]):
-            raise ContradictionException
 
-        print('---------------------------------------------------------------------------------')
-
-    # Calculating and printing average and maximum times
-    average_time = sum(solving_times) / len(solving_times)
-    max_time = max(solving_times)
+    average_time = round(sum(solving_times) / len(solving_times), 4)
+    max_time = round(max(solving_times), 4)
     print(f'Average solving time: {average_time} seconds')
     print(f'Maximum solving time: {max_time} seconds')
 
