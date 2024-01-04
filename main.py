@@ -1,5 +1,7 @@
 import numpy as np
 import time
+import random
+
 
 class ContradictionException(Exception):
     pass
@@ -20,6 +22,8 @@ class ContradictionException(Exception):
 cells = [ (row, column) for row in range(1, 10) for column in range(1, 10) ]
 units = { cell: [] for cell in cells }
 peers = {}
+
+INVALID_SOLUTION = {cell: '-1' for cell in cells}
 
 # Populate `units`.
 for cell in cells:
@@ -49,27 +53,33 @@ for cell in cells:
 
 
 def remove_digit_from_peers(digit, cell, grid):
+    single_digits_of_peers = []
     for peer in peers[cell]:
-        # TODO: Figure out if this ever happens what to do with it.
-        # If there are no available digits for given a cell.
-        if not grid[peer]:
+        # If there are available digits for given a cell.
+        if len(grid[peer]) > 1:
+            grid[peer] = grid[peer].replace(digit, '')
+        elif grid[peer] == grid[cell]:
             raise ContradictionException
-        grid[peer] = grid[peer].replace(digit, '')
+            # print(f'Checking peer {peer} of cell {cell}')
+            # single_digits_of_peers.append(grid[peer])
+            # if len(single_digits_of_peers) != len(set(single_digits_of_peers)):
+            #     print(single_digits_of_peers)
+            #     print('Duplicate singles detected.')
     return grid
 
 
 def assign_and_propagate(digit, cell, grid):
-    # When the cell is empty (`digit == 0`) it has to keep the default `available_digits` value.
-    if digit != '0':
-        grid[cell] = digit
+    # TODO: rename
+    # grid = gridd.copy()
 
-    if len(digit) > 1:
-        grid[cell] = digit
-        return grid
+    grid[cell] = digit
+
+    # display_sudoku(convert_grid_to_np_array(grid))
     
     cell_has_one_possible_value = len(grid[cell]) == 1
     if cell_has_one_possible_value:
         grid = remove_digit_from_peers(digit, cell, grid)
+
 
     digits_counter = { digit: {'count': 0, 'cell': None} for digit in '123456789' }
     # Insert a digit if a unit has one possible place for a value.
@@ -82,33 +92,37 @@ def assign_and_propagate(digit, cell, grid):
                 digits_counter[digit_iter]['count'] += 1
                 digits_counter[digit_iter]['cell'] = cell_iter
 
-            cell_has_two_possible_values = len(grid[cell_iter]) == 2
-            if cell_has_two_possible_values:
-                potential_naked_twins[cell_iter] = grid[cell_iter]
+            # cell_has_two_possible_values = len(grid[cell_iter]) == 2
+            # if cell_has_two_possible_values:
+            #     potential_naked_twins[cell_iter] = grid[cell_iter]
 
-        for cell, digits in potential_naked_twins.items():
-            potential_naked_twins_counter.setdefault(digits, []).append(cell)
+        # for cell, digits in potential_naked_twins.items():
+        #     potential_naked_twins_counter.setdefault(digits, []).append(cell)
 
         # Filter `potential_naked_twins_counter` to include only those digit pairs that occur exactly twice.
-        naked_twins = { digits: cells for digits, cells in potential_naked_twins_counter.items() if len(cells) == 2 }
-        if naked_twins:
-            for digits, cells in naked_twins.items():
-                first_twin   = cells[0]
-                second_twin  = cells[1]
-                first_digit  = digits[0]
-                second_digit = digits[1]
-                for cell in unit:
-                    # TODO: May be redundant.
-                    if not grid[cell]:
-                        raise ContradictionException
-                    if (cell != first_twin) and (cell != second_twin):
-                        grid[cell] = grid[cell].replace(first_digit, '')
-                        grid[cell] = grid[cell].replace(second_digit, '')
+        # naked_twins = { digits: cells for digits, cells in potential_naked_twins_counter.items() if len(cells) == 2 }
+        # if naked_twins:
+        #     for digits, cells in naked_twins.items():
+        #         first_twin   = cells[0]
+        #         second_twin  = cells[1]
+        #         first_digit  = digits[0]
+        #         second_digit = digits[1]
+        #         for cell in unit:
+        #             # TODO: May be redundant.
+        #             if not grid[cell]:
+        #                 raise ContradictionException
+        #                 # return gridd
+        #                 # raise
+        #             if (cell != first_twin) and (cell != second_twin) and len(grid[cell]) > 1:
+        #                 grid[cell] = grid[cell].replace(first_digit, '')
+        #                 grid[cell] = grid[cell].replace(second_digit, '')
 
         for digit_key, value in digits_counter.items():
             unit_missing_possible_digit = value['count'] == 0
             if unit_missing_possible_digit: 
                 raise ContradictionException
+                # return gridd
+                # raise
 
             cell_has_multiple_possible_values = len(grid[value['cell']]) > 1
             unit_has_one_possible_place_for_value = (value['count'] == 1) and (cell_has_multiple_possible_values)
@@ -119,18 +133,59 @@ def assign_and_propagate(digit, cell, grid):
             digits_counter[digit_key]['count'] = 0
             digits_counter[digit_key]['cell'] = None
 
+    return grid
+
+
+def recursive_depth_first_search(grid):
+    solution_is_found = all(len(grid[cell]) == 1 for cell in cells)
+    if solution_is_found:
+        return grid
+
+    # Any cell has less 9 or less available values, hence choose 10 as "infinity".
+    min_remaining_values = 10
+    mrv_cell = None
+    for cell in cells:
+        num_of_remaining_values = len(grid[cell])
+        if 1 < num_of_remaining_values < min_remaining_values:
+            mrv_cell = cell
+            if num_of_remaining_values == 2:
+                break
+            min_remaining_values = num_of_remaining_values
+    if mrv_cell is None:
+        return INVALID_SOLUTION
+
+    # new_grid = grid
+
+    shuffled_digits = list(grid[mrv_cell])
+    random.shuffle(shuffled_digits)
+
+    # TODO: Maybe implement least constraining value instead.
+    for digit in shuffled_digits:
+        new_grid = grid.copy()
+        # print(f'Checking {digit} in {mrv_cell}...')
+        try:
+            new_grid = assign_and_propagate(digit, mrv_cell, new_grid)
+
+            # display_sudoku(convert_grid_to_np_array(new_grid))
+
+            solution = recursive_depth_first_search(new_grid)
+            solution_is_valid = not np.array_equal(solution, INVALID_SOLUTION)
+            if solution_is_valid:
+                return solution
+        except ContradictionException:
+            # print(f'FAILURE: {digit} in {mrv_cell} leads to invalid solution.')
+            # print()
+            pass
+
+    return INVALID_SOLUTION
                 
 
-def generate_solution(numpy_arrays):
-    flattened_numpy_array = [ str(item_cell) for array in numpy_arrays for item_cell in array ]
-    available_digits = '123456789'
-    # Initialize an empty greed (i.e. every cell can take any digit).
-    grid = { cell: available_digits for cell in cells }
-
-    for cell, digit in zip(cells, flattened_numpy_array):
-        assign_and_propagate(digit, cell, grid)
-
-    return grid
+def generate_solution(numpy_array):
+    flattened_numpy_array = [ str(item_cell) for array in numpy_array for item_cell in array ]
+    grid = { cell: digit if digit != '0' else '123456789' for cell, digit in zip(cells, flattened_numpy_array) }
+    grid_solution = recursive_depth_first_search(grid)
+    numpy_array_solution = convert_grid_to_np_array(grid_solution)
+    return numpy_array_solution
 
 
 def convert_grid_to_np_array(grid):
@@ -145,9 +200,9 @@ def convert_grid_to_np_array(grid):
     return np_grid
 
 
-def display_sudoku(grid):
+def display_sudoku(np_array):
     horizontal_line = ' ' + '+'.join(['-'*7]*3)
-    for i, row in enumerate(grid):
+    for i, row in enumerate(np_array):
         if i % 3 == 0 and i != 0:
             print(horizontal_line)
         try:
@@ -159,7 +214,7 @@ def display_sudoku(grid):
 
 
 def main():
-    difficulty = 'medium'
+    difficulty = 'hard'
     sudokus = np.load(f'data/{difficulty}_puzzle.npy')
     sudokus_solutions = np.load(f'data/{difficulty}_solution.npy')
 
@@ -167,22 +222,29 @@ def main():
     sudokus_solutions = sudokus_solutions.astype(int)
 
     solving_times = []
+    sudoku_string = "005300000800000020070010500400005300010070006003200080060500009004000030000009700"
+
+    # Converting the string to a list of integers
+    sudoku_list = [int(char) for char in sudoku_string]
+
+    # Converting the list to a 9x9 numpy array
+    sudoku_array = np.array(sudoku_list).reshape(9, 9)
+    # print(sudoku_array)
+    # raise
+    # sudokus[0] = sudoku_array
 
     print('Generating solutions...')
-    output = False
-    for j in range(25):
-        for i in range(0, 15):
+    output = True
+    for j in range(1):
+        for i in range(15):
             if output:
-                print('Sudoku:')
+                print(f'Sudoku index {i}:')
                 display_sudoku(sudokus[i])
 
             start_time = time.time()
 
-            try:
-                solution = generate_solution(sudokus[i])
-                solution = convert_grid_to_np_array(solution)
-            except ContradictionException:
-                solution = np.full((9, 9), -1)
+            solution = generate_solution(sudokus[i])
+            # solution = convert_grid_to_np_array(solution)
 
             end_time = time.time()
             solving_time = end_time - start_time
