@@ -23,7 +23,7 @@ cells = [ (row, column) for row in range(1, 10) for column in range(1, 10) ]
 units = { cell: [] for cell in cells }
 peers = {}
 
-INVALID_SOLUTION = {cell: '-1' for cell in cells}
+INVALID_SOLUTION = { cell: '-1' for cell in cells }
 
 # Populate `units`.
 for cell in cells:
@@ -54,23 +54,76 @@ for cell in cells:
 
 def remove_digit_from_peers(digit, cell, grid):
     single_digits_of_peers = []
+    total_available_values = 0
     for peer in peers[cell]:
+        # # TEMPORARY GLOBAL
+        # global num_of_available_values
+        num_of_available_values = len(grid[peer])
+        # total_available_values += num_of_available_values
         # If there are available digits for given a cell.
         if len(grid[peer]) > 1:
             grid[peer] = grid[peer].replace(digit, '')
         elif grid[peer] == grid[cell]:
             raise ContradictionException
-            # print(f'Checking peer {peer} of cell {cell}')
-            # single_digits_of_peers.append(grid[peer])
-            # if len(single_digits_of_peers) != len(set(single_digits_of_peers)):
-            #     print(single_digits_of_peers)
-            #     print('Duplicate singles detected.')
+    return grid
+
+
+def constrain_cell_to_single_digit(digit, cell, grid):
+    for digit_to_be_eliminated in grid[cell]:
+        if digit_to_be_eliminated != digit:
+            # print(f'Eliminating digit {digit_to_be_eliminated} from cell {cell}')
+            # display_sudoku(convert_grid_to_np_array(grid))
+            # if digit_to_be_eliminated == '9': raise
+            grid = propagate_digit_elimination(digit_to_be_eliminated, cell, grid)
+    return grid
+
+
+def propagate_digit_elimination(digit, cell, grid):
+    digit_is_present = digit in grid[cell]
+
+    if digit_is_present:
+        grid[cell] = grid[cell].replace(digit, '')
+    else:
+        return grid
+
+    num_of_remaining_digits = len(grid[cell])
+    if num_of_remaining_digits == 0:
+        # print(digit)
+        # print(cell)
+        # display_sudoku(convert_grid_to_np_array(grid))
+        raise ContradictionException
+    # Eliminating from peers.
+    elif num_of_remaining_digits == 1:
+        for peer in peers[cell]:
+            # print(f'Removing digit {digit} from peer {peer}')
+            # display_sudoku(convert_grid_to_np_array(grid))
+            # if digit == '9': raise
+            grid = propagate_digit_elimination(grid[cell], peer, grid)
+    # Naked twins.
+    elif num_of_remaining_digits == 2:
+        pass
+
+    # Hidden singles.
+    for unit in units[cell]:
+        num_of_occurences_in_unit = 0
+        last_occured_in_cell = None
+
+        for cell_of_unit in unit:
+            if digit in grid[cell_of_unit]:
+                num_of_occurences_in_unit += 1
+                last_occured_in_cell = cell_of_unit
+
+        if last_occured_in_cell is not None:
+            if num_of_occurences_in_unit == 1:
+                # print('HEREEEEE')
+                grid = constrain_cell_to_single_digit(digit, last_occured_in_cell, grid)
+        else:
+            raise ContradictionException
+
     return grid
 
 
 def assign_and_propagate(digit, cell, grid):
-    # TODO: rename
-    # grid = gridd.copy()
 
     grid[cell] = digit
 
@@ -91,31 +144,6 @@ def assign_and_propagate(digit, cell, grid):
             for digit_iter in grid[cell_iter]:
                 digits_counter[digit_iter]['count'] += 1
                 digits_counter[digit_iter]['cell'] = cell_iter
-
-            # cell_has_two_possible_values = len(grid[cell_iter]) == 2
-            # if cell_has_two_possible_values:
-            #     potential_naked_twins[cell_iter] = grid[cell_iter]
-
-        # for cell, digits in potential_naked_twins.items():
-        #     potential_naked_twins_counter.setdefault(digits, []).append(cell)
-
-        # Filter `potential_naked_twins_counter` to include only those digit pairs that occur exactly twice.
-        # naked_twins = { digits: cells for digits, cells in potential_naked_twins_counter.items() if len(cells) == 2 }
-        # if naked_twins:
-        #     for digits, cells in naked_twins.items():
-        #         first_twin   = cells[0]
-        #         second_twin  = cells[1]
-        #         first_digit  = digits[0]
-        #         second_digit = digits[1]
-        #         for cell in unit:
-        #             # TODO: May be redundant.
-        #             if not grid[cell]:
-        #                 raise ContradictionException
-        #                 # return gridd
-        #                 # raise
-        #             if (cell != first_twin) and (cell != second_twin) and len(grid[cell]) > 1:
-        #                 grid[cell] = grid[cell].replace(first_digit, '')
-        #                 grid[cell] = grid[cell].replace(second_digit, '')
 
         for digit_key, value in digits_counter.items():
             unit_missing_possible_digit = value['count'] == 0
@@ -154,17 +182,20 @@ def recursive_depth_first_search(grid):
     if mrv_cell is None:
         return INVALID_SOLUTION
 
-    # new_grid = grid
-
     shuffled_digits = list(grid[mrv_cell])
     random.shuffle(shuffled_digits)
 
-    # TODO: Maybe implement least constraining value instead.
+    # TODO: Continue implementing least constraining value instead of randomness.
+    total_available_values = 0
+    for peer in peers[mrv_cell]:
+        num_of_available_values = len(grid[peer])
+        total_available_values += num_of_available_values
+
     for digit in shuffled_digits:
         new_grid = grid.copy()
         # print(f'Checking {digit} in {mrv_cell}...')
         try:
-            new_grid = assign_and_propagate(digit, mrv_cell, new_grid)
+            new_grid = constrain_cell_to_single_digit(digit, mrv_cell, new_grid)
 
             # display_sudoku(convert_grid_to_np_array(new_grid))
 
@@ -182,7 +213,18 @@ def recursive_depth_first_search(grid):
 
 def generate_solution(numpy_array):
     flattened_numpy_array = [ str(item_cell) for array in numpy_array for item_cell in array ]
-    grid = { cell: digit if digit != '0' else '123456789' for cell, digit in zip(cells, flattened_numpy_array) }
+
+    # Initialize the grid.
+    grid = { cell: '123456789' for cell in cells}
+    for digit, cell in zip(flattened_numpy_array, cells):
+        # print(f'Assigning digit {digit} in cell {cell} from the numpy array')
+        if digit == '0':
+            continue
+        try:
+            grid = constrain_cell_to_single_digit(digit, cell, grid)
+        except ContradictionException:
+            return convert_grid_to_np_array(INVALID_SOLUTION)
+
     grid_solution = recursive_depth_first_search(grid)
     numpy_array_solution = convert_grid_to_np_array(grid_solution)
     return numpy_array_solution
@@ -234,8 +276,8 @@ def main():
     # sudokus[0] = sudoku_array
 
     print('Generating solutions...')
-    output = True
-    for j in range(1):
+    output = False
+    for j in range(128):
         for i in range(15):
             if output:
                 print(f'Sudoku index {i}:')
