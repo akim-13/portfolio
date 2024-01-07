@@ -1,13 +1,17 @@
 import numpy as np
 import time
+import copy
 
 # Frequently used constants, populated in `main()`.
 cells = [ (row, column) for row in range(1, 10) for column in range(1, 10) ]
 units = { cell: [] for cell in cells }
 peers = { }
 
-# Helps to identify how much time have passed after starting to generate a solution.
-start_time = 0
+# Global variable to track the elapsed time since the start of the solution generation.
+# IMPORTANT: Ensure `start_time` is defined and used globally to prevent incorrect triggering of 
+# the time-out condition in `recursive_depth_first_search`, which could lead to an erroneous 
+# `INVALID_SOLUTION` return.
+start_time = time.time()
 
 INVALID_SOLUTION = { cell: '-1' for cell in cells }
 ALL_AVAILABLE_DIGITS = '123456789'
@@ -386,16 +390,11 @@ def main():
 
     print('Generating solutions...')
 
-    # print('BEFORE THE LOOP')
-    # original_puzzle_before = np.copy(sudokus[2])  # Make a copy before solving
-    # solution_before = sudoku_solver(original_puzzle_before)
-    # print(original_puzzle_before)
-    # print(solution_before)
-    # print(sudokus_solutions[2])
-
     solving_times = []
-    sudoku_output_enabled = False
+    incorrect_solutions_counter = 0
+    num_of_sudokus = len(sudokus)
 
+    sudoku_output_enabled = False
     if sudoku_output_enabled:
         test_n_times = 1
     else:
@@ -404,14 +403,17 @@ def main():
     print(f'The test (difficulty "{difficulty}") will be run {test_n_times} time(s).', end='\n\n')
 
     for n in range(test_n_times):
-        for i in range(len(sudokus)):
+        for i in range(num_of_sudokus):
+            sudoku = copy.deepcopy(sudokus[i])
             if sudoku_output_enabled:
                 print(f'Sudoku number {i+1}:')
-                display_sudoku(sudokus[i])
+                display_sudoku(sudoku)
 
+            # IMPORTANT: It is mandatory to use `time.time()` when testing, failure to do
+            # so may result in erroneous assignment of `INVALID_SOLUTION` to `solution`.
             start_time = time.time()
 
-            solution = sudoku_solver(sudokus[i])
+            solution = sudoku_solver(sudoku)
 
             end_time = time.time()
             solving_time = end_time - start_time
@@ -422,23 +424,17 @@ def main():
                 display_sudoku(solution)
                 print('Actual solution:')
                 display_sudoku(sudokus_solutions[i])
-            #
-            # if i == 2:
-            #     print('AFTER THE LOOP')
-            #     original_puzzle_after = np.copy(sudokus[2])  # Make another copy for the second solve
-            #     solution_after = sudoku_solver(original_puzzle_after)
-            #     print(original_puzzle_after)
-            #     print(solution_after)
-            #     print(sudokus_solutions[2])
 
             if not np.array_equal(solution, sudokus_solutions[i]):
                 print('ERROR: The generated solution does not match the actual one.')
-                # raise
+                incorrect_solutions_counter += 1
 
             if sudoku_output_enabled:
                 print('='*64, end='\n\n')
 
-        print(f'Test {n+1}/{test_n_times} completed.', end='\n\n')
+        num_of_correct_solutions = num_of_sudokus - incorrect_solutions_counter
+        print(f'Test {n+1}/{test_n_times} completed.')
+        print(f'{num_of_correct_solutions}/{num_of_sudokus} solutions are correct.', end='\n\n')
 
     average_time = round(sum(solving_times) / len(solving_times), 4)
     max_time = round(max(solving_times), 4)
