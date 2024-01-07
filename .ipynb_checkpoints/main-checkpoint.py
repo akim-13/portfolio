@@ -386,15 +386,8 @@ def main():
 
     print('Generating solutions...')
 
-    # print('BEFORE THE LOOP')
-    # original_puzzle_before = np.copy(sudokus[2])  # Make a copy before solving
-    # solution_before = sudoku_solver(original_puzzle_before)
-    # print(original_puzzle_before)
-    # print(solution_before)
-    # print(sudokus_solutions[2])
-
     solving_times = []
-    sudoku_output_enabled = False
+    sudoku_output_enabled = True
 
     if sudoku_output_enabled:
         test_n_times = 1
@@ -422,18 +415,9 @@ def main():
                 display_sudoku(solution)
                 print('Actual solution:')
                 display_sudoku(sudokus_solutions[i])
-            #
-            # if i == 2:
-            #     print('AFTER THE LOOP')
-            #     original_puzzle_after = np.copy(sudokus[2])  # Make another copy for the second solve
-            #     solution_after = sudoku_solver(original_puzzle_after)
-            #     print(original_puzzle_after)
-            #     print(solution_after)
-            #     print(sudokus_solutions[2])
 
             if not np.array_equal(solution, sudokus_solutions[i]):
                 print('ERROR: The generated solution does not match the actual one.')
-                # raise
 
             if sudoku_output_enabled:
                 print('='*64, end='\n\n')
