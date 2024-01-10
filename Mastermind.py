@@ -245,7 +245,7 @@ class GameProcessor:
 
     def _generate_guess_based_feedback_str(self, code, guesses, current_guess_num):
         right_pos_count, right_colour_count = self._generate_guess_based_right_pos_col_counts(code, guesses)
-        feedback_str = self._generate_feedback_string(right_pos_count, right_colour_count, current_guess_num)
+        feedback_str = self._assemble_feedback_string(right_pos_count, right_colour_count, current_guess_num)
 
         return feedback_str
 
@@ -260,17 +260,6 @@ class GameProcessor:
         right_colour_count = self._generate_right_colour_count(code_copy, guesses_copy)
 
         return right_pos_count, right_colour_count
-
-
-    @staticmethod
-    def _nullify_pegs(code, guesses, code_index, guess_index=None):
-        """Nullifies the pegs at given indices to prevent double counting."""
-        code[code_index] = None
-
-        if guess_index is not None:
-            guesses[guess_index] = None
-        else:
-            guesses[code_index] = None
 
 
     # WARN: Do not call outside `_generate_guess_based_right_pos_col_counts` unless `code_copy` 
@@ -301,54 +290,23 @@ class GameProcessor:
 
 
     @staticmethod
-    def _generate_feedback_string(right_pos_count, right_colour_count, current_guess_num):
+    def _nullify_pegs(code, guesses, code_index, guess_index=None):
+        """Nullifies the pegs at given indices to prevent double counting."""
+        code[code_index] = None
+
+        if guess_index is not None:
+            guesses[guess_index] = None
+        else:
+            guesses[code_index] = None
+
+
+    @staticmethod
+    def _assemble_feedback_string(right_pos_count, right_colour_count, current_guess_num):
         feedback_string = f'Guess {current_guess_num}: '
         feedback_parts = [CORRECT_POSITION_GUESS] * right_pos_count + [CORRECT_COLOUR_GUESS] * right_colour_count
         feedback_string += ' '.join(feedback_parts)
 
         return feedback_string
-
-
-    @staticmethod
-    def _generate_right_pos_pegs_feedback(guesses, code, only_count_pos_and_color):
-        right_pos_pegs_str = ''
-        right_pos_counter = 0
-
-        for i, (guess, code_colour) in enumerate(zip(guesses, code)):
-            if guess == code_colour:
-                if only_count_pos_and_color:
-                    right_pos_counter += 1
-                else:
-                    right_pos_pegs_str += CORRECT_POSITION_GUESS + ' '
-                # Nullify the current guess and corresponding code to ensure that they are not used later on.
-                guesses[i] = None
-                code[i] = None
-
-        if only_count_pos_and_color:
-            return right_pos_counter
-        else:
-            return right_pos_pegs_str
-
-
-    @staticmethod
-    def _generate_right_colour_pegs_feedback(guesses, code, only_count_pos_and_color):
-        right_colour_pegs_str = ''
-        right_colour_counter = 0
-
-        for i, code_colour in enumerate(code):
-            if (code_colour is not None) and (code_colour in guesses):
-                if only_count_pos_and_color:
-                    right_colour_counter += 1
-                else:
-                    right_colour_pegs_str += CORRECT_COLOUR_GUESS + ' '
-                j = guesses.index(code_colour)
-                guesses[j] = None
-                code[i] = None
-
-        if only_count_pos_and_color:
-            return right_colour_counter
-        else:
-            return right_colour_pegs_str
 
 
     def _game_is_over(self, correct_position_guesses, current_guess_num):
