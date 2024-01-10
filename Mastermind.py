@@ -217,7 +217,7 @@ class GameProcessor:
         self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.maximum_guesses)
         guesses = self._validate_current_guesses(current_guess_num)
 
-        current_line_output = self._generate_guess_based_feedback(guesses, current_guess_num, self.code)
+        current_line_output = self._generate_guess_based_feedback_str(self.code, guesses, current_guess_num)
         self.output_lines.append(current_line_output)
 
         correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
@@ -243,30 +243,70 @@ class GameProcessor:
         return guesses
 
 
-    # FIXME: Getting stuck in an infinite loop after refactoring. Do not return different types, split in two functions.
-    def _generate_guess_based_feedback(self, guesses, current_guess_num, code, only_count_pos_and_color=False):
-        current_line_output = f'Guess {current_guess_num}: '
-        right_pos_counter = 0
-        right_colour_counter = 0
-        # Make copies of the lists in order to preserve the originals.
+    def _generate_guess_based_feedback_str(self, code, guesses, current_guess_num):
+        right_pos_count, right_colour_count = self._generate_guess_based_right_pos_col_counts(code, guesses)
+        feedback_str = self._generate_feedback_string(right_pos_count, right_colour_count, current_guess_num)
+
+        return feedback_str
+
+
+    def _generate_guess_based_right_pos_col_counts(self, code, guesses):
+        if not (code and guesses):
+            return 0, 0
+
         code_copy = code.copy()
         guesses_copy = guesses.copy()
+        right_pos_count = self._generate_right_pos_count(code_copy, guesses_copy)
+        right_colour_count = self._generate_right_colour_count(code_copy, guesses_copy)
 
-        if only_count_pos_and_color:
-            current_line_output += self._generate_right_pos_pegs_feedback(guesses_copy, code_copy, only_count_pos_and_color)
-            current_line_output += self._generate_right_colour_pegs_feedback(guesses_copy, code_copy, only_count_pos_and_color)
+        return right_pos_count, right_colour_count
+
+
+    @staticmethod
+    def _nullify_pegs(code, guesses, code_index, guess_index=None):
+        """Nullifies the pegs at given indices to prevent double counting."""
+        code[code_index] = None
+
+        if guess_index is not None:
+            guesses[guess_index] = None
         else:
-            right_pos_counter = self._generate_right_pos_pegs_feedback(guesses_copy, code_copy, only_count_pos_and_color)
-            right_colour_counter = self._generate_right_colour_pegs_feedback(guesses_copy, code_copy, only_count_pos_and_color)
+            guesses[code_index] = None
 
-        # Remove the last space only when `current_line_output` has been modified.
-        if current_line_output.endswith(f'{CORRECT_POSITION_GUESS} ') or current_line_output.endswith(f'{CORRECT_COLOUR_GUESS} '):
-            current_line_output = current_line_output.strip()
 
-        if only_count_pos_and_color:
-            return (right_pos_counter, right_colour_counter)
-        else:
-            return current_line_output
+    # WARN: Do not call outside `_generate_guess_based_right_pos_col_counts` unless `code_copy` 
+    # and `guesses_copy` are copies of the actual variables, they get altered in the process.
+    def _generate_right_pos_count(self, code_copy, guesses_copy):
+        right_pos_count = 0
+
+        for i, (guess, code_colour) in enumerate(zip(guesses_copy, code_copy)):
+            if guess == code_colour:
+                right_pos_count += 1
+                self._nullify_pegs(code_copy, guesses_copy, i)
+
+        return right_pos_count
+
+
+    # WARN: Do not call outside `_generate_guess_based_right_pos_col_counts` unless `code_copy` 
+    # and `guesses_copy` are copies of the actual variables, they get altered in the process.
+    def _generate_right_colour_count(self, code_copy, guesses_copy):
+        right_colour_count = 0
+
+        for i, code_colour in enumerate(code_copy):
+            if (code_colour is not None) and (code_colour in guesses_copy):
+                right_colour_count += 1
+                j = guesses_copy.index(code_colour)
+                self._nullify_pegs(code_copy, guesses_copy, i, j)
+
+        return right_colour_count
+
+
+    @staticmethod
+    def _generate_feedback_string(right_pos_count, right_colour_count, current_guess_num):
+        feedback_string = f'Guess {current_guess_num}: '
+        feedback_parts = [CORRECT_POSITION_GUESS] * right_pos_count + [CORRECT_COLOUR_GUESS] * right_colour_count
+        feedback_string += ' '.join(feedback_parts)
+
+        return feedback_string
 
 
     @staticmethod
@@ -340,7 +380,7 @@ class GameProcessor:
         while True:
             computer_guesses.append(current_guess)
 
-            current_line_output = self._generate_guess_based_feedback(current_guess, current_guess_num, self.code)
+            current_line_output = self._generate_guess_based_feedback_str(self.code, current_guess, current_guess_num)
             self.output_lines.append(current_line_output)
             correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
 
@@ -350,7 +390,7 @@ class GameProcessor:
             possible_solutions = self._filter_possible_solutions(possible_solutions, current_guess)
             current_guess = self._generate_next_guess(possible_codes, possible_solutions)
             current_guess_num += 1
-            self.out_of_guesses = current_guess_num == MAX_GUESSES
+            self.out_of_guesses = current_guess_num == self.input_args.maximum_guesses
 
         FileHandler(self.input_args.output_filename).write_lines_to_file(self.output_lines)
         self._write_computer_guesses_to_file(computer_guesses)
@@ -377,25 +417,21 @@ class GameProcessor:
     def _filter_possible_solutions(self, possible_solutions, guess):
         new_possible_solutions = []
 
-        current_line_output = self.output_lines[-1] if self.output_lines else None
-        correct_position_guesses, correct_colour_guesses = self._get_pos_and_colour_feedback(None, None, current_line_output)
+        if not self.output_lines:
+            return new_possible_solutions
+
+        current_line_output = self.output_lines[-1]
+        correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
+        correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
 
         for possible_solution in possible_solutions:
-            current_correct_position_guesses, current_correct_colour_guesses = self._get_pos_and_colour_feedback(possible_solution, guess)
+            current_correct_position_guesses, current_correct_colour_guesses = self._generate_guess_based_right_pos_col_counts(guess, possible_solution)
 
             feedback_is_the_same = (current_correct_position_guesses == correct_position_guesses) and (current_correct_colour_guesses == correct_colour_guesses)
             if feedback_is_the_same:
                 new_possible_solutions.append(possible_solution)
 
         return new_possible_solutions
-
-
-    def _get_pos_and_colour_feedback(self, guesses, code, current_line_output=None):
-        if current_line_output is None:
-            current_line_output = self._generate_guess_based_feedback(guesses, None, code)
-        correct_colour_guesses = current_line_output.count(CORRECT_COLOUR_GUESS)
-        correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
-        return (correct_position_guesses, correct_colour_guesses)
 
 
     def _generate_next_guess(self, possible_codes, possible_solutions):
@@ -407,7 +443,7 @@ class GameProcessor:
             current_max_occurrences = 0
 
             for code in possible_solutions:
-                pos_and_color_combo = self._get_pos_and_colour_feedback(guess, code)
+                pos_and_color_combo = self._generate_guess_based_right_pos_col_counts(code, guess)
                 occurrence_count = num_of_pos_and_colour_occurrences.get(pos_and_color_combo, 0) + 1
                 num_of_pos_and_colour_occurrences[pos_and_color_combo] = occurrence_count
                 current_max_occurrences = max(current_max_occurrences, occurrence_count)
