@@ -1,7 +1,6 @@
-from my_logger import d, i, w, e
+import re
 import os
 import sys
-import shlex
 import itertools
 
 INF = float('inf')
@@ -84,7 +83,7 @@ class FileHandler():
         Validate if the input file is accessible and has the correct format.
 
         Return:
-            str: The filename if validation is successful.
+            `self.filename` (str): The filename if validation is successful.
         """
         file_exists = os.path.isfile(self.filename)
 
@@ -109,7 +108,7 @@ class FileHandler():
         Validate if the output file is accessible and has the correct format.
 
         Return:
-            str: The filename if validation is successful.
+            `self_filename` (str): The filename if validation is successful.
         """
         file_exists = os.path.exists(self.filename)
 
@@ -145,15 +144,12 @@ class InputArgs:
         Args:
             `args` (List[str]): A list of command line arguments.
         """
-        self._validate_num_of_args(args)
-        self.input_filename  = FileHandler(args[1]).validate_input_file_accessibility()
-        self.output_filename = FileHandler(args[2]).validate_output_file_accessibility()
-        self.code_length     = self._validate_arg_is_valid_int(args[3], 1, MAX_CODE_LENGTH) if len(args) > 3 else DEFAULT_CODE_LENGTH
-        self.maximum_guesses = self._validate_arg_is_valid_int(args[4], 1, MAX_GUESSES) if len(args) > 4 else DEFAULT_MAX_GUESSES
-        # Join the rest of the arguments (available colours) into a string.
-        available_colours_str = ' '.join(args[5:]) if len(args) > 5 else ' '.join(DEFAULT_AVAILABLE_COLOURS)
-        # Split the string into a list using `shlex` to handle quotes and double quotes like the shell does.
-        self.available_colours = shlex.split(available_colours_str)
+        num_of_args            = self._validate_num_of_args(args)
+        self.input_filename    = FileHandler(args[1]).validate_input_file_accessibility()
+        self.output_filename   = FileHandler(args[2]).validate_output_file_accessibility()
+        self.code_length       = self._validate_arg_is_valid_int(args[3], 1, MAX_CODE_LENGTH) if num_of_args > 3 else DEFAULT_CODE_LENGTH
+        self.max_guesses       = self._validate_arg_is_valid_int(args[4], 1, MAX_GUESSES) if num_of_args > 4 else DEFAULT_MAX_GUESSES
+        self.available_colours = self._validate_colours(args[5:]) if num_of_args > 5 else DEFAULT_AVAILABLE_COLOURS
 
 
     @staticmethod
@@ -163,11 +159,18 @@ class InputArgs:
 
         Args:
             `args` (List[str]): A list of command line arguments.
+
+        Return:
+            `num_of_args` (int): The number of arguments.
         """
-        if len(args) < 3:
+        num_of_args = len(args)
+
+        if num_of_args < 3:
             print('ERROR: Not enough arguments provided.')
             print('Usage: python Mastermind.py InputFile OutputFile [CodeLength] [MaximumGuesses] [AvailableColours]*')
             sys.exit(INVALID_ARGS)
+
+        return num_of_args
 
 
     @staticmethod
@@ -193,6 +196,27 @@ class InputArgs:
             sys.exit(INVALID_ARGS)
 
         return num
+
+
+    def _validate_colours(self, colours):
+        """
+        Validate the colours provided in a string and return them as a list.
+
+        Args:
+            `colours` (List[str]): A string containing colour names.
+
+        Return:
+            `colours` (List[str]): A list of valid colour names.
+        """
+        # Allow only letters and optionally hyphens, e.g. 'light-green'.
+        valid_colour_pattern = re.compile(r'^[a-zA-Z]+(-[a-zA-Z]+)*$')
+        all_colours_are_valid = all(valid_colour_pattern.match(colour) for colour in colours)
+
+        if not all_colours_are_valid:
+                print(f'ERROR: One or more provided colours are invalid.')
+                sys.exit(INVALID_ARGS)
+
+        return colours
 
 
 class ContinueException(Exception):
@@ -324,7 +348,7 @@ class GameProcessor:
         Args:
             `current_guess_num` (int): The current guess number.
         """
-        self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.maximum_guesses)
+        self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.max_guesses)
         guesses = self._validate_current_guesses(current_guess_num)
         current_line_output = self._generate_guess_based_feedback_str(self.code, guesses, current_guess_num)
         self.output_lines.append(current_line_output)
@@ -516,6 +540,8 @@ class GameProcessor:
             return True
         elif self.out_of_guesses:
             self.output_lines.append('You lost. Please try again.')
+            if current_guess_num == self.input_args.max_guesses:
+                self.output_lines.append(f'You can only have {self.input_args.max_guesses} guesses.')
             return True
         else:
             return False
@@ -554,7 +580,7 @@ class GameProcessor:
             possible_solutions = self._filter_possible_solutions(possible_solutions, current_guess)
             current_guess = self._generate_next_guess(possible_codes, possible_solutions)
             current_guess_num += 1
-            self.out_of_guesses = current_guess_num == self.input_args.maximum_guesses
+            self.out_of_guesses = current_guess_num == self.input_args.max_guesses
 
         FileHandler(self.input_args.output_filename).write_lines_to_file(self.output_lines)
         self._write_computer_guesses_to_file(computer_guesses)
