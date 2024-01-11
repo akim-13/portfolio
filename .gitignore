@@ -1,4 +1,7 @@
 __pycache__/
-input.txt
-output.txt
-computerGame.txt
+*.txt
+!examples_io/*.txt
+
+# input.txt
+# output.txt
+# computerGame.txt
