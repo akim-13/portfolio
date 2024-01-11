@@ -13,9 +13,9 @@ MAX_GUESSES = 1024
 DEFAULT_CODE_LENGTH = 5
 DEFAULT_MAX_GUESSES = 12
 DEFAULT_AVAILABLE_COLOURS = ['red', 'blue', 'yellow', 'green', 'orange']
+
 CORRECT_COLOUR_GUESS = 'white'
 CORRECT_POSITION_GUESS = 'black'
-
 CODE_KEYWORD = 'code'
 HUMAN_PLAYER_KEYWORDS = 'player human'
 COMPUTER_PLAYER_KEYWORDS = 'player computer'
@@ -32,20 +32,40 @@ KEYBOARD_INTERRUPT = 6
 GENERAL_ERROR      = 7
 UNEXPECTED_ERROR   = 8
 
-# TODO: Add docstrings everywhere.
-
 class FileHandler():
+    """
+    Handle file operations such as reading, writing, and validating file accessibility.
+    """
+
     def __init__(self, filename):
+        """
+        Initialize the `FileHandler` with a specific filename.
+
+        Args:
+            `filename` (str): The name of the file to be processed.
+        """
         self.filename = filename
 
 
     def write_lines_to_file(self, lines):
+        """
+        Write given lines to the specified file.
+
+        Args:
+            `lines` (List[str]): A list of strings, each representing a line to be written to the file.
+        """
         with open(self.filename, 'w') as file:
             for line in lines:
                 file.write(line + '\n')
 
 
     def _file_has_txt_extension(self):
+        """
+        Check if the file has a .txt extension.
+
+        Return:
+            bool: `True` if the file has a .txt extension, `False` otherwise.
+        """
         try:
             filename_ends_with_txt = self.filename.lower().endswith('.txt')
         except:
@@ -60,12 +80,20 @@ class FileHandler():
 
 
     def validate_input_file_accessibility(self):
+        """
+        Validate if the input file is accessible and has the correct format.
+
+        Return:
+            str: The filename if validation is successful.
+        """
         file_exists = os.path.isfile(self.filename)
+
         if not file_exists:
             print(f'ERROR: The input file "{self.filename}" does not exist.')
             sys.exit(INPUT_FILE_ISSUE)
 
         file_is_readable = os.access(self.filename, os.R_OK)
+
         if not file_is_readable:
             print(f'ERROR: The input file "{self.filename}" is not readable.')
             sys.exit(INPUT_FILE_ISSUE)
@@ -77,20 +105,27 @@ class FileHandler():
 
 
     def validate_output_file_accessibility(self):
+        """
+        Validate if the output file is accessible and has the correct format.
+
+        Return:
+            str: The filename if validation is successful.
+        """
         file_exists = os.path.exists(self.filename)
 
         if (file_exists) and (not self._file_has_txt_extension()):
                 sys.exit(OUTPUT_FILE_ISSUE)
-        else:
-            try:
-                # Attempt to create the file.
-                with open(self.filename, 'w'):
-                    pass
-            except IOError:
-                print(f'ERROR: The output file "{self.filename}" cannot be created.')
-                sys.exit(OUTPUT_FILE_ISSUE)
+
+        try:
+            # Attempt to create the file.
+            with open(self.filename, 'w'):
+                pass
+        except IOError:
+            print(f'ERROR: The output file "{self.filename}" cannot be created.')
+            sys.exit(OUTPUT_FILE_ISSUE)
 
         file_is_writable = os.access(self.filename, os.W_OK)
+
         if not file_is_writable:
             print(f'ERROR: The output file "{self.filename}" is not writable.')
             sys.exit(OUTPUT_FILE_ISSUE)
@@ -99,7 +134,17 @@ class FileHandler():
 
 
 class InputArgs:
+    """
+    Parse, process and validate command line arguments to set up the game configuration.
+    """
+
     def __init__(self, args):
+        """
+        Initialize `InputArgs` with command line arguments.
+
+        Args:
+            `args` (List[str]): A list of command line arguments.
+        """
         self._validate_num_of_args(args)
         self.input_filename  = FileHandler(args[1]).validate_input_file_accessibility()
         self.output_filename = FileHandler(args[2]).validate_output_file_accessibility()
@@ -113,6 +158,12 @@ class InputArgs:
 
     @staticmethod
     def _validate_num_of_args(args):
+        """
+        Validate the number of command line arguments provided.
+
+        Args:
+            `args` (List[str]): A list of command line arguments.
+        """
         if len(args) < 3:
             print('ERROR: Not enough arguments provided.')
             print('Usage: python Mastermind.py InputFile OutputFile [CodeLength] [MaximumGuesses] [AvailableColours]*')
@@ -121,6 +172,17 @@ class InputArgs:
 
     @staticmethod
     def _validate_arg_is_valid_int(num, lower_bound=-INF, upper_bound=INF):
+        """
+        Validate whether a provided argument is a valid integer within specified bounds.
+
+        Args:
+            `num` (str): The argument to validate as an integer. 
+            `lower_bound` (int): The lower bound of the valid range. Defaults to negative infinity.
+            `upper_bound` (int): The upper bound of the valid range. Defaults to positive infinity.
+
+        Return:
+            `num` (int): The validated integer.
+        """
         try:
             num = int(num)
             if num < lower_bound or num > upper_bound:
@@ -129,21 +191,39 @@ class InputArgs:
         except ValueError:
             print(f'ERROR: "{num}" is not an integer.')
             sys.exit(INVALID_ARGS)
+
         return num
 
 
 class ContinueException(Exception):
-    """Exception raised to continue in a loop."""
+    """
+    Exception raised to continue in a loop.
+    """
     pass
 
 
 class BreakException(Exception):
-    """Exception raised to break from a loop."""
+    """
+    Exception raised to break from a loop.
+    """
     pass
 
 
 class GameProcessor:
+    """
+    Manage and process the game logic for Mastermind based on input arguments.
+
+    Handle the game's execution flow, processing guesses, generating feedback, 
+    and determining the outcome of the game.
+    """
+
     def __init__(self, input_args):
+        """
+        Initialize `GameProcessor` with the provided input arguments.
+
+        Args:
+            `input_args` (InputArgs): An instance of `InputArgs` containing the game configuration.
+        """
         self.input_args           = input_args
         self.out_of_guesses       = False
         self.player_mode_is_human = True
@@ -153,6 +233,9 @@ class GameProcessor:
 
 
     def execute_input_file(self):
+        """
+        Execute the game logic based on the contents of the input file.
+        """
         with open(self.input_args.input_filename, 'r') as file:
             lines = file.readlines()
             self._validate_num_of_lines(len(lines))
@@ -164,12 +247,24 @@ class GameProcessor:
 
     @staticmethod
     def _validate_num_of_lines(num_of_lines):
+        """
+        Validate the number of lines in a file.
+
+        Args:
+            `num_of_lines` (int): The number of lines in the file.
+        """
         if num_of_lines < 2:
             print('ERROR: Ill-formed input file provided.')
             sys.exit(INPUT_FILE_ISSUE)
 
 
     def _validate_code(self, code_line):
+        """
+        Validate the code line from the input file.
+
+        Args:
+            `code_line` (str): The line from the input file containing the code (the secret combination of colours).
+        """
         code_keyword_is_present = code_line.startswith(f'{CODE_KEYWORD} ')
         # +1 because of the space after the keyword.
         code_keyword_offset = len(CODE_KEYWORD) + 1
@@ -185,6 +280,12 @@ class GameProcessor:
 
 
     def _choose_player_mode(self, player_line):
+        """
+        Choose the player mode based on the input file's player line.
+
+        Args:
+            `player_line` (str): The line from the input file indicating the player mode.
+        """
         player_line = player_line.strip()
         if player_line == HUMAN_PLAYER_KEYWORDS:
             self._process_all_guess_lines()
@@ -198,6 +299,9 @@ class GameProcessor:
 
 
     def _process_all_guess_lines(self):
+        """
+        Process all guess lines from the input file in human player mode and write them to the output file.
+        """
         no_guesses_provided = not self.guess_lines
         if no_guesses_provided:
             self.output_lines.append('You lost. Please try again.')
@@ -214,18 +318,33 @@ class GameProcessor:
 
 
     def _process_line_of_guesses(self, current_guess_num):
+        """
+        Process a single line of guesses.
+
+        Args:
+            `current_guess_num` (int): The current guess number.
+        """
         self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.maximum_guesses)
         guesses = self._validate_current_guesses(current_guess_num)
-
         current_line_output = self._generate_guess_based_feedback_str(self.code, guesses, current_guess_num)
         self.output_lines.append(current_line_output)
 
         correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
+
         if self._game_is_over(correct_position_guesses, current_guess_num):
             raise BreakException
 
 
     def _validate_current_guesses(self, current_guess_num):
+        """
+        Validate the guesses of the current guess line.
+
+        Args:
+            `current_guess_num` (int): The current guess number.
+
+        Return:
+            `guesses` (List[str]): A list of valid current line guesses.
+        """
         current_guess_line = self.guess_lines[current_guess_num - 1]
         guesses = current_guess_line.strip().split()
         num_of_guesses_is_correct = len(guesses) == self.input_args.code_length
@@ -244,13 +363,43 @@ class GameProcessor:
 
 
     def _generate_guess_based_feedback_str(self, code, guesses, current_guess_num):
-        right_pos_count, right_colour_count = self._generate_guess_based_right_pos_col_counts(code, guesses)
-        feedback_str = self._assemble_feedback_string(right_pos_count, right_colour_count, current_guess_num)
+        """
+        Generate a feedback string based on the code and the guesses.
 
-        return feedback_str
+        Args:
+            `code` (List[str]): A list of colours against which to check the guesses.
+            `guesses` (List[str]): A list of colours as guesses.
+            `current_guess_num` (int): The current guess number.
+
+        Return:
+            `feedback_string` (str): The feedback string.
+
+        Example:
+            Args:
+                `code    = ['red', 'blue',  'green']`
+                `guesses = ['red', 'green', 'orange']`
+                `current_guess_num = 3`
+            Return:
+                `feedback_string == 'Guess 3: black white'`
+        """
+        right_pos_count, right_colour_count = self._generate_guess_based_right_pos_col_counts(code, guesses)
+        feedback_string = self._assemble_feedback_string(right_pos_count, right_colour_count, current_guess_num)
+
+        return feedback_string
 
 
     def _generate_guess_based_right_pos_col_counts(self, code, guesses):
+        """
+        Generate the counts of right position and right colour pegs (code feedback based on guesses).
+
+        Args:
+            `code` (List[str]): A list of colours against which to check the guesses.
+            `guesses` (List[str]): A list of colours as guesses.
+
+        Return:
+            `right_pos_count, right_colour_count` (Tuple[int, int]): The number of pegs that are in the right position 
+                                                                     and the ones that are of the right colour.
+        """
         if not (code and guesses):
             return 0, 0
 
@@ -265,6 +414,16 @@ class GameProcessor:
     # WARN: Do not call outside `_generate_guess_based_right_pos_col_counts` unless `code_copy` 
     # and `guesses_copy` are copies of the actual variables, they get altered in the process.
     def _generate_right_pos_count(self, code_copy, guesses_copy):
+        """
+        Count the number of guesses that are in the correct position.
+
+        Args:
+            `code_copy` (List[str]): A copy of the list of colours against which to check the guesses.
+            `guesses_copy` (List[str]): A copy of the list of colours as guesses.
+
+        Return:
+            `right_pos_count` (int): The number of pegs that are in the right position.
+        """
         right_pos_count = 0
 
         for i, (guess, code_colour) in enumerate(zip(guesses_copy, code_copy)):
@@ -278,6 +437,16 @@ class GameProcessor:
     # WARN: Do not call outside `_generate_guess_based_right_pos_col_counts` unless `code_copy` 
     # and `guesses_copy` are copies of the actual variables, they get altered in the process.
     def _generate_right_colour_count(self, code_copy, guesses_copy):
+        """
+        Count the number of guesses that are of the correct colour but in the wrong position.
+
+        Args:
+            `code_copy` (List[str]): A copy of the list of colours against which to check the guesses.
+            `guesses_copy` (List[str]): A copy of the list of colours as guesses.
+
+        Return:
+            `right_colour_count` (int): The number of pegs that are of the right colour but in the wrong position.
+        """
         right_colour_count = 0
 
         for i, code_colour in enumerate(code_copy):
@@ -291,7 +460,15 @@ class GameProcessor:
 
     @staticmethod
     def _nullify_pegs(code, guesses, code_index, guess_index=None):
-        """Nullifies the pegs at given indices to prevent double counting."""
+        """
+        Nullify (set to `None`) the pegs at given indices to prevent double counting.
+
+        Args:
+            `code` (List[str]): A list of colours against which to check the guesses.
+            `guesses` (List[str]): A list of colours as guesses.
+            `code_index` (int): The index in the code to nullify.
+            `guess_index` (int): The index in the guesses to nullify. Defaults to `None`.
+        """
         code[code_index] = None
 
         if guess_index is not None:
@@ -302,6 +479,17 @@ class GameProcessor:
 
     @staticmethod
     def _assemble_feedback_string(right_pos_count, right_colour_count, current_guess_num):
+        """
+        Assemble the feedback string from counts of right position and colour guesses.
+
+        Args:
+            `right_pos_count` (int): The count of right position guesses.
+            `right_colour_count` (int): The count of right colour guesses.
+            `current_guess_num` (int): The current guess number.
+
+        Return:
+            `feedback_string` (str): The assembled feedback string.
+        """
         feedback_string = f'Guess {current_guess_num}: '
         feedback_parts = [CORRECT_POSITION_GUESS] * right_pos_count + [CORRECT_COLOUR_GUESS] * right_colour_count
         feedback_string += ' '.join(feedback_parts)
@@ -310,6 +498,16 @@ class GameProcessor:
 
 
     def _game_is_over(self, correct_position_guesses, current_guess_num):
+        """
+        Check if the game is over based on the number of correct position guesses and the guess number.
+
+        Args:
+            `correct_position_guesses` (int): The number of correct position guesses.
+            `current_guess_num` (int): The current guess number.
+
+        Return:
+            bool: `True` if the game is over, `False` otherwise.
+        """
         # `>=` instead of `==` because it is better to be safe than sorry (stuck in an infinite loop).
         if correct_position_guesses >= self.input_args.code_length:
             self.output_lines.append(f'You won in {current_guess_num} guesses. Congratulations!')
@@ -324,6 +522,14 @@ class GameProcessor:
 
 
     def _handle_computer_player(self):
+        """
+        Handle the game logic for the computer player using a generalized version of the Knuth's algorithm.
+
+        The standard Knuth's algorithm is designed for a 4-long code and 6 colours, however this implementation
+        generalizes it in order to work with any combination of code length and number of colours. The only 
+        limitation is computational power, since the number of available codes grows exponentially with increasing
+        code length.
+        """
         # Generate all possible codes from the available colours.
         all_possible_codes = itertools.product(self.input_args.available_colours, repeat=len(self.code))
         possible_codes = [ list(code) for code in all_possible_codes ]
@@ -355,6 +561,21 @@ class GameProcessor:
 
 
     def _generate_initial_guess(self):
+        """
+        Generate the initial guess for the computer player.
+
+        The initial guess is created by sequentially picking colors from the available colors list.
+
+        Return:
+            `initial_guess` (List[str]): The initial guess.
+
+        Example:
+            If:
+               `len(self.code) = 5`
+               `self.input_args.available_colours = ['R', 'G', 'B', 'Y', 'O', 'P']`
+            Then:
+                `initial_guess == ['R', 'R', 'G', 'G', 'B']`
+        """
         initial_guess = []
         colour_index = 0
         finished_generating_initial_guess = False
@@ -373,6 +594,19 @@ class GameProcessor:
 
 
     def _filter_possible_solutions(self, possible_solutions, guess):
+        """
+        Filter possible solutions based on the latest guess and its feedback.
+
+        Compare each possible solution against the latest guess and its feedback
+        to narrow down the set of potential solutions.
+
+        Args:
+            `possible_solutions` (List[List[str]]): The list of possible solutions.
+            `guess` (List[str]): The latest guess made by the computer.
+
+        Return:
+            `new_possible_solutions` (List[List[str]]): The filtered list of possible solutions.
+        """
         new_possible_solutions = []
 
         if not self.output_lines:
@@ -393,6 +627,19 @@ class GameProcessor:
 
 
     def _generate_next_guess(self, possible_codes, possible_solutions):
+        """
+        Generate the next guess for the computer player.
+
+        Analyze possible codes and solutions to determine the
+        most effective next guess using the Minimax algorithm.
+
+        Args:
+            `possible_codes` (List[List[str]]): All possible codes.
+            `possible_solutions` (List[List[str]]): The list of possible solutions after filtering.
+
+        Return:
+            List[str]: The next guess.
+        """
         potential_guesses = []
         min_score_of_a_guess = INF
 
@@ -401,9 +648,9 @@ class GameProcessor:
             current_max_occurrences = 0
 
             for code in possible_solutions:
-                pos_and_color_combo = self._generate_guess_based_right_pos_col_counts(code, guess)
-                occurrence_count = num_of_pos_and_colour_occurrences.get(pos_and_color_combo, 0) + 1
-                num_of_pos_and_colour_occurrences[pos_and_color_combo] = occurrence_count
+                pos_and_colour_combo = self._generate_guess_based_right_pos_col_counts(code, guess)
+                occurrence_count = num_of_pos_and_colour_occurrences.get(pos_and_colour_combo, 0) + 1
+                num_of_pos_and_colour_occurrences[pos_and_colour_combo] = occurrence_count
                 current_max_occurrences = max(current_max_occurrences, occurrence_count)
 
             if current_max_occurrences < min_score_of_a_guess:
@@ -421,6 +668,12 @@ class GameProcessor:
 
 
     def _write_computer_guesses_to_file(self, computer_guesses):
+        """
+        Write the computer's guesses to a file.
+
+        Args:
+            `computer_guesses` (List[List[str]]): The list of guesses made by the computer.
+        """
         FileHandler(COMPUTER_GENERATED_FILENAME).validate_output_file_accessibility()
 
         computer_aux_file_lines = []
@@ -446,3 +699,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f'UNEXPECTED ERROR:\n{e}')
         sys.exit(UNEXPECTED_ERROR)
+
