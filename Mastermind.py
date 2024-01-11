@@ -5,9 +5,7 @@ import itertools
 
 INF = float('inf')
 
-# Do not set too high since the number of possible
-# combinations = `num_of_colours**MAX_CODE_LENGTH`.
-MAX_CODE_LENGTH = 8
+MAX_CODE_LENGTH = 16
 MAX_GUESSES = 1024
 DEFAULT_CODE_LENGTH = 5
 DEFAULT_MAX_GUESSES = 12
@@ -28,8 +26,7 @@ OUTPUT_FILE_ISSUE  = 3
 CODE_ISSUE         = 4
 PLAYER_ISSUE       = 5
 KEYBOARD_INTERRUPT = 6
-GENERAL_ERROR      = 7
-UNEXPECTED_ERROR   = 8
+UNEXPECTED_ERROR   = 7
 
 class FileHandler():
     """
@@ -65,11 +62,7 @@ class FileHandler():
         Return:
             bool: `True` if the file has a .txt extension, `False` otherwise.
         """
-        try:
-            filename_ends_with_txt = self.filename.lower().endswith('.txt')
-        except:
-            print(f'ERROR: Invalid filename or file does not exist.')
-            sys.exit(GENERAL_ERROR)
+        filename_ends_with_txt = self.filename.lower().endswith('.txt')
 
         if not filename_ends_with_txt:
             print(f'ERROR: The file "{self.filename}" does not have a .txt extension.')
@@ -219,20 +212,6 @@ class InputArgs:
         return colours
 
 
-class ContinueException(Exception):
-    """
-    Exception raised to continue in a loop.
-    """
-    pass
-
-
-class BreakException(Exception):
-    """
-    Exception raised to break from a loop.
-    """
-    pass
-
-
 class GameProcessor:
     """
     Manage and process the game logic for Mastermind based on input arguments.
@@ -327,15 +306,14 @@ class GameProcessor:
         Process all guess lines from the input file in human player mode and write them to the output file.
         """
         no_guesses_provided = not self.guess_lines
+
         if no_guesses_provided:
             self.output_lines.append('You lost. Please try again.')
 
         for current_guess_num,_ in enumerate(self.guess_lines, 1):
-            try:
-                self._process_line_of_guesses(current_guess_num)
-            except ContinueException:
-                continue
-            except BreakException:
+            correct_position_guesses = self._process_line_of_guesses(current_guess_num)
+
+            if self._game_is_over(correct_position_guesses, current_guess_num):
                 break
                 
         FileHandler(self.input_args.output_filename).write_lines_to_file(self.output_lines)
@@ -347,16 +325,21 @@ class GameProcessor:
 
         Args:
             `current_guess_num` (int): The current guess number.
+
+        Return:
+            `correct_position_guesses` (int): The number of pegs in the correct position.
         """
         self.out_of_guesses = (current_guess_num >= len(self.guess_lines)) or (current_guess_num >= self.input_args.max_guesses)
         guesses = self._validate_current_guesses(current_guess_num)
+
+        if not guesses:
+            return 0
+
         current_line_output = self._generate_guess_based_feedback_str(self.code, guesses, current_guess_num)
         self.output_lines.append(current_line_output)
-
         correct_position_guesses = current_line_output.count(CORRECT_POSITION_GUESS)
 
-        if self._game_is_over(correct_position_guesses, current_guess_num):
-            raise BreakException
+        return correct_position_guesses
 
 
     def _validate_current_guesses(self, current_guess_num):
@@ -377,11 +360,7 @@ class GameProcessor:
 
         if not all_guesses_are_valid:
             self.output_lines.append(f'Guess {current_guess_num}: Ill-formed guess provided')
-            if self.out_of_guesses:
-                self.output_lines.append('You lost. Please try again.')
-                raise BreakException
-            else:
-                raise ContinueException
+            guesses = []
 
         return guesses
 
@@ -538,11 +517,13 @@ class GameProcessor:
             if (self.player_mode_is_human) and (not self.out_of_guesses):
                 self.output_lines.append('The game was completed. Further lines were ignored.')
             return True
+
         elif self.out_of_guesses:
             self.output_lines.append('You lost. Please try again.')
             if current_guess_num == self.input_args.max_guesses:
                 self.output_lines.append(f'You can only have {self.input_args.max_guesses} guesses.')
             return True
+
         else:
             return False
 
@@ -561,6 +542,12 @@ class GameProcessor:
         possible_codes = [ list(code) for code in all_possible_codes ]
         possible_solutions = possible_codes.copy()
         computer_guesses = []
+        num_of_combinations = len(possible_codes)
+        # `2**14` has been chosen arbitrarily.
+        too_many_combinations = num_of_combinations > 2**14
+
+        if too_many_combinations:
+            self._warn_user(num_of_combinations)
 
         print('Generating solutions...')
 
@@ -584,6 +571,22 @@ class GameProcessor:
 
         FileHandler(self.input_args.output_filename).write_lines_to_file(self.output_lines)
         self._write_computer_guesses_to_file(computer_guesses)
+
+
+    @staticmethod
+    def _warn_user(num_of_combinations):
+        """
+        Warn the user about the potentially long computation time due to a large number of code combinations.
+
+        Args:
+            `num_of_combinations` (int): The total number of possible code combinations.
+        """
+        print(f'There are {num_of_combinations} possible code combinations. This might take a while.')
+        user_warning_reply = input('Are you sure you want to proceed? [Y/n] ').lower()
+
+        if user_warning_reply == 'n':
+            print('Execution terminated by the user.')
+            sys.exit(SUCCESS)
 
 
     def _generate_initial_guess(self):
@@ -644,8 +647,8 @@ class GameProcessor:
 
         for possible_solution in possible_solutions:
             current_correct_position_guesses, current_correct_colour_guesses = self._generate_guess_based_right_pos_col_counts(guess, possible_solution)
-
             feedback_is_the_same = (current_correct_position_guesses == correct_position_guesses) and (current_correct_colour_guesses == correct_colour_guesses)
+
             if feedback_is_the_same:
                 new_possible_solutions.append(possible_solution)
 
