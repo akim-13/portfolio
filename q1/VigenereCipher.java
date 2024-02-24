@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -60,52 +61,31 @@ public class VigenereCipher implements Cipher {
         "ZABCDEFGHIJKLMNOPQRSTUVWXY",
     };
 
-    private static final String alphabetLength = vigenereSquare[0].length();
-
     private static int getLetterIndex(char letter) {
-        int letterIndex = Character.toLowerCase(letter) - 'a';
-        // TODO: Check if letter index is in bounds.
-        // if (letterIndex < 0 || letterIndex > ...)
-        return letterIndex
+        letter = Character.toUpperCase(letter);
+        if (letter < 'A' || letter > 'Z') {
+            return -1;
+        }
+        int letterIndex = letter - 'A';
+        return letterIndex;
     }
 
-    @Override
-    public String encrypt(String messageFilename, String keyFilename) {
-        String message = VigenereCipher.getFileContents(messageFilename);
-        String key = VigenereCipher.getFileContents(keyFilename);
-
+    private static String modifyKey(String key, int messageLength) {
         StringBuilder modifiedKey = new StringBuilder(key);
-        while (modifiedKey.length() < message.length()) {
+
+        if (modifiedKey.length() == 0) {
+            return "";
+        }
+
+        while (modifiedKey.length() < messageLength) {
             modifiedKey.append(key);
         }
 
-        if (modifiedKey.length() > message.length()) {
-            modifiedKey.setLength(message.length());
-        }
-        key = modifiedKey.toString();
-
-        StringBuilder encryptedMessageBuilder = new StringBuilder();
-
-        for (int i = 0; i < message.length(); i++) {
-            char currentMessageLetter = message.charAt(i);
-            char currentKeyLetter = key.charAt(i);
-
-            int vigenereRowIndex = VigenereCipher.getLetterIndex(currentKeyLetter);
-            int vigenereColumnIndex = VigenereCipher.getLetterIndex(currentMessageLetter);
-
-            if (vigenereRowIndex || vigenereColumnIndex > VigenereCipher.alphabetLength - 1){ }
-
-            char encryptedLetter = VigenereCipher.vigenereSquare[vigenereRowIndex].charAt(vigenereColumnIndex);
-            encryptedMessageBuilder.append(encryptedLetter);
+        if (modifiedKey.length() > messageLength) {
+            modifiedKey.setLength(messageLength);
         }
 
-        String encryptedMessage = encryptedMessageBuilder.toString();
-        return "hi";
-    }
-
-    @Override
-    public String decrypt(String messageFilename, String keyFilename) {
-        return "hello"; // Placeholder implementation
+        return modifiedKey.toString();
     }
 
     private static String getFileContents(String filename) {
@@ -120,18 +100,91 @@ public class VigenereCipher implements Cipher {
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return "";
         }
 
         String fileContents = stringBuilder.toString().trim();
         return fileContents;
     }
 
+    @Override
+    public String encrypt(String messageFilename, String keyFilename) {
+        // Read the files.
+        String message = VigenereCipher.getFileContents(messageFilename);
+        String key = VigenereCipher.getFileContents(keyFilename);
+
+        key = VigenereCipher.modifyKey(key, message.length());
+
+        if (key.equals("")) {
+            return message;
+        }
+
+        // Encrypt each letter 1 by 1.
+        StringBuilder encryptedMessageBuilder = new StringBuilder();
+        for (int i = 0; i < message.length(); i++) {
+            char currentMessageLetter = message.charAt(i);
+            char currentKeyLetter = key.charAt(i);
+
+            int vigenereRowIndex = VigenereCipher.getLetterIndex(currentKeyLetter);
+            int vigenereColumnIndex = VigenereCipher.getLetterIndex(currentMessageLetter);
+
+            if (vigenereRowIndex == -1) {
+                return "ERROR: Invalid key.";
+            }
+
+            if (vigenereColumnIndex != -1) { 
+                char encryptedLetter = VigenereCipher.vigenereSquare[vigenereRowIndex].charAt(vigenereColumnIndex);
+                encryptedMessageBuilder.append(encryptedLetter);
+            } else {
+                encryptedMessageBuilder.append(currentMessageLetter);
+            }
+        }
+
+        String encryptedMessage = encryptedMessageBuilder.toString();
+        return encryptedMessage;
+    }
+
+    @Override
+    public String decrypt(String messageFilename, String keyFilename) {
+        String encryptedMessage = VigenereCipher.getFileContents(messageFilename);
+        String key = VigenereCipher.getFileContents(keyFilename);
+
+        key = VigenereCipher.modifyKey(key, encryptedMessage.length());
+
+        if (key.equals("")) {
+            return encryptedMessage;
+        }
+
+        StringBuilder decryptedMessageBuilder = new StringBuilder();
+        for (int i = 0; i < encryptedMessage.length(); i++) {
+            char currentEncryptedMessageLetter = encryptedMessage.charAt(i);
+            char currentKeyLetter = key.charAt(i);
+
+            int vigenereRowIndex = VigenereCipher.getLetterIndex(currentKeyLetter);
+            int vigenereColumnIndex = VigenereCipher.getLetterIndex(currentEncryptedMessageLetter);
+
+            if (vigenereRowIndex == -1) {
+                return "ERROR: Invalid key.";
+            }
+
+            if (vigenereColumnIndex != -1) { 
+                int decryptedLetterIndex = VigenereCipher.vigenereSquare[vigenereRowIndex].indexOf(currentEncryptedMessageLetter);
+                char decryptedLetter = VigenereCipher.vigenereSquare[0].charAt(decryptedLetterIndex);
+                decryptedMessageBuilder.append(decryptedLetter);
+            } else {
+                decryptedMessageBuilder.append(currentEncryptedMessageLetter);
+            }
+        }
+
+        String decryptedMessage = decryptedMessageBuilder.toString();
+        return decryptedMessage;
+    }
+
     public static void main(String[] args) {
         VigenereCipher cipher = new VigenereCipher();
-        String messageFilename = "encrypt_check.txt";
-        String keyFilename = "key_check.txt";
-        String encryptedMessageCheckFilename = "decrypt_check.txt";
+        String messageFilename = "enc.txt";
+        String keyFilename = "key.txt";
+        String encryptedMessageCheckFilename = "dec.txt";
 
         String originalMessage = cipher.getFileContents(messageFilename);
         String encryptedMessage = cipher.encrypt(messageFilename, keyFilename);
@@ -140,13 +193,13 @@ public class VigenereCipher implements Cipher {
 
         System.out.println("ORIGINAL:\n" + originalMessage);
         System.out.println("\nENCRYPTED:\n" + encryptedMessage);
-        System.out.println("\nENCRYPTED CHECK:\n" + encryptedMessageCheck);
         System.out.println("\nDECRYPTED:\n" + decryptedMessage);
 
         if (!encryptedMessage.equals(encryptedMessageCheck)) {
             System.out.println("\nWARNING:\nEncrypted message does not match encrypted check!");
+            System.out.println("\nENCRYPTED CHECK:\n" + encryptedMessageCheck);
         }
-        if (!decryptedMessage.equals(originalMessage)) {
+        if (!decryptedMessage.equals(originalMessage.toUpperCase())) {
             System.out.println("\nWARNING:\nOriginal message does not match decrypted message!");
         }
     }
