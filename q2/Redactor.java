@@ -1,46 +1,35 @@
 public class Redactor {
-    public static boolean arrayContainsElement(String[] array, String key) {
-        for (String element : array) {
-            if (element.equalsIgnoreCase(key)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-//     public static String redact(String content, String[] redactWords) {
-//         String[] words = content.split("[^a-zA-Z]+");
-//         StringBuilder redactedContent = new StringBuilder(content);
-//
-//         for (String word : words) {
-//             System.out.println(word);
-//             if (arrayContainsElement(redactWords, word)) {
-//                 // find `word` in redactedContent and replace it
-//             } 
-//         }
-//
-//         return redactedContent.toString().trim(); // Trim to remove the last space
-//     }
-    public static String repeatAsterisks(int length) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            sb.append("*");
-        }
-        return sb.toString();
-    }
 
     public static String redact(String content, String[] redactWords) {
+        StringBuilder redactedContent = new StringBuilder(content);
+        int startOfWordIndex = -1;
+
         for (String word : redactWords) {
-            String asterisks = repeatAsterisks(word.length());
-            content = content.replace(word, asterisks);
+            startOfWordIndex = redactedContent.toString().toLowerCase().indexOf(word.toLowerCase());
+
+            while (startOfWordIndex != -1) {
+                int endOfWordIndex = startOfWordIndex + word.length();
+                boolean startIsValid = startOfWordIndex == 0 || !Character.isLetterOrDigit(content.charAt(startOfWordIndex - 1));
+                boolean endIsValid = endOfWordIndex == content.length() || !Character.isLetterOrDigit(content.charAt(endOfWordIndex));
+                boolean wordIsValid = startIsValid && endIsValid;
+
+                if (wordIsValid) {
+                    for (int i = 0; i < word.length(); i++) {
+                        redactedContent.setCharAt(startOfWordIndex + i, '*');
+                    }
+                }
+
+                startOfWordIndex = redactedContent.toString().toLowerCase().indexOf(word.toLowerCase(), startOfWordIndex + word.length());
+            }
         }
-        return content;
+
+        return redactedContent.toString();
     }
 
     public static void main(String[] args) {
-        String originalContent = "This is a sensitive document. The secret code is 1234.";
-        String[] wordsToRedact = {"sensitive", "secret", "1234"};
-        
+        String originalContent = "This is a sensitive document. The secret code password is 1234.";
+        String[] wordsToRedact = {"sensitive", "secret", "1234", "pass"};
+
         String redactedContent = redact(originalContent, wordsToRedact);
         System.out.println(redactedContent);
     }
