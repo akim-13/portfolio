@@ -11,8 +11,10 @@ public class SortedLinkedList implements SortedList {
 
     public static void main(String[] args) {
         SortedLinkedList list = new SortedLinkedList();
-        list.add("abc");
-        list.add("bc");
+        list.add("abC");
+        list.add("Beee");
+        list.add("bEe");
+        list.add("Bc");
         list.add("acd");
         list.print();
         System.out.println(list.size());
@@ -36,6 +38,33 @@ public class SortedLinkedList implements SortedList {
         return cnt;
     }
 
+    private void insertNodeAfterGiven(Node curNode, String string){
+        Node newNode = new Node(curNode, string);
+        Node nextNode = curNode.getNext();
+        curNode.setNext(newNode);
+        newNode.setNext(nextNode);
+        if (nextNode != null) {
+            nextNode.setPrev(newNode); 
+        } else {
+            this.last = curNode;
+        }
+    }
+
+    private void insertNodeBeforeGiven(Node curNode, String string){
+        if (curNode == null) {
+            return;
+        }
+        Node newNode = new Node(string, curNode);
+        Node prevNode = curNode.getPrev();
+        curNode.setPrev(newNode);
+        newNode.setPrev(prevNode);
+        if (prevNode != null) {
+            prevNode.setNext(newNode); 
+        } else {
+            this.first = curNode;
+        }
+    }
+
     /**
     * Adds a Node with the specified string to the linked list in
     * the appropriate position given the specified alphabetical order
@@ -45,30 +74,46 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public void add(String string) {
-        // TODO: Finish.
+        // TODO: Test and clean up.
         if (this.first != null) {
-            Node nextNode = this.first;
+            Node curNode = this.first;
             int i = 0;
             char stringChar = string.toLowerCase().charAt(i);
-            char nodeChar = nextNode.getString().toLowerCase().charAt(i);
+            String nodeString = curNode.getString();
+            char nodeChar = nodeString.toLowerCase().charAt(i);
 
-            while (nextNode != null) {
-                if (stringChar == nodeChar) {
-                    // Increment i to look at the second char, etc.
-                } else if (stringChar > nodeChar) {
-                    // Insert it here.
+            boolean stringIsDuplicate = string.toLowerCase().equals(nodeString.toLowerCase());
+            if (stringIsDuplicate) {
+                return;
+            }
+
+            while (curNode != null) {
+                if (stringChar > nodeChar) {
+                    this.insertNodeAfterGiven(curNode, string);
+                    break;
+
+                } else if (stringChar == nodeChar) {
+                    nodeString = curNode.getString();
+                    i++;
+
+                    boolean nodeStringIsShorter = i >= nodeString.length();
+                    boolean givenStringIsShorter = i >= string.length();
+                    if (nodeStringIsShorter) {
+                        this.insertNodeAfterGiven(curNode, string);
+                        break;
+                    } else if (givenStringIsShorter) {
+                        this.insertNodeBeforeGiven(curNode, string);
+                        break;
+                    }
+
+                    stringChar = string.toLowerCase().charAt(i);
+                    nodeChar = nodeString.toLowerCase().charAt(i);
+
                 } else {
-                    nextNode = nextNode.getNext();
+                    curNode = curNode.getNext();
                 }
             }
-        }
-
-        // TODO: The following just adds at the end. Work on the version above.
-        if (this.last != null) {
-            Node newNode = new Node(this.last, string);
-            this.last.setNext(newNode);
-            this.last = newNode;
-        } else {
+        } else { 
             Node newNode = new Node(string);
             this.last = newNode;
             this.first = newNode;
