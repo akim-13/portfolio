@@ -1,16 +1,20 @@
 public class SortedLinkedList implements SortedList {
-    private Node head;
-    private Node tail;
-    private int size;
+    private Node last;
+    private Node first;
 
     public SortedLinkedList() {
-        this.head = null; 
-        this.tail = null;
-        this.size = 0;
+        // Rightmost.
+        this.last = null; 
+        // Leftmost.
+        this.first = null;
     }
 
     public static void main(String[] args) {
         SortedLinkedList list = new SortedLinkedList();
+        list.add("abc");
+        list.add("bc");
+        list.add("acd");
+        list.print();
         System.out.println(list.size());
     }
 
@@ -21,7 +25,15 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public int size() {
-        return 0;
+        int cnt = 0;
+        Node nextNode = this.first;
+
+        while (nextNode != null) {
+            cnt++;
+            nextNode = nextNode.getNext();
+        }
+
+        return cnt;
     }
 
     /**
@@ -33,6 +45,34 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public void add(String string) {
+        // TODO: Finish.
+        if (this.first != null) {
+            Node nextNode = this.first;
+            int i = 0;
+            char stringChar = string.toLowerCase().charAt(i);
+            char nodeChar = nextNode.getString().toLowerCase().charAt(i);
+
+            while (nextNode != null) {
+                if (stringChar == nodeChar) {
+                    // Increment i to look at the second char, etc.
+                } else if (stringChar > nodeChar) {
+                    // Insert it here.
+                } else {
+                    nextNode = nextNode.getNext();
+                }
+            }
+        }
+
+        // TODO: The following just adds at the end. Work on the version above.
+        if (this.last != null) {
+            Node newNode = new Node(this.last, string);
+            this.last.setNext(newNode);
+            this.last = newNode;
+        } else {
+            Node newNode = new Node(string);
+            this.last = newNode;
+            this.first = newNode;
+        }
     }
 
     /**
@@ -42,7 +82,8 @@ public class SortedLinkedList implements SortedList {
     * @param  node  a Node to be added to the linked list
     */
     @Override
-    public void add(Node node) {}
+    public void add(Node node) {
+    }
 
     /**
     * Returns the first Node of the linked list given the specified
@@ -52,7 +93,7 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public Node getFirst(){
-        return this.head;
+        return this.first;
     }
 
     /**
@@ -63,7 +104,7 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public Node getLast(){
-        return this.tail;
+        return this.last;
     };
 
     /**
@@ -76,7 +117,16 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public Node get(int index){
-        return null;
+        if (index < 0 || index >= this.size()) {
+            return null;
+        }
+
+        Node nextNode = this.first;
+        for (int i = 0; i != index; i++) {
+            nextNode = nextNode.getNext();
+        }
+
+        return nextNode;
     };
 
     /**
@@ -86,8 +136,16 @@ public class SortedLinkedList implements SortedList {
     * @param  string  the String to be searched for in the linked list
     * @return       True if the string is present or false if not
     */
+    // TODO: Optimize.
     @Override
     public boolean isPresent(String string) {
+        Node nextNode = this.first;
+        while (nextNode != null) {
+            if (nextNode.getString().equals(string)) {
+                return true;
+            }
+            nextNode = nextNode.getNext();
+        }
         return false;
     }
 
@@ -99,7 +157,19 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public boolean removeFirst() {
-        return false;
+        if (this.first == null) {
+            return false;
+        }
+
+        if (this.size() > 1) {
+            this.first = this.first.getNext();
+            this.first.setPrev(null);
+        } else {
+            this.first = null;
+            this.last = null;
+        }
+
+        return true;
     }
 
     /**
@@ -110,7 +180,19 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public boolean removeLast() {
-        return false;
+        if (this.last == null) {
+            return false;
+        }
+
+        if (this.size() > 1) {
+            this.last = this.last.getPrev();
+            this.last.setNext(null);
+        } else {
+            this.first = null;
+            this.last = null;
+        }
+
+        return true;
     }
 
     /**
@@ -158,7 +240,13 @@ public class SortedLinkedList implements SortedList {
     *
     */
     @Override
-    public void print() {}
+    public void print() {
+        Node nextNode = this.first;
+        while (nextNode != null) {
+            System.out.println(nextNode.getString());
+            nextNode = nextNode.getNext();
+        }
+    }
 }
 
 // DO NOT CHANGE!
