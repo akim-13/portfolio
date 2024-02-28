@@ -3,19 +3,28 @@ public class SortedLinkedList implements SortedList {
     private Node first;
 
     public SortedLinkedList() {
-        // Rightmost.
         this.last = null; 
-        // Leftmost.
         this.first = null;
     }
 
     public static void main(String[] args) {
         SortedLinkedList list = new SortedLinkedList();
-        list.add("abC");
-        list.add("Beee");
-        list.add("bEe");
-        list.add("Bc");
-        list.add("acd");
+        list.add("abc");
+        list.add("abccc");
+        list.add("abc");
+        list.add("abCc");
+        Node nd = new Node("zzz");
+        list.add(nd);
+        list.add(new Node(nd, "hiii"));
+        list.print();
+        System.out.println(list.size());
+        System.out.println();
+        System.out.println(list.remove(4));
+        System.out.println(list.remove("abc"));
+        System.out.println(list.remove("abccc"));
+        System.out.println(list.remove("abCc"));
+        System.out.println(list.remove("hiii"));
+        System.out.println(list.remove("hiii"));
         list.print();
         System.out.println(list.size());
     }
@@ -39,6 +48,9 @@ public class SortedLinkedList implements SortedList {
     }
 
     private void insertNodeAfterGiven(Node curNode, String string){
+        if (curNode == null) {
+            return;
+        }
         Node newNode = new Node(curNode, string);
         Node nextNode = curNode.getNext();
         curNode.setNext(newNode);
@@ -46,11 +58,11 @@ public class SortedLinkedList implements SortedList {
         if (nextNode != null) {
             nextNode.setPrev(newNode); 
         } else {
-            this.last = curNode;
+            this.last = newNode;
         }
     }
 
-    private void insertNodeBeforeGiven(Node curNode, String string){
+    private void insertNodeBeforeGiven(Node curNode, String string) {
         if (curNode == null) {
             return;
         }
@@ -61,7 +73,7 @@ public class SortedLinkedList implements SortedList {
         if (prevNode != null) {
             prevNode.setNext(newNode); 
         } else {
-            this.first = curNode;
+            this.first = newNode;
         }
     }
 
@@ -74,50 +86,40 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public void add(String string) {
-        // TODO: Test and clean up.
-        if (this.first != null) {
-            Node curNode = this.first;
-            int i = 0;
-            char stringChar = string.toLowerCase().charAt(i);
-            String nodeString = curNode.getString();
-            char nodeChar = nodeString.toLowerCase().charAt(i);
-
-            boolean stringIsDuplicate = string.toLowerCase().equals(nodeString.toLowerCase());
-            if (stringIsDuplicate) {
-                return;
-            }
-
-            while (curNode != null) {
-                if (stringChar > nodeChar) {
-                    this.insertNodeAfterGiven(curNode, string);
-                    break;
-
-                } else if (stringChar == nodeChar) {
-                    nodeString = curNode.getString();
-                    i++;
-
-                    boolean nodeStringIsShorter = i >= nodeString.length();
-                    boolean givenStringIsShorter = i >= string.length();
-                    if (nodeStringIsShorter) {
-                        this.insertNodeAfterGiven(curNode, string);
-                        break;
-                    } else if (givenStringIsShorter) {
-                        this.insertNodeBeforeGiven(curNode, string);
-                        break;
-                    }
-
-                    stringChar = string.toLowerCase().charAt(i);
-                    nodeChar = nodeString.toLowerCase().charAt(i);
-
-                } else {
-                    curNode = curNode.getNext();
-                }
-            }
-        } else { 
+        if (this.first == null) {
             Node newNode = new Node(string);
             this.last = newNode;
             this.first = newNode;
+            return;
         }
+
+        Node curNode = this.first;
+        boolean orderIsAscending = true;
+
+        if (size() > 1) {
+            orderIsAscending = this.first.getString().compareToIgnoreCase(this.first.getNext().getString()) < 0;
+        }
+
+        while (curNode != null) {
+
+            int compareResult = string.compareToIgnoreCase(curNode.getString());
+            boolean foundPlaceBefore = compareResult < 0;
+            boolean stringsAreEqual = compareResult == 0;
+            if (foundPlaceBefore) {
+                if (orderIsAscending) {
+                    insertNodeBeforeGiven(curNode, string);
+                } else {
+                    insertNodeAfterGiven(curNode, string);
+                }
+                return;
+            } else if (stringsAreEqual) {
+                return;
+            }
+            curNode = curNode.getNext();
+
+        }
+
+        insertNodeAfterGiven(this.last, string);
     }
 
     /**
@@ -128,6 +130,7 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public void add(Node node) {
+        add(node.getString());
     }
 
     /**
@@ -181,7 +184,6 @@ public class SortedLinkedList implements SortedList {
     * @param  string  the String to be searched for in the linked list
     * @return       True if the string is present or false if not
     */
-    // TODO: Optimize.
     @Override
     public boolean isPresent(String string) {
         Node nextNode = this.first;
@@ -250,7 +252,39 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public boolean remove(int index) {
-        return false;
+        if (index < 0 || index >= size()) {
+            return false;
+        }
+
+        if (index == 0) {
+            if (size() == 1) {
+                this.first = null;
+                this.last = null;
+                return true;
+            }
+            Node nextNode = this.first.getNext();
+            this.first.setNext(null);
+            this.first = nextNode;
+            this.first.setPrev(null);
+        } else if (index == size() - 1) {
+            Node prevNode = this.last.getPrev();
+            this.last.setPrev(null);
+            this.last = prevNode;
+            this.last.setNext(null);
+        } else {
+            Node curNode = this.first;
+            for (int i = 0; i != index; i++) {
+                curNode = curNode.getNext();
+            }
+            Node prevNode = curNode.getPrev();
+            Node nextNode = curNode.getNext();
+            curNode.setNext(null);
+            curNode.setPrev(null);
+            prevNode.setNext(nextNode);
+            nextNode.setPrev(prevNode);
+        }
+
+        return true;
     }
 
     /**
@@ -261,7 +295,30 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public boolean remove(String string) {
+        Node curNode = this.first;
+        int size = size();
+        for (int i = 0; i < size; i++) {
+            if (curNode.getString().equals(string)) {
+                remove(i);
+                return true;
+            }
+            curNode = curNode.getNext();
+        }
         return false;
+    }
+
+    public void reverseOrder() {
+        Node curNode = this.first;
+        while (curNode != null) {
+            Node nextNode = curNode.getNext();
+            Node prevNode = curNode.getPrev();
+            curNode.setPrev(nextNode);
+            curNode.setNext(prevNode);
+            curNode = nextNode;
+        }
+        Node firstNode = this.first;
+        this.first = this.last;
+        this.last = firstNode;
     }
 
     /**
@@ -269,14 +326,36 @@ public class SortedLinkedList implements SortedList {
     *
     */
     @Override
-    public void orderAscending() {}
+    public void orderAscending() {
+        if (size() < 2) {
+            return;
+        }
+
+        boolean orderIsAscending = this.first.getString().compareToIgnoreCase(this.first.getNext().getString()) < 0;
+        if (orderIsAscending) {
+            return;
+        }
+
+        reverseOrder();
+    }
 
     /**
     * Orders the linked list in descending alphabetical order.
     *
     */
     @Override
-    public void orderDescending() {}
+    public void orderDescending() {
+        if (size() < 2) {
+            return;
+        }
+
+        boolean orderIsDescending = this.first.getString().compareToIgnoreCase(this.first.getNext().getString()) > 0;
+        if (orderIsDescending) {
+            return;
+        }
+
+        reverseOrder();
+    }
 
     /**
     * Prints the contents of the linked list in the specified alphabetical order
