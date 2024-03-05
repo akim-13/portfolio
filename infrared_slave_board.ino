@@ -4,18 +4,12 @@
 const int IREntrancePin = 3;    // Infrared sensor at the entrance.
 const int IRExitPin = 2;        // Infrared sensor at the exit.
 volatile int peopleInRoom = 0;  // Number of people in the room. 
-bool roomIsEmpty = true;        // The room is either empty or not.
 
 
-void sendDataToMaster() 
+void sendInfoToMaster() 
 {
-    if (peopleInRoom > 0)
-        roomIsEmpty = false;
-    else
-        roomIsEmpty = true;
-
-    // Send the state of the room to the master board.
-    Wire.write(roomIsEmpty);
+    // Send the number of people in the room to the master board.
+    Wire.write(peopleInRoom > 0);
 }
 
 
@@ -26,10 +20,10 @@ void setup()
     pinMode(IREntrancePin, INPUT);
     pinMode(IRExitPin, INPUT);
 
-    // Initialize I2C communication (slave address `2`).
+    // Initialize the I2C communication with address `2`.
     Wire.begin(2); 
-    // Send data to the master board when requested.
-    Wire.onRequest(sendDataToMaster); 
+    // Send information to the master board when requested.
+    Wire.onRequest(sendInfoToMaster); 
 
     // Initialize serial communication at 9600 bits per second.
     Serial.begin(9600);
@@ -39,8 +33,8 @@ void setup()
 void handleEnteringPerson() 
 {
     // Increment the counter of people.
+    digitalWrite(IREntrancePin, LOW);
     peopleInRoom++;
-    // For debugging.
     Serial.print("+: ");
     Serial.println(peopleInRoom);
 }
@@ -48,12 +42,12 @@ void handleEnteringPerson()
 
 void handleExitingPerson() 
 {
-    // Do not allow the counter to go negative.
+    // Don't allow the counter to go negative.
+    digitalWrite(IRExitPin, LOW);
     if (peopleInRoom > 0) 
     { 
         // Decrement the counter of people.
         peopleInRoom--; 
-        // For debugging.
         Serial.print("-: ");
         Serial.println(peopleInRoom);
     }
@@ -71,18 +65,13 @@ void loop()
     {
         handleEnteringPerson();
         // Deactivate the entrance IR sensor.
-        digitalWrite(IREntrancePin, LOW);
     }
 
-    // TODO: check whether we need this delay.
-    delay(100);
 
     // If the IR sensor at the exit has activated.
     if (digitalRead(IRExitPin) == HIGH) 
     {
         handleExitingPerson();
-        // Deactivate the exit IR sensor.
-        digitalWrite(IRExitPin, LOW);
+        // Deactivate the exit IR sensors
     }
 }
-

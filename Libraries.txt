@@ -1,0 +1,4 @@
+Libraries that may require installation:
+
+- ArduinoThread by Ivan Seidel (Available on built in Arduino Library Manager)
+- TMRPCM (Available from https://github.com/TMRh20/TMRpcm)
