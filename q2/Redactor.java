@@ -8,6 +8,10 @@ public class Redactor {
             startOfWordIndex = redactedContent.toString().toLowerCase().indexOf(word.toLowerCase());
 
             while (startOfWordIndex != -1) {
+                if (word.length() == 0) {
+                    break;
+                }
+
                 int endOfWordIndex = startOfWordIndex + word.length();
                 boolean startIsValid = startOfWordIndex == 0 || !Character.isLetterOrDigit(content.charAt(startOfWordIndex - 1));
                 boolean endIsValid = endOfWordIndex == content.length() || !Character.isLetterOrDigit(content.charAt(endOfWordIndex));
@@ -28,7 +32,7 @@ public class Redactor {
 
     public static void main(String[] args) {
         String originalContent = "This is a sensitive document. The secret code password is 1234.";
-        String[] wordsToRedact = {"sensitive", "secret", "1234", "pass"};
+        String[] wordsToRedact = {"", "secret", "1234", "pass"};
 
         String redactedContent = redact(originalContent, wordsToRedact);
         System.out.println(redactedContent);
