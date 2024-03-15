@@ -10,24 +10,19 @@ public class SortedLinkedList implements SortedList {
 
     public static void main(String[] args) {
         SortedLinkedList list = new SortedLinkedList();
-        list.add("abc");
-        list.add("abccc");
-        list.add("abc");
-        list.add("abCc");
-        Node nd = new Node("zzz");
-        list.add(nd);
-        list.add(new Node(nd, "hiii"));
-        list.print();
-        System.out.println(list.size());
-        System.out.println();
-        System.out.println(list.remove(4));
-        System.out.println(list.remove("abc"));
-        System.out.println(list.remove("abccc"));
-        System.out.println(list.remove("abCc"));
-        System.out.println(list.remove("hiii"));
-        System.out.println(list.remove("hiii"));
-        list.print();
-        System.out.println(list.size());
+        list.add("b");
+        list.add("c");
+        list.add("z");
+        list.print(); System.out.println();
+
+        list.orderDescending();
+        list.print(); System.out.println();
+
+        list.add("a");
+        list.print(); System.out.println();
+
+        list.orderAscending();
+        list.print(); System.out.println();
     }
 
     /**
@@ -100,14 +95,13 @@ public class SortedLinkedList implements SortedList {
             int compareResult = string.compareToIgnoreCase(curNode.getString());
             boolean foundPlaceBefore = compareResult < 0;
             boolean stringsAreEqual = compareResult == 0;
-            if (foundPlaceBefore) {
-                if (SortedLinkedList.orderIsAscending) {
-                    insertNodeBeforeGiven(curNode, string);
-                } else {
-                    insertNodeAfterGiven(curNode, string);
-                }
+            boolean foundPlaceAfter = compareResult > 0;
+            boolean foundPlaceForInsertion = (SortedLinkedList.orderIsAscending && foundPlaceBefore) || (!SortedLinkedList.orderIsAscending && foundPlaceAfter);
+            if (foundPlaceForInsertion) {
+                insertNodeBeforeGiven(curNode, string);
                 return;
-            } else if (stringsAreEqual) {
+            }
+            else if (stringsAreEqual) {
                 return;
             }
             curNode = curNode.getNext();
@@ -337,8 +331,7 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public void orderAscending() {
-        boolean orderIsCorrect = orderIsAscending || size() < 2;
-        if (orderIsCorrect) {
+        if (SortedLinkedList.orderIsAscending) {
             return;
         }
 
@@ -352,8 +345,7 @@ public class SortedLinkedList implements SortedList {
     */
     @Override
     public void orderDescending() {
-        boolean orderIsCorrect = !orderIsAscending || size() < 2;
-        if (orderIsCorrect) {
+        if (!SortedLinkedList.orderIsAscending) {
             return;
         }
 
