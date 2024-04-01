@@ -25,7 +25,7 @@ namespace PI_Systems
             }
             else
             {
-                // Otherwise enable it
+                // Otherwise enable it by setting the visibilty to visible
                 testText.Visibility = Visibility.Visible;
             }
         }
