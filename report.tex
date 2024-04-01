@@ -1,0 +1,167 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{url}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{[Name of the app/project] Report}
+\rhead{Programming 2 (CM12005)}
+\cfoot{\thepage}
+\setlength{\headheight}{14.5pt}
+
+% Adjust the spacing of the section titles
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titlespacing{\section}{0pt}{*0.5}{*0.5}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    {\Huge \bfseries [Name of the App/Project]}\\[0.2cm]
+    \vspace*{0.5cm}
+    {\large Author 1, Author 2, Author 3, Author 4, Author 5, Author 6, Author 7, Author 8, Author 9}\\[2cm] % Authors
+    \vspace*{1cm}
+
+    \begin{minipage}{0.9\textwidth}
+
+        \textbf{Abstract:} About 200 words here. Lorem ipsum aliquam
+        etiam erat velit scelerisque in dictum non consectetur a erat nam at lectus
+        urna duis convallis convallis tellus id interdum velit laoreet id donec
+        ultrices tincidunt arcu non sodales neque sodales ut etiam sit amet nisl
+        purus in mollis nunc sed id semper risus in hendrerit gravida rutrum
+        quisque non tellus orci ac auctor augue mauris augue neque gravida in
+        fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus
+        pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum odio
+        eu feugiat pretium nibh ipsum consequat nisl vel pretium lectus quam id leo
+        in vitae turpis massa sed elementum tempus egestas sed sed risus pretium
+        quam vulputate dignissim suspendisse in est ante in nibh mauris cursus
+        mattis molestie a iaculis at erat pellentesque adipiscing commodo elit at
+        imperdiet dui accumsan sit amet nulla facilisi morbi tempus iaculis urna id
+        volutpat lacus laoreet non curabitur gravida arcu ac tortor dignissim
+        convallis aenean et tortor at risus viverra adipiscing at in tellus integer
+        feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit amet
+        porttitor eget dolor morbi non arcu risus quis varius quam quisque id diam
+        vel quam elementum pulvinar etiam non quam lacus suspendisse faucibus
+        interdum posuere lorem.
+
+    \end{minipage}
+\end{titlepage}
+\thispagestyle{fancy}
+
+\newpage
+
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+
+\setcounter{page}{1}
+
+\section{Introduction (2 pages)}
+
+An account of the problem your software system is intended to address, including a
+description of the problem area (Personal Informatics) supported by relevant literature (See
+NFR3.1 and NFR3.2), what can make a PI software system effective for its users, and a clear
+statement of the main idea behind your particular PI software system.
+
+
+\section{Agile Software Process Planning and Management (2 pages)}
+
+This section must describe how you carried out your project as an Agile process, including
+how you planned and tracked your sprints, and how Scrum meetings were used to manage
+the evolution of your idea and the features you decided to include in your software system.
+
+
+\section{Specification of Software Requirements (5 pages)}
+
+This section should include:
+
+An account of how you established your detailed system requirements (building on
+the initial requirements).
+
+A description of the specific domain of your personal informatics system, linked to
+the viewpoint of students as your target users.
+
+Use cases to illustrate the services your PI system is intended to offer to relevant
+actors, including target users.
+
+A set of functional and non-functional requirements for your system, organised into
+sensible groups and following the guidance given you in lectures (e.g. relationships
+and priorities).
+
+
+\section{Design (5 pages)}
+
+This section should include:
+
+A set of UML models describing the low-level design of your system (class models,
+sequence diagrams, etc.)
+
+A justification of your chosen design. This should explicitly show how your design
+meets both functional and non-functional requirements, making direct reference
+them and the rationale behind your design as it embodies your PI idea.
+
+Make sure you include explanatory text with your design models: the meaning of a diagram
+Page 9 of 11
+is very rarely self-evident because it depends on an explanatory frame for interpretation. So
+you must make sure to express in words what you wish the reader to understand by them.
+
+
+\section{Software Testing (Verification) (2 pages)}
+
+This section should include:
+
+Testing plans, indicating how you planned to perform verification of your PI system.
+These plans should reflect your requirements and design work, and be completed
+before any implementation (coding) work begins.
+
+Evidence of testing - test case results.
+
+
+\section{Reflection and Conclusion (4 pages)}
+
+This section should include two main sections:
+
+A critique of your software system’s requirements specification, design and testing,
+including what might be improved and why you feel it would be better with these
+changes.
+
+A critical reflection on the group’s software process, including evidence of Agility in
+your software process, evidence of having evolved your requirements to reflect
+changes in understanding of problem and viability of designs.
+
+
+\section{References}
+
+\renewcommand{\refname}{} 
+\vspace{-20pt}
+\begin{thebibliography}{99}
+    % EXAMPLE 1
+    \bibitem{ref-ex1} Surname, X. \textit{Article name} [Online].
+    Available from:~\url{https://google.com}.
+
+    % EXAMPLE 2
+    \bibitem{ref-ex2} AfterAcademy, 2020. \textit{Sudoku Solver} [Online].
+    Available from:~\url{https://afteracademy.com/blog/sudoku-solver/}. See the
+    \textit{Complexity Analysis} section.
+\end{thebibliography}
+
+
+\section{Appendices}
+You must include your one-page final GCF as the first appendix to your report. You should
+include records of your group meetings (minutes) as the second appendix. You may include
+transcripts of interviews and/or other evidence of primary research you have conducted as
+the third appendix.
+Also, you may include earlier design models to evidence how your ideas have evolved as an
+appendix. if you wish to include, as well as any unit tests or additional test runs you might
+wish to include with your report
+
+\end{document}
