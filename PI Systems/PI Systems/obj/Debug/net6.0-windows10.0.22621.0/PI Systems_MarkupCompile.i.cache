@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\App.xaml
-1-46521483
+81698705619
 
-5986247947
+12-1334733290
 196-180717349
-GUIs\Menu.xaml;
+GUIs\AchievementsPage.xaml;GUIs\GraphsPage.xaml;GUIs\MainWindow.xaml;GUIs\MenuPage.xaml;GUIs\SleepPage.xaml;GUIs\StepsPage.xaml;GUIs\WaterPage.xaml;GUIs\WorkPage.xaml;
 
-False
+True
 

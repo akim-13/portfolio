@@ -6,5 +6,50 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Update="GUIs\AchievementsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GUIs\GraphsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GUIs\MenuPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GUIs\SleepPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GUIs\StepsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GUIs\WaterPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GUIs\WorkPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="GUIs\AchievementsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\GraphsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\MenuPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\SleepPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\StepsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\WaterPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\WorkPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
 </Project>
