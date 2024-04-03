@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\
+C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\
 PI_Systems
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\App.xaml
-1-46521483
+C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\App.xaml
+81698705619
 
-3-1163465923
-19614890925
-GUIs\Menu.xaml;
+10810520136
+196-180717349
+GUIs\AchievementsPage.xaml;GUIs\GraphsPage.xaml;GUIs\MainWindow.xaml;GUIs\MenuPage.xaml;GUIs\SleepPage.xaml;GUIs\StepsPage.xaml;GUIs\WaterPage.xaml;GUIs\WorkPage.xaml;
 
 False
 
