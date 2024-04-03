@@ -29,5 +29,10 @@ namespace PI_Systems.GUIs
         {
             Application.Current.MainWindow.Content = MenuPage.instance;
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
+        }
     }
 }
