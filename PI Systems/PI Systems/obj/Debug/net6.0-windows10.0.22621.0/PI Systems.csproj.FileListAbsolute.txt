@@ -26,11 +26,9 @@ C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-wi
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Windows.SDK.NET.dll
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\Menu.g.cs
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.g.cs
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\Menu.baml
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.g.resources
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfoInputs.cache
@@ -59,3 +57,19 @@ C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\GraphsPage.baml
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\AchievementsPage.g.cs
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\AchievementsPage.baml
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\AchievementsPage.g.cs
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\GraphsPage.g.cs
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MenuPage.g.cs
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\SleepPage.g.cs
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\StepsPage.g.cs
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WaterPage.g.cs
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WorkPage.g.cs
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\AchievementsPage.baml
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\GraphsPage.baml
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MenuPage.baml
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\SleepPage.baml
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\StepsPage.baml
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WaterPage.baml
+C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WorkPage.baml
