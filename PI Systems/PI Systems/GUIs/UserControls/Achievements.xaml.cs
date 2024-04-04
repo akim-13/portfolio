@@ -13,26 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PI_Systems.GUIs
+namespace PI_Systems.GUIs.UserControls
 {
     /// <summary>
-    /// Interaction logic for SleepPage.xaml
+    /// Interaction logic for Achievements.xaml
     /// </summary>
-    public partial class SleepPage : Page
+    public partial class Achievements : UserControl
     {
-        public SleepPage()
+        public Achievements()
         {
             InitializeComponent();
-        }
-
-        private void ToMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.Content = MenuPage.instance;
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-           
         }
     }
 }

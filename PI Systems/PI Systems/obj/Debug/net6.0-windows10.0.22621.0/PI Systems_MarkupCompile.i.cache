@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\App.xaml
-81698705619
+9927865697
 
-12-1334733290
+142050457932
 196-180717349
-GUIs\AchievementsPage.xaml;GUIs\GraphsPage.xaml;GUIs\MainWindow.xaml;GUIs\MenuPage.xaml;GUIs\SleepPage.xaml;GUIs\StepsPage.xaml;GUIs\WaterPage.xaml;GUIs\WorkPage.xaml;
+GUIs\MainWindow.xaml;GUIs\UserControls\Achievements.xaml;GUIs\UserControls\Graphs.xaml;GUIs\UserControls\Menu.xaml;GUIs\UserControls\Sleep.xaml;GUIs\UserControls\Steps.xaml;GUIs\UserControls\TitleAndBack.xaml;GUIs\UserControls\Water.xaml;GUIs\UserControls\Work.xaml;
 
-True
+False
 

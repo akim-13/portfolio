@@ -1,18 +1,19 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 
 
-namespace PI_Systems.GUIs
+namespace PI_Systems.GUIs.UserControls
 {
     /// <summary>
-    /// Interaction logic for GraphsPage.xaml
+    /// Interaction logic for Graphs.xaml
     /// </summary>
-    public partial class GraphsPage : Page
+    public partial class Graphs : UserControl
     {
         ActivityType[] activities;
 
-        public GraphsPage(params CheckBox[] checkBoxes)
+        public Graphs(params CheckBox[] checkBoxes)
         {
             InitializeComponent();
 
@@ -20,18 +21,5 @@ namespace PI_Systems.GUIs
             string outputList = activities.Length == 0 ? "Nothing" : string.Join(", ", activities);
             label.Content = $"You want to see these graph(s): {outputList}";
         }
-
-        private void ToMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.Content = MenuPage.instance;
-        }
     }
-}
-
-public enum ActivityType
-{
-    Sleep,
-    Steps,
-    Work,
-    Water
 }

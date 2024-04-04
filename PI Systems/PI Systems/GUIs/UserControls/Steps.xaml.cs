@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PI_Systems.GUIs
+namespace PI_Systems.GUIs.UserControls
 {
     /// <summary>
-    /// Interaction logic for WaterPage.xaml
+    /// Interaction logic for Steps.xaml
     /// </summary>
-    public partial class WaterPage : Page
+    public partial class Steps : UserControl
     {
-        public WaterPage()
+        public Steps()
         {
             InitializeComponent();
-        }
-
-        private void ToMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.Content = MenuPage.instance;
         }
     }
 }
