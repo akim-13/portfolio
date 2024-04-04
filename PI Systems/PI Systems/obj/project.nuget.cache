@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "uTzZeXt93aIMsuhojcFVj8SQhlj7zO/xUa+fnstTMxHgJOeBeoIQdIKzgFNNlTizVqdxYHGVmQ71Aaddlioh5g==",
+  "dgSpecHash": "p3Md1SBFijYUtUr3WlmYt7R/BQx0i7+GJfLvleY6FLV0UxtN4waOgAtCbzFTGs9xy0JuO9EG+W6/0Hjiqd/jlQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+  "projectFilePath": "C:\\Users\\James\\Desktop\\Coding\\Uni\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\jeety\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22621.29\\microsoft.windows.sdk.net.ref.10.0.22621.29.nupkg.sha512"
+    "C:\\Users\\James\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22621.31\\microsoft.windows.sdk.net.ref.10.0.22621.31.nupkg.sha512",
+    "C:\\Users\\James\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.28\\microsoft.windowsdesktop.app.ref.6.0.28.nupkg.sha512",
+    "C:\\Users\\James\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.28\\microsoft.netcore.app.ref.6.0.28.nupkg.sha512",
+    "C:\\Users\\James\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.28\\microsoft.aspnetcore.app.ref.6.0.28.nupkg.sha512",
+    "C:\\Users\\James\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.28\\microsoft.netcore.app.host.win-x64.6.0.28.nupkg.sha512"
   ],
   "logs": []
 }

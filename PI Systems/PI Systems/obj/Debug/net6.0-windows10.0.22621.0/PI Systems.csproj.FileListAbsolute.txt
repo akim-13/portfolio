@@ -73,3 +73,41 @@ C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-wi
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\StepsPage.baml
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WaterPage.baml
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WorkPage.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.exe
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.deps.json
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.runtimeconfig.json
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Windows.SDK.NET.dll
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\AchievementsPage.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\GraphsPage.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MenuPage.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\SleepPage.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\StepsPage.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WaterPage.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WorkPage.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.g.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\AchievementsPage.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\GraphsPage.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MenuPage.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\SleepPage.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\StepsPage.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WaterPage.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\WorkPage.baml
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.g.resources
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfoInputs.cache
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfo.cs
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.CoreCompileInputs.cache
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.sourcelink.json
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.Up2Date
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\refint\PI Systems.dll
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.genruntimeconfig.cache
+C:\Users\James\Desktop\Coding\Uni\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\ref\PI Systems.dll
