@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PI_Systems
-build_property.ProjectDir = C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\
+build_property.ProjectDir = C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
