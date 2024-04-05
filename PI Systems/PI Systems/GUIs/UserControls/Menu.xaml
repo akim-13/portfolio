@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="PI_Systems.GUIs.UserControls.Menu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="850">
+
+    <!--Main grid - Splits the screen into two rows-->
+    <Grid>
+        <Label Margin="0,5,0,0" Content="Menu 🖥️" Foreground="FloralWhite" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" FontFamily="consolas"/>
+
+        <Grid Margin="35">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <!--Grid responsible for displaying the 4 data for current day-->
+            <Grid Grid.Row="0" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <!--Steps Button-->
+                <Border Background="SlateGray" Margin="70,20" CornerRadius="5">
+                    <Grid>
+                        <CheckBox Name="stepsCheckBox" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0"/>
+                        <Button Name="stepsButton" Background="SlateGray" Margin="20,10,20,10" BorderThickness="0" Click="BaseActivityButton_Click">
+                            <Grid>
+                                <StackPanel VerticalAlignment="Stretch" Name="stepsStackPanel">
+                                    <Label
+                            FontFamily="Cascadia Code" 
+                            Content="STEPS today" 
+                            Foreground="#FFCD9E9E" 
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold" 
+                            FontSize="30"/>
+
+                                    <Label
+                            Name="stepsLabel"
+                            Content="5000 steps" 
+                            FontSize="20"
+                            HorizontalContentAlignment="Center" 
+                            Foreground="#FFFDF6F6" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Top" 
+                            FontFamily="Cascadia Code"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!--Work Button-->
+                <Border Background="SlateGray" Margin="70,20" CornerRadius="5" Grid.Column="1">
+                    <Grid>
+                        <CheckBox Name="workCheckBox" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0"/>
+                        <Button Name="workButton" Background="SlateGray" Margin="20,10,20,10" BorderThickness="0" Click="BaseActivityButton_Click">
+                            <Grid>
+                                <StackPanel VerticalAlignment="Stretch" Name="workStackPanel">
+                                    <Label 
+                            FontFamily="Cascadia Code" 
+                            Content="WORK today" 
+                            Foreground="#FFCD9E9E" 
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold" 
+                            FontSize="30"/>
+
+                                    <Label
+                            Name="workLabel"
+                            Content="2 hours"
+                            FontSize="20"
+                            HorizontalContentAlignment="Center" 
+                            Foreground="#FFFDF6F6" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Top" 
+                            FontFamily="Cascadia Code"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!--Sleep Button-->
+                <Border Background="SlateGray" Margin="70,20" CornerRadius="5" Grid.Row="1">
+                    <Grid>
+                        <CheckBox Name="sleepCheckBox" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0"/>
+                        <Button Name="sleepButton" Background="SlateGray" Margin="20,10,20,10" BorderThickness="0" Click="BaseActivityButton_Click">
+                            <Grid>
+                                <StackPanel VerticalAlignment="Stretch" Name="sleepStackPanel">
+                                    <Label 
+                            FontFamily="Cascadia Code" 
+                            Content="SLEEP last night" 
+                            Foreground="#FFCD9E9E" 
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold" 
+                            FontSize="20"/>
+
+                                    <Label
+                            Name="sleepLabel"
+                            Content="8 hours"
+                            FontSize="20"
+                            HorizontalContentAlignment="Center" 
+                            Foreground="#FFFDF6F6" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Top" 
+                            FontFamily="Cascadia Code"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!--Water Button-->
+                <Border Background="SlateGray" Margin="70,20" CornerRadius="5" Grid.Row="1" Grid.Column="1">
+                    <Grid>
+                        <CheckBox Name="waterCheckBox" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0"/>
+                        <Button Name="waterButton" Background="SlateGray" Margin="20,10,20,10" BorderThickness="0" Click="BaseActivityButton_Click">
+                            <Grid>
+                                <StackPanel VerticalAlignment="Stretch" Name="waterStackPanel">
+                                    <Label 
+                            FontFamily="Cascadia Code" 
+                            Content="WATER DRANK today" 
+                            Foreground="#FFCD9E9E" 
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold" 
+                            FontSize="20"/>
+
+                                    <Label
+                            Name="waterLabel"
+                            Content="2 litres"
+                            FontSize="20"
+                            HorizontalContentAlignment="Center" 
+                            Foreground="#FFFDF6F6" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Top" 
+                            FontFamily="Cascadia Code"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+            <!--Bottom grid for the graph and achievement buttons-->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Graphs Button-->
+                <Button Name="graphsButton" 
+                        VerticalAlignment="Stretch" 
+                        Margin="45,20" Content="Graphs" 
+                        FontSize="35" Foreground="Wheat" 
+                        Background="DarkSlateGray" 
+                        Click="BaseActivityButton_Click"/>
+
+                <!--Achievements Button-->
+                <Button Name="achievementsButton" 
+                        VerticalAlignment="Stretch" 
+                        Margin="45,20" 
+                        Content="Achievements" 
+                        FontSize="35" 
+                        Foreground="Wheat" 
+                        Background="DarkSlateGray"
+                        Grid.Column="1" 
+                        Click="BaseActivityButton_Click"/>
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

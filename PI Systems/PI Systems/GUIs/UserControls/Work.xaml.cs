@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PI_Systems.GUIs
+namespace PI_Systems.GUIs.UserControls
 {
     /// <summary>
-    /// Interaction logic for WorkPage.xaml
+    /// Interaction logic for Work.xaml
     /// </summary>
-    public partial class WorkPage : Page
+    public partial class Work : UserControl
     {
-        public WorkPage()
+        public Work()
         {
             InitializeComponent();
-        }
-
-        private void ToMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.Content = MenuPage.instance;
         }
     }
 }

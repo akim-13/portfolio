@@ -7,48 +7,54 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="GUIs\AchievementsPage.xaml.cs">
+    <Compile Update="GUIs\UserControls\Achievements.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\GraphsPage.xaml.cs">
+    <Compile Update="GUIs\UserControls\TitleAndBack.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\MenuPage.xaml.cs">
+    <Compile Update="GUIs\UserControls\Graphs.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\SleepPage.xaml.cs">
+    <Compile Update="GUIs\UserControls\Menu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\StepsPage.xaml.cs">
+    <Compile Update="GUIs\UserControls\Sleep.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\WaterPage.xaml.cs">
+    <Compile Update="GUIs\UserControls\Steps.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\WorkPage.xaml.cs">
+    <Compile Update="GUIs\UserControls\Water.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GUIs\UserControls\Work.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="GUIs\AchievementsPage.xaml">
+    <Page Update="GUIs\UserControls\Achievements.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\GraphsPage.xaml">
+    <Page Update="GUIs\UserControls\TitleAndBack.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\MenuPage.xaml">
+    <Page Update="GUIs\UserControls\Graphs.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\SleepPage.xaml">
+    <Page Update="GUIs\UserControls\Menu.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\StepsPage.xaml">
+    <Page Update="GUIs\UserControls\Sleep.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\WaterPage.xaml">
+    <Page Update="GUIs\UserControls\Steps.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\WorkPage.xaml">
+    <Page Update="GUIs\UserControls\Water.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\UserControls\Work.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
