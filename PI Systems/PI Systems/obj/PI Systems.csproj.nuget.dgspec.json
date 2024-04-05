@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\James\\Desktop\\Coding\\Uni\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {}
+    "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {}
   },
   "projects": {
-    "C:\\Users\\James\\Desktop\\Coding\\Uni\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {
+    "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\James\\Desktop\\Coding\\Uni\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+        "projectUniqueName": "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
         "projectName": "PI Systems",
-        "projectPath": "C:\\Users\\James\\Desktop\\Coding\\Uni\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
-        "packagesPath": "C:\\Users\\James\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\James\\Desktop\\Coding\\Uni\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\",
+        "projectPath": "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+        "packagesPath": "C:\\Users\\jeety\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\James\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jeety\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -57,24 +52,8 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.28, 6.0.28]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.28, 6.0.28]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.28, 6.0.28]"
-            },
-            {
               "name": "Microsoft.Windows.SDK.NET.Ref",
-              "version": "[10.0.22621.31, 10.0.22621.31]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.28, 6.0.28]"
+              "version": "[10.0.22621.29, 10.0.22621.29]"
             }
           ],
           "frameworkReferences": {
@@ -88,7 +67,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
