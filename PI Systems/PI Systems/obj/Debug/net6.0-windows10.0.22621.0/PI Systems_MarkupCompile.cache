@@ -1,7 +1,7 @@
 ﻿PI Systems
 
 
-winexe
+exe
 C#
 .cs
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\
@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\App.xaml
-9927865697
+10-457305365
 
-12-99255938
-196-180717349
-GUIs\MainWindow.xaml;GUIs\UserControls\Achievements.xaml;GUIs\UserControls\Graphs.xaml;GUIs\UserControls\Menu.xaml;GUIs\UserControls\Sleep.xaml;GUIs\UserControls\Steps.xaml;GUIs\UserControls\TitleAndBack.xaml;GUIs\UserControls\Water.xaml;GUIs\UserControls\Work.xaml;
+13766914328
+196-1653140313
+GUIs\MainWindow.xaml;GUIs\UserControls\Achievements.xaml;GUIs\UserControls\Graphs.xaml;GUIs\UserControls\Menu.xaml;GUIs\UserControls\Sleep.xaml;GUIs\UserControls\Steps.xaml;GUIs\UserControls\TitleAndBack.xaml;GUIs\UserControls\Water.xaml;GUIs\UserControls\Work.xaml;GUIs\UserControls\WorkItem.xaml;
 
 False
 
