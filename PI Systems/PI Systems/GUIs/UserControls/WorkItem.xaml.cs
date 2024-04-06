@@ -31,7 +31,7 @@ namespace PI_Systems.GUIs.UserControls
             controls_btn.Content = GetCurrentStateSymbol();
         }
 
-        private void controls_btn_Click(object sender, RoutedEventArgs e)
+        private void ControlButton_Click(object sender, RoutedEventArgs e)
         {
             if(currState == ControlState.Paused)
             {

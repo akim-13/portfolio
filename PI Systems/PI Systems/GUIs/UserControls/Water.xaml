@@ -25,15 +25,16 @@
              Background="DarkSlateGray"/>
 
                 <TextBox 
-             Width="100" 
-             Height="50" 
-             VerticalAlignment="Stretch"
-             Background="Wheat" 
-             HorizontalContentAlignment="Center" 
-             VerticalContentAlignment="Center" 
-             FontFamily="Cascadia Code" 
-             FontSize="15" 
-             AutomationProperties.Name="txtSleep"/>
+                Width="100" 
+                Height="50" 
+                VerticalAlignment="Stretch"
+                Background="Wheat" 
+                HorizontalContentAlignment="Center" 
+                VerticalContentAlignment="Center" 
+                FontFamily="Cascadia Code" 
+                FontSize="15" 
+                    TextChanged="TextBox_TextChanged"
+                AutomationProperties.Name="txtSleep"/>
             </StackPanel>
 
 
