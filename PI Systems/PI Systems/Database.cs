@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PI_Systems
 {
-    internal class Database
+    public class Database
     {
+        
     }
 }

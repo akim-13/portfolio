@@ -76,3 +76,44 @@ C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.baml
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\TitleAndBack.g.cs
 C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\TitleAndBack.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.exe
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.deps.json
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.runtimeconfig.json
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Windows.SDK.NET.dll
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\TitleAndBack.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GeneratedInternalTypeHelper.g.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\TitleAndBack.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.baml
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.g.resources
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfoInputs.cache
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfo.cs
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.CoreCompileInputs.cache
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.sourcelink.json
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.Up2Date
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\refint\PI Systems.dll
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.genruntimeconfig.cache
+C:\Users\ekate_sdiptwt\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\ref\PI Systems.dll
