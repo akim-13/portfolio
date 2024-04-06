@@ -24,5 +24,11 @@ namespace PI_Systems.GUIs.UserControls
         {
             InitializeComponent();
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox txtbx = (TextBox)sender;  
+            Console.WriteLine(txtbx.Text);
+        }
     }
 }

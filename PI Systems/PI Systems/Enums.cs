@@ -7,4 +7,11 @@
         Work,
         Water
     }
+
+    public enum ControlState
+    {
+        Running,
+        Paused,
+        Ended
+    }
 }

@@ -31,6 +31,9 @@
     <Compile Update="GUIs\UserControls\Work.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="GUIs\UserControls\WorkItem.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="GUIs\UserControls\Achievements.xaml">
@@ -55,6 +58,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="GUIs\UserControls\Work.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\UserControls\WorkItem.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
