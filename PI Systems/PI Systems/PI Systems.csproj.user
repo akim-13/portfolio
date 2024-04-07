@@ -7,10 +7,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="GUIs\HelperUserControls\ActivityDayInput.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="GUIs\UserControls\Achievements.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\UserControls\TitleAndBack.xaml.cs">
+    <Compile Update="GUIs\HelperUserControls\TitleAndBack.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="GUIs\UserControls\Graphs.xaml.cs">
@@ -31,15 +34,18 @@
     <Compile Update="GUIs\UserControls\Work.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\UserControls\WorkItem.xaml.cs">
+    <Compile Update="GUIs\HelperUserControls\WorkItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="GUIs\HelperUserControls\ActivityDayInput.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="GUIs\UserControls\Achievements.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\UserControls\TitleAndBack.xaml">
+    <Page Update="GUIs\HelperUserControls\TitleAndBack.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="GUIs\UserControls\Graphs.xaml">
@@ -60,7 +66,7 @@
     <Page Update="GUIs\UserControls\Work.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\UserControls\WorkItem.xaml">
+    <Page Update="GUIs\HelperUserControls\WorkItem.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

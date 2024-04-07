@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PI_Systems.GUIs.UserControls"
-             xmlns:uc="clr-namespace:PI_Systems.GUIs.UserControls"
+             xmlns:huc="clr-namespace:PI_Systems.GUIs.HelperUserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <uc:TitleAndBack Title="Achievements 🏅"/>
+        <huc:TitleAndBack Title="Achievements 🏅"/>
     </Grid>
 </UserControl>
