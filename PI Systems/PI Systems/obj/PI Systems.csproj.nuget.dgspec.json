@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {}
+    "C:\\Users\\jeety\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {
+    "C:\\Users\\jeety\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+        "projectUniqueName": "C:\\Users\\jeety\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
         "projectName": "PI Systems",
-        "projectPath": "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+        "projectPath": "C:\\Users\\jeety\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
         "packagesPath": "C:\\Users\\jeety\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jeety\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\",
+        "outputPath": "C:\\Users\\jeety\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jeety\\AppData\\Roaming\\NuGet\\NuGet.Config",
