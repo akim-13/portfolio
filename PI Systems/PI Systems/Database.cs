@@ -9,7 +9,7 @@ namespace PI_Systems
 {
     internal class Database
     {
-        public static Database instance;
+        public static Database Instance { get; private set; }
 
         private readonly SqlConnection conn;
 
@@ -25,7 +25,7 @@ namespace PI_Systems
                 conn.Open();
             }            
 
-            instance = this;
+            Instance = this;
         }
 
         #region Insertions
@@ -126,6 +126,17 @@ namespace PI_Systems
             {
                 return default;
             }
+        }
+
+        public string GetStringDataToday<T>()
+        {
+            object? item = GetUserActivity<T>(DateTime.Now.Date);
+            if (item != null)
+            {
+                Console.WriteLine("Data: " + item.ToString());
+                return item.ToString();
+            }
+            return "0";
         }
     }
 }

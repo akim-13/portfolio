@@ -9,8 +9,8 @@
     Title="PI Systems" 
     MinHeight="500"
     Height="500" 
-    MinWidth="850"
-    Width="850" 
+    MinWidth="865"
+    Width="865" 
     Background="#FF0C1944">
 
     <uc:Menu/>

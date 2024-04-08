@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System;
+using System.Windows.Controls;
 
 namespace PI_Systems.GUIs.HelperUserControls
 {
@@ -40,6 +40,7 @@ namespace PI_Systems.GUIs.HelperUserControls
                 case ActivityType.Work:
                     break;
             }
+            UserControls.Menu.Instance.RefreshTodaysData();
         }
 
         
@@ -49,9 +50,9 @@ namespace PI_Systems.GUIs.HelperUserControls
         private void InsertOrUpdate(dynamic entry)
         {
             // Jeet: Try inserting data, and if it can't be inserted (since it already exists), update it 
-            if (!Database.instance.Insert(entry))
+            if (!Database.Instance.Insert(entry))
             {
-                Database.instance.Update(entry);
+                Database.Instance.Update(entry);
             }
         }
 
@@ -136,29 +137,19 @@ namespace PI_Systems.GUIs.HelperUserControls
         #endregion
 
 
-        private void SetTextbox<T>()
-        {
-            object? item = Database.instance.GetUserActivity<T>(DateTime.Now.Date);
-            if (item != null)
-            {
-                Console.WriteLine("Data: " + item.ToString());
-                textBox.Text = item.ToString();
-            }
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Jeet: Set the data into the text box when this specific GUI component loads in on the screen
             switch (Activity)
             {
                 case ActivityType.Water:
-                    SetTextbox<UserWater>();
+                    textBox.Text = UserControls.Menu.Instance.waterToday;
                     break;
                 case ActivityType.Sleep:
-                    SetTextbox<UserSleep>();
+                    textBox.Text = UserControls.Menu.Instance.sleepToday;
                     break;
                 case ActivityType.Steps:
-                    SetTextbox<UserSteps>();
+                    textBox.Text = UserControls.Menu.Instance.stepsToday;
                     break;
             }
         }
