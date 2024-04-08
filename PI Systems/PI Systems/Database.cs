@@ -11,7 +11,7 @@ namespace PI_Systems
     {
         public static Database instance;
 
-        readonly SqlConnection conn;
+        private readonly SqlConnection conn;
 
         public Database()
         { 
@@ -23,18 +23,17 @@ namespace PI_Systems
             if (conn.State != ConnectionState.Open)
             {
                 conn.Open();
-            }
+            }            
 
             instance = this;
         }
 
         #region Insertions
 
-        public bool InsertUserWater(UserWater newEntry)
+        private bool InsertIntoTable(string query, object newEntry)
         {
             try
             {
-                string query = "INSERT INTO UserWater VALUES (@Username, @Date, @LitresDrank)";
                 conn.Execute(query, newEntry);
                 return true;
             }
@@ -45,36 +44,55 @@ namespace PI_Systems
             }
         }
 
-        public bool InsertUserSleep(UserSleep newEntry)
+        public bool Insert(UserWater newEntry)
         {
-            try
-            {
-                string query = "INSERT INTO UserSleep VALUES (@Username, @Date, @SleepHours)";
-                conn.Execute(query, newEntry);
-                return true;
-            }
-            catch (SqlException)
-            {
-                return false;
-            }
+            return InsertIntoTable(
+                "INSERT INTO UserWater VALUES (@Username, @Date, @LitresDrank)",
+                newEntry);
+        }
+
+        public bool Insert(UserSleep newEntry)
+        {
+            return InsertIntoTable(
+                "INSERT INTO UserSleep VALUES (@Username, @Date, @SleepHours)",
+                newEntry);
+        }
+
+        public bool Insert(UserSteps newEntry)
+        {
+            return InsertIntoTable(
+                "INSERT INTO UserSteps VALUES (@Username, @Date, @Steps)",
+                newEntry);
         }
 
         #endregion
 
         #region Updates
 
-        public void UpdateUserWater(UserWater newEntry)
+        void UpdateTable(string query, object entry)
         {
-            string query = "UPDATE UserWater SET LitresDrank = @LitresDrank " +
-                "WHERE Username = @Username AND Date = @Date";
-            conn.Execute(query, newEntry);
+            conn.Execute(query, entry);
         }
 
-        public void UpdateUserSleep(UserSleep newEntry)
+        public void Update(UserWater entry)
         {
-            string query = "UPDATE UserSleep SET LitresDrank = @SleepHours " +
-                "WHERE Username = @Username AND Date = @Date";
-            conn.Execute(query, newEntry);
+            UpdateTable(
+                "UPDATE UserWater SET LitresDrank = @LitresDrank WHERE Username = @Username AND Date = @Date",
+                entry);
+        }
+
+        public void Update(UserSleep entry)
+        {
+            UpdateTable(
+                "UPDATE UserSleep SET SleepHours = @SleepHours WHERE Username = @Username AND Date = @Date",
+                entry);
+        }
+
+        public void Update(UserSteps entry)
+        {
+            UpdateTable(
+                "UPDATE UserSteps SET Steps = @Steps WHERE Username = @Username AND Date = @Date",
+                entry);
         }
 
         #endregion
@@ -90,14 +108,16 @@ namespace PI_Systems
         /// <returns></returns>
         public T[] GetUserActivities<T>(DateTime startDate, DateTime endDate)
         {
-            string query = "SELECT * FROM UserWater WHERE Date >= @startDate AND Date <= @endDate";
+            string query = $"SELECT * FROM {typeof(T).Name} WHERE Date >= @startDate AND Date <= @endDate";
 
             return conn.Query<T>(query, new { startDate, endDate }).ToArray();
         }
 
         public T? GetUserActivity<T>(DateTime startDate)
         {
-            string query = "SELECT * FROM UserWater WHERE Date = @startDate";
+            // Jeet: typeof(T).Name gets the name of the class.
+            // Since the class names are the same as the SQL table names, we can use them
+            string query = $"SELECT * FROM {typeof(T).Name} WHERE Date = @startDate";
             try
             {
                 return conn.QueryFirst<T>(query, new { startDate });
@@ -107,6 +127,5 @@ namespace PI_Systems
                 return default;
             }
         }
-
     }
 }

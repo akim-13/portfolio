@@ -32,8 +32,10 @@ namespace PI_Systems.GUIs.HelperUserControls
                     UpdateUserWater();
                     break;
                 case ActivityType.Sleep:
+                    UpdateUserSleep();
                     break;
                 case ActivityType.Steps:
+                    UpdateUserSteps();
                     break;
                 case ActivityType.Work:
                     break;
@@ -44,20 +46,46 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         #region Update Various Different Activity Types
 
+        private void InsertOrUpdate(dynamic entry)
+        {
+            // Jeet: Try inserting data, and if it can't be inserted (since it already exists), update it 
+            if (!Database.instance.Insert(entry))
+            {
+                Database.instance.Update(entry);
+            }
+        }
+
         void UpdateUserWater()
         {
-            UserWater newEntry = new UserWater
+            UserWater entry = new UserWater
             {
                 Username = "TestUser",
                 Date = DateTime.Now.Date,
                 LitresDrank = float.Parse(textBox.Text)
             };
+            InsertOrUpdate(entry);
+        }
 
-            // Jeet: Try inserting data, and if it can't be inserted (since it already exists), update it 
-            if (!Database.instance.InsertUserWater(newEntry))
+        void UpdateUserSleep()
+        {
+            UserSleep entry = new UserSleep
             {
-                Database.instance.UpdateUserWater(newEntry);
-            }
+                Username = "TestUser",
+                Date = DateTime.Now.Date,
+                SleepHours = float.Parse(textBox.Text)
+            };
+            InsertOrUpdate(entry);
+        }
+
+        void UpdateUserSteps()
+        {
+            UserSteps entry = new UserSteps
+            {
+                Username = "TestUser",
+                Date = DateTime.Now.Date,
+                Steps = int.Parse(textBox.Text)
+            };
+            InsertOrUpdate(entry);
         }
 
         #endregion
@@ -108,25 +136,29 @@ namespace PI_Systems.GUIs.HelperUserControls
         #endregion
 
 
+        private void SetTextbox<T>()
+        {
+            object? item = Database.instance.GetUserActivity<T>(DateTime.Now.Date);
+            if (item != null)
+            {
+                Console.WriteLine("Data: " + item.ToString());
+                textBox.Text = item.ToString();
+            }
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Jeet: Set the data into the text box when this specific GUI component loads in on the screen
             switch (Activity)
             {
                 case ActivityType.Water:
-                    UserWater? water = Database.instance.GetUserActivity<UserWater>(DateTime.Now.Date);
-                    if (water != null)
-                    {
-                        // Console.WriteLine("Setting water info");
-                        textBox.Text = water.LitresDrank.ToString();
-                    }
+                    SetTextbox<UserWater>();
                     break;
                 case ActivityType.Sleep:
-                    UserSleep? sleep = Database.instance.GetUserActivity<UserSleep>(DateTime.Now.Date);
-                    if (sleep != null)
-                    {
-                        textBox.Text = sleep.SleepHours.ToString();
-                    }
+                    SetTextbox<UserSleep>();
+                    break;
+                case ActivityType.Steps:
+                    SetTextbox<UserSteps>();
                     break;
             }
         }
