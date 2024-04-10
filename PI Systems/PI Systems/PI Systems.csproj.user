@@ -69,5 +69,11 @@
     <Page Update="GUIs\HelperUserControls\WorkItem.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Colours.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

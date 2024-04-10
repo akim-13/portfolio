@@ -11,7 +11,7 @@
     Height="500" 
     MinWidth="865"
     Width="865" 
-    Background="#FF0C1944">
+    Background="{StaticResource BlueGradient}">
 
     <uc:Menu/>
 

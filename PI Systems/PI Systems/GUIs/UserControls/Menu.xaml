@@ -28,29 +28,35 @@
                 </Grid.RowDefinitions>
 
                 <!--Steps Button-->
-                <Border Background="SlateGray" Margin="70,20" CornerRadius="5">
+                <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="45,10" CornerRadius="5">
                     <Grid>
                         <CheckBox Name="stepsCheckBox" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0"/>
-                        <Button Name="stepsButton" Background="SlateGray" Margin="20,10,20,10" BorderThickness="0" Click="BaseActivityButton_Click">
+                        <Button 
+                            Style="{StaticResource Button}"
+                            Name="stepsButton" 
+                            Background="{x:Null}" 
+                            Margin="20,10,20,10" 
+                            BorderThickness="0" 
+                            Click="BaseActivityButton_Click">
                             <Grid>
                                 <StackPanel VerticalAlignment="Stretch" Name="stepsStackPanel">
                                     <Label
-                            FontFamily="Cascadia Code" 
-                            Content="STEPS today" 
-                            Foreground="#FFCD9E9E" 
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold" 
-                            FontSize="30"/>
+                                        FontFamily="Cascadia Code" 
+                                        Content="STEPS today" 
+                                        Foreground="#FFCD9E9E" 
+                                        HorizontalAlignment="Center"
+                                        FontWeight="Bold" 
+                                        FontSize="30"/>
 
                                     <Label
-                            Name="stepsLabel"
-                            Content="5000 steps" 
-                            FontSize="20"
-                            HorizontalContentAlignment="Center" 
-                            Foreground="#FFFDF6F6" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Top" 
-                            FontFamily="Cascadia Code"/>
+                                        Name="stepsLabel"
+                                        Content="5000 steps" 
+                                        FontSize="20"
+                                        HorizontalContentAlignment="Center" 
+                                        Foreground="#FFFDF6F6" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Top" 
+                                        FontFamily="Cascadia Code"/>
                                 </StackPanel>
                             </Grid>
                         </Button>
@@ -58,29 +64,35 @@
                 </Border>
 
                 <!--Work Button-->
-                <Border Background="SlateGray" Margin="70,20" CornerRadius="5" Grid.Column="1">
+                <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="45,10" CornerRadius="5" Grid.Column="1">
                     <Grid>
                         <CheckBox Name="workCheckBox" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0"/>
-                        <Button Name="workButton" Background="SlateGray" Margin="20,10,20,10" BorderThickness="0" Click="BaseActivityButton_Click">
+                        <Button 
+                            Style="{StaticResource Button}"
+                            Name="workButton" 
+                            Background="{x:Null}" 
+                            Margin="20,10,20,10" 
+                            BorderThickness="0" 
+                            Click="BaseActivityButton_Click">
                             <Grid>
                                 <StackPanel VerticalAlignment="Stretch" Name="workStackPanel">
                                     <Label 
-                            FontFamily="Cascadia Code" 
-                            Content="WORK today" 
-                            Foreground="#FFCD9E9E" 
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold" 
-                            FontSize="30"/>
+                                        FontFamily="Cascadia Code" 
+                                        Content="WORK today" 
+                                        Foreground="#FFCD9E9E" 
+                                        HorizontalAlignment="Center"
+                                        FontWeight="Bold" 
+                                        FontSize="30"/>
 
                                     <Label
-                            Name="workLabel"
-                            Content="2 hours"
-                            FontSize="20"
-                            HorizontalContentAlignment="Center" 
-                            Foreground="#FFFDF6F6" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Top" 
-                            FontFamily="Cascadia Code"/>
+                                        Name="workLabel"
+                                        Content="2 hours"
+                                        FontSize="20"
+                                        HorizontalContentAlignment="Center" 
+                                        Foreground="#FFFDF6F6" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Top" 
+                                        FontFamily="Cascadia Code"/>
                                 </StackPanel>
                             </Grid>
                         </Button>
@@ -88,29 +100,35 @@
                 </Border>
 
                 <!--Sleep Button-->
-                <Border Background="SlateGray" Margin="70,20" CornerRadius="5" Grid.Row="1">
+                <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="45,10" CornerRadius="5" Grid.Row="1">
                     <Grid>
                         <CheckBox Name="sleepCheckBox" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0"/>
-                        <Button Name="sleepButton" Background="SlateGray" Margin="20,10,20,10" BorderThickness="0" Click="BaseActivityButton_Click">
+                        <Button 
+                            Style="{StaticResource Button}"
+                            Name="sleepButton" 
+                            Background="{x:Null}" 
+                            Margin="20,10,20,10" 
+                            BorderThickness="0" 
+                            Click="BaseActivityButton_Click">
                             <Grid>
                                 <StackPanel VerticalAlignment="Stretch" Name="sleepStackPanel">
                                     <Label 
-                            FontFamily="Cascadia Code" 
-                            Content="SLEEP last night" 
-                            Foreground="#FFCD9E9E" 
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold" 
-                            FontSize="20"/>
+                                        FontFamily="Cascadia Code" 
+                                        Content="SLEEP last night" 
+                                        Foreground="#FFCD9E9E" 
+                                        HorizontalAlignment="Center"
+                                        FontWeight="Bold" 
+                                        FontSize="20"/>
 
                                     <Label
-                            Name="sleepLabel"
-                            Content="8 hours"
-                            FontSize="20"
-                            HorizontalContentAlignment="Center" 
-                            Foreground="#FFFDF6F6" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Top" 
-                            FontFamily="Cascadia Code"/>
+                                        Name="sleepLabel"
+                                        Content="8 hours"
+                                        FontSize="20"
+                                        HorizontalContentAlignment="Center" 
+                                        Foreground="#FFFDF6F6" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Top" 
+                                        FontFamily="Cascadia Code"/>
                                 </StackPanel>
                             </Grid>
                         </Button>
@@ -118,29 +136,35 @@
                 </Border>
 
                 <!--Water Button-->
-                <Border Background="SlateGray" Margin="70,20" CornerRadius="5" Grid.Row="1" Grid.Column="1">
+                <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="45,10" CornerRadius="5" Grid.Row="1" Grid.Column="1">
                     <Grid>
                         <CheckBox Name="waterCheckBox" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0"/>
-                        <Button Name="waterButton" Background="SlateGray" Margin="20,10,20,10" BorderThickness="0" Click="BaseActivityButton_Click">
+                        <Button
+                            Style="{StaticResource Button}"
+                            Name="waterButton" 
+                            Background="{x:Null}" 
+                            Margin="20,10,20,10" 
+                            BorderThickness="0" 
+                            Click="BaseActivityButton_Click">
                             <Grid>
                                 <StackPanel VerticalAlignment="Stretch" Name="waterStackPanel">
                                     <Label 
-                            FontFamily="Cascadia Code" 
-                            Content="WATER DRANK today" 
-                            Foreground="#FFCD9E9E" 
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold" 
-                            FontSize="20"/>
+                                        FontFamily="Cascadia Code" 
+                                        Content="WATER DRANK today" 
+                                        Foreground="#FFCD9E9E" 
+                                        HorizontalAlignment="Center"
+                                        FontWeight="Bold" 
+                                        FontSize="20"/>
 
                                     <Label
-                            Name="waterLabel"
-                            Content="2 litres"
-                            FontSize="20"
-                            HorizontalContentAlignment="Center" 
-                            Foreground="#FFFDF6F6" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Top" 
-                            FontFamily="Cascadia Code"/>
+                                        Name="waterLabel"
+                                        Content="2 litres"
+                                        FontSize="20"
+                                        HorizontalContentAlignment="Center" 
+                                        Foreground="#FFFDF6F6" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Top" 
+                                        FontFamily="Cascadia Code"/>
                                 </StackPanel>
                             </Grid>
                         </Button>
@@ -158,22 +182,25 @@
 
                 <!--Graphs Button-->
                 <Button Name="graphsButton" 
+                        Style="{StaticResource Button}"
                         VerticalAlignment="Stretch" 
                         Margin="45,20" Content="Graphs" 
                         FontSize="35" Foreground="Wheat" 
-                        Background="DarkSlateGray" 
+                        Background="{StaticResource ForestGreenGradient}" 
                         Click="BaseActivityButton_Click"/>
 
                 <!--Achievements Button-->
-                <Button Name="achievementsButton" 
-                        VerticalAlignment="Stretch" 
-                        Margin="45,20" 
-                        Content="Achievements" 
-                        FontSize="35" 
-                        Foreground="Wheat" 
-                        Background="DarkSlateGray"
-                        Grid.Column="1" 
-                        Click="BaseActivityButton_Click"/>
+                <Button 
+                    Style="{StaticResource Button}"
+                    Name="achievementsButton" 
+                    VerticalAlignment="Stretch" 
+                    Margin="45,20" 
+                    Content="Achievements" 
+                    FontSize="35" 
+                    Foreground="Wheat" 
+                    Background="{StaticResource ForestGreenGradient}"
+                    Grid.Column="1" 
+                    Click="BaseActivityButton_Click"/>
 
             </Grid>
 
