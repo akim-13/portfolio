@@ -21,7 +21,7 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private void ToMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.Content = UserControls.Menu.Instance;
+            Application.Current.MainWindow.Content = UserControls.MainMenu.Instance;
         }
     }
 }

@@ -13,29 +13,7 @@
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
 
             <huc:ActivityDayInput Prompt="Insert litres of water drank here" Activity="Water"/>
-
-            <StackPanel Orientation="Horizontal">
-                <Label 
-             Width="300" 
-             Height="50" 
-             Content="Goal amount of water for" 
-             HorizontalContentAlignment="Center" 
-             VerticalContentAlignment="Center" 
-             VerticalAlignment="Center" 
-             FontFamily="Cascadia Code" 
-             FontSize="16" Foreground="Wheat" 
-             Background="DarkSlateGray"/>
-
-                <TextBox
-             Width ="100" 
-             Height="50" 
-             VerticalAlignment="Bottom" 
-             Background="Wheat" 
-             HorizontalContentAlignment="Center" 
-             VerticalContentAlignment="Center" 
-             FontFamily="Cascadia Code" 
-             FontSize="15"/>
-            </StackPanel>
+            <huc:GoalInput Prompt="Insert litres of water for goal period:" Activity="Water"/>
         </StackPanel>
     </Grid>
 </UserControl>

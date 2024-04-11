@@ -65,6 +65,13 @@ namespace PI_Systems
                 newEntry);
         }
 
+        public bool Insert(UserGoals newEntry)
+        {
+            return InsertIntoTable(
+                "INSERT INTO UserGoals VALUES (@Username, @ActivityID, @TimeFrameID, @Date, @Value)",
+                newEntry);
+        }
+
         #endregion
 
         #region Updates
@@ -92,6 +99,13 @@ namespace PI_Systems
         {
             UpdateTable(
                 "UPDATE UserSteps SET Steps = @Steps WHERE Username = @Username AND Date = @Date",
+                entry);
+        }
+
+        public void Update(UserGoals entry)
+        {
+            UpdateTable(
+                "UPDATE UserSteps SET TimeFrameID = @TimeFrameID, Date = @Date, Value = @Value WHERE Username = @Username AND Date = @Date",
                 entry);
         }
 
@@ -137,6 +151,24 @@ namespace PI_Systems
                 return item.ToString();
             }
             return "0";
+        }
+
+        public UserGoals? GetUserGoal(string Username, int ActivityID)
+        {
+            string query = $"SELECT * FROM UserGoals WHERE Username = @Username AND ActivityID = @ActivityID";
+            try
+            {
+                return conn.QueryFirst<UserGoals>(query, new { Username, ActivityID });
+            }
+            catch (InvalidOperationException)  // Jeet: If this entry isn't in the db, return null
+            {
+                return null;
+            }
+        }
+
+        public void DeleteRow(string Username, int ActivityID)
+        {
+            conn.Execute("DELETE FROM UserGoals WHERE Username = @Username AND ActivityID = @ActivityID", new { Username, ActivityID });
         }
     }
 }

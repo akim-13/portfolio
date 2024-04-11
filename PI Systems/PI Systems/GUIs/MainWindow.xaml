@@ -13,6 +13,6 @@
     Width="865" 
     Background="{StaticResource BlueGradient}">
 
-    <uc:Menu/>
+    <uc:MainMenu/>
 
 </Window>

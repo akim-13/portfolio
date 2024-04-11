@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System;
 using System.Windows.Controls;
+using PI_Systems.GUIs.UserControls;
 
 namespace PI_Systems.GUIs.HelperUserControls
 {
@@ -40,7 +41,8 @@ namespace PI_Systems.GUIs.HelperUserControls
                 case ActivityType.Work:
                     break;
             }
-            UserControls.Menu.Instance.RefreshTodaysData();
+            MainMenu.Instance.RefreshTodaysData();
+            //((GoalAndDailyInput)Tag).goalInput.DisplayGoal();
         }
 
         
@@ -60,7 +62,7 @@ namespace PI_Systems.GUIs.HelperUserControls
         {
             UserWater entry = new UserWater
             {
-                Username = "TestUser",
+                Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
                 LitresDrank = float.Parse(textBox.Text)
             };
@@ -71,7 +73,7 @@ namespace PI_Systems.GUIs.HelperUserControls
         {
             UserSleep entry = new UserSleep
             {
-                Username = "TestUser",
+                Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
                 SleepHours = float.Parse(textBox.Text)
             };
@@ -82,7 +84,7 @@ namespace PI_Systems.GUIs.HelperUserControls
         {
             UserSteps entry = new UserSteps
             {
-                Username = "TestUser",
+                Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
                 Steps = int.Parse(textBox.Text)
             };
@@ -95,7 +97,6 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
             if (string.IsNullOrEmpty(textBox.Text))
             {
                 // Jeet: If the user removes everything from the text box, set default to 0
@@ -143,13 +144,13 @@ namespace PI_Systems.GUIs.HelperUserControls
             switch (Activity)
             {
                 case ActivityType.Water:
-                    textBox.Text = UserControls.Menu.Instance.waterToday;
+                    textBox.Text = MainMenu.Instance.waterToday;
                     break;
                 case ActivityType.Sleep:
-                    textBox.Text = UserControls.Menu.Instance.sleepToday;
+                    textBox.Text = MainMenu.Instance.sleepToday;
                     break;
                 case ActivityType.Steps:
-                    textBox.Text = UserControls.Menu.Instance.stepsToday;
+                    textBox.Text = MainMenu.Instance.stepsToday;
                     break;
             }
         }

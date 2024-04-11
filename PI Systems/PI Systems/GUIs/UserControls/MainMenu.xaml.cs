@@ -7,15 +7,17 @@ namespace PI_Systems.GUIs.UserControls
     /// <summary>
     /// Interaction logic for Menu.xaml
     /// </summary>
-    public partial class Menu : UserControl
+    public partial class MainMenu : UserControl
     {
-        public static Menu Instance { get; private set; }
+        public static MainMenu Instance { get; private set; }
 
         public string waterToday;
         public string sleepToday;
         public string stepsToday;
 
-        public Menu()
+        public string user = "TestUser";
+
+        public MainMenu()
         {
             InitializeComponent();
             Instance = this;

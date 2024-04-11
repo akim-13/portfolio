@@ -14,4 +14,11 @@
         Paused,
         Ended
     }
+
+    public enum TimeFrame
+    {
+        Today,
+        Week,
+        Month
+    }
 }

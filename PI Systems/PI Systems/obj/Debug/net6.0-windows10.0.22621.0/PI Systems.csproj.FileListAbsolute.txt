@@ -258,14 +258,12 @@ D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.AssemblyReference.cache
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.baml
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.g.cs
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.g.cs
@@ -372,3 +370,9 @@ D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\ButtonStyles.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\Colours.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.baml
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.g.cs
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.baml
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.baml
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.g.cs
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.g.cs
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.baml

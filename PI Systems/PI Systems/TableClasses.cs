@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PI_Systems.GUIs.UserControls;
+using System;
 
 namespace PI_Systems
 {
@@ -35,6 +36,20 @@ namespace PI_Systems
         public override string ToString()
         {
             return Steps.ToString();
+        }
+    }
+
+    class UserGoals
+    {
+        public string? Username { get; set; }
+        public int ActivityID { get; set; }
+        public int TimeFrameID { get; set; }
+        public DateTime Date { get; set; }
+        public float Value { get; set; }
+
+        public override string ToString()
+        {
+            return Value.ToString();
         }
     }
 }

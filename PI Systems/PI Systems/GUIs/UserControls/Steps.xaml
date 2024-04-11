@@ -20,32 +20,8 @@
                 <Grid Name="stepsInputGrid" Visibility="Visible">
                     <huc:ActivityDayInput Prompt="Insert amount of steps today" Activity="Steps"/>
                 </Grid>
-                
-                <StackPanel 
-                    Orientation="Horizontal" 
-                    Margin="0,10,0,10" 
-                    Background="DarkSlateGray" 
-                    HorizontalAlignment="Center">
-                    <Label 
-                        Width="260" 
-                        Height="50" 
-                        Content="Insert your goal steps for" 
-                        HorizontalContentAlignment="Right" 
-                        VerticalContentAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        FontFamily="Cascadia Code" 
-                        FontSize="16" 
-                        Foreground="Wheat"/>
-                    <ComboBox x:Name="step_goal_timeframe" Width="75" Background="{x:Null}" Height="25" SelectedIndex="0" FontFamily="Cascadia Code" FontSize="16" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="7,0,20,0" SelectionChanged="GoalTimeframe_Changed" Foreground="Black">
-                        <ComboBoxItem FontFamily="Cascadia Code" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">today</ComboBoxItem>
-                        <ComboBoxItem FontFamily="Cascadia Code" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">week</ComboBoxItem>
-                        <ComboBoxItem FontFamily="Cascadia Code" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">month</ComboBoxItem>
-                    </ComboBox>
 
-                    <TextBox Width ="100" Height="50" VerticalAlignment="Stretch" Background="Wheat" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Cascadia Code" FontSize="15" TextChanged="TextBox_TextChanged" AutomationProperties.Name="txtSleep"/>
-                </StackPanel>
-                
-                
+                <huc:GoalInput Prompt="Insert steps for goal period:" Activity="Steps"/>
             </StackPanel>
         </StackPanel>
     </Grid>
