@@ -10,6 +10,12 @@
     <Compile Update="GUIs\HelperUserControls\ActivityDayInput.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="GUIs\HelperUserControls\GoalAndDailyInput.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="GUIs\HelperUserControls\GoalInput.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="GUIs\UserControls\Achievements.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,7 +25,7 @@
     <Compile Update="GUIs\UserControls\Graphs.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GUIs\UserControls\Menu.xaml.cs">
+    <Compile Update="GUIs\UserControls\MainMenu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="GUIs\UserControls\Sleep.xaml.cs">
@@ -42,6 +48,12 @@
     <Page Update="GUIs\HelperUserControls\ActivityDayInput.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="GUIs\HelperUserControls\GoalAndDailyInput.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="GUIs\HelperUserControls\GoalInput.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="GUIs\UserControls\Achievements.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -51,7 +63,7 @@
     <Page Update="GUIs\UserControls\Graphs.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GUIs\UserControls\Menu.xaml">
+    <Page Update="GUIs\UserControls\MainMenu.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="GUIs\UserControls\Sleep.xaml">
@@ -67,6 +79,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="GUIs\HelperUserControls\WorkItem.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Colours.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

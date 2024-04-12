@@ -1,7 +1,8 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System;
+using System.Windows.Controls;
+using PI_Systems.GUIs.UserControls;
 
 namespace PI_Systems.GUIs.HelperUserControls
 {
@@ -32,32 +33,62 @@ namespace PI_Systems.GUIs.HelperUserControls
                     UpdateUserWater();
                     break;
                 case ActivityType.Sleep:
+                    UpdateUserSleep();
                     break;
                 case ActivityType.Steps:
+                    UpdateUserSteps();
                     break;
                 case ActivityType.Work:
                     break;
             }
+            MainMenu.Instance.RefreshTodaysData();
+            //((GoalAndDailyInput)Tag).goalInput.DisplayGoal();
         }
 
         
 
         #region Update Various Different Activity Types
 
+        private void InsertOrUpdate(dynamic entry)
+        {
+            // Jeet: Try inserting data, and if it can't be inserted (since it already exists), update it 
+            if (!Database.Instance.Insert(entry))
+            {
+                Database.Instance.Update(entry);
+            }
+        }
+
         void UpdateUserWater()
         {
-            UserWater newEntry = new UserWater
+            UserWater entry = new UserWater
             {
-                Username = "TestUser",
+                Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
                 LitresDrank = float.Parse(textBox.Text)
             };
+            InsertOrUpdate(entry);
+        }
 
-            // Jeet: Try inserting data, and if it can't be inserted (since it already exists), update it 
-            if (!Database.instance.InsertUserWater(newEntry))
+        void UpdateUserSleep()
+        {
+            UserSleep entry = new UserSleep
             {
-                Database.instance.UpdateUserWater(newEntry);
-            }
+                Username = MainMenu.Instance.user,
+                Date = DateTime.Now.Date,
+                SleepHours = float.Parse(textBox.Text)
+            };
+            InsertOrUpdate(entry);
+        }
+
+        void UpdateUserSteps()
+        {
+            UserSteps entry = new UserSteps
+            {
+                Username = MainMenu.Instance.user,
+                Date = DateTime.Now.Date,
+                Steps = int.Parse(textBox.Text)
+            };
+            InsertOrUpdate(entry);
         }
 
         #endregion
@@ -66,7 +97,6 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
             if (string.IsNullOrEmpty(textBox.Text))
             {
                 // Jeet: If the user removes everything from the text box, set default to 0
@@ -114,19 +144,13 @@ namespace PI_Systems.GUIs.HelperUserControls
             switch (Activity)
             {
                 case ActivityType.Water:
-                    UserWater? water = Database.instance.GetUserActivity<UserWater>(DateTime.Now.Date);
-                    if (water != null)
-                    {
-                        // Console.WriteLine("Setting water info");
-                        textBox.Text = water.LitresDrank.ToString();
-                    }
+                    textBox.Text = MainMenu.Instance.waterToday;
                     break;
                 case ActivityType.Sleep:
-                    UserSleep? sleep = Database.instance.GetUserActivity<UserSleep>(DateTime.Now.Date);
-                    if (sleep != null)
-                    {
-                        textBox.Text = sleep.SleepHours.ToString();
-                    }
+                    textBox.Text = MainMenu.Instance.sleepToday;
+                    break;
+                case ActivityType.Steps:
+                    textBox.Text = MainMenu.Instance.stepsToday;
                     break;
             }
         }
