@@ -4,6 +4,7 @@
 ﻿
 >>>>>>> master
 
+<<<<<<< HEAD
 FC:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\GUIs\MainWindow.xaml;;
 FC:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Achievements.xaml;;
 FC:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Graphs.xaml;;
@@ -15,5 +16,15 @@ FC:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\GUIs\User
 <<<<<<< HEAD
 =======
 FC:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\WorkItem.xaml;;
+>>>>>>> master
+=======
+FC:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\WorkItem.xaml;;
+FC:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\MainWindow.xaml;;
+FC:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Achievements.xaml;;
+FC:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Graphs.xaml;;
+FC:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Sleep.xaml;;
+FC:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Steps.xaml;;
+FC:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Water.xaml;;
+FC:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Work.xaml;;
 >>>>>>> master
 
