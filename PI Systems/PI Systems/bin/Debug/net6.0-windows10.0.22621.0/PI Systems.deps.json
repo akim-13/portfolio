@@ -9,6 +9,8 @@
       "PI Systems/1.0.0": {
         "dependencies": {
           "Dapper": "2.1.35",
+          "EasyModbusTCP": "5.6.0",
+          "LiveCharts.Wpf": "0.9.7",
           "Microsoft.Data.SqlClient": "5.2.0",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.22621.31"
         },
@@ -67,6 +69,33 @@
           "lib/net5.0/Dapper.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.1.35.13827"
+          }
+        }
+      },
+      "EasyModbusTCP/5.6.0": {
+        "runtime": {
+          "lib/net40/EasyModbus.dll": {
+            "assemblyVersion": "5.6.0.0",
+            "fileVersion": "5.6.0.0"
+          }
+        }
+      },
+      "LiveCharts/0.9.7": {
+        "runtime": {
+          "lib/net45/LiveCharts.dll": {
+            "assemblyVersion": "0.9.7.0",
+            "fileVersion": "0.9.7.0"
+          }
+        }
+      },
+      "LiveCharts.Wpf/0.9.7": {
+        "dependencies": {
+          "LiveCharts": "0.9.7"
+        },
+        "runtime": {
+          "lib/net45/LiveCharts.Wpf.dll": {
+            "assemblyVersion": "0.9.7.0",
+            "fileVersion": "0.9.7.0"
           }
         }
       },
@@ -476,6 +505,27 @@
       "sha512": "sha512-YKRwjVfrG7GYOovlGyQoMvr1/IJdn+7QzNXJxyMh0YfFF5yvDmTYaJOVYWsckreNjGsGSEtrMTpnzxTUq/tZQw==",
       "path": "dapper/2.1.35",
       "hashPath": "dapper.2.1.35.nupkg.sha512"
+    },
+    "EasyModbusTCP/5.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2a5a9smmIu0Tq5zdwMvgO+WDvUgH0JuNv/crAILrDKcNRb8P/AOx9PEyegBiMn1TGXLP3byu0zhsSSUrrVyyXw==",
+      "path": "easymodbustcp/5.6.0",
+      "hashPath": "easymodbustcp.5.6.0.nupkg.sha512"
+    },
+    "LiveCharts/0.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-p4xyBrUaNNfkWZSNsIle0r51cyVyFg0Yi0uBRZM5GQtdFiA/7guZHlffFyNUILIdux10Ch2hUaJpcZENVU9aaQ==",
+      "path": "livecharts/0.9.7",
+      "hashPath": "livecharts.0.9.7.nupkg.sha512"
+    },
+    "LiveCharts.Wpf/0.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lv6YZoK0B4yWykMq5b9grZXtIbTj+OWu4sVN9GDpdgV6zffu64m4d5CW8KSjfSl9rB8VU649x1NZvhoU67hCDg==",
+      "path": "livecharts.wpf/0.9.7",
+      "hashPath": "livecharts.wpf.0.9.7.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",

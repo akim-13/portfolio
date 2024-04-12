@@ -7,6 +7,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Label Margin="0,15,0,0" Content="{Binding Title}" Foreground="FloralWhite" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontFamily="consolas"/>
-        <Button Width="100" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Content="BACK" FontSize="18" FontWeight="Bold" Background="DarkSlateGray" Foreground ="Wheat"  Click="ToMenuButton_Click" Margin="0,0,0,0"/>
+        <Button BorderThickness="0" Style="{StaticResource Button}" Margin="10,10,0,0" Width="80" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Content="BACK" FontSize="18" FontWeight="Bold" Background="DarkSlateGray" Foreground ="Wheat"  Click="ToMenuButton_Click"/>
     </Grid>
 </UserControl>

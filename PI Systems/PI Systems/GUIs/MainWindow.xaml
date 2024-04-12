@@ -9,10 +9,10 @@
     Title="PI Systems" 
     MinHeight="500"
     Height="500" 
-    MinWidth="850"
-    Width="850" 
-    Background="#FF0C1944">
+    MinWidth="865"
+    Width="865" 
+    Background="{StaticResource BlueGradient}">
 
-    <uc:Menu/>
+    <uc:MainMenu/>
 
 </Window>
