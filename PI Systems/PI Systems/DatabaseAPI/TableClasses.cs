@@ -1,5 +1,4 @@
-﻿using PI_Systems.GUIs.UserControls;
-using System;
+﻿using System;
 
 namespace PI_Systems
 {
@@ -51,5 +50,11 @@ namespace PI_Systems
         {
             return Value.ToString();
         }
+    }
+
+    class FitbitUsers
+    {
+        public string? ClientID { get; set; }
+        public string? AccessToken { get; set; }
     }
 }

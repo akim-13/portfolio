@@ -1,14 +1,6 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "qP0sElwYvQzoxmIPl/1ScBn3GSbXQLv0cxmpP8ql4tYXZNpjUjv64N6O925Pmzh/y5Of8bZVDPwPXGbM/i01vA==",
-=======
-<<<<<<< HEAD
-  "dgSpecHash": "j9C2PkZNsSMYjTtZCz1CbaY4qxa3lyIA9aDMl9mdZtChcShZWDoTav+hJOTHocr4aV6VTz3iywQbrSnPTSyIHw==",
-=======
-  "dgSpecHash": "E1/JOqAF0KxubpNTTGgEIxG0wvR9WtzSgDw/BlRI3bvqT/ukJ7JCwd4wvp72I7euocQYzwgy8rqgH5R0lBlESw==",
->>>>>>> cf5d37b7c6b2a8da4abbd3329143c44cdd71711e
->>>>>>> Database-Setup
   "success": true,
   "projectFilePath": "D:\\C# Projects\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
   "expectedPackageFiles": [
@@ -60,6 +52,12 @@
     "C:\\Users\\jeety\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22621.31\\microsoft.windows.sdk.net.ref.10.0.22621.31.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\C# Projects\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",
