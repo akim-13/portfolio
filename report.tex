@@ -157,6 +157,24 @@ is very rarely self-evident because it depends on an explanatory frame for inter
 you must make sure to express in words what you wish the reader to understand by them.
 
 
+The class diagram, derived from our database Entity-Relationship Diagram (ERD), illustrates the intricate structure of our Personal Informatics system, designed specifically for tracking and managing various user-centric activities. This diagram provides a visual representation of the data relationships and is critical in guiding the development process to ensure the system meets both functional and non-functional requirements effectively.\par
+
+User Class: Central to our system, the User class captures essential personal identifiers and account information for each user. Attributes include Username, Email, and Password, which are fundamental for ensuring secure user authentication and system access. This class acts as the primary entity with which other classes associate, establishing a one-to-many relationship across various data-tracking entities. Each instance of a User can associate with multiple records in subordinate classes, reflecting the diverse activities and metrics tracked by the system.\par
+
+UserAchievements Class: This class stores specific achievements of users, linked directly to the User class. Attributes like Username, Date, ActivityID, TimeFrameID, and Value allow for detailed recording and analysis of user accomplishments across different activities and timeframes. It enables the system to provide feedback and insights based on historical achievement data, supporting motivational features such as goal setting and progress tracking.\par
+
+UserStep Class: Dedicated to tracking the physical activity of steps taken, this class includes attributes such as Username, Date, and Steps. By recording daily step counts, the UserStep class feeds into the system’s health monitoring and fitness tracking capabilities, allowing users to set and monitor physical activity goals.\par
+
+UserSleep Class: Focusing on sleep habits, this class records the duration of sleep per day for each user with attributes Username, Date, and SleepHour. It is vital for analyzing sleep patterns and correlating them with other health metrics, which is essential for offering personalized health insights and improving user well-being.\par
+
+UserWork Class: This class tracks work and study sessions, an essential feature for our student users. Attributes include Username, WorkName, Date, and Endtime, facilitating the tracking of academic and work-related activities over time. This functionality supports students in managing their time and productivity more effectively.\par
+
+UserWater Class: Monitoring hydration, the UserWater class includes attributes such as Username, Date, and LitresDrank. Hydration tracking is crucial for overall health, and this class allows the system to remind users to stay hydrated and track their daily water intake.\par
+
+UserGoals Class: As a strategic component of our system, the UserGoals class holds data related to the personal objectives of users. With attributes like Username, ActivityID, TimeFrameID, Date, and Value, this class supports the setting and monitoring of personalized goals, enhancing the system's capability to drive user engagement and encourage behavior modification.\par
+
+
+
 \section{Software Testing (Verification) (2 pages)}
 
 This section should include:
