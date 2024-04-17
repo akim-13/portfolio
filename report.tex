@@ -94,49 +94,81 @@ The sprint that followed largely prioritised the implementation of desired funct
 
 \section{Specification of Software Requirements (5 pages)}
 
-This section breaks down what we need for our Personal Informatics (PI) system, 
-focusing on helping students keep up with their fitness and study goals. 
-We've used feedback from surveys, talks with users, and research articles to 
-figure out what features our system should have. Our aim is to make a system 
-that really helps students improve their daily habits and studies.\par
 
-III.1. Establishing Detailed System Requirements
-We started by asking people what they're looking for in an app like ours. We found out that most students are really into tracking their fitness (60%) and want to keep an eye on their learning progress too (30%). This helped us get a good idea of what our app should focus on.
-Next, we looked at what users said about our initial ideas and checked out what experts say in articles. People told us they like apps that are easy to use but still do a lot. They also want to connect with friends through the app and like the idea of seeing all their info in one place.\par
-After all this, we made a final list of what our app needs to do. We're making sure it's good at tracking health and study time, lets users share their progress with friends, and keeps all their data safe and private.\par
- 
-III.2. Specific Domain Description (will add more thing to this after the meeting, this is an example)
-The PI system is intricately designed with a student demographic at its core, addressing their unique challenges such as managing academic deadlines alongside maintaining a balanced lifestyle.\par
-Students grapple with the dual challenges of academic accountability and physical well-being. The system is poised to provide an integrative suite of tools for effective study habits, fitness tracking, and fostering a socially supportive ecosystem.\par
- 
-III.3. Uses
-Our app is mainly for people who need a hand managing their time healthily. We know many people have difficulty balancing their work and their private life. Our app aims to help them track their life style along with their diet\par
--    Tracking sleep time: The system will calculate the time users spend a day for sleeping and do statistic with it to find a pattern.\\
--    Tracking calorie intake: The system receive the calorie intake everyday by users and find a pattern along with comparing with the calorie that users spend that day and give suggestion about their diet.\\
--    Calculating calorie output: From the exercises that users take, the system will find out how much energy do users burn in a day and use them along with calorie intake to make suggestion about life style and diet.\\
--    Challenges: Users can do challenges themselves or with their friends. They can choose the difficulty of the challenges and it can be changed everyday if users may want to do other kinds or difficulties of challenge.\\
-…
-(Add more later)
-III.4. Requirement
-III.4.1. Functional Requirements
--    Data Tracking: Users should be able to easily enter and track their sleep hours, physical activities, and more. And we uses different means to track every users behavior.\\
--    Social Features: The app should offer social interaction, such as challenges and sharing achievements with friends.\\
--    Notifications: Customizable reminders to help users stay on track with their goals.\\
--    Account system: Users can register and have their own accounts to manage their data easier\\
--    Allow users to enter data that is not tracked: This can help with stats like calorie intake or why kind of food they ate so that the app know additional data, which makes it easier to find users’ behaviour pattern.\\
--    Compare users’ data overtime: This function help users manage the difference in a specific type of data over days or hours, this help them to know if the changes they make are positive or negative.\\
--    Allow users to compare different data together in a fixed time: Some of the data might link to another somehow, eg mood might affect sleep quality, lack or spare of exercises might affect mood and sleep quality as well, so this make both users and the system so see clearly how changes affect users life style and to come up with solutions to improve behaviour pattern.\\
--    Challenges: Allow users to set, change their goals, it can be social, such as friendly challenges between classmates. The system should have suggestions to users in setting their goals and the time frame to make it suitable to the users, or else they might lose interest over time if they set all the goals too difficult and could not finish any of it.\\
- 
-III.4.2. Non-Functional Requirements
--    Usability: The app must be intuitive and simple to navigate for all users.\\
+This section breaks down the core requirements for our Personal Informatics (PI) system, 
+focusing on helping students keep up with their fitness and study goals. 
+We utilised feedback from surveys, talks with users, market research, and research articles to 
+figure out what features our system should have. Our aim is to make a system 
+that assists students in improving both their physical health and studying habits whilst not being overly invasive.\newline
+
+\begin{enumerate}
+	\item Establishing Detailed System Requirements:\\ 
+	We started by asking people what they are looking for in an personal improvement app. We found out that most students use PI systems for tracking their fitness (60\%) and their learning progress (30\%). This helped us get a good idea of what our app should focus on.
+	Next, we looked at what users said about our initial ideas as well as comparing our ideas to expert findings from our listed articles. People told us they like apps that are intuitive but still allow for great insight and control into goals and targets. They also wanted to connect with friends through the app and liked the idea of seeing all their information in a single area.\\ \\
+	After this, we made a final list of what our app needs to do. We will ensure our system is good at tracking health and study time, allows users to share their progress with friends, and keeps all their data safe and private.\newline
+	 
+	\item Specific Domain of Application:\\
+	Our PI system is intricately designed with a student demographic at its core, addressing their unique challenges such as managing academic deadlines alongside maintaining a balanced lifestyle.\par
+	Students grapple with the dual challenges of academic accountability and physical well-being. The system shall provide a suite of tools for effective study habits and simple health tracking.\newline
+	 
+	\item Uses:\\
+	Our app is mainly for people who need assistance managing their time healthily. We are aware that many people have difficulty maintaining a healthy work-life balace. Our app aims to help them track key aspects of the student lifestyle. The ways this will be done are as follows: \begin{enumerate}
+	
+		\item Tracking sleep time: The system will calculate the time a user sleeps each night. This will be used to establish an average sleep time and patterns in their sleep schedule which will then be used to suggest ways to improve this. For example: if a user's average sleeping time is below 7 hours, more sleep could be recommended.
+		
+		\item Tracking step count: The system will receive inputs of a user's daily step count either from the fitbit API or manual input. This can then be used to analyse whether a user is moving regularly or performing enough exercise. This goal should be adjusted to ensure a user is not consistently overachieving or underachieving their goal.
+
+		\item Tracking work done: The system will receive manual inputs of how much time a user has spent studying. This will then be compared to past data to suggest whether the user has studied enough or should do more studying that day. The data collected over time should be used to set study goals for a given period of time.
+		
+		\item Tracking water intake: The system will receive inputs of how much water a user has drank in a day.
+	
+		\item Challenges: Users can partake in challenges either individually or with friends. They can choose the difficulty of the challenges which can be changed daily if a user finds it too challenging or not engaging enough. These could be user set or generated based on habits. 
+	
+	\end{enumerate}
+	
+	 The majority of data is going to be pulled from the fitbit API upon request for each user. We must ensure that potential users without the relevant hardware can still use our system. This should be done in an intuitive way. This will also allow for easier gathering of data fields such as water intake which can be hard to track through physical equipment like a fitbit. Additionally, not all fields we have selected can be accessed directly via the fitbit API and as such manual entry is necessary.\newline
+
+	To ensure that our users understand what data we are storing, each user shall be allowed to view the data we have stored on them for each of these key fields.\newline
+
+\item Allow Users to Manage Goals:\\
+This will be done through "achievements" generated by the system or manually set by the user. They can either be individual or group goals. Group goals will consist of a friendly competiton to see who can perform the best in a given field. For example this could be a friendly challenge between flatmates. The system should have suggestions to users in setting their goals and the time frame to make it suitable to the users, or else they might lose interest over time if they set all the goals too difficult and could not finish any of it.\\ 
+
+Additionally, a user should have the option to share their achievements with other users, although this may be better achieved through means not involving our application.
+***idk if we want to do this so feel free to remove it***\\ 
+	
+\item Comparing User Data:\\
+Our system should ensure that a user can compare all data fields in an intuitive manner. This will be done via graphs that allow the user to select what fields they wish to view along with a time frame (day, week, month to date).\\
+
+From a user's perspective, seeing a clear change in habits can be both a great motivator to improve as well as allowing them to identify variables unknown to our system that may be affecting their data. From our system's perspective, this data is necessary to allow us to suggest methods of which to improve their lifestyle.\\ 
+
+By including time frames, the user can identify potential outside factor that our system cannot consider. For example, a negative event in a given time frame such as a coursework deadline could influence sleep count. They could then use this data to come up with ways to improve their behaviour patterns for other similar circumstances.\\ 
+
+\end{enumerate}
+
+***will be expanding this, should fit to 5 pages***
+
+Non-Functional Requirements: \\ 
+
+This section encompasses many other factors that our system must consider:
+
 -    Scalability: It should be capable of handling an increase in users and additional features over time.\\
+
 -    Security: User data must be kept secure, with privacy settings that users can control.\\
+
 -    Performance: The app needs to be responsive and reliable, providing a smooth user experience.\\
+
+
+*** I'd say we don't need to mention this side of the requirements in our report, instead evidencing/discussing it in other sections***\\
+
 -    Follow SCRUM framework: We have sprints and meeting every week to make sure everything go smoothly, and we have a Scrum Master to make sure that the progress is in the right way.\\
+
 -    Expanding initial requirements: pending\\
+
 -    Background research: We did articles research, however, most of them are in the PI field, which narrows down our view on how to build the system. It is helpful if we do more research outside of this field which might give us more idea about functional requirements and how to implement them.\\
+
 -    	Testing: pending\\
+
+*** let me know if you want me to fully write this section out though***
 
 
 
