@@ -19,17 +19,19 @@
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
 
             <StackPanel Orientation="Horizontal" Margin="0,10,0,10" Background="DarkSlateGray" HorizontalAlignment="Center">
-                <Label Width="260" Height="50" Content="Set hours wours goal for" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" VerticalAlignment="Center" FontFamily="Cascadia Code" FontSize="16" Foreground="Wheat"/>
+                <Label Width="260" Height="50" Content="Set work goal in hours for" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" VerticalAlignment="Center" FontFamily="Cascadia Code" FontSize="16" Foreground="Wheat"/>
                 <ComboBox x:Name="step_goal_timeframe" Width="75" Background="{x:Null}" Height="25" SelectedIndex="0" FontFamily="Cascadia Code" FontSize="16" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="7,0,20,0" SelectionChanged="GoalTimeframe_Changed" Foreground="Black">
                     <ComboBoxItem FontFamily="Cascadia Code" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">today</ComboBoxItem>
                     <ComboBoxItem FontFamily="Cascadia Code" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">week</ComboBoxItem>
                     <ComboBoxItem FontFamily="Cascadia Code" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">month</ComboBoxItem>
                 </ComboBox>
 
-                <TextBox Width ="100" Height="50" VerticalAlignment="Stretch" Background="Wheat" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Cascadia Code" FontSize="15" TextChanged="TextBox_TextChanged" AutomationProperties.Name="txtSleep"/>
+                <TextBox Width ="100" Height="50" VerticalAlignment="Stretch" Background="Wheat" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Cascadia Code" FontSize="15" TextChanged="TextBox_TextChanged"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,10" Background="DarkSlateGray">
+                <Label Width="150" Height="50" Content="Add new work:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" VerticalAlignment="Center" FontFamily="Cascadia Code" FontSize="16" Foreground="Wheat"/>
+                <TextBox Name="new_work_textbox" Height="50" Background="Wheat" Foreground="DarkSlateGray" KeyDown="new_work_textbox_KeyDown" Width="250" Margin="0,0,9,0" FontFamily="Cascadia Code" FontSize="16" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxLength="10" />
                 <Button x:Name="new_work_btn" Width="40"
                     Height="40" Content="+" FontFamily="Cascadia Code" FontSize="22" Background="Wheat" Foreground="DarkSlateGray" Click="NewWorkButton_Click"
                         />
