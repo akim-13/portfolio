@@ -9,11 +9,19 @@ PI_Systems
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+<<<<<<< HEAD
 C:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\App.xaml
 151292803740
 
 20240638043
 227532761054
+=======
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\App.xaml
+151292803740
+
+212103754024
+2271774054249
+>>>>>>> API-Setup
 GUIs\HelperUserControls\ActivityDayInput.xaml;GUIs\HelperUserControls\GoalAndDailyInput.xaml;GUIs\HelperUserControls\GoalInput.xaml;GUIs\HelperUserControls\TitleAndBack.xaml;GUIs\HelperUserControls\WorkItem.xaml;GUIs\MainWindow.xaml;GUIs\UserControls\Achievements.xaml;GUIs\UserControls\Graphs.xaml;GUIs\UserControls\MainMenu.xaml;GUIs\UserControls\Sleep.xaml;GUIs\UserControls\Steps.xaml;GUIs\UserControls\Water.xaml;GUIs\UserControls\Work.xaml;Styles\ButtonStyles.xaml;Styles\Colours.xaml;
 
 False
