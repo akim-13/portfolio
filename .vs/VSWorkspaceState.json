@@ -3,8 +3,9 @@
     "",
     "\\PI Systems",
     "\\PI Systems\\PI Systems",
-    "\\PI Systems\\PI Systems\\GUIs"
+    "\\PI Systems\\PI Systems\\GUIs",
+    "\\PI Systems\\PI Systems\\Properties"
   ],
-  "SelectedNode": "\\PI Systems\\PI Systems\\GUIs\\StepsPage.xaml",
+  "SelectedNode": "\\PI Systems",
   "PreviewInSolutionExplorer": false
 }
