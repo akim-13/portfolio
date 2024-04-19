@@ -4,6 +4,8 @@ using System.Data;
 using Dapper;
 using System;
 using System.Linq;
+using System.Windows.Documents;
+using System.Collections.Generic;
 
 namespace PI_Systems
 {
@@ -30,7 +32,7 @@ namespace PI_Systems
 
         #region Insertions
 
-        private bool InsertIntoTable(string query, object newEntry)
+        private bool InsertWithQuery(string query, object newEntry)
         {
             try
             {
@@ -44,30 +46,16 @@ namespace PI_Systems
             }
         }
 
-        public bool Insert(UserWater newEntry)
+        public bool Insert(UserActivity newEntry, string tableName)
         {
-            return InsertIntoTable(
-                "INSERT INTO UserWater VALUES (@Username, @Date, @LitresDrank)",
-                newEntry);
-        }
-
-        public bool Insert(UserSleep newEntry)
-        {
-            return InsertIntoTable(
-                "INSERT INTO UserSleep VALUES (@Username, @Date, @SleepHours)",
-                newEntry);
-        }
-
-        public bool Insert(UserSteps newEntry)
-        {
-            return InsertIntoTable(
-                "INSERT INTO UserSteps VALUES (@Username, @Date, @Steps)",
+            return InsertWithQuery(
+                $"INSERT INTO {tableName} (Username, Date, Value) VALUES (@Username, @Date, @Value)",
                 newEntry);
         }
 
         public bool Insert(UserGoals newEntry)
         {
-            return InsertIntoTable(
+            return InsertWithQuery(
                 "INSERT INTO UserGoals VALUES (@Username, @ActivityID, @TimeFrameID, @Date, @Value)",
                 newEntry);
         }
@@ -76,35 +64,29 @@ namespace PI_Systems
 
         #region Updates
 
-        void UpdateTable(string query, object entry)
+        bool UpdateWithQuery(string query, object entry)
         {
-            conn.Execute(query, entry);
+            try
+            {
+                conn.Execute(query, entry);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }   
         }
 
-        public void Update(UserWater entry)
+        public bool Update(UserActivity entry, string tableName)
         {
-            UpdateTable(
-                "UPDATE UserWater SET LitresDrank = @LitresDrank WHERE Username = @Username AND Date = @Date",
+            return UpdateWithQuery(
+                $"UPDATE {tableName} SET Value = @Value WHERE Username = @Username AND Date = @Date",
                 entry);
         }
 
-        public void Update(UserSleep entry)
+        public bool Update(UserGoals entry)
         {
-            UpdateTable(
-                "UPDATE UserSleep SET SleepHours = @SleepHours WHERE Username = @Username AND Date = @Date",
-                entry);
-        }
-
-        public void Update(UserSteps entry)
-        {
-            UpdateTable(
-                "UPDATE UserSteps SET Steps = @Steps WHERE Username = @Username AND Date = @Date",
-                entry);
-        }
-
-        public void Update(UserGoals entry)
-        {
-            UpdateTable(
+            return UpdateWithQuery(
                 "UPDATE UserSteps SET TimeFrameID = @TimeFrameID, Date = @Date, Value = @Value WHERE Username = @Username AND Date = @Date",
                 entry);
         }
@@ -112,42 +94,58 @@ namespace PI_Systems
         #endregion
 
 
+
+
         /// <summary>
-        /// Specify the table class you want, eg GetUserActivities<UserWater>(...)
-        /// This aviods the use of multiple methods of similar functionality for eact activity
+        /// Gets the data from the one of the 3 user activities (water, sleep, steps).
+        /// If one of the dates is not in the table, will add it to the array as a UserActivity object with the value set to default (0)
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public T[] GetUserActivities<T>(DateTime startDate, DateTime endDate)
+        public UserActivity[] GetUserActivities(DateTime startDate, DateTime endDate, string tableName)
         {
-            string query = $"SELECT * FROM {typeof(T).Name} WHERE Date >= @startDate AND Date <= @endDate";
+            string query = $"SELECT * FROM {tableName} WHERE Date >= @startDate AND Date <= @endDate";
 
-            return conn.Query<T>(query, new { startDate, endDate }).ToArray();
+            List<UserActivity> rows = conn.Query<UserActivity>(query, new { startDate, endDate }).ToList();
+
+            // Go through all the days between these two dates (inclusive, which is why <= is used)
+            for (int i = 0; i <= (endDate-startDate).Days; i++) 
+            { 
+                // Check whether the date is within the list, and if not add it to the list 
+                DateTime date = startDate.AddDays(i);
+                if (!rows.Select(x => x.Date).Contains(date))
+                {
+                    rows.Add(new UserActivity { Date = date });
+                }
+            }
+
+            Console.WriteLine("[MESSAGE BELOW INVOKED IN GetUserActivities]\n" + string.Join(",\n", rows.Select(x => $"DATE: {x.Date}, VALUE: {x.Value}")));
+            return rows.ToArray();
+
         }
 
-        public T? GetUserActivity<T>(DateTime startDate)
+        public UserActivity? GetUserActivityAt(DateTime startDate, string tableName)
         {
             // Jeet: typeof(T).Name gets the name of the class.
             // Since the class names are the same as the SQL table names, we can use them
-            string query = $"SELECT * FROM {typeof(T).Name} WHERE Date = @startDate";
+            string query = $"SELECT * FROM {tableName} WHERE Date = @startDate";
             try
             {
-                return conn.QueryFirst<T>(query, new { startDate });
+                return conn.QueryFirst<UserActivity>(query, new { startDate });
             }
             catch (InvalidOperationException)  // Jeet: If this entry isn't in the db, return null (default)
             {
-                return default;
+                return null;
             }
         }
 
-        public string GetStringDataToday<T>()
+        public string GetStringDataToday(string tableName)
         {
-            object? item = GetUserActivity<T>(DateTime.Now.Date);
+            object? item = GetUserActivityAt(DateTime.Now.Date, tableName);
             if (item != null)
             {
-                Console.WriteLine("Data: " + item.ToString());
                 return item.ToString();
             }
             return "0";
@@ -166,7 +164,7 @@ namespace PI_Systems
             }
         }
 
-        public void DeleteRow(string Username, int ActivityID)
+        public void DeleteUserGoal(string Username, int ActivityID)
         {
             conn.Execute("DELETE FROM UserGoals WHERE Username = @Username AND ActivityID = @ActivityID", new { Username, ActivityID });
         }
