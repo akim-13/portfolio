@@ -1,10 +1,6 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "25lcmC4PE5pLu/saLRtqztzOgATKDgMgKfSjOB5B6xFqE3Swh4pK3psbKQ06WjR6AtuGYzKK+2BvEIMTmA2+ZA==",
-=======
-  "dgSpecHash": "qP0sElwYvQzoxmIPl/1ScBn3GSbXQLv0cxmpP8ql4tYXZNpjUjv64N6O925Pmzh/y5Of8bZVDPwPXGbM/i01vA==",
->>>>>>> API-Setup
   "success": true,
   "projectFilePath": "C:\\Users\\user\\source\\Repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
   "expectedPackageFiles": [
@@ -64,7 +60,7 @@
       "code": "Undefined",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Problem reading the cache file D:\\C# Projects\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+      "message": "Problem reading the cache file C:\\Users\\user\\source\\Repos\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
     },
     {
       "code": "NU1701",

@@ -12,6 +12,8 @@ using LiveCharts.Wpf.Charts.Base;
 using System.ComponentModel;
 using System.Xml.Linq;
 using PI_Systems.GUIs.HelperUserControls;
+using System.Windows.Markup;
+using System.Windows.Input;
 
 namespace PI_Systems.GUIs.UserControls
 {
@@ -27,30 +29,7 @@ namespace PI_Systems.GUIs.UserControls
             InitializeComponent();
 
             //Ollie: Setting up stuff for the graph such as xAxis and COlour of legend
-            LineGraph.ChartLegend.Foreground = new SolidColorBrush(Colors.White);
-            LineGraph.AxisX.Clear();
-            DataContext = this;
-            // Customize X-axis labels
-            LineGraph.AxisX.Add(new Axis
-            {
-                Title = "Day",
-                Labels = new[] { "Yesterday", "Today" }
-            });
-            Axis axisX = (Axis)LineGraph.AxisX[0];
-            axisX.MaxValue = 1;
-            axisX.Separator.Step = 1;
-            LineGraph.AxisY.Clear();
-            DataContext = this;
-            LineGraph.AxisY.Add(new Axis
-            {
-                Labels = new[] {"0","1","2","3","4","5","6","7","8","9","10"}
-            });
-
-            Axis axisY = (Axis)LineGraph.AxisY[0];
-            axisY.MaxValue = 10;
-            axisY.Separator.Step = 1;
-            LineGraph.Update(true);
-            GenerateValues(-1, ActiveLines);
+            
 
             activities = checkBoxes.Where(c => c.IsChecked == true).Select(c => (ActivityType)c.Tag).ToArray();
             string outputList = activities.Length == 0 ? "Nothing" : string.Join(", ", activities);
@@ -81,54 +60,94 @@ namespace PI_Systems.GUIs.UserControls
             {
                 LineGraph.Visibility = System.Windows.Visibility.Hidden;
             }
+            LineGraph.ChartLegend.Foreground = new SolidColorBrush(Colors.White);
+            LineGraph.AxisX.Clear();
+            DataContext = this;
+            // Customize X-axis labels
+            LineGraph.AxisX.Add(new Axis
+            {
+                Title = "Day",
+                Labels = new[] { "Yesterday", "Today" }
+            });
+            Axis axisX = (Axis)LineGraph.AxisX[0];
+            axisX.MaxValue = 1;
+            axisX.Separator.Step = 1;
+            LineGraph.AxisY.Clear();
+            DataContext = this;
+            LineGraph.AxisY.Add(new Axis
+            {
+                Labels = new[] {"0","1","2","3","4","5","6","7","8","9","10"}
+            });
+
+            Axis axisY = (Axis)LineGraph.AxisY[0];
+            axisY.MaxValue = 10;
+            axisY.Separator.Step = 1;
+            LineGraph.Update(true);
+
+            GenerateValues(DateTime.Now.AddDays(-1).Date,DateTime.Now.Date, ActiveLines);
         }
 
-        private void GenerateValues(int TimeFrame, List<LineSeries> ActiveLines)
+        private void GenerateValues(DateTime StartTimeFrame, DateTime EndTimeFrame, List<LineSeries> ActiveLines)
         {
-            this.LineGraph.Series.Clear();
             SeriesCollection series = new SeriesCollection();
             LineSeries sleepline = new LineSeries();
             LineSeries workline = new LineSeries();
             LineSeries waterline = new LineSeries();
             LineSeries stepsline = new LineSeries();
 
-            if (ActiveLines.Contains(SleepLine))
-            {
-                var Data = Database.Instance.GetUserActivities<UserSleep>(DateTime.Now.AddDays(TimeFrame).Date, DateTime.Now.Date);
-                List<float> values = new List<float>();
-                for (int loop = 0; loop < Data.Length; loop++)
+            // Sort the list by Date
+                this.LineGraph.Series.Clear();
+                if (ActiveLines.Contains(SleepLine))
                 {
-                    values.Add(Data[loop].SleepHours);
+                    sleepline.LineSmoothness = 0;
+                    sleepline.Title = "Sleep";
+                    var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserSleep");
+                    var dataList = Data.ToList();
+                    dataList = dataList.OrderBy(d => d.Date).ToList();
+                    List<float> values = new List<float>();
+                    for (int loop = 0; loop < dataList.Count; loop++)
+                    {
+                        values.Add(dataList[loop].Value);
+                    }
+                    IChartValues list = new ChartValues<float>(values);
+                    sleepline.Values = list;
+                    series.Add(sleepline);
                 }
-                IChartValues list = new ChartValues<float>(values);
-                sleepline.Values = list;
-                series.Add(sleepline);
-            }
-            if (ActiveLines.Contains(StepsLine))
-            {
-                var Data = Database.Instance.GetUserActivities<UserSteps>(DateTime.Now.AddDays(TimeFrame).Date, DateTime.Now.Date);
-                List<float> values = new List<float>();
-                for (int loop = 0; loop < Data.Length; loop++)
+                if (ActiveLines.Contains(StepsLine))
                 {
-                    values.Add(Data[loop].Steps / 1000);
+                    stepsline.LineSmoothness = 0;
+                    stepsline.Title = "Steps (1000)";
+                    var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserSteps");
+                    var dataList = Data.ToList();
+                    dataList = dataList.OrderBy(d => d.Date).ToList();
+                    List<float> values = new List<float>();
+                    for (int loop = 0; loop < dataList.Count; loop++)
+                    {
+                        values.Add(dataList[loop].Value / 1000);
+                    }
+                    IChartValues list = new ChartValues<float>(values);
+                    stepsline.Values = list;
+                    series.Add(stepsline);
                 }
-                IChartValues list = new ChartValues<float>(values);
-                stepsline.Values = list;
-                series.Add(stepsline);
-            }
-            if (ActiveLines.Contains(WaterLine))
-            {
-                var Data = Database.Instance.GetUserActivities<UserWater>(DateTime.Now.AddDays(TimeFrame).Date, DateTime.Now.Date);
-                List<float> values = new List<float>();
-                for (int loop = 0; loop < Data.Length; loop++)
+                if (ActiveLines.Contains(WaterLine))
                 {
-                    values.Add(Data[loop].LitresDrank);
+                    waterline.LineSmoothness = 0;
+                    waterline.Title = "Water";
+                    var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserWater");
+                    var dataList = Data.ToList();
+                    dataList = dataList.OrderBy(d => d.Date).ToList();
+                    List<float> values = new List<float>();
+                    for (int loop = 0; loop < dataList.Count; loop++)
+                    {
+                        values.Add(dataList[loop].Value);
+                    }
+                    IChartValues list = new ChartValues<float>(values);
+                    waterline.Values = (list);
+                    series.Add(waterline);
                 }
-                IChartValues list = new ChartValues<float>(values);
-                waterline.Values = (list);
-                series.Add(waterline);
-            }
-            LineGraph.Series = series;
+                LineGraph.Series = series;
+       
+            
             /*
             if (ActiveLines.Contains(WorkLine))
             {
@@ -168,35 +187,34 @@ namespace PI_Systems.GUIs.UserControls
                 xTitle = "Day";
                 xLabels = new string[] { "Yesterday", "Today" };
                 xMaxval = 1;
-                GenerateValues(-1, ActiveLines);
+                GenerateValues(DateTime.Now.AddDays(-1).Date, DateTime.Now.Date, ActiveLines);
             }
             else if (cbi.Content.ToString() == "week")
             {
-                DayOfWeek currentDayOfWeek = DateTime.Now.DayOfWeek;
                 string[] daysArray = new string[7];
 
-                for (int i = daysArray.Length - 1; i >= 0; i--)
+                for (int loop = 6; loop >= 0; loop--)
                 {
-                    daysArray[i] = currentDayOfWeek.ToString();
-                    currentDayOfWeek = (DayOfWeek)(((int)currentDayOfWeek + 1) % 7);
+                    daysArray[6 - loop] = DateTime.Now.AddDays(-loop).DayOfWeek.ToString();
                 }
 
                 xTitle = "Week";
                 xLabels = daysArray;
                 xMaxval = 6;
-                GenerateValues(-7, ActiveLines);
+                GenerateValues(DateTime.Now.AddDays(-6).Date, DateTime.Now.Date, ActiveLines);
             }
             else if (cbi.Content.ToString() == "month")
             {
-                xTitle = "Last 30 Days";
-                xMaxval = 29;
-
-                xLabels = new string[30];
-                for (int loop = 0; loop < 30; loop++)
+                xTitle = "Month";
+                DateTime startDate = new DateTime(DateTime.Now.Year,DateTime.Now.Month, 1);
+                DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+                xMaxval = endDate.Day - 1;
+                xLabels = new string[endDate.Day];
+                for (int loop = 0; loop < endDate.Day; loop++)
                 {
                     xLabels[loop] = (loop + 1).ToString();
                 }
-                GenerateValues(-30, ActiveLines);
+                GenerateValues(startDate, endDate, ActiveLines);
 
             }
             else if (cbi.Content.ToString() == "year")
@@ -204,7 +222,88 @@ namespace PI_Systems.GUIs.UserControls
                 xTitle = "Year";
                 xLabels = new string[] { "Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
                 xMaxval = 11;
-                //god help me
+                int[] MonthAvg = new int[12];
+
+                this.LineGraph.Series.Clear();
+                SeriesCollection series = new SeriesCollection();
+                LineSeries sleepline = new LineSeries();
+                LineSeries workline = new LineSeries();
+                LineSeries waterline = new LineSeries();
+                LineSeries stepsline = new LineSeries();
+
+                if (ActiveLines.Contains(SleepLine))
+                {
+                    sleepline.LineSmoothness = 0;
+                    sleepline.Title = "Sleep";
+                    sleepline.Values = new ChartValues<double> { };
+                    series.Add(sleepline); 
+                }
+                if (ActiveLines.Contains(StepsLine))
+                {
+                    stepsline.LineSmoothness = 0;
+                    stepsline.Title = "Steps (1000)";
+                    stepsline.Values = new ChartValues<double> { };
+                    series.Add(stepsline);
+                }
+                if (ActiveLines.Contains(WaterLine))
+                {
+                    waterline.LineSmoothness = 0;
+                    waterline.Title = "Water";
+                    waterline.Values = new ChartValues<double> { };
+                    series.Add(waterline);
+                }
+
+                for (int loop = 0; loop <= 11; loop++)
+                {
+                    DateTime startDate = new DateTime(DateTime.Now.Year, loop + 1, 1);
+                    // Finding the end date of the month
+                    DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+                    
+                    // Sort the list by Date
+                    if (ActiveLines.Contains(SleepLine))
+                    {
+                        var Data = Database.Instance.GetUserActivities(startDate, endDate, "UserSleep");
+                        var dataList = Data.ToList();
+                        dataList = dataList.OrderBy(d => d.Date).ToList();
+                        double avg = 0;
+                        for (int loop2 = 0; loop2 < dataList.Count; loop2++)
+                        {
+                            avg += dataList[loop2].Value;
+                        }
+                        avg = avg / dataList.Count;
+                        sleepline.Values.Add(avg);
+                    }
+                    if (ActiveLines.Contains(StepsLine))
+                    {
+                        var Data = Database.Instance.GetUserActivities(startDate, endDate, "UserSteps");
+                        var dataList = Data.ToList();
+                        dataList = dataList.OrderBy(d => d.Date).ToList();
+                        double avg = 0;
+                        for (int loop2 = 0; loop2 < dataList.Count; loop2++)
+                        {
+                            avg += (dataList[loop2].Value / 1000);
+                        }
+                        avg = avg / dataList.Count;
+                        stepsline.Values.Add(avg);
+                    }
+                    if (ActiveLines.Contains(WaterLine))
+                    {
+                        var Data = Database.Instance.GetUserActivities(startDate, endDate, "UserWater");
+                        var dataList = Data.ToList();
+                        dataList = dataList.OrderBy(d => d.Date).ToList();
+                        double avg = 0;
+                        for (int loop2 = 0; loop2 < dataList.Count; loop2++)
+                        {
+                            avg += (dataList[loop2].Value);
+                        }
+                        avg = avg / dataList.Count;
+                        waterline.Values.Add(avg);
+                    }
+                    LineGraph.Series = series;
+
+
+
+                }
             }
             LineGraph.AxisX.Clear();
             DataContext = this;
