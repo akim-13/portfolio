@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PI_Systems.DatabaseAPI;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PI_Systems.GUIs.UserControls
 {
@@ -31,9 +20,10 @@ namespace PI_Systems.GUIs.UserControls
 
         }
 
-        private void FitbitButton_Click(object sender, RoutedEventArgs e)
+        private async void FitbitButton_Click(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine("Send to FitBit Auth");
+            FitbitAPI fitbit = new FitbitAPI(tokenTextBox.Text.Trim());
+            await fitbit.FetchUserData();
         }
 
         private void GoalTimeframe_Changed(object sender, SelectionChangedEventArgs e)
