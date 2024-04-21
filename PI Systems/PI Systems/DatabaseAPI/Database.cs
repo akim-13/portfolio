@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Windows.Documents;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace PI_Systems
 {
@@ -32,6 +33,7 @@ namespace PI_Systems
 
         #region Insertions
 
+
         private bool InsertWithQuery(string query, object newEntry)
         {
             try
@@ -42,6 +44,7 @@ namespace PI_Systems
             // Jeet: If the insertion causes any issues, like primary key contraint breaking
             catch (SqlException)
             {
+                Console.WriteLine("Insertionn error");
                 return false;
             }
         }
@@ -121,7 +124,6 @@ namespace PI_Systems
                 }
             }
 
-            Console.WriteLine("[MESSAGE BELOW INVOKED IN GetUserActivities]\n" + string.Join(",\n", rows.Select(x => $"DATE: {x.Date}, VALUE: {x.Value}")));
             return rows.ToArray();
 
         }
