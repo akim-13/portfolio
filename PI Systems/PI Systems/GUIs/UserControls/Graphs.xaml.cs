@@ -76,8 +76,9 @@ namespace PI_Systems.GUIs.UserControls
             DataContext = this;
             LineGraph.AxisY.Add(new Axis
             {
-                Labels = new[] {"0","1","2","3","4","5","6","7","8","9","10"}
-            });
+                Labels = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" },
+                MinValue = 0
+            }); 
 
             Axis axisY = (Axis)LineGraph.AxisY[0];
             axisY.MaxValue = 10;
