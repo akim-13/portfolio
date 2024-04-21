@@ -1,4 +1,5 @@
 ﻿
+<<<<<<< HEAD
 FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\App.xaml;;
 FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\GoalAndDailyInput.xaml;;
 FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\WorkItem.xaml;;
@@ -9,4 +10,16 @@ FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\
 FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Steps.xaml;;
 FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Water.xaml;;
 FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Work.xaml;;
+=======
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\App.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\GoalAndDailyInput.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\WorkItem.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\MainWindow.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Achievements.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Graphs.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Sleep.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Steps.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Water.xaml;;
+FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Work.xaml;;
+>>>>>>> master
 

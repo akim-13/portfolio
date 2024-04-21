@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\user\\source\\Repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {}
   },
   "projects": {
@@ -12,13 +13,30 @@
         "projectPath": "C:\\Users\\user\\source\\Repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\user\\source\\Repos\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\",
+=======
+    "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+        "projectName": "PI Systems",
+        "projectPath": "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+        "packagesPath": "C:\\Users\\willh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\",
+>>>>>>> master
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+=======
+          "C:\\Users\\willh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> master
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -111,7 +129,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
         }
       }
     }
