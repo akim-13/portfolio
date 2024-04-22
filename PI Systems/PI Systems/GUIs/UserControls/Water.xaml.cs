@@ -30,5 +30,10 @@ namespace PI_Systems.GUIs.UserControls
             TextBox txtbx = (TextBox)sender;  
             Console.WriteLine(txtbx.Text);
         }
+
+        private void TitleAndBack_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
