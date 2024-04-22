@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {}
+    "D:\\C# Projects\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {}
   },
   "projects": {
-    "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {
+    "D:\\C# Projects\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+        "projectUniqueName": "D:\\C# Projects\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
         "projectName": "PI Systems",
-        "projectPath": "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
-        "packagesPath": "C:\\Users\\willh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\willh\\source\\repos\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\",
+        "projectPath": "D:\\C# Projects\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
+        "packagesPath": "C:\\Users\\jeety\\.nuget\\packages\\",
+        "outputPath": "D:\\C# Projects\\cm12005_cw2\\PI Systems\\PI Systems\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\willh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jeety\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -48,10 +48,6 @@
             "Dapper": {
               "target": "Package",
               "version": "[2.1.35, )"
-            },
-            "EasyModbusTCP": {
-              "target": "Package",
-              "version": "[5.6.0, )"
             },
             "LiveCharts.Wpf": {
               "target": "Package",
@@ -90,7 +86,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

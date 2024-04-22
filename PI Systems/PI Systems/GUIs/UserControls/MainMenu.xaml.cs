@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -54,9 +54,9 @@ namespace PI_Systems.GUIs.UserControls
 
         public void RefreshTodaysData()
         {
-            sleepToday = Database.Instance.GetStringDataToday<UserSleep>();
-            stepsToday = Database.Instance.GetStringDataToday<UserSteps>();
-            waterToday = Database.Instance.GetStringDataToday<UserWater>();
+            sleepToday = Database.Instance.GetStringDataToday("UserSleep");
+            stepsToday = Database.Instance.GetStringDataToday("UserSteps");
+            waterToday = Database.Instance.GetStringDataToday("UserWater");
 
             // Displaying amount of each activity done today
             sleepLabel.Content = sleepToday + " hours";

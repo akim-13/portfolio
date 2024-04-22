@@ -364,7 +364,6 @@ C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-wi
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\EasyModbus.dll
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.dll
 C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.Wpf.dll
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\EasyModbus.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.Wpf.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\ButtonStyles.baml
