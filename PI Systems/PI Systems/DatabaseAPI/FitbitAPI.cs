@@ -11,16 +11,10 @@ using PI_Systems.GUIs.UserControls;
 
 namespace PI_Systems.DatabaseAPI
 {
-    class DateSteps
+    class FitbitSteps
     {
-        public DateTime Date { get; set; }
-        public int Steps { get; set; }
-
-        public DateSteps(DateTime Date, int Steps)
-        {
-            this.Date = Date;
-            this.Steps = Steps;
-        }
+        [JsonPropertyName("activities-tracker-steps")]
+        public List<Dictionary<string, string>>? TrackerSteps { get; set; }
     }
 
     class FitbitAPI
