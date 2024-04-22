@@ -67,7 +67,8 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            UserGoals entry = new UserGoals {
+            UserGoals entry = new UserGoals
+            {
                 Username = MainMenu.Instance.user,
                 ActivityID = (int)Activity,
                 TimeFrameID = goalTimeFrame.SelectedIndex,

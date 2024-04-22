@@ -14,15 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PI Systems")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+78ab0a50aada35c5c44947cb9bb8857ae5b751eb")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5e9649759151dcc6246361561ccce8b6dbaa6b0")]
->>>>>>> master
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2703eaf528a9629a4ac6c187f20433601a7b2493")]
->>>>>>> API-Setup
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e87d8cc60bc116a8ac98c712385325d8f6b5951")]
 [assembly: System.Reflection.AssemblyProductAttribute("PI Systems")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PI Systems")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -17,7 +17,7 @@ namespace PI_Systems
         private readonly SqlConnection conn;
 
         public Database()
-        { 
+        {
             string connString = Settings.Default.ConnectionString;
             conn = new SqlConnection(connString);
 
@@ -26,7 +26,7 @@ namespace PI_Systems
             if (conn.State != ConnectionState.Open)
             {
                 conn.Open();
-            }            
+            }
 
             Instance = this;
         }
@@ -77,7 +77,7 @@ namespace PI_Systems
             catch
             {
                 return false;
-            }   
+            }
         }
 
         public bool Update(UserActivity entry, string tableName)
@@ -114,8 +114,8 @@ namespace PI_Systems
             List<UserActivity> rows = conn.Query<UserActivity>(query, new { startDate, endDate }).ToList();
 
             // Go through all the days between these two dates (inclusive, which is why <= is used)
-            for (int i = 0; i <= (endDate-startDate).Days; i++) 
-            { 
+            for (int i = 0; i <= (endDate - startDate).Days; i++)
+            {
                 // Check whether the date is within the list, and if not add it to the list 
                 DateTime date = startDate.AddDays(i);
                 if (!rows.Select(x => x.Date).Contains(date))

@@ -20,7 +20,7 @@ namespace PI_Systems.GUIs.HelperUserControls
 
             // Jeet: Remember to do this, otherwise the properties won't be in xaml file (Prompt and Activity)
             DataContext = this;
-            
+
             textBox.Text = "0";
         }
 
@@ -29,7 +29,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             // Jeet: Updates the inputted data to the database (depends on the Activity)
             switch (Activity)
             {
-                case ActivityType.Water: 
+                case ActivityType.Water:
                     UpdateUserWater();
                     break;
                 case ActivityType.Sleep:
@@ -44,7 +44,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             MainMenu.Instance.RefreshTodaysData();
         }
 
-        
+
 
         #region Update Various Different Activity Types
 
@@ -63,7 +63,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                Value = float.Parse(textBox.Text)
+                Value = textBox.Text == "." ? 0 : float.Parse(textBox.Text)
             };
             InsertOrUpdate(entry, "UserWater");
         }
@@ -74,7 +74,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                Value = float.Parse(textBox.Text)
+                Value = textBox.Text == "." ? 0 : float.Parse(textBox.Text)
             };
             InsertOrUpdate(entry, "UserSleep");
         }
@@ -85,7 +85,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                Value = int.Parse(textBox.Text)
+                Value = textBox.Text == "." ? 0 : int.Parse(textBox.Text)
             };
             InsertOrUpdate(entry, "UserSteps");
         }
@@ -100,7 +100,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             {
                 // Jeet: If the user removes everything from the text box, set default to 0
                 textBox.Text = "0";
-                textBox.SelectAll(); // Selecting text so its easy for user to write over
+                textBox.SelectAll();  // So that the user can easily overwrite the 0
             }
         }
 

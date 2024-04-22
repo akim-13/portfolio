@@ -17,23 +17,11 @@ namespace PI_Systems.DatabaseAPI
         public List<Dictionary<string, string>>? TrackerSteps { get; set; }
     }
 
-    class DateSteps
-    {
-        public DateTime Date {  get; set; }
-        public int Steps { get; set; }
-
-        public DateSteps(DateTime Date, int Steps)
-        {
-            this.Date = Date;
-            this.Steps = Steps;
-        }
-    }
-
     class FitbitAPI
     {
         string accessToken;
 
-        public FitbitAPI(string token) 
+        public FitbitAPI(string token)
         {
             accessToken = token;
         }
@@ -59,7 +47,7 @@ namespace PI_Systems.DatabaseAPI
                     return null;
                 }
 
-                List<UserActivity> steps = new List<UserActivity>();  
+                List<UserActivity> steps = new List<UserActivity>();
                 for (int i = 0; i < stepData.TrackerSteps.Count; i++)
                 {
                     bool s1 = stepData.TrackerSteps[i].TryGetValue("dateTime", out string dateStr);
@@ -86,7 +74,7 @@ namespace PI_Systems.DatabaseAPI
             Console.WriteLine($"Failed to fetch step count data: {stepResponse.StatusCode} - {stepResponse.ReasonPhrase}");
 
             return null;
-            
+
         }
     }
 }
