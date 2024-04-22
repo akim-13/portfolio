@@ -1,7 +1,11 @@
-﻿using PI_Systems.DatabaseAPI;
+﻿using Microsoft.IdentityModel.Tokens;
+using PI_Systems.DatabaseAPI;
+using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Windows.ApplicationModel.UserActivities;
 
 namespace PI_Systems.GUIs.UserControls
 {
@@ -23,7 +27,24 @@ namespace PI_Systems.GUIs.UserControls
         private async void FitbitButton_Click(object sender, RoutedEventArgs e)
         {
             FitbitAPI fitbit = new FitbitAPI(tokenTextBox.Text.Trim());
-            await fitbit.FetchUserData();
+            UserActivity[]? dateSteps = await fitbit.FetchUserData(DateTime.Now.AddDays(-365).Date);
+            if (dateSteps.IsNullOrEmpty())
+            {
+                MessageBox.Show("Something went wrong. Are you sure the token was correct?", "Error Connecting", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            dateSteps = dateSteps?.Where(x => x.Value != 0).ToArray();
+            if (dateSteps.IsNullOrEmpty())
+            {
+                MessageBox.Show("Although the connection has been successful, no data has been added since you dont have any data about steps on your fitbit.", "Empty Data", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            foreach (UserActivity stepData in dateSteps)
+            {
+                Database.Instance.Insert(stepData, "UserSteps");
+            }
+            MessageBox.Show("Your fitbit data has been added to the database successfully :)", "Operation Successful", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void GoalTimeframe_Changed(object sender, SelectionChangedEventArgs e)
