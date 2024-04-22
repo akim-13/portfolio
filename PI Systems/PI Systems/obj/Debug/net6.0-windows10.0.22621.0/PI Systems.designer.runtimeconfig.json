@@ -12,18 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-<<<<<<< HEAD
       "C:\\Users\\jeety\\.dotnet\\store\\|arch|\\|tfm|",
-=======
-<<<<<<< HEAD
-      "C:\\Users\\user\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\user\\.nuget\\packages",
-      "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-=======
-      "C:\\Users\\willh\\.dotnet\\store\\|arch|\\|tfm|",
->>>>>>> API-Setup
       "C:\\Users\\jeety\\.nuget\\packages"
->>>>>>> master
     ],
     "configProperties": {
       "Microsoft.NETCore.DotNetHostPolicy.SetAppPaths": true

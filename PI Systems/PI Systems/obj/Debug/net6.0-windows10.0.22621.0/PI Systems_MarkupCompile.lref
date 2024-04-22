@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GeneratedInternalTypeHelper.g.cs
 FD:\C# Projects\cm12005_cw2\PI Systems\PI Systems\App.xaml;;
 FD:\C# Projects\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\GoalAndDailyInput.xaml;;
@@ -10,30 +9,4 @@ FD:\C# Projects\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Sleep.xaml;;
 FD:\C# Projects\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Steps.xaml;;
 FD:\C# Projects\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Water.xaml;;
 FD:\C# Projects\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Work.xaml;;
-=======
-﻿
-<<<<<<< HEAD
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\App.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\GoalAndDailyInput.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\WorkItem.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\MainWindow.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Achievements.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Graphs.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Sleep.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Steps.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Water.xaml;;
-FC:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Work.xaml;;
-=======
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\App.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\GoalAndDailyInput.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\HelperUserControls\WorkItem.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\MainWindow.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Achievements.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Graphs.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Sleep.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Steps.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Water.xaml;;
-FC:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\GUIs\UserControls\Work.xaml;;
->>>>>>> master
->>>>>>> API-Setup
 

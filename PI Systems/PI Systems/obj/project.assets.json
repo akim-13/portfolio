@@ -59,6 +59,19 @@
           }
         }
       },
+      "EasyModbusTCP/5.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/EasyModbus.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net40/EasyModbus.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "LiveCharts/0.9.7": {
         "type": "package",
         "compile": {
@@ -885,6 +898,19 @@
         "lib/netstandard2.0/Dapper.dll",
         "lib/netstandard2.0/Dapper.xml",
         "readme.md"
+      ]
+    },
+    "EasyModbusTCP/5.6.0": {
+      "sha512": "2a5a9smmIu0Tq5zdwMvgO+WDvUgH0JuNv/crAILrDKcNRb8P/AOx9PEyegBiMn1TGXLP3byu0zhsSSUrrVyyXw==",
+      "type": "package",
+      "path": "easymodbustcp/5.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "easymodbustcp.5.6.0.nupkg.sha512",
+        "easymodbustcp.nuspec",
+        "lib/net40/EasyModbus.dll",
+        "lib/net40/EasyModbus.xml"
       ]
     },
     "LiveCharts/0.9.7": {
@@ -2242,6 +2268,7 @@
   "projectFileDependencyGroups": {
     "net6.0-windows10.0.22621": [
       "Dapper >= 2.1.35",
+      "EasyModbusTCP >= 5.6.0",
       "LiveCharts.Wpf >= 0.9.7",
       "Microsoft.Data.SqlClient >= 5.2.0"
     ]
@@ -2294,6 +2321,10 @@
             "target": "Package",
             "version": "[2.1.35, )"
           },
+          "EasyModbusTCP": {
+            "target": "Package",
+            "version": "[5.6.0, )"
+          },
           "LiveCharts.Wpf": {
             "target": "Package",
             "version": "[0.9.7, )"
@@ -2336,6 +2367,16 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'EasyModbusTCP 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0-windows10.0.22621'. This package may not be fully compatible with your project.",
+      "libraryId": "EasyModbusTCP",
+      "targetGraphs": [
+        "net6.0-windows10.0.22621"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",

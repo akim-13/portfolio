@@ -1,206 +1,3 @@
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.exe
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.deps.json
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.runtimeconfig.json
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Windows.SDK.NET.dll
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.g.resources
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfoInputs.cache
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfo.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.CoreCompileInputs.cache
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\refint\PI Systems.dll
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.genruntimeconfig.cache
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\ref\PI Systems.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.exe
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.deps.json
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.runtimeconfig.json
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Windows.SDK.NET.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.g.resources
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfoInputs.cache
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfo.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.CoreCompileInputs.cache
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.sourcelink.json
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.Up2Date
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\refint\PI Systems.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.genruntimeconfig.cache
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\ref\PI Systems.dll
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GeneratedInternalTypeHelper.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\TitleAndBack.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\TitleAndBack.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.exe
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.deps.json
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.runtimeconfig.json
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Windows.SDK.NET.dll
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\TitleAndBack.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GeneratedInternalTypeHelper.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\TitleAndBack.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.baml
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.g.resources
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfoInputs.cache
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfo.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.CoreCompileInputs.cache
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.sourcelink.json
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.Up2Date
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\refint\PI Systems.dll
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.genruntimeconfig.cache
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\ref\PI Systems.dll
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\WorkItem.g.cs
-C:\Users\James\source\repos\CW2\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\WorkItem.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\WorkItem.g.cs
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\WorkItem.baml
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.sourcelink.json
-C:\Users\jeety\source\repos\akim-13\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.Up2Date
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.exe
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.deps.json
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.runtimeconfig.json
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Dapper.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Windows.SDK.NET.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.AssemblyReference.cache
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Menu.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GeneratedInternalTypeHelper.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.g.resources
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfoInputs.cache
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfo.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.CoreCompileInputs.cache
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.sourcelink.json
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.Up2Date
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\refint\PI Systems.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.genruntimeconfig.cache
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\ref\PI Systems.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.baml
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.g.cs
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll.config
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Azure.Core.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Azure.Identity.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Data.SqlClient.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.Extensions.Msal.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.NativeInterop.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Abstractions.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Logging.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Protocols.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Tokens.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.SqlServer.Server.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.Core.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.WinForms.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.Wpf.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Configuration.ConfigurationManager.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Diagnostics.DiagnosticSource.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Memory.Data.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Runtime.Caching.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\de\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\es\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\fr\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\it\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ja\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ko\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\pt-BR\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ru\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\zh-Hans\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\zh-Hant\Microsoft.Data.SqlClient.resources.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\msalruntime_arm64.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\msalruntime.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\msalruntime_x86.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\WebView2Loader.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\WebView2Loader.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\WebView2Loader.dll
-C:\Users\jeety\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.exe
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll.config
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.deps.json
@@ -210,6 +7,9 @@ D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Azure.Core.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Azure.Identity.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Dapper.dll
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\EasyModbus.dll
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.dll
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.Wpf.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Data.SqlClient.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.dll
@@ -257,13 +57,20 @@ D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.AssemblyReference.cache
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.baml
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.baml
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.baml
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\ButtonStyles.baml
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\Colours.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.g.cs
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.g.cs
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.g.cs
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.g.cs
@@ -272,6 +79,8 @@ D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GeneratedInternalTypeHelper.g.cs
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.baml
+D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.baml
@@ -292,199 +101,3 @@ D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.genruntimeconfig.cache
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\ref\PI Systems.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll.config
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Azure.Core.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Azure.Identity.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Dapper.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Data.SqlClient.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.Extensions.Msal.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.NativeInterop.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Abstractions.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Logging.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Protocols.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Tokens.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.SqlServer.Server.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.Core.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.WinForms.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.Wpf.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Configuration.ConfigurationManager.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Diagnostics.DiagnosticSource.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Memory.Data.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Runtime.Caching.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\de\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\es\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\fr\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\it\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ja\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ko\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\pt-BR\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ru\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\zh-Hans\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\zh-Hant\Microsoft.Data.SqlClient.resources.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\msalruntime_arm64.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\msalruntime.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\msalruntime_x86.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\WebView2Loader.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\WebView2Loader.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\WebView2Loader.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.AssemblyReference.cache
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GeneratedInternalTypeHelper.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\EasyModbus.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.dll
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.Wpf.dll
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.dll
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.Wpf.dll
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\ButtonStyles.baml
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\Colours.baml
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.baml
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.g.cs
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.baml
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.baml
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.g.cs
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.g.cs
-D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.baml
-<<<<<<< HEAD
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\ButtonStyles.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\Colours.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.g.cs
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.baml
-C:\Users\user\Source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.baml
-=======
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.exe
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll.config
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.deps.json
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.runtimeconfig.json
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Azure.Core.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Azure.Identity.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Dapper.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\EasyModbus.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\LiveCharts.Wpf.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Data.SqlClient.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.Extensions.Msal.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Identity.Client.NativeInterop.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Abstractions.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Logging.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Protocols.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.IdentityModel.Tokens.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.SqlServer.Server.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.Core.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.WinForms.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Web.WebView2.Wpf.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Configuration.ConfigurationManager.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Diagnostics.DiagnosticSource.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Memory.Data.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\System.Runtime.Caching.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\de\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\es\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\fr\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\it\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ja\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ko\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\pt-BR\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\ru\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\zh-Hans\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\zh-Hant\Microsoft.Data.SqlClient.resources.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\msalruntime_arm64.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\msalruntime.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\msalruntime_x86.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-arm64\native\WebView2Loader.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x64\native\WebView2Loader.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win-x86\native\WebView2Loader.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\Microsoft.Windows.SDK.NET.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\bin\Debug\net6.0-windows10.0.22621.0\WinRT.Runtime.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.AssemblyReference.cache
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\ButtonStyles.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\Styles\Colours.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\ActivityDayInput.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalInput.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\TitleAndBack.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\MainMenu.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GeneratedInternalTypeHelper.g.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.cache
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems_MarkupCompile.lref
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\App.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\GoalAndDailyInput.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\HelperUserControls\WorkItem.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\MainWindow.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Achievements.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Graphs.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Sleep.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Steps.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Water.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\GUIs\UserControls\Work.baml
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.g.resources
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfoInputs.cache
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.AssemblyInfo.cs
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.CoreCompileInputs.cache
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.sourcelink.json
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.csproj.Up2Date
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\refint\PI Systems.dll
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.pdb
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\PI Systems.genruntimeconfig.cache
-C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\ref\PI Systems.dll
->>>>>>> master
