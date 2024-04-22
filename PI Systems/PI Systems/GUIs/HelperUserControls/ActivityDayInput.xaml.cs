@@ -42,53 +42,52 @@ namespace PI_Systems.GUIs.HelperUserControls
                     break;
             }
             MainMenu.Instance.RefreshTodaysData();
-            //((GoalAndDailyInput)Tag).goalInput.DisplayGoal();
         }
 
         
 
         #region Update Various Different Activity Types
 
-        private void InsertOrUpdate(dynamic entry)
+        private void InsertOrUpdate(UserActivity entry, string tableName)
         {
             // Jeet: Try inserting data, and if it can't be inserted (since it already exists), update it 
-            if (!Database.Instance.Insert(entry))
+            if (!Database.Instance.Insert(entry, tableName))
             {
-                Database.Instance.Update(entry);
+                Database.Instance.Update(entry, tableName);
             }
         }
 
         void UpdateUserWater()
         {
-            UserWater entry = new UserWater
+            UserActivity entry = new UserActivity
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                LitresDrank = float.Parse(textBox.Text)
+                Value = float.Parse(textBox.Text)
             };
-            InsertOrUpdate(entry);
+            InsertOrUpdate(entry, "UserWater");
         }
 
         void UpdateUserSleep()
         {
-            UserSleep entry = new UserSleep
+            UserActivity entry = new UserActivity
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                SleepHours = float.Parse(textBox.Text)
+                Value = float.Parse(textBox.Text)
             };
-            InsertOrUpdate(entry);
+            InsertOrUpdate(entry, "UserSleep");
         }
 
         void UpdateUserSteps()
         {
-            UserSteps entry = new UserSteps
+            UserActivity entry = new UserActivity
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                Steps = int.Parse(textBox.Text)
+                Value = int.Parse(textBox.Text)
             };
-            InsertOrUpdate(entry);
+            InsertOrUpdate(entry, "UserSteps");
         }
 
         #endregion

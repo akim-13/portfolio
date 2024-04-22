@@ -80,59 +80,106 @@ Our system will allow data to be entered manually. Some metrics will also be abl
 
 
 \section{Agile Software Process Planning and Management (2 pages)}
-
-This section must describe how you carried out your project as an Agile process, including
+\textbf{This section must describe how you carried out your project as an Agile process, including
 how you planned and tracked your sprints, and how Scrum meetings were used to manage
-the evolution of your idea and the features you decided to include in your software system.
+the evolution of your idea and the features you decided to include in your software system.}\par
+To carry out this project in an efficient and organised manner, we followed Agile practices and values using the Scrum framework. This involved using a series of week-long sprints to break up and work through the continuously evolving product backlog. Between each sprint, a meeting was held to discuss the outcome of the previous sprint, go over any changes to the product backlog, produce a sprint backlog and divide this sprint backlog between the group members for completion during the next sprint. To maintain clarity and access to information, minutes were taken of these meetings and stored in the project GitHub repository. This meant that developers could always access information about the progress of other developers and their allocated tasks (See Appendix x). During sprints, group members worked either individually or as part of a smaller group to complete their allocated element of the sprint backlog. Regular scrum meetings were also used to allow group members to communicate progress, plans, obstacles and key information. We assigned a scrum master to gain a full understanding of Agile values and methodologies and ensure the group's adherence to them. A product owner was also chosen to be in charge of managing the product backlog and organising sprints.\par
+
+Our first sprint was devoted towards research into PI systems and what students wanted in one. Three group members were assigned to researching PI systems, two to market research, two to gauging interest in students, one to compiling the initial project backlog and one to researching the most appropriate programming language to use for the project. By the end of the week, all members had fulfilled the duties assigned to them. The research was discussed as a group and used to produce the idea for our system. As this idea evolved, it was converted into a list of functional requirements and added to the product backlog.\par
+
+The second sprint consisted of designing and beginning to create our application. A member of the team set up a framework for our project on GitHub and two team members were assigned the task of creating a UI (User Interface) diagram for our application. Having done this, the UI designers presented the result in a scrum meeting and, based on this, other members of the group created a coding plan, started creating the UI and implemented some basic functionality. Meanwhile, a group member worked on creating a database and demonstrating the use of it; another researched and showcased the use of a suitable API; and the remaining people began the writing of the report. The scrum meetings held throughout the week were key in ensuring that all the programmers could stay abreast of any important changes made by others with impacts on their own work, as well as allowing the sharing and discussion of issues. At the end of the sprint, all available team members attended a Google Meet meeting in which all progress was discussed. The sprint was very successful, with every individual achieving their designated goals. Based on the API research conducted, it was decided that the Fitbit API was most suitable for our system. Additionally, it was concluded that an alternative database design would be more efficient. These evolutions of the idea of our project meant that the product backlog was updated.\par
+
+The sprint that followed largely prioritised the implementation of desired functionalities from the product backlog. Five members of the group were individually allocated to specific aspects of the program. This included implementing the productive time tracker, achievements, goals, graphs and the Fitbit API integration. One developer was also assigned to redesigning the database to be more efficient. The other available group members were given sections of the report to work on. During the frequent scrum meetings in this sprint, reporting back was important to maintain a full understanding of the latest changes among the programmers. Unfortunately, due to technical difficulties, not all parts of the sprint backlog were completed during this sprint. These incomplete tasks were added to the sprint backlog of the next sprint. Other than some software features, all other tasks were completed successfully and the next sprint was discussed and planned as usual.\par
+
+The fourth sprint had very similar aims to the previous one, with team members allocated to report writing and the development of features, including those which were not completed during the previous week. 
+
+\newpage
+\section{Specification of Software Requirements}
+
+This section establishes the core requirements for our Personal Informatics
+(PI) system, focusing on helping students keep up with their fitness and study
+goals. We utilised feedback from surveys, talks with users, market research,
+and academic research articles to figure out what features our system should have. Our
+aim is to make a system that assists students in improving both their physical
+health and studying habits whilst not being overly invasive.
 
 
-\section{Specification of Software Requirements (5 pages)}
+\subsection{Establishing Detailed System Requirements}
 
-This section breaks down what we need for our Personal Informatics (PI) system, 
-focusing on helping students keep up with their fitness and study goals. 
-We've used feedback from surveys, talks with users, and research articles to 
-figure out what features our system should have. Our aim is to make a system 
-that really helps students improve their daily habits and studies.\par
+Initially, we asked people what features they would look for in an personal
+improvement application. From these interviews, we identified that most students use PI systems for
+tracking their fitness (60\%) and their learning progress (30\%), with the other 10\% being interested in their environmental impact. This
+helped us decide which area of personal informatics our system should focus on. Next, we looked
+at what users stated about our initial ideas as well as comparing our ideas
+to expert findings from our listed articles. Additionally, many students told us they prefer applications
+that are intuitive but still allow for great insight and control into goals
+and targets. Also, they wished to connect with their friends and peers through the app and
+liked the idea of seeing all their information in a single area. Furthermore, we also researched into competitor 
+systems (such as garmin and fitbit) to identify both good and bad features of these systems.\par
 
-III.1. Establishing Detailed System Requirements
-We started by asking people what they're looking for in an app like ours. We found out that most students are really into tracking their fitness (60%) and want to keep an eye on their learning progress too (30%). This helped us get a good idea of what our app should focus on.
-Next, we looked at what users said about our initial ideas and checked out what experts say in articles. People told us they like apps that are easy to use but still do a lot. They also want to connect with friends through the app and like the idea of seeing all their info in one place.\par
-After all this, we made a final list of what our app needs to do. We're making sure it's good at tracking health and study time, lets users share their progress with friends, and keeps all their data safe and private.\par
+After this, we made a final list of what functionality our app must contain based on the data gathered. We must
+ensure our system is perfect for tracking health and study time, allows users
+to share their progress with friends, and keeps all their data safe and
+private.
  
-III.2. Specific Domain Description (will add more thing to this after the meeting, this is an example)
-The PI system is intricately designed with a student demographic at its core, addressing their unique challenges such as managing academic deadlines alongside maintaining a balanced lifestyle.\par
-Students grapple with the dual challenges of academic accountability and physical well-being. The system is poised to provide an integrative suite of tools for effective study habits, fitness tracking, and fostering a socially supportive ecosystem.\par
- 
-III.3. Uses
-Our app is mainly for people who need a hand managing their time healthily. We know many people have difficulty balancing their work and their private life. Our app aims to help them track their life style along with their diet\par
--    Tracking sleep time: The system will calculate the time users spend a day for sleeping and do statistic with it to find a pattern.\\
--    Tracking calorie intake: The system receive the calorie intake everyday by users and find a pattern along with comparing with the calorie that users spend that day and give suggestion about their diet.\\
--    Calculating calorie output: From the exercises that users take, the system will find out how much energy do users burn in a day and use them along with calorie intake to make suggestion about life style and diet.\\
--    Challenges: Users can do challenges themselves or with their friends. They can choose the difficulty of the challenges and it can be changed everyday if users may want to do other kinds or difficulties of challenge.\\
-…
-(Add more later)
-III.4. Requirement
-III.4.1. Functional Requirements
--    Data Tracking: Users should be able to easily enter and track their sleep hours, physical activities, and more. And we uses different means to track every users behavior.\\
--    Social Features: The app should offer social interaction, such as challenges and sharing achievements with friends.\\
--    Notifications: Customizable reminders to help users stay on track with their goals.\\
--    Account system: Users can register and have their own accounts to manage their data easier\\
--    Allow users to enter data that is not tracked: This can help with stats like calorie intake or why kind of food they ate so that the app know additional data, which makes it easier to find users’ behaviour pattern.\\
--    Compare users’ data overtime: This function help users manage the difference in a specific type of data over days or hours, this help them to know if the changes they make are positive or negative.\\
--    Allow users to compare different data together in a fixed time: Some of the data might link to another somehow, eg mood might affect sleep quality, lack or spare of exercises might affect mood and sleep quality as well, so this make both users and the system so see clearly how changes affect users life style and to come up with solutions to improve behaviour pattern.\\
--    Challenges: Allow users to set, change their goals, it can be social, such as friendly challenges between classmates. The system should have suggestions to users in setting their goals and the time frame to make it suitable to the users, or else they might lose interest over time if they set all the goals too difficult and could not finish any of it.\\
- 
-III.4.2. Non-Functional Requirements
--    Usability: The app must be intuitive and simple to navigate for all users.\\
--    Scalability: It should be capable of handling an increase in users and additional features over time.\\
--    Security: User data must be kept secure, with privacy settings that users can control.\\
--    Performance: The app needs to be responsive and reliable, providing a smooth user experience.\\
--    Follow SCRUM framework: We have sprints and meeting every week to make sure everything go smoothly, and we have a Scrum Master to make sure that the progress is in the right way.\\
--    Expanding initial requirements: pending\\
--    Background research: We did articles research, however, most of them are in the PI field, which narrows down our view on how to build the system. It is helpful if we do more research outside of this field which might give us more idea about functional requirements and how to implement them.\\
--    	Testing: pending\\
 
+\subsection{Specific Domain of Application}
 
+Our PI system is intricately designed with a student demographic at its core,
+addressing their unique challenges such as managing academic deadlines
+alongside maintaining a balanced lifestyle.\par 
+
+Students grapple with the dual challenges of academic accountability and
+physical well-being. The system shall provide a suite of tools for effective
+study habits and simple health tracking.
+ 
+
+\subsection{Use Cases}
+
+Our app is tailored towards individuals who require assistance managing their time healthily as
+we are aware that a large proportion of students have difficulty maintaining a healthy work-life
+balace. Our app aims to help them track key aspects of the student lifestyle.
+The fields we have chosen to track are as follows:
+
+\begin{itemize}
+
+    \item \textbf{Tracking sleep time}: The average student struggles to manage sleep, studying, and being social and out of these three, sleep is usually the area in which students choose to disregard in order to create more time. However, a lack of sleep can be detrimental on all aspects of life and as such it is imperative that we ensure our users are aware of how little sleep thay may be getting across a given time frame. We are aware that some students may also be getting too much sleep which can lead to them feeling lethargic throughout the day and as such our system should also provide a solution for these users. Sleep quality also plays a large role in this but is incredibly difficult to track unless specialist equipment is used. Additionally, it is usually influenced by factors our system cannot control such as noise from other tenants and temperature.
+
+This field will require a user to manually enter their data **or tracked by a fitbit, depends on the coding**. Allowing a user to set goals for this field will enable them to prioritise the quantity of sleep they are getting each night. Our system should enable our users to obtain a consistent, healthy sleep pattern
+    
+    \item \textbf{Tracking step count}: The average student spends a large proportion of their day sedentry, whether that be from napping after a lecture, studying hard for an exam, or sat behind a computer trying to finish coursework. This can cause students to not get out frequently for events other than their lectures and the occasional social gathering. This has hidden consequences: less time outside walking means less vitamin D, less opportunity to make new friends, increased risk of certain diseases such as heart disease. It is imperative to emphasise that our users who do not perform enough steps in a given time period that this is not healthy. Our system will allow a user to view trends in their step data and clearly visualise how litte (or many) steps they are actually performing.
+
+    \item \textbf{Tracking work done}: Students often report one of two extremes when it comes to studying: overstudying and losing out on other aspects of the student life or understudying and suffering academically. Neither of these are healthy for a student. To potentially fix this behaviour, our system should allow a user to set study goals. This allows the understudying students to have a target to achieve in a given time period, motivating them to allocate more time to study. Furthermore, this allows the overstudying students to know that they have studied a sufficient amount for a given time period and deserve a break.
+    
+    \item \textbf{Tracking water intake}: Water intake has many hidden benefits: helps with weight loss by suppressing hunger, increases energy levels, improves skin health. Many students may neglect drinking water as they need an energy boosted via caffeinated products. By setting clear goals of how much water a user should drink, it increases the likelihood they select to drink water over a less healthy alternative.
+
+    \item \textbf{Achievements}: This will be the method by which goals for a user to achieve are set. Their main purpose is to motivate a user to change some aspect of their life. Through our research, we discovered that by providing some sort of challenge, a user becomes more motivated to complete a goal, even if no physical reward (aside from health benefits) is provided. By allowing the user to set these goals we ensure that the user finds these achievements to be possible and further increases the likelihood they change some of their bad habits.
+
+\end{itemize}
+
+A large proportion of any given user's data (provided they own a fitbit device or have used the fitbit app) is going to be pulled from the fitbit API upon request from each user. We must ensure that potential users without the relevant hardware can still use our system and must be done in an intuitive way in order to allow our system to be accessible for a greater amount of students. This will also allow for easy gathering of data fields which cannot be tracked via physical devices. As not all data fields we have selected can be accessed directly via the fitbit API (sleep, and study time), manual entry is necessary.\newline
+
+To ensure that our users understand what data we are storing, each user shall be allowed to view the data we have stored on them for each of these key fields.
+In addition, the security of this data is paramount. We must ensure it cannot be accessed by any end users.
+
+\subsection{Allow Users to Manage Goals}
+This will be done through achievements generated by the system or manually set by the user. They can either be individual or group goals. Group goals will consist of a friendly competiton to see who can perform the best in a given field. For example this could be a friendly challenge between flatmates. The system should have suggestions to users in setting their goals and the time frame to make it suitable to the users to ensure they do not lose interest over time if all set the goals are too difficult.\\ 
+    
+
+\subsection{Comparing User Data}
+Our system must ensure that a user can compare all data fields in an intuitive manner. This will be done via graphs that allow the user to select what fields they wish to view along with a time frame (day, week, month to date, year to date).
+By including time frames, the user can identify potential outside factor that our system cannot consider. For example, an event in a given time frame such as a coursework deadline could influence sleep count. The user could then use this data to come up with ways to improve their behaviour patterns for other similar circumstances in the future.
+
+\subsection{Scalability and Performance}
+Scalability will not be a problem for our system as it runs entirely off of the user's computer.\\
+
+We must ensure that this system performs smoothly and efficiently to not hinder a user's experience .
+
+\subsection{Following SCRUM Framework and Expanding Goals}
+Our development of this project very closely followed the agile and SCRUM development approach. This was done to ensure our system was consistently improving and changing to match what our users will need. This was done through weekly review meetings where our group would assemble and discuss if the goals for the sprint had been completed, ways to expand upon the work produced in each sprint, any potential issues with the goals set for the sprint. This was led by our scrum master who ensured that all goals for the week were thoroughly discussed and examined, along with taking minutes for each meeting to ensure that all members knew exactly what needed to be completed. Our sprints tended to last 1 week each, with goals consistently being met by the vast majority of the group. During each sprint, the group members focusing on developing the software would regularly discuss and assist each other via online meetings.\\
+
+\subsection{Testing}
+dunno what we're testing so this is empty :)\\
 
 \section{Design (5 pages)}
 
@@ -151,6 +198,24 @@ is very rarely self-evident because it depends on an explanatory frame for inter
 you must make sure to express in words what you wish the reader to understand by them.
 
 
+The class diagram, derived from our database Entity-Relationship Diagram (ERD), illustrates the intricate structure of our Personal Informatics system, designed specifically for tracking and managing various user-centric activities. This diagram provides a visual representation of the data relationships and is critical in guiding the development process to ensure the system meets both functional and non-functional requirements effectively.\par
+
+User Class: Central to our system, the User class captures essential personal identifiers and account information for each user. Attributes include Username, Email, and Password, which are fundamental for ensuring secure user authentication and system access. This class acts as the primary entity with which other classes associate, establishing a one-to-many relationship across various data-tracking entities. Each instance of a User can associate with multiple records in subordinate classes, reflecting the diverse activities and metrics tracked by the system.\par
+
+UserAchievements Class: This class stores specific achievements of users, linked directly to the User class. Attributes like Username, Date, ActivityID, TimeFrameID, and Value allow for detailed recording and analysis of user accomplishments across different activities and timeframes. It enables the system to provide feedback and insights based on historical achievement data, supporting motivational features such as goal setting and progress tracking.\par
+
+UserStep Class: Dedicated to tracking the physical activity of steps taken, this class includes attributes such as Username, Date, and Steps. By recording daily step counts, the UserStep class feeds into the system’s health monitoring and fitness tracking capabilities, allowing users to set and monitor physical activity goals.\par
+
+UserSleep Class: Focusing on sleep habits, this class records the duration of sleep per day for each user with attributes Username, Date, and SleepHour. It is vital for analyzing sleep patterns and correlating them with other health metrics, which is essential for offering personalized health insights and improving user well-being.\par
+
+UserWork Class: This class tracks work and study sessions, an essential feature for our student users. Attributes include Username, WorkName, Date, and Endtime, facilitating the tracking of academic and work-related activities over time. This functionality supports students in managing their time and productivity more effectively.\par
+
+UserWater Class: Monitoring hydration, the UserWater class includes attributes such as Username, Date, and LitresDrank. Hydration tracking is crucial for overall health, and this class allows the system to remind users to stay hydrated and track their daily water intake.\par
+
+UserGoals Class: As a strategic component of our system, the UserGoals class holds data related to the personal objectives of users. With attributes like Username, ActivityID, TimeFrameID, Date, and Value, this class supports the setting and monitoring of personalized goals, enhancing the system's capability to drive user engagement and encourage behavior modification.\par
+
+
+
 \section{Software Testing (Verification) (2 pages)}
 
 This section should include:
@@ -161,6 +226,9 @@ before any implementation (coding) work begins.
 
 Evidence of testing - test case results.
 
+During the initial planning of this project, the approach to testing was discussed. It was agreed that each time a developer completed a feature from the product backlog they would thoroughly white-box test it themselves using a variety of specifically chosen test cases and take screenshots to record the results. If all tests produced the desired results, the developer would consider the feature complete. If any tests were unsuccessful, however, they would debug and fix the problem before applying all tests again. In this way, the component's functionality given both valid and invalid inputs would be ensured. By testing each element before combining it with other elements of the system, the testing process as a whole would comprise a bottom-up integration testing approach. On the completion of a part of the product backlog, the developer would send the screenshots produced in testing to the product owner. The product owner would then analyse the screenshots to ensure that the evidenced functionality aligned with the requirements of the product backlog. The product owner would also use the screenshots to provide feedback to the developers and to inform future decisions and alterations to the product backlog.\par
+\subsection{Example}
+Below is the outcome of the testing of the --------- feature:
 
 \section{Reflection and Conclusion (4 pages)}
 

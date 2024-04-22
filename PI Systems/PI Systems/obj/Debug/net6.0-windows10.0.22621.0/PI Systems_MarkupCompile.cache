@@ -4,16 +4,40 @@
 exe
 C#
 .cs
+<<<<<<< HEAD
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\
+=======
+<<<<<<< HEAD
+C:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\
+=======
+C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\obj\Debug\net6.0-windows10.0.22621.0\
+>>>>>>> master
+>>>>>>> API-Setup
 PI_Systems
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+<<<<<<< HEAD
 D:\C# Projects\cm12005_cw2\PI Systems\PI Systems\App.xaml
 151292803740
 
 212103754024
 2271774054249
+=======
+<<<<<<< HEAD
+C:\Users\user\source\Repos\cm12005_cw2\PI Systems\PI Systems\App.xaml
+151292803740
+
+212103754024
+227532761054
+=======
+C:\Users\willh\source\repos\cm12005_cw2\PI Systems\PI Systems\App.xaml
+151292803740
+
+212103754024
+227711704512
+>>>>>>> master
+>>>>>>> API-Setup
 GUIs\HelperUserControls\ActivityDayInput.xaml;GUIs\HelperUserControls\GoalAndDailyInput.xaml;GUIs\HelperUserControls\GoalInput.xaml;GUIs\HelperUserControls\TitleAndBack.xaml;GUIs\HelperUserControls\WorkItem.xaml;GUIs\MainWindow.xaml;GUIs\UserControls\Achievements.xaml;GUIs\UserControls\Graphs.xaml;GUIs\UserControls\MainMenu.xaml;GUIs\UserControls\Sleep.xaml;GUIs\UserControls\Steps.xaml;GUIs\UserControls\Water.xaml;GUIs\UserControls\Work.xaml;Styles\ButtonStyles.xaml;Styles\Colours.xaml;
 
 False
