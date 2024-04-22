@@ -1,3 +1,4 @@
+# Attendance
 - Taking attendance.
 
 ## Discussion Topics
