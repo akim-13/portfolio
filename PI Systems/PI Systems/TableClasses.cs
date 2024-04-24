@@ -52,4 +52,16 @@ namespace PI_Systems
             return Value.ToString();
         }
     }
+
+    class UserWork
+    {
+        public string? Username { get; set; }
+        public DateTime Date { get; set; }
+        public int Value { get; set; }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+    }
 }
