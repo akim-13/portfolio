@@ -27,16 +27,19 @@ namespace PI_Systems.GUIs.HelperUserControls
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             // Jeet: Updates the inputted data to the database (depends on the Activity)
+            // James: Check for valid inputs before updating the activities
+            float input = float.Parse(textBox.Text);
             switch (Activity)
             {
                 case ActivityType.Water:
-                    UpdateUserWater();
+                    // apparantly you die if you drink 6 litres of water in 3 hours, so capping at 48 should be safe enough
+                    if (input <= 48) { UpdateUserWater(); }
                     break;
                 case ActivityType.Sleep:
-                    UpdateUserSleep();
+                    if (input <= 24) { UpdateUserSleep(); }
                     break;
                 case ActivityType.Steps:
-                    UpdateUserSteps();
+                    if (input <= 100000) { UpdateUserSteps(); }
                     break;
                 case ActivityType.Work:
                     break;
