@@ -4,9 +4,8 @@ using System.Data;
 using Dapper;
 using System;
 using System.Linq;
-using System.Windows.Documents;
 using System.Collections.Generic;
-using System.Collections;
+
 
 namespace PI_Systems
 {
@@ -95,8 +94,6 @@ namespace PI_Systems
         }
 
         #endregion
-
-
 
 
         /// <summary>
