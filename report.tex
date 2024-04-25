@@ -5,6 +5,7 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{url}
+\usepackage{graphicx}
 
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
@@ -184,25 +185,17 @@ dunno what we're testing so this is empty :)
 
 \newpage
 \section{Design (5 pages)}
+\subsection{Design description}
+In the design of our Personal Informatics system, the UML diagrams serve as a cornerstone for understanding the structure and relationships within the application. The diagrams are organized to reflect the logical architecture of the system and consists of several key classes that correlate directly with the user data management and activity tracking functionalities.\par
 
-This section should include:
+The Entity-Relationship Diagram (ERD) illustrates the intricate structure of our Personal Informatics system, designed specifically for tracking and managing various user-centric activities. This diagram provides a visual representation of the data relationships and is critical in guiding the development process to ensure the system meets both functional and non-functional requirements effectively.\par
 
-A set of UML models describing the low-level design of your system (class models,
-sequence diagrams, etc.)
+\begin{figure}[h]
+\centering
+\includegraphics{PI ERD}
+\end{figure}
 
-A justification of your chosen design. This should explicitly show how your design
-meets both functional and non-functional requirements, making direct reference
-them and the rationale behind your design as it embodies your PI idea.
-
-Make sure you include explanatory text with your design models: the meaning of a diagram
-Page 9 of 11
-is very rarely self-evident because it depends on an explanatory frame for interpretation. So
-you must make sure to express in words what you wish the reader to understand by them.
-
-
-The class diagram, derived from our database Entity-Relationship Diagram (ERD), illustrates the intricate structure of our Personal Informatics system, designed specifically for tracking and managing various user-centric activities. This diagram provides a visual representation of the data relationships and is critical in guiding the development process to ensure the system meets both functional and non-functional requirements effectively.\par
-
-User Class: Central to our system, the User class captures essential personal identifiers and account information for each user. Attributes include Username, Email, and Password, which are fundamental for ensuring secure user authentication and system access. This class acts as the primary entity with which other classes associate, establishing a one-to-many relationship across various data-tracking entities. Each instance of a User can associate with multiple records in subordinate classes, reflecting the diverse activities and metrics tracked by the system.\par
+User Class: Central to our system, the User class captures essential personal identifiers and account information for each user. Attributes include Username, Email, and Password, which are fundamental for ensuring secure user authentication and system access. This class acts as the primary entity with which other classes associate, establishing a one-to-many relationship across various data-tracking entities. Each instance of a User can associate with multiple records in subordinate classes, reflecting the diverse activities and metrics tracked by the system. However, at the end, we did not manage to implement the multi-user system, this can be a huge improvement if we have more time to build to application.\par
 
 UserAchievements Class: This class stores specific achievements of users, linked directly to the User class. Attributes like Username, Date, ActivityID, TimeFrameID, and Value allow for detailed recording and analysis of user accomplishments across different activities and timeframes. It enables the system to provide feedback and insights based on historical achievement data, supporting motivational features such as goal setting and progress tracking.\par
 
@@ -216,7 +209,36 @@ UserWater Class: Monitoring hydration, the UserWater class includes attributes s
 
 UserGoals Class: As a strategic component of our system, the UserGoals class holds data related to the personal objectives of users. With attributes like Username, ActivityID, TimeFrameID, Date, and Value, this class supports the setting and monitoring of personalized goals, enhancing the system's capability to drive user engagement and encourage behavior modification.\par
 
+The class diagram of our Personal Informatics system delineates the fundamental components and their relationships, underscoring the system's design to efficiently manage and process user data. Central to this architecture is the Database class, which acts as the primary conduit for all data manipulation and retrieval activities within the system. This class is critical for the robust handling of data and supports various functionalities critical to user interaction and data integrity.\par
 
+\begin{figure}[h]
+\centering
+\includegraphics{UML Class diagram}
+\end{figure}
+
+The Database class ensures a singleton pattern for database management, creating a single, globally accessible instance throughout the application lifecycle. It manages the database connectivity, facilitating secure and persistent connections to the data store. Data manipulation methods such as InsertWithQuery(), Insert(), UpdateWithQuery(), and Update() allow for efficient data insertion and updating within the database. Retrieval methods like GetUserActivities() and GetUserActivityAt() fetch activity data for users, crucial for generating reports and insights. Utility methods including GetStringDataToday(), GetUserGoal(), and DeleteUserGoal() provide additional functionality for managing daily data strings and user goals, enhancing the system’s responsiveness to user interactions.\par
+
+The ActivityDayInput and GoalInput classes, both inheriting from UserControl, are specifically designed for handling the input and update functionalities related to daily user activities and goal management, respectively. The ActivityDayInput Class includes a Prompt string for user guidance and an Activity ActivityType to specify the type of activity data being entered. It comprises various user interaction handlers such as UpdateButton_Click() and InsertOrUpdate() for data submission, alongside UpdateUserWater() and UpdateUserSteps() for updating specific activity metrics. Text handling methods like TextBox_TextChanged(), TextBox_PreviewTextInput(), and TextBox_KeyDown() ensure data integrity and user input validation.\par
+
+The GoalInput Class mirrors the ActivityDayInput class in providing prompts and activity type specifications tailored towards user goals. It features goal-specific functionalities such as DisplayGoal() for visualizing set goals, GetSumData() for data aggregation, and DeleteGoalButton_Click() for goal modification. It inherits text handling and initialization methods from ActivityDayInput, ensuring a consistent and user-friendly interface.\par
+
+\begin{figure}[h]
+\centering
+\includegraphics{UML Flow diagram}
+\end{figure}
+
+The flow diagram of our Personal Informatics system illustrates the interactions between classes, essential for efficient functionality and user experience. At the core is the MainMenu class, which integrates features like tracking steps, achievements, water intake, and sleep via separate classes (Step, Achievement, Water, Sleep). These classes manage specific activities and are tightly integrated with ActivityDayInput and GoalInput controls for data entry and goal management.\par
+
+For example, when users input their daily water intake through the ActivityDayInput tailored for water, this control processes and validates the data, then interacts with the Water class and the Database to store this information. Similarly, the GoalInput facilitates setting and updating goals, interacting directly with the Database to ensure goals are current and reflective of user activity.\par
+
+The association between the ActivityDayInput, GoalInput, and the Database ensures immediate data reflection in the system, supporting features like activity comparison and trend analysis. The Database manages its instance, maintaining data integrity and security, and acts as a centralized repository for all user data. This structure ensures seamless data flow across the system, fulfilling functional and non-functional requirements, and enhancing overall user interaction.\par
+
+\subsection{Design justification}
+Functional requirement justification(Alex)
+...\\
+
+Non-functional\\
+This design framework effectively meets the functional requirements such as data tracking, social features, and notifications by ensuring that each class is optimized for specific roles within the system. Non-functional requirements like usability, scalability, security, and performance are also adeptly addressed through this architecture. The system’s modular design allows for easy scalability and enhancements, while robust data handling ensures security and high performance, ensuring a responsive and reliable user experience. This meticulous organization not only supports operational efficiency but also enhances user engagement, thereby aligning with the overarching goal of the Personal Informatics system.\par
 
 \section{Software Testing (Verification) (2 pages)}
 
