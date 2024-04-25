@@ -5,6 +5,7 @@ using Dapper;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
 
 
 namespace PI_Systems
@@ -166,6 +167,12 @@ namespace PI_Systems
         public void DeleteUserGoal(string Username, int ActivityID)
         {
             conn.Execute("DELETE FROM UserGoals WHERE Username = @Username AND ActivityID = @ActivityID", new { Username, ActivityID });
+        }
+        public int sumOfData(string table)
+        {
+            string query = $"SELECT SUM(Value) FROM {table}";
+            int sum = conn.QueryFirstOrDefault<int>(query);
+            return sum;
         }
     }
 }
