@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "01d68mb8egLXu7Nou53Zg3w0Z/VEbxoiHRct7VZX/OXvl2OkRooBHk+EDVASc2vi/pDmaSj4BwJy55Rz3FBZ9Q==",
+=======
+  "dgSpecHash": "qP0sElwYvQzoxmIPl/1ScBn3GSbXQLv0cxmpP8ql4tYXZNpjUjv64N6O925Pmzh/y5Of8bZVDPwPXGbM/i01vA==",
+>>>>>>> master
   "success": true,
   "projectFilePath": "C:\\Users\\ekate_sdiptwt\\source\\repos\\akim-13\\cm12005_cw2\\PI Systems\\PI Systems\\PI Systems.csproj",
   "expectedPackageFiles": [

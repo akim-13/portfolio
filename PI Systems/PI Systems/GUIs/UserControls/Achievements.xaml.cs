@@ -1,26 +1,29 @@
+<<<<<<< HEAD
 ﻿using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+=======
+﻿using System;
+>>>>>>> master
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PI_Systems.GUIs.UserControls
 {
     /// <summary>
     /// Interaction logic for Achievements.xaml
     /// </summary>
+<<<<<<< HEAD
     public partial class Achievements : UserControl { 
+=======
+    public partial class Achievements : UserControl
+    {
+>>>>>>> master
 
         public int sleepAchievement;
         public int stepsAchievement;
@@ -51,6 +54,7 @@ namespace PI_Systems.GUIs.UserControls
 
             string achievementMessage = "";
 
+<<<<<<< HEAD
             getAchSleep = Database.Instance.GetStringDataToday<UserSleep>();
             int achSleep = int.Parse(getAchSleep);
 
@@ -66,6 +70,23 @@ namespace PI_Systems.GUIs.UserControls
 
             achievementCounter = 0;
             if (achSleep>8)
+=======
+            getAchSleep = Database.Instance.GetStringDataToday("UserSleep");
+            int achSleep = int.Parse(getAchSleep);
+
+            getAchStep = Database.Instance.GetStringDataToday("UserSteps");
+            int achStep = int.Parse(getAchStep);
+
+            getAchWater = Database.Instance.GetStringDataToday("UserWater");
+            int achWater = int.Parse(getAchWater);
+
+            getAchWork = Database.Instance.GetStringDataToday("UserWork");
+            int achWork = int.Parse(getAchWork);
+            Console.WriteLine(achWork);
+
+            achievementCounter = 0;
+            if (achSleep > 8)
+>>>>>>> master
             {
                 Achievement1.Fill = Brushes.GreenYellow;
                 achievementCounter++;
@@ -75,7 +96,11 @@ namespace PI_Systems.GUIs.UserControls
             {
                 achievementMessage += "You could've slept more today!\n";
             }
+<<<<<<< HEAD
             if (achWork>=2)
+=======
+            if (achWork >= 2)
+>>>>>>> master
             {
                 Achievement2.Fill = Brushes.GreenYellow;
                 achievementCounter++;
@@ -95,7 +120,11 @@ namespace PI_Systems.GUIs.UserControls
             {
                 achievementMessage += "You can do more steps today!\n";
             }
+<<<<<<< HEAD
             if (achWater>=2)
+=======
+            if (achWater >= 2)
+>>>>>>> master
             {
                 Achievement4.Fill = Brushes.GreenYellow;
                 achievementCounter++;
@@ -105,7 +134,11 @@ namespace PI_Systems.GUIs.UserControls
             {
                 achievementMessage += "Keep drinking more water!\n";
             }
+<<<<<<< HEAD
             if (achievementCounter ==4)
+=======
+            if (achievementCounter == 4)
+>>>>>>> master
             {
                 currentStreak++;
                 achievementMessage = "Congratulations! \nYou have completed \nall the goals for today!";

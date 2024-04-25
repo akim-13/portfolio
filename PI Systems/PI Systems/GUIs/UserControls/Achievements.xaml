@@ -22,12 +22,21 @@
             <Grid Grid.Column="0" VerticalAlignment="Stretch">
                 <StackPanel>
 
+<<<<<<< HEAD
                 <!--Weekly Achievements-->
                 <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="10,60, 30, 40" CornerRadius="5">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="20" Foreground="#FFCD9E9E" FontWeight="Bold" FontFamily="Cascadia Code" Margin="10,15">
                             Weekly achievements: 
                         </TextBlock>
+=======
+                    <!--Weekly Achievements-->
+                    <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="10,60, 30, 40" CornerRadius="5">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="20" Foreground="#FFCD9E9E" FontWeight="Bold" FontFamily="Cascadia Code" Margin="10,15">
+                            Weekly achievements:
+                            </TextBlock>
+>>>>>>> master
                             <Label
                                 Name="WeeklyAchievementsLabel"
                                 Content="0/4"
@@ -36,6 +45,7 @@
                                 FontFamily="Cascadia Code" 
                                 Margin="40,14"/>
                         </StackPanel>
+<<<<<<< HEAD
                 </Border>
 
                 <!--Achievement 1-->
@@ -44,11 +54,22 @@
                         <TextBlock FontSize="20" Foreground="#FFCD9E9E" FontWeight="Bold" FontFamily="Cascadia Code" Margin="10,15">
                             Sleep 8H
                         </TextBlock>
+=======
+                    </Border>
+
+                    <!--Achievement 1-->
+                    <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="10,10" CornerRadius="5">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="20" Foreground="#FFCD9E9E" FontWeight="Bold" FontFamily="Cascadia Code" Margin="10,15">
+                            Sleep 8H
+                            </TextBlock>
+>>>>>>> master
                             <Rectangle Name="Achievement1" Width="35" Height="35" Margin="220, 10, 10,10">
                                 <Rectangle.Fill>
                                     <SolidColorBrush Color="#E9EAEC"/>
                                 </Rectangle.Fill>
                             </Rectangle>
+<<<<<<< HEAD
                     </StackPanel>
                 </Border>
 
@@ -58,12 +79,24 @@
                         <TextBlock FontSize="20" Foreground="#FFCD9E9E" FontWeight="Bold" FontFamily="Cascadia Code" Margin="10,15">
                             Work 2H on every activity
                         </TextBlock>
+=======
+                        </StackPanel>
+                    </Border>
+
+                    <!--Achievement 2-->
+                    <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="10,10" CornerRadius="5">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="20" Foreground="#FFCD9E9E" FontWeight="Bold" FontFamily="Cascadia Code" Margin="10,15">
+                            Work 2H on every activity
+                            </TextBlock>
+>>>>>>> master
                             <Rectangle Name="Achievement2" Width="35" Height="35" Margin="20, 10, 10,10">
                                 <Rectangle.Fill>
                                     <SolidColorBrush Color="#E9EAEC"/>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </StackPanel>
+<<<<<<< HEAD
                 </Border>
 
                     <!--Achievement 3-->
@@ -72,13 +105,27 @@
                         <TextBlock FontSize="20" Foreground="#FFCD9E9E" FontWeight="Bold" FontFamily="Cascadia Code" Margin="10,15">
                              Take 60.000 steps per week
                         </TextBlock>
+=======
+                    </Border>
+
+                    <!--Achievement 3-->
+                    <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="10,10" CornerRadius="5">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="20" Foreground="#FFCD9E9E" FontWeight="Bold" FontFamily="Cascadia Code" Margin="10,15">
+                             Take 60.000 steps per week
+                            </TextBlock>
+>>>>>>> master
                             <Rectangle Name="Achievement3" Width="35" Height="35" Margin="10, 10, 10,10">
                                 <Rectangle.Fill>
                                     <SolidColorBrush Color="#E9EAEC"/>
                                 </Rectangle.Fill>
                             </Rectangle>
                         </StackPanel>
+<<<<<<< HEAD
                 </Border>
+=======
+                    </Border>
+>>>>>>> master
 
                     <!--Achievement 4-->
                     <Border Background="{StaticResource DarkGradient}" MaxWidth="400" MaxHeight="190" Margin="10,10" CornerRadius="5">
@@ -97,7 +144,11 @@
                 </StackPanel>
 
             </Grid>
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> master
             <!--Left column-->
             <Grid Grid.Column="1" VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
@@ -130,7 +181,11 @@
                            HorizontalContentAlignment="Center" 
                            Width="Auto"
                            Foreground="#FFFDF6F6" 
+<<<<<<< HEAD
                            FontFamily="Cascadia Code" Margin="0,0"/>    
+=======
+                           FontFamily="Cascadia Code" Margin="0,0"/>
+>>>>>>> master
                 </Border>
 
 

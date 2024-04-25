@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using PI_Systems.GUIs.HelperUserControls;
 
 namespace PI_Systems.GUIs.UserControls
@@ -14,7 +15,6 @@ namespace PI_Systems.GUIs.UserControls
     {
         const int MAX_ITEMS = 9;
         int currCol, currRow, currItem;
-        bool reachedMaxItems;
         public Work()
         {
             InitializeComponent();
@@ -22,7 +22,6 @@ namespace PI_Systems.GUIs.UserControls
             currCol = 0;
             currRow = 0;
             currItem = 1;
-            reachedMaxItems = false;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -32,39 +31,75 @@ namespace PI_Systems.GUIs.UserControls
 
         private void NewWorkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!reachedMaxItems)
+            if (currItem <= MAX_ITEMS && new_work_textbox.Text != "")
             {
-                Trace.WriteLine("Added new work");
                 // Create new WorkItem
                 WorkItem wi = new WorkItem();
                 // Set WorkItem's title and timer
-                wi.Title = "Test " + currItem;
-                wi.Timer = "00:00:00";
+                wi.Title = new_work_textbox.Text;
+                wi.Timer = "00:00";
+                wi.position = currItem;
 
                 // add new WorkItem to the grid
                 Grid.SetColumn(wi, currCol);
                 Grid.SetRow(wi, currRow);
                 IncrementColAndRow();
+                currItem++;
 
                 // add as children
                 work_item_panel.Children.Add(wi);
+
+                // Clear textbox text
+                new_work_textbox.Text = "";
+
+                // Subscribe to the childs kill event
+                wi.KillCurrentWork += KillWorkItem;
+            }
+        }
+
+        private void KillWorkItem(object sender, string e)
+        {
+            WorkItem wi = (WorkItem)sender;
+            // James: Remove the item
+            work_item_panel.Children.Remove(wi);
+            currCol = 0;
+            currRow = 0;
+            // if the currItem is > items position, shift others down
+            if (currItem > wi.position)
+            {
+                int currItemIndex = 0;
+
+                while (currItemIndex < work_item_panel.Children.Count)
+                {
+                    WorkItem item = (WorkItem)work_item_panel.Children[currItemIndex];
+                    if (item.position > wi.position)
+                    {
+                        // shift the positioning if this item
+                        Grid.SetColumn(item, currCol);
+                        Grid.SetRow(item, currRow);
+                    }
+                    IncrementColAndRow();
+                    currItemIndex++;
+                }
+            }
+            currItem--;
+        }
+
+        private void new_work_textbox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                NewWorkButton_Click(sender, e);
             }
         }
 
         private void IncrementColAndRow()
         {
-            if(currItem == MAX_ITEMS)
-            {
-                reachedMaxItems = true;
-                return;
-            }
-
-            currCol = currCol < 2 ? currCol + 1 : currCol = 0;
-            if(currCol == 0)
+            currCol = currCol < 2 ? currCol + 1 : 0;
+            if (currCol == 0)
             {
                 currRow++;
             }
-            currItem++;
         }
 
         private void GoalTimeframe_Changed(object sender, SelectionChangedEventArgs e)
@@ -78,11 +113,6 @@ namespace PI_Systems.GUIs.UserControls
             }
             ComboBoxItem cbi = (ComboBoxItem)cb.SelectedItem;
             Trace.WriteLine(cbi.Content.ToString());
-        }
-
-        private void new_work_btn_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

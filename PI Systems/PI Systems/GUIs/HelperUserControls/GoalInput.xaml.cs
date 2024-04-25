@@ -21,8 +21,6 @@ namespace PI_Systems.GUIs.HelperUserControls
             DataContext = this;
         }
 
-        
-
         #region Textbox input constraints
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -69,7 +67,8 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            UserGoals entry = new UserGoals {
+            UserGoals entry = new UserGoals
+            {
                 Username = MainMenu.Instance.user,
                 ActivityID = (int)Activity,
                 TimeFrameID = goalTimeFrame.SelectedIndex,
@@ -86,7 +85,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             DisplayGoal();
         }
 
-        public void DisplayGoal()
+        private void DisplayGoal()
         {
             UserGoals? goal = Database.Instance.GetUserGoal(MainMenu.Instance.user, (int)Activity);
             if (goal != null)
@@ -105,17 +104,7 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private float GetSumData(DateTime start)
         {
-            switch (Activity)
-            {
-                case ActivityType.Sleep:
-                    return Database.Instance.GetUserActivities<UserSleep>(start, DateTime.Now.Date).Sum(x => x.SleepHours);
-                case ActivityType.Steps:
-                    return Database.Instance.GetUserActivities<UserSteps>(start, DateTime.Now.Date).Sum(x => x.Steps);
-                case ActivityType.Water:
-                    return Database.Instance.GetUserActivities<UserWater>(start, DateTime.Now.Date).Sum(x => x.LitresDrank);
-                default:
-                    return 0f;
-            }
+            return Database.Instance.GetUserActivities(start, DateTime.Now.Date, "User" + Activity.ToString()).Sum(x => x.Value);
         }
 
         private void DeleteGoalButton_Click(object sender, RoutedEventArgs e)
@@ -123,7 +112,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this goal?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
-                Database.Instance.DeleteRow(MainMenu.Instance.user, (int)Activity);
+                Database.Instance.DeleteUserGoal(MainMenu.Instance.user, (int)Activity);
                 preExistingGoal.Visibility = Visibility.Collapsed;
                 inputStackPanel.Visibility = Visibility.Visible;
             }

@@ -25,8 +25,8 @@ namespace PI_Systems.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\MSQL\\DatabasePI.mdf;Integr" +
-            "ated Security=True;Connect Timeout=30;Encrypt=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\willh\\Server DB Fil" +
+            "es\\DatabasePI.mdf\";Integrated Security=True;Connect Timeout=30;Encrypt=True")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));
