@@ -14,6 +14,7 @@ namespace PI_Systems.GUIs.UserControls
         public string waterToday;
         public string sleepToday;
         public string stepsToday;
+        public string workToday;
 
         public string user = "TestUser";
 
@@ -32,8 +33,12 @@ namespace PI_Systems.GUIs.UserControls
             sleepButton.Tag = new Sleep();
             stepsButton.Tag = new Steps();
             waterButton.Tag = new Water();
-            achievementsButton.Tag = new Achievements();
+            achievementsButton.Tag = new Achievements();       
+        }
 
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
             RefreshTodaysData();
         }
 
@@ -57,11 +62,13 @@ namespace PI_Systems.GUIs.UserControls
             sleepToday = Database.Instance.GetStringDataToday("UserSleep");
             stepsToday = Database.Instance.GetStringDataToday("UserSteps");
             waterToday = Database.Instance.GetStringDataToday("UserWater");
+            workToday = Database.Instance.GetStringDataToday("UserWork");
 
             // Displaying amount of each activity done today
             sleepLabel.Content = sleepToday + " hours";
             stepsLabel.Content = stepsToday + " steps";
             waterLabel.Content = waterToday + " litres";
+            workLabel.Content = workToday + " hours";
         }
     }
 }
