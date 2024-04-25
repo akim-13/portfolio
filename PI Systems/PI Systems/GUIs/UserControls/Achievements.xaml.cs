@@ -16,26 +16,23 @@ namespace PI_Systems.GUIs.UserControls
         public int workAchievement;
         public int waterAchievement;
 
-        public int achievementCounter = 0;
+        public int achievementCounter;
+        public int currentStreak = 0;
 
         public Achievements()
         {
             InitializeComponent();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void UserControl_Loader(object sender, RoutedEventArgs e)
         {
             UpdateSquareColor();
-            UpdateCurrentStrike();
+            UpdateCurrentStreak();
             UpdateWeekAchievements();
         }
 
         private void UpdateSquareColor()
         {
-            bool condition2 = true;
-            bool condition3 = true;
-            bool condition4 = true;
-
             string getAchSleep;
             string getAchStep;
             string getAchWork;
@@ -43,10 +40,8 @@ namespace PI_Systems.GUIs.UserControls
 
             string achievementMessage = "";
 
-            // Katrya: gets sleep data
             getAchSleep = Database.Instance.GetStringDataToday("UserSleep");
-            int achSleep = int.Parse(MainMenu.Instance.sleepToday);
-            Console.WriteLine("Actual Sleep: " + achSleep.ToString());
+            int achSleep = int.Parse(getAchSleep);
 
             getAchStep = Database.Instance.GetStringDataToday("UserSteps");
             int achStep = int.Parse(getAchStep);
@@ -54,10 +49,11 @@ namespace PI_Systems.GUIs.UserControls
             getAchWater = Database.Instance.GetStringDataToday("UserWater");
             int achWater = int.Parse(getAchWater);
 
-            getAchWork = Database.Instance.GetStringDataToday("UserWater");
+            getAchWork = Database.Instance.GetStringDataToday("UserWork");
             int achWork = int.Parse(getAchWork);
+            Console.WriteLine(achWork);
 
-
+            achievementCounter = 0;
             if (achSleep > 8)
             {
                 Achievement1.Fill = Brushes.GreenYellow;
@@ -100,15 +96,20 @@ namespace PI_Systems.GUIs.UserControls
             }
             if (achievementCounter == 4)
             {
+                currentStreak++;
                 achievementMessage = "Congratulations! \nYou have completed \nall the goals for today!";
+            }
+            else
+            {
+                currentStreak = 0;
             }
             printNote(achievementMessage);
 
         }
 
-        private void UpdateCurrentStrike()
+        private void UpdateCurrentStreak()
         {
-
+            currentStreakLabel.Content = currentStreak;
         }
 
         private void UpdateWeekAchievements()
@@ -119,7 +120,6 @@ namespace PI_Systems.GUIs.UserControls
         {
             motivationalNote.Content = message;
         }
-
 
     }
 }
