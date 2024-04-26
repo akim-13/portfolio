@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Windows.Networking.Connectivity;
 
 namespace PI_Systems.GUIs.UserControls
 {
@@ -10,7 +12,6 @@ namespace PI_Systems.GUIs.UserControls
     /// </summary>
     public partial class Achievements : UserControl
     {
-
         public int sleepAchievement;
         public int stepsAchievement;
         public int workAchievement;
@@ -41,58 +42,42 @@ namespace PI_Systems.GUIs.UserControls
             string achievementMessage = "";
 
             getAchSleep = Database.Instance.GetStringDataToday("UserSleep");
-            int achSleep = int.Parse(getAchSleep);
+            float achSleep = float.Parse(getAchSleep);
 
             getAchStep = Database.Instance.GetStringDataToday("UserSteps");
             int achStep = int.Parse(getAchStep);
 
             getAchWater = Database.Instance.GetStringDataToday("UserWater");
-            int achWater = int.Parse(getAchWater);
+            float achWater = float.Parse(getAchWater);
 
             getAchWork = Database.Instance.GetStringDataToday("UserWork");
-            int achWork = int.Parse(getAchWork);
-            Console.WriteLine(achWork);
+            float achWork = float.Parse(getAchWork);
+
+            float totalWater = 0;
+            int totalSteps = 0;
+            float totalWork = 0;
+            float totalSleep = 0;
 
             achievementCounter = 0;
-            if (achSleep > 8)
+            if (achSleep >= 8)
             {
                 Achievement1.Fill = Brushes.GreenYellow;
                 achievementCounter++;
-                achievementMessage += "You slept enought hours today!\n";
-            }
-            else
-            {
-                achievementMessage += "You could've slept more today!\n";
             }
             if (achWork >= 2)
             {
                 Achievement2.Fill = Brushes.GreenYellow;
                 achievementCounter++;
-                achievementMessage += "You worked for 2 hours today!\n";
-            }
-            else
-            {
-                achievementMessage += "You didn't manage to do much work today!\n";
             }
             if (achStep >= 60000)
             {
                 Achievement3.Fill = Brushes.GreenYellow;
                 achievementCounter++;
-                achievementMessage += "You've completed steps goal for today!\n";
-            }
-            else
-            {
-                achievementMessage += "You can do more steps today!\n";
             }
             if (achWater >= 2)
             {
                 Achievement4.Fill = Brushes.GreenYellow;
                 achievementCounter++;
-                achievementMessage += "You drank enough water today!\n";
-            }
-            else
-            {
-                achievementMessage += "Keep drinking more water!\n";
             }
             if (achievementCounter == 4)
             {
@@ -103,13 +88,25 @@ namespace PI_Systems.GUIs.UserControls
             {
                 currentStreak = 0;
             }
+
+            totalSleep = Database.Instance.sumOfData("UserSleep");
+            totalWork = Database.Instance.sumOfData("UserWork");
+            totalSteps = Database.Instance.sumOfData("UserSteps");
+            totalWater = Database.Instance.sumOfData("UserWater");
+
+
+            achievementMessage += $"You slept for {totalSleep} hours in total!\n";
+            achievementMessage += $"You worked for {totalWork} hours in total.\n";
+            achievementMessage += $"You've taken {totalSteps} steps\nin total!\n";
+            achievementMessage += $"You drank {totalWater} litres\nof water in total!\n";
+
             printNote(achievementMessage);
 
         }
 
         private void UpdateCurrentStreak()
         {
-            currentStreakLabel.Content = currentStreak;
+            currentStreakLabel.Content = currentStreak + " days";
         }
 
         private void UpdateWeekAchievements()

@@ -132,13 +132,7 @@
                            Foreground="#FFFDF6F6" 
                            FontFamily="Cascadia Code" Margin="0,0"/>
                 </Border>
-
-
             </Grid>
-
         </Grid>
-
-
     </Grid>
-
 </UserControl>
