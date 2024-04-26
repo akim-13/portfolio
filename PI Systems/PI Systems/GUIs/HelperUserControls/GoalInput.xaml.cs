@@ -104,14 +104,7 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private float GetSumData(DateTime start)
         {
-            if (Activity != ActivityType.Work)
-            {
-                return Database.Instance.GetUserActivities(start, DateTime.Now.Date, "User" + Activity.ToString()).Sum(x => x.Value);
-            }
-            else
-            {
-                return 0;
-            }
+            return Database.Instance.GetUserActivities(start, DateTime.Now.Date, "User" + Activity.ToString()).Sum(x => x.Value);
         }
 
         private void DeleteGoalButton_Click(object sender, RoutedEventArgs e)
@@ -129,5 +122,7 @@ namespace PI_Systems.GUIs.HelperUserControls
         {
             DisplayGoal();
         }
+
+        
     }
 }

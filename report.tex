@@ -5,6 +5,7 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{url}
+\usepackage{graphicx}
 
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
@@ -89,9 +90,12 @@ Our first sprint was devoted towards research into PI systems and what students 
 
 The second sprint consisted of designing and beginning to create our application. A member of the team set up a framework for our project on GitHub and two team members were assigned the task of creating a UI (User Interface) diagram for our application. Having done this, the UI designers presented the result in a scrum meeting and, based on this, other members of the group created a coding plan, started creating the UI and implemented some basic functionality. Meanwhile, a group member worked on creating a database and demonstrating the use of it; another researched and showcased the use of a suitable API; and the remaining people began the writing of the report. The scrum meetings held throughout the week were key in ensuring that all the programmers could stay abreast of any important changes made by others with impacts on their own work, as well as allowing the sharing and discussion of issues. At the end of the sprint, all available team members attended a Google Meet meeting in which all progress was discussed. The sprint was very successful, with every individual achieving their designated goals. Based on the API research conducted, it was decided that the Fitbit API was most suitable for our system. Additionally, it was concluded that an alternative database design would be more efficient. These evolutions of the idea of our project meant that the product backlog was updated.\par
 
-The sprint that followed largely prioritised the implementation of desired functionalities from the product backlog. Five members of the group were individually allocated to specific aspects of the program. This included implementing the productive time tracker, achievements, goals, graphs and the Fitbit API integration. One developer was also assigned to redesigning the database to be more efficient. The other available group members were given sections of the report to work on. During the frequent scrum meetings in this sprint, reporting back was important to maintain a full understanding of the latest changes among the programmers. Unfortunately, due to technical difficulties, not all parts of the sprint backlog were completed during this sprint. These incomplete tasks were added to the sprint backlog of the next sprint. Other than some software features, all other tasks were completed successfully and the next sprint was discussed and planned as usual.\par
+The sprint that followed largely prioritised the implementation of desired functionalities from the product backlog. Five members of the group were individually allocated to specific aspects of the program. This included implementing the productivity tracker, achievements, goals, graphs and the Fitbit API integration. One developer was also assigned to redesigning the database to be more efficient. The other available group members were given sections of the report to work on. During the frequent scrum meetings in this sprint, reporting back helped maintain a full understanding of the latest changes among the programmers. Unfortunately, due to technical difficulties, the sprint backlog was not entirely completed. These incomplete tasks were added to the sprint backlog of the next sprint. Other than some software features, all tasks were completed successfully and the next sprint was discussed and planned as usual.\par
 
-The fourth sprint had very similar aims to the previous one, with team members allocated to report writing and the development of features, including those which were not completed during the previous week. 
+The fourth sprint had very similar aims to the previous one, with team members allocated to report writing and the development of features, including those which were not completed during the previous week. By the end of the sprint, more elements of our system's functionality had been implemented and the report completed further so these parts of the product backlog were marked as complete. However, the design section of the report and the achievement functionality of the system were not completed due to other commitments and the work tracking section was not fully functional due to technical difficulties. The completion of these requirements was moved to the following week's sprint.\par
+
+The fifth, and final, sprint targeted the completion of as yet unimplemented features and work on the report document. These responsibilities were split so that roughly half the group was working on each. As well as the programming of parts of the system, focus was also placed on merging all the functionality together to create our system as a whole.
+
 
 \newpage
 \section{Specification of Software Requirements}
@@ -104,7 +108,7 @@ aim is to make a system that assists students in improving both their physical
 health and studying habits whilst not being overly invasive.
 
 
-\subsection{Establishing Detailed System Requirements}
+\subsection{Gathering System Requirements}
 
 Initially, we asked people what features they would look for in an personal
 improvement application. From these interviews, we identified that most students use PI systems for
@@ -134,7 +138,7 @@ physical well-being. The system shall provide a suite of tools for effective
 study habits and simple health tracking.
  
 
-\subsection{Use Cases}
+\subsection{Data Fields Chosen}
 
 Our app is tailored towards individuals who require assistance managing their time healthily as
 we are aware that a large proportion of students have difficulty maintaining a healthy work-life
@@ -147,61 +151,65 @@ The fields we have chosen to track are as follows:
 
 This field will require a user to manually enter their data **or tracked by a fitbit, depends on the coding**. Allowing a user to set goals for this field will enable them to prioritise the quantity of sleep they are getting each night. Our system should enable our users to obtain a consistent, healthy sleep pattern
     
-    \item \textbf{Tracking step count}: The average student spends a large proportion of their day sedentry, whether that be from napping after a lecture, studying hard for an exam, or sat behind a computer trying to finish coursework. This can cause students to not get out frequently for events other than their lectures and the occasional social gathering. This has hidden consequences: less time outside walking means less vitamin D, less opportunity to make new friends, increased risk of certain diseases such as heart disease. It is imperative to emphasise that our users who do not perform enough steps in a given time period that this is not healthy. Our system will allow a user to view trends in their step data and clearly visualise how litte (or many) steps they are actually performing.
+    \item \textbf{Tracking step count}: The average student spends a large proportion of their day sedentry, whether that be from napping after a lecture, studying hard for an exam, or sat behind a computer trying to finish coursework. This can cause students to not get out frequently for events other than their lectures and the occasional social gathering. This has hidden consequences: less time outside walking means less vitamin D, less opportunity to make new friends, increased risk of certain diseases such as heart disease. It is imperative to emphasise to our users who do not perform enough steps in a given time period that this behaviour is not healthy. Our system will allow a user to view trends in their step data and clearly visualise how litte (or many) steps they are actually performing.
 
     \item \textbf{Tracking work done}: Students often report one of two extremes when it comes to studying: overstudying and losing out on other aspects of the student life or understudying and suffering academically. Neither of these are healthy for a student. To potentially fix this behaviour, our system should allow a user to set study goals. This allows the understudying students to have a target to achieve in a given time period, motivating them to allocate more time to study. Furthermore, this allows the overstudying students to know that they have studied a sufficient amount for a given time period and deserve a break.
     
-    \item \textbf{Tracking water intake}: Water intake has many hidden benefits: helps with weight loss by suppressing hunger, increases energy levels, improves skin health. Many students may neglect drinking water as they need an energy boosted via caffeinated products. By setting clear goals of how much water a user should drink, it increases the likelihood they select to drink water over a less healthy alternative.
+    \item \textbf{Tracking water intake}: Water intake has many hidden benefits: helps with weight loss by making you feel more full, increases energy levels, improves skin health. Many students may neglect drinking water as they need an energy boosted via caffeinated products. By setting clear goals of how much water a user should drink, it increases the likelihood they select to drink water over a less healthy alternative.
 
     \item \textbf{Achievements}: This will be the method by which goals for a user to achieve are set. Their main purpose is to motivate a user to change some aspect of their life. Through our research, we discovered that by providing some sort of challenge, a user becomes more motivated to complete a goal, even if no physical reward (aside from health benefits) is provided. By allowing the user to set these goals we ensure that the user finds these achievements to be possible and further increases the likelihood they change some of their bad habits.
 
 \end{itemize}
 
-A large proportion of any given user's data (provided they own a fitbit device or have used the fitbit app) is going to be pulled from the fitbit API upon request from each user. We must ensure that potential users without the relevant hardware can still use our system and must be done in an intuitive way in order to allow our system to be accessible for a greater amount of students. This will also allow for easy gathering of data fields which cannot be tracked via physical devices. As not all data fields we have selected can be accessed directly via the fitbit API (sleep, and study time), manual entry is necessary.\newline
-
-To ensure that our users understand what data we are storing, each user shall be allowed to view the data we have stored on them for each of these key fields.
-In addition, the security of this data is paramount. We must ensure it cannot be accessed by any end users.
 
 \subsection{Allow Users to Manage Goals}
-Our system will allow users to set and manage goals via an achievement system. These achievements can be manually set or removed by the user. We are using achievements as they provide a reason for a user to improve specific fields without aimlessly trying to increase some number in a field. Furthermore, these achievements can take place over different ranges of time: day, week to date, month to date, year to date.
-    
+
+Our system will allow users to set and manage goals via an achievement system. These achievements can be manually set or removed by the user. We are using achievements as they provide a reason for a user to improve specific fields without aimlessly trying to increase some number. Furthermore, these achievements can take place over different ranges of time: day, week to date, month to date, year to date.
+
 
 \subsection{Comparing User Data}
+
 Our system must ensure that a user can compare all data fields in an intuitive manner. This will be done via graphs that allow the user to select what fields they wish to view along with a time frame (day, week, month to date, year to date).
 By including time frames, the user can identify potential outside factor that our system cannot consider. For example, an event in a given time frame such as a coursework deadline could influence sleep count. The user could then use this data to come up with ways to improve their behaviour patterns for other similar circumstances in the future.
 
+
+\subsection{Viewing and Collecting Tracking Data}
+A large portion of any given user's data (provided they own a fitbit device or have used the fitbit app) is going to be accessed via the fitbit API upon request from each user. We must ensure that potential users without the relevant hardware can still use our system and must be done in an intuitive way in order to allow our system to be accessible for a greater amount of students. This will also allow for easy gathering of data fields which cannot be tracked via physical devices. As not all data fields we have selected can be accessed directly via the fitbit API (sleep, and study time), manual entry is necessary.\newline
+
+To ensure that our users understand what data we are storing, each user shall be allowed to view the data we have stored on them for each of these key fields.
+In addition, the security of this data is paramount. We must ensure it cannot be accessed by any other end users.
+
+
 \subsection{Scalability and Performance}
+
 Scalability will not be a problem for our system as it runs entirely off of the user's computer.\\
 
-We must ensure that this system performs smoothly and efficiently to not hinder a user's experience .
+We must ensure that this system performs smoothly and efficiently to not hinder a user's experience.
 
-\subsection{Following SCRUM Framework and Expanding Goals}
+
+\subsection{Structuring the Software Development Process}
+
 Our development of this project very closely followed the agile and SCRUM development approach. This was done to ensure our system was consistently improving and changing to match what our users will need. This was done through weekly review meetings where our group would assemble and discuss if the goals for the sprint had been completed, ways to expand upon the work produced in each sprint, any potential issues with the goals set for the sprint. This was led by our scrum master who ensured that all goals for the week were thoroughly discussed and examined, along with taking minutes for each meeting to ensure that all members knew exactly what needed to be completed. Our sprints tended to last 1 week each, with goals consistently being met by the vast majority of the group. During each sprint, the group members focusing on developing the software would regularly discuss and assist each other via online meetings.\\
+
 
 \subsection{Testing}
 dunno what we're testing so this is empty :)
 
 \newpage
 \section{Design (5 pages)}
+\subsection{Design description}
+In the design of our Personal Informatics system, the UML diagrams serve as a cornerstone for understanding the structure and relationships within the application. The diagrams are organized to reflect the logical architecture of the system and consists of several key classes that correlate directly with the user data management and activity tracking functionalities.\par
 
-This section should include:
+The Entity-Relationship Diagram (ERD) illustrates the intricate structure of our Personal Informatics system, designed specifically for tracking and managing various user-centric activities. This diagram provides a visual representation of the data relationships and is critical in guiding the development process to ensure the system meets both functional and non-functional requirements effectively.\par
 
-A set of UML models describing the low-level design of your system (class models,
-sequence diagrams, etc.)
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width = \linewidth]{PI ERD}
+  \caption{Database ERD model of our PI system}
+  \label{fig:PI_ERD}
+\end{figure}
 
-A justification of your chosen design. This should explicitly show how your design
-meets both functional and non-functional requirements, making direct reference
-them and the rationale behind your design as it embodies your PI idea.
-
-Make sure you include explanatory text with your design models: the meaning of a diagram
-Page 9 of 11
-is very rarely self-evident because it depends on an explanatory frame for interpretation. So
-you must make sure to express in words what you wish the reader to understand by them.
-
-
-The class diagram, derived from our database Entity-Relationship Diagram (ERD), illustrates the intricate structure of our Personal Informatics system, designed specifically for tracking and managing various user-centric activities. This diagram provides a visual representation of the data relationships and is critical in guiding the development process to ensure the system meets both functional and non-functional requirements effectively.\par
-
-User Class: Central to our system, the User class captures essential personal identifiers and account information for each user. Attributes include Username, Email, and Password, which are fundamental for ensuring secure user authentication and system access. This class acts as the primary entity with which other classes associate, establishing a one-to-many relationship across various data-tracking entities. Each instance of a User can associate with multiple records in subordinate classes, reflecting the diverse activities and metrics tracked by the system.\par
+User Class: Central to our system, the User class captures essential personal identifiers and account information for each user. Attributes include Username, Email, and Password, which are fundamental for ensuring secure user authentication and system access. This class acts as the primary entity with which other classes associate, establishing a one-to-many relationship across various data-tracking entities. Each instance of a User can associate with multiple records in subordinate classes, reflecting the diverse activities and metrics tracked by the system. However, at the end, we did not manage to implement the multi-user system, this can be a huge improvement if we have more time to build to application.\par
 
 UserAchievements Class: This class stores specific achievements of users, linked directly to the User class. Attributes like Username, Date, ActivityID, TimeFrameID, and Value allow for detailed recording and analysis of user accomplishments across different activities and timeframes. It enables the system to provide feedback and insights based on historical achievement data, supporting motivational features such as goal setting and progress tracking.\par
 
@@ -215,7 +223,56 @@ UserWater Class: Monitoring hydration, the UserWater class includes attributes s
 
 UserGoals Class: As a strategic component of our system, the UserGoals class holds data related to the personal objectives of users. With attributes like Username, ActivityID, TimeFrameID, Date, and Value, this class supports the setting and monitoring of personalized goals, enhancing the system's capability to drive user engagement and encourage behavior modification.\par
 
+The class diagram of our Personal Informatics system delineates the fundamental components and their relationships, underscoring the system's design to efficiently manage and process user data. Central to this architecture is the Database class, which acts as the primary conduit for all data manipulation and retrieval activities within the system. This class is critical for the robust handling of data and supports various functionalities critical to user interaction and data integrity.\par
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width = \linewidth]{UML Class diagram}
+  \caption{UML Class diagram of our PI system}
+  \label{fig:Class}
+\end{figure}
+
+The Database class ensures a singleton pattern for database management, creating a single, globally accessible instance throughout the application lifecycle. It manages the database connectivity, facilitating secure and persistent connections to the data store. Data manipulation methods such as InsertWithQuery(), Insert(), UpdateWithQuery(), and Update() allow for efficient data insertion and updating within the database. Retrieval methods like GetUserActivities() and GetUserActivityAt() fetch activity data for users, crucial for generating reports and insights. Utility methods including GetStringDataToday(), GetUserGoal(), and DeleteUserGoal() provide additional functionality for managing daily data strings and user goals, enhancing the system’s responsiveness to user interactions.\par
+
+The ActivityDayInput and GoalInput classes, both inheriting from UserControl, are specifically designed for handling the input and update functionalities related to daily user activities and goal management, respectively. The ActivityDayInput Class includes a Prompt string for user guidance and an Activity ActivityType to specify the type of activity data being entered. It comprises various user interaction handlers such as UpdateButton_Click() and InsertOrUpdate() for data submission, alongside UpdateUserWater() and UpdateUserSteps() for updating specific activity metrics. Text handling methods like TextBox_TextChanged(), TextBox_PreviewTextInput(), and TextBox_KeyDown() ensure data integrity and user input validation.\par
+
+The GoalInput Class mirrors the ActivityDayInput class in providing prompts and activity type specifications tailored towards user goals. It features goal-specific functionalities such as DisplayGoal() for visualizing set goals, GetSumData() for data aggregation, and DeleteGoalButton_Click() for goal modification. It inherits text handling and initialization methods from ActivityDayInput, ensuring a consistent and user-friendly interface.\par
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width = \linewidth]{UML Flow diagram}
+  \caption{UML Flow diagram of our PI system}
+  \label{fig:flow}
+\end{figure} 
+
+The flow diagram of our Personal Informatics system illustrates the interactions between classes, essential for efficient functionality and user experience. At the core is the MainMenu class, which integrates features like tracking steps, achievements, water intake, and sleep via separate classes (Step, Achievement, Water, Sleep). These classes manage specific activities and are tightly integrated with ActivityDayInput and GoalInput controls for data entry and goal management.\par
+
+For example, when users input their daily water intake through the ActivityDayInput tailored for water, this control processes and validates the data, then interacts with the Water class and the Database to store this information. Similarly, the GoalInput facilitates setting and updating goals, interacting directly with the Database to ensure goals are current and reflective of user activity.\par
+
+The association between the ActivityDayInput, GoalInput, and the Database ensures immediate data reflection in the system, supporting features like activity comparison and trend analysis. The Database manages its instance, maintaining data integrity and security, and acts as a centralized repository for all user data. This structure ensures seamless data flow across the system, fulfilling functional and non-functional requirements, and enhancing overall user interaction.\par
+
+\subsection{Design justification}
+Functional requirement justification(Alex)
+
+#*********** Begin *********
+\textbf{Non-Functional Requierments:}
+
+Like scpecified in A stage-based model of personal informatics systems (Li, Ian ; Dey, Anind ; Forlizzi, Jodi.  2010),  there are many factors that a PI system should be tailored towards to assure a constant interaction between the system and its users.  Our design was vagely tailores towards the 5 stages mentioned in A stage-based model of personal informatics systems (Li, Ian ; Dey, Anind ; Forlizzi, Jodi.  2010), these being Preparation Stage,  Collection Stage, Integration Stage,  Reflection Stage and Action Stage.  We made sure that users could chose what informatics they would prefer to track as well as how to record it, as we allowed API collection to be enabled or data to be manually inserted.\\
+
+We generally offered useful but easy to gather data so that barriers such as difficulty in colletion would not interfere with our purpous,  and enabled users to compara their data between itself,  to watch for corelation.  For example,  a user could compare steps taken to sleep to see if having a proper walk directly correlates to sleep paterns,  and the user could even compare the data from last month, or in blocks of weeks to have a more aqurate messure.  These characteristics where tailored towards the Integration and Reflection Stage.  \\
+
+Similarly,  the achievements page is aimed towards causing an action or a refelction in the user.  Our PI system allows users to set realistic goals for the day,  week or even month,  and rewards them with badges and motivating messages when these goals are met. Furthermore,  a streak counter increases every day that you achieve your goals,  and is reset if you fail to meet them.  This allows users to have a more competitive spirit towards themselves and maybe even thir friends.\\
+
+From our multiple interviews, we gathered that people would respond positively to friendly competitions,  so we attempted to make a fun and interactive acheivements page that could be used to compare data and progress with other people.  To further expand upon this,  we made our data comparable with each other throiugh line graphs to effectivly see your progress throughout the day,  week or month,  and to further visualize your goals. \\
+
+As we are perfectly aware that most people mut far more importance into one or two data types than the rest, we made it so that you can compare data with as many other types of data as you wish,  yet you could also concentrate on a specific one. \\
+
+We wished for our PI system to be completely private if need be,  as even though we want friendly competitiveness between people,  the data being gathered could be quite sensitive,  and thorugh our interviews we gathered that making profiles private would be what most people would prefer.  Furthermore,  through these same interviews we found out that people would like to have goals and recomendations set by the PI,  as a sort of guide line for their objectives.  To implement this feature,  we devised the achievements page to provide our users with a ready made set of goals they should progressively aim towards.\\
+#************* END ************
+...\\
+
+Non-functional\\
+This design framework effectively meets the functional requirements such as data tracking, social features, and notifications by ensuring that each class is optimized for specific roles within the system. Non-functional requirements like usability, scalability, security, and performance are also adeptly addressed through this architecture. The system’s modular design allows for easy scalability and enhancements, while robust data handling ensures security and high performance, ensuring a responsive and reliable user experience. This meticulous organization not only supports operational efficiency but also enhances user engagement, thereby aligning with the overarching goal of the Personal Informatics system.\par
 
 \section{Software Testing (Verification) (2 pages)}
 

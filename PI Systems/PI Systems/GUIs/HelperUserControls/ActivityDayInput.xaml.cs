@@ -27,16 +27,40 @@ namespace PI_Systems.GUIs.HelperUserControls
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             // Jeet: Updates the inputted data to the database (depends on the Activity)
+            // James: Check for valid inputs before updating the activities
+            float input = float.Parse(textBox.Text);
             switch (Activity)
             {
                 case ActivityType.Water:
-                    UpdateUserWater();
+                    // apparantly you die if you drink 6 litres of water in 3 hours, so capping at 48 should be safe enough
+                    if (input <= 48) 
+                    { 
+                        UpdateUserWater(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("The max input is 48 litres", "Error Inputting", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                     break;
                 case ActivityType.Sleep:
-                    UpdateUserSleep();
+                    if (input <= 24) 
+                    { 
+                        UpdateUserSleep(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("The max input is 24hrs", "Error Inputting", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                     break;
                 case ActivityType.Steps:
-                    UpdateUserSteps();
+                    if (input <= 100000) 
+                    { 
+                        UpdateUserSteps(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("The max input is 100,000 steps", "Error Inputting", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                     break;
                 case ActivityType.Work:
                     break;
@@ -55,6 +79,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             {
                 Database.Instance.Update(entry, tableName);
             }
+            updateButton.IsEnabled = false;
         }
 
         void UpdateUserWater()
@@ -139,6 +164,7 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            updateButton.IsEnabled = true;
             // Jeet: Set the data into the text box when this specific GUI component loads in on the screen
             switch (Activity)
             {
