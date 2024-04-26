@@ -202,9 +202,11 @@ In the design of our Personal Informatics system, the UML diagrams serve as a co
 
 The Entity-Relationship Diagram (ERD) illustrates the intricate structure of our Personal Informatics system, designed specifically for tracking and managing various user-centric activities. This diagram provides a visual representation of the data relationships and is critical in guiding the development process to ensure the system meets both functional and non-functional requirements effectively.\par
 
-\begin{figure}[h]
-\centering
-\includegraphics{PI ERD}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width = \linewidth]{PI ERD}
+  \caption{Database ERD model of our PI system}
+  \label{fig:PI_ERD}
 \end{figure}
 
 User Class: Central to our system, the User class captures essential personal identifiers and account information for each user. Attributes include Username, Email, and Password, which are fundamental for ensuring secure user authentication and system access. This class acts as the primary entity with which other classes associate, establishing a one-to-many relationship across various data-tracking entities. Each instance of a User can associate with multiple records in subordinate classes, reflecting the diverse activities and metrics tracked by the system. However, at the end, we did not manage to implement the multi-user system, this can be a huge improvement if we have more time to build to application.\par
@@ -223,9 +225,11 @@ UserGoals Class: As a strategic component of our system, the UserGoals class hol
 
 The class diagram of our Personal Informatics system delineates the fundamental components and their relationships, underscoring the system's design to efficiently manage and process user data. Central to this architecture is the Database class, which acts as the primary conduit for all data manipulation and retrieval activities within the system. This class is critical for the robust handling of data and supports various functionalities critical to user interaction and data integrity.\par
 
-\begin{figure}[h]
-\centering
-\includegraphics{UML Class diagram}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width = \linewidth]{UML Class diagram}
+  \caption{UML Class diagram of our PI system}
+  \label{fig:Class}
 \end{figure}
 
 The Database class ensures a singleton pattern for database management, creating a single, globally accessible instance throughout the application lifecycle. It manages the database connectivity, facilitating secure and persistent connections to the data store. Data manipulation methods such as InsertWithQuery(), Insert(), UpdateWithQuery(), and Update() allow for efficient data insertion and updating within the database. Retrieval methods like GetUserActivities() and GetUserActivityAt() fetch activity data for users, crucial for generating reports and insights. Utility methods including GetStringDataToday(), GetUserGoal(), and DeleteUserGoal() provide additional functionality for managing daily data strings and user goals, enhancing the system’s responsiveness to user interactions.\par
@@ -234,10 +238,12 @@ The ActivityDayInput and GoalInput classes, both inheriting from UserControl, ar
 
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and activity type specifications tailored towards user goals. It features goal-specific functionalities such as DisplayGoal() for visualizing set goals, GetSumData() for data aggregation, and DeleteGoalButton_Click() for goal modification. It inherits text handling and initialization methods from ActivityDayInput, ensuring a consistent and user-friendly interface.\par
 
-\begin{figure}[h]
-\centering
-\includegraphics{UML Flow diagram}
-\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width = \linewidth]{UML Flow diagram}
+  \caption{UML Flow diagram of our PI system}
+  \label{fig:flow}
+\end{figure} 
 
 The flow diagram of our Personal Informatics system illustrates the interactions between classes, essential for efficient functionality and user experience. At the core is the MainMenu class, which integrates features like tracking steps, achievements, water intake, and sleep via separate classes (Step, Achievement, Water, Sleep). These classes manage specific activities and are tightly integrated with ActivityDayInput and GoalInput controls for data entry and goal management.\par
 
