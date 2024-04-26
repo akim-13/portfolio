@@ -95,6 +95,8 @@ The sprint that followed largely prioritised the implementation of desired funct
 The fourth sprint had very similar aims to the previous one, with team members allocated to report writing and the development of features, including those which were not completed during the previous week. By the end of the sprint, more elements of our system's functionality had been implemented and the report completed further so these parts of the product backlog were marked as complete. However, the design section of the report and the achievement functionality of the system were not completed due to other commitments and the work tracking section was not fully functional due to technical difficulties. The completion of these requirements was moved to the following week's sprint.\par
 
 The fifth, and final, sprint targeted the completion of as yet unimplemented features and work on the report document. These responsibilities were split so that roughly half the group was working on each. As well as the programming of parts of the system, focus was also placed on merging all the functionality together to create our system as a whole.
+
+
 \newpage
 \section{Specification of Software Requirements}
 
@@ -125,6 +127,36 @@ to share their progress with friends, and keeps all their data safe and
 private.
  
 
+\newpage
+\section{Specification of Software Requirements}
+
+This section establishes the core requirements for our Personal Informatics
+(PI) system, focusing on helping students keep up with their fitness and study
+goals. We utilised feedback from surveys, talks with users, market research,
+and academic research articles to figure out what features our system should have. Our
+aim is to make a system that assists students in improving both their physical
+health and studying habits whilst not being overly invasive.
+
+
+\subsection{Gathering System Requirements}
+
+Initially, we asked people what features they would look for in an personal
+improvement application. From these interviews, we identified that most students use PI systems for
+tracking their fitness (60\%) and their learning progress (30\%), with the other 10\% being interested in their environmental impact. This
+helped us decide which area of personal informatics our system should focus on. Next, we looked
+at what users stated about our initial ideas as well as comparing our ideas
+to expert findings from our listed articles. Additionally, many students told us they prefer applications
+that are intuitive but still allow for great insight and control into goals
+and targets. Also, they wished to connect with their friends and peers through the app and
+liked the idea of seeing all their information in a single area. Furthermore, we also researched into competitor 
+systems (such as garmin and fitbit) to identify both good and bad features of these systems.\par
+
+After this, we made a final list of what functionality our app must contain based on the data gathered. We must
+ensure our system is perfect for tracking health and study time, allows users
+to share their progress with friends, and keeps all their data safe and
+private.
+ 
+
 \subsection{Specific Domain of Application}
 
 Our PI system is intricately designed with a student demographic at its core,
@@ -136,7 +168,7 @@ physical well-being. The system shall provide a suite of tools for effective
 study habits and simple health tracking.
  
 
-\subsection{Use Cases}
+\subsection{Data Fields Chosen}
 
 Our app is tailored towards individuals who require assistance managing their time healthily as
 we are aware that a large proportion of students have difficulty maintaining a healthy work-life
@@ -149,36 +181,46 @@ The fields we have chosen to track are as follows:
 
 This field will require a user to manually enter their data **or tracked by a fitbit, depends on the coding**. Allowing a user to set goals for this field will enable them to prioritise the quantity of sleep they are getting each night. Our system should enable our users to obtain a consistent, healthy sleep pattern
     
-    \item \textbf{Tracking step count}: The average student spends a large proportion of their day sedentry, whether that be from napping after a lecture, studying hard for an exam, or sat behind a computer trying to finish coursework. This can cause students to not get out frequently for events other than their lectures and the occasional social gathering. This has hidden consequences: less time outside walking means less vitamin D, less opportunity to make new friends, increased risk of certain diseases such as heart disease. It is imperative to emphasise that our users who do not perform enough steps in a given time period that this is not healthy. Our system will allow a user to view trends in their step data and clearly visualise how litte (or many) steps they are actually performing.
+    \item \textbf{Tracking step count}: The average student spends a large proportion of their day sedentry, whether that be from napping after a lecture, studying hard for an exam, or sat behind a computer trying to finish coursework. This can cause students to not get out frequently for events other than their lectures and the occasional social gathering. This has hidden consequences: less time outside walking means less vitamin D, less opportunity to make new friends, increased risk of certain diseases such as heart disease. It is imperative to emphasise to our users who do not perform enough steps in a given time period that this behaviour is not healthy. Our system will allow a user to view trends in their step data and clearly visualise how litte (or many) steps they are actually performing.
 
     \item \textbf{Tracking work done}: Students often report one of two extremes when it comes to studying: overstudying and losing out on other aspects of the student life or understudying and suffering academically. Neither of these are healthy for a student. To potentially fix this behaviour, our system should allow a user to set study goals. This allows the understudying students to have a target to achieve in a given time period, motivating them to allocate more time to study. Furthermore, this allows the overstudying students to know that they have studied a sufficient amount for a given time period and deserve a break.
     
-    \item \textbf{Tracking water intake}: Water intake has many hidden benefits: helps with weight loss by suppressing hunger, increases energy levels, improves skin health. Many students may neglect drinking water as they need an energy boosted via caffeinated products. By setting clear goals of how much water a user should drink, it increases the likelihood they select to drink water over a less healthy alternative.
+    \item \textbf{Tracking water intake}: Water intake has many hidden benefits: helps with weight loss by making you feel more full, increases energy levels, improves skin health. Many students may neglect drinking water as they need an energy boosted via caffeinated products. By setting clear goals of how much water a user should drink, it increases the likelihood they select to drink water over a less healthy alternative.
 
     \item \textbf{Achievements}: This will be the method by which goals for a user to achieve are set. Their main purpose is to motivate a user to change some aspect of their life. Through our research, we discovered that by providing some sort of challenge, a user becomes more motivated to complete a goal, even if no physical reward (aside from health benefits) is provided. By allowing the user to set these goals we ensure that the user finds these achievements to be possible and further increases the likelihood they change some of their bad habits.
 
 \end{itemize}
 
-A large proportion of any given user's data (provided they own a fitbit device or have used the fitbit app) is going to be pulled from the fitbit API upon request from each user. We must ensure that potential users without the relevant hardware can still use our system and must be done in an intuitive way in order to allow our system to be accessible for a greater amount of students. This will also allow for easy gathering of data fields which cannot be tracked via physical devices. As not all data fields we have selected can be accessed directly via the fitbit API (sleep, and study time), manual entry is necessary.\newline
-
-To ensure that our users understand what data we are storing, each user shall be allowed to view the data we have stored on them for each of these key fields.
-In addition, the security of this data is paramount. We must ensure it cannot be accessed by any end users.
 
 \subsection{Allow Users to Manage Goals}
-Our system will allow users to set and manage goals via an achievement system. These achievements can be manually set or removed by the user. We are using achievements as they provide a reason for a user to improve specific fields without aimlessly trying to increase some number in a field. Furthermore, these achievements can take place over different ranges of time: day, week to date, month to date, year to date.
-    
+
+Our system will allow users to set and manage goals via an achievement system. These achievements can be manually set or removed by the user. We are using achievements as they provide a reason for a user to improve specific fields without aimlessly trying to increase some number. Furthermore, these achievements can take place over different ranges of time: day, week to date, month to date, year to date.
+
 
 \subsection{Comparing User Data}
+
 Our system must ensure that a user can compare all data fields in an intuitive manner. This will be done via graphs that allow the user to select what fields they wish to view along with a time frame (day, week, month to date, year to date).
 By including time frames, the user can identify potential outside factor that our system cannot consider. For example, an event in a given time frame such as a coursework deadline could influence sleep count. The user could then use this data to come up with ways to improve their behaviour patterns for other similar circumstances in the future.
 
+
+\subsection{Viewing and Collecting Tracking Data}
+A large portion of any given user's data (provided they own a fitbit device or have used the fitbit app) is going to be accessed via the fitbit API upon request from each user. We must ensure that potential users without the relevant hardware can still use our system and must be done in an intuitive way in order to allow our system to be accessible for a greater amount of students. This will also allow for easy gathering of data fields which cannot be tracked via physical devices. As not all data fields we have selected can be accessed directly via the fitbit API (sleep, and study time), manual entry is necessary.\newline
+
+To ensure that our users understand what data we are storing, each user shall be allowed to view the data we have stored on them for each of these key fields.
+In addition, the security of this data is paramount. We must ensure it cannot be accessed by any other end users.
+
+
 \subsection{Scalability and Performance}
+
 Scalability will not be a problem for our system as it runs entirely off of the user's computer.\\
 
-We must ensure that this system performs smoothly and efficiently to not hinder a user's experience .
+We must ensure that this system performs smoothly and efficiently to not hinder a user's experience.
 
-\subsection{Following SCRUM Framework and Expanding Goals}
+
+\subsection{Structuring the Software Development Process}
+
 Our development of this project very closely followed the agile and SCRUM development approach. This was done to ensure our system was consistently improving and changing to match what our users will need. This was done through weekly review meetings where our group would assemble and discuss if the goals for the sprint had been completed, ways to expand upon the work produced in each sprint, any potential issues with the goals set for the sprint. This was led by our scrum master who ensured that all goals for the week were thoroughly discussed and examined, along with taking minutes for each meeting to ensure that all members knew exactly what needed to be completed. Our sprints tended to last 1 week each, with goals consistently being met by the vast majority of the group. During each sprint, the group members focusing on developing the software would regularly discuss and assist each other via online meetings.\\
+
 
 \subsection{Testing}
 dunno what we're testing so this is empty :)
