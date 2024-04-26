@@ -42,6 +42,7 @@
                 PreviewTextInput="TextBox_PreviewTextInput"/>
 
             <Button 
+                Name="updateButton"
                 Content="Update" 
                 Padding="10"
                 FontFamily="consolas"
