@@ -74,6 +74,20 @@ class SpamClassifier:
         print(self.features_data)
         
 
+    def generate_batches_of_size(self, batch_size):
+        num_of_inputs = self.features_data.shape[0]
+        indices = np.arange(num_of_inputs)
+        np.random.shuffle(indices)
+
+        features_data_shuffled = self.features_data[indices]
+        labels_data_shuffled = self.labels_data[indices]
+
+        for i in range(0, num_of_inputs, batch_size):
+            features_data_batch = features_data_shuffled[i:i + batch_size]
+            labels_data_batch = labels_data_shuffled[i:i + batch_size]
+            yield (features_data_batch, labels_data_batch)
+
+
     def train(self):
         self.populate_features_and_labels(True)
         num_of_inputs = np.shape(self.features_data)[1]
@@ -89,21 +103,25 @@ class SpamClassifier:
 
         output_layer = Layer(num_of_outputs_2, 1)
         activation_function_output = ActivationFunction(True)
-        
-        # Pass through the 1st hidden layer.
-        hidden_layer_1.forward_pass(self.features_data)
-        activation_function_1.forward_pass(hidden_layer_1.output)
 
-        # Pass through the 2nd hidden layer.
-        hidden_layer_2.forward_pass(activation_function_1.output)
-        activation_function_2.forward_pass(hidden_layer_2.output)
+        # The size of batches should be a multiple of the number of inputs
+        # to prevent the last batch from being smaller than the rest!
+        for features_data_batch, labels_data_batch in self.generate_batches_of_size(20):
+            # Pass through the 1st hidden layer.
+            hidden_layer_1.forward_pass(features_data_batch)
+            activation_function_1.forward_pass(hidden_layer_1.output)
 
-        # Pass through the output layer.
-        output_layer.forward_pass(activation_function_2.output)
-        activation_function_output.forward_pass(output_layer.output)
+            # Pass through the 2nd hidden layer.
+            hidden_layer_2.forward_pass(activation_function_1.output)
+            activation_function_2.forward_pass(hidden_layer_2.output)
 
-        print('outputs:')
-        print(activation_function_output.output[:20])
+            # Pass through the output layer.
+            output_layer.forward_pass(activation_function_2.output)
+            activation_function_output.forward_pass(output_layer.output)
+
+            print('First outputs are:')
+            print(activation_function_output.output[:20])
+            print()
         
 
     def predict(self, data):
