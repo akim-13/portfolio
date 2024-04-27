@@ -13,13 +13,13 @@ class Layer:
 
 
 class ActivationFunction:
-    def __init__(self, inputs, is_for_hidden_layer=True, current_layer=None):
+    def __init__(self, inputs, is_for_hidden_layer=True):
         self.inputs = inputs
 
         if is_for_hidden_layer:
             self.output = self.activate_rectifier()
         else:
-            self.output = self.activate_sigmoid(current_layer)
+            self.output = self.activate_sigmoid()
 
             
     # A.K.A. ReLU
@@ -27,14 +27,8 @@ class ActivationFunction:
         return np.maximum(0, self.inputs)
 
 
-    def activate_sigmoid(self, current_layer):
-        # You forgot to pass `current_layer` if this it is true.
-        if not current_layer:
-            # Do something.
-            return None
-
-        # NOPE, CONTINUE HERE
-        return 1 / (1 + np.exp**(-current_layer.output))
+    def activate_sigmoid(self):
+        return 1 / (1 + np.exp(-self.inputs))
         
 
 class SpamClassifier:
