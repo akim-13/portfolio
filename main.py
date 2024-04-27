@@ -7,34 +7,42 @@ class Layer:
         self.biases = np.zeros((1, num_of_neurons))
 
 
+    # I.e. update weights and biases for all connections with the previous layer.
     def forward_pass(self, inputs):
         self.output = np.dot(inputs, self.weights) + self.biases
         return self.output
 
 
 class ActivationFunction:
-    def __init__(self, inputs, is_for_hidden_layer=True):
-        self.inputs = inputs
+    def __init__(self, is_for_output_layer):
+        self.is_for_output_layer = is_for_output_layer
 
-        if is_for_hidden_layer:
-            self.output = self.activate_rectifier()
+
+    # I.e. update values of all neurons on the current level.
+    def forward_pass(self, inputs):
+        if self.is_for_output_layer:
+            self.output = self.calc_sigmoid(inputs)
         else:
-            self.output = self.activate_sigmoid()
+            self.output = self.calc_rectifier(inputs)
+
+        return self.output
 
             
     # A.K.A. ReLU
-    def activate_rectifier(self):
-        return np.maximum(0, self.inputs)
+    @staticmethod
+    def calc_rectifier(inputs):
+        return np.maximum(0, inputs)
 
 
-    def activate_sigmoid(self):
-        return 1 / (1 + np.exp(-self.inputs))
+    @staticmethod
+    def calc_sigmoid(inputs):
+        return 1 / (1 + np.exp(-inputs))
         
 
 class SpamClassifier:
     def __init__(self, k):
         self.k = k
-        features, labels = None, None
+        features_data, labels_data = None, None
 
 
     def populate_features_and_labels(self, is_training_data):
@@ -50,23 +58,52 @@ class SpamClassifier:
         except FileNotFoundError:
             print(f'ERROR: "{dataset_relative_path}" file not found.')
             return
+        except:
+            print(f'ERROR: improper contents or something is wrong with the file/permissions ("{dataset_relative_path}").')
+            return
 
-        self.labels = dataset[:, 0]
-        self.features = dataset[:, 1:]
+
+        self.labels_data = dataset[:, 0]
+        self.features_data = dataset[:, 1:]
 
         print("Shape of the spam training data set:", dataset.shape)
         print(dataset)
-        print("Shape of labels:", self.labels.shape)
-        print(self.labels)
-        print("Shape of features:", self.features.shape)
-        print(self.features)
-
+        print("Shape of labels_data:", self.labels_data.shape)
+        print(self.labels_data)
+        print("Shape of features_data:", self.features_data.shape)
+        print(self.features_data)
         
+
     def train(self):
         self.populate_features_and_labels(True)
-        # first_layer = Layer
-        # Unsure whether it's supposed to be self.features here.
-        ActivationFunction(self.features, False)
+        num_of_inputs = np.shape(self.features_data)[1]
+        # A.K.A. the number of neurons in the first hidden layer.
+        num_of_outputs_1 = 32
+        hidden_layer_1 = Layer(num_of_inputs, num_of_outputs_1)
+        activation_function_1 = ActivationFunction(False)
+
+        # Cut the number of neurons in half in the second layer to prevent overfitting.
+        num_of_outputs_2 = int(num_of_outputs_1 / 2)
+        hidden_layer_2 = Layer(num_of_outputs_1, num_of_outputs_2)
+        activation_function_2 = ActivationFunction(False)
+
+        output_layer = Layer(num_of_outputs_2, 1)
+        activation_function_output = ActivationFunction(True)
+        
+        # Pass through the 1st hidden layer.
+        hidden_layer_1.forward_pass(self.features_data)
+        activation_function_1.forward_pass(hidden_layer_1.output)
+
+        # Pass through the 2nd hidden layer.
+        hidden_layer_2.forward_pass(activation_function_1.output)
+        activation_function_2.forward_pass(hidden_layer_2.output)
+
+        # Pass through the output layer.
+        output_layer.forward_pass(activation_function_2.output)
+        activation_function_output.forward_pass(output_layer.output)
+
+        print('outputs:')
+        print(activation_function_output.output[:20])
         
 
     def predict(self, data):
