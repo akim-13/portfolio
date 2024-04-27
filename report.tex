@@ -490,6 +490,28 @@ Figure \ref{fig:PI_ERD} describes the following components:
 
 \end{itemize}
 
+\begin{figure}[!ht]
+  \centering
+  \includegraphic[width = 6cm]{PI DB User class}
+  \caption{User Class in our database model}
+  \label{fig:User_Class}
+\end{figure}
+
+Figure \ref{fig:User_Class} describes our  \texttt{User} Class: 
+Used to be central to our system, the User class captures
+essential personal identifiers and account information for each user.
+Attributes include Username, Email, and PasswordHash, which are fundamental
+for ensuring secure user authentication and system access. This class
+acts as the primary entity with which other classes associate,
+establishing a one-to-many relationship across various data-tracking
+entities. Each instance of a User can associate with multiple records
+in subordinate classes, reflecting the diverse activities and metrics
+tracked by the system. Ultimately, the requirement for a multi-user
+system was omitted due to limitations in the allocated time frame.
+However, the underlying database architecture has been deliberately
+designed to facilitate the seamless integration of multi-user
+capabilities, should they be developed in the future.
+
 \subsection{UML Class diagram}
 
 \begin{figure}[!ht]
