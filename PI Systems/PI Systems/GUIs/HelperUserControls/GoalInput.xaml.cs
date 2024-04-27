@@ -91,11 +91,31 @@ namespace PI_Systems.GUIs.HelperUserControls
             if (goal != null)
             {
                 TimeFrame timeFrame = (TimeFrame)goal.TimeFrameID;
-                string thisWord = timeFrame != TimeFrame.Today ? "this " : "";
-                progressLabel.Content = $"Progress for goal {thisWord}{timeFrame}";
+                int period = Helper.TimeFrameToDays(timeFrame);
+                int currentDay = (int)(DateTime.Now.Date - goal.Date).TotalDays + 1;
 
-                progressText.Text = $"{Activity}: {GetSumData(goal.Date)}/{goal.Value}\n" +
-                    $"Day: {(DateTime.Now.Date - goal.Date).TotalDays + 1}/{Helper.TimeFrameToDays(timeFrame)}";
+                float currentValue = GetSumData(goal.Date);
+                string thisWord = timeFrame != TimeFrame.Today ? "this " : "";
+
+                // Jeet: If the goal is still in date, display the stats of it
+                if (currentDay <= period)
+                {
+                    progressLabel.Content = $"Progress for goal {thisWord}{timeFrame}";
+                    progressText.Text = $"{Activity}: {currentValue}/{goal.Value}\nDay: {currentDay}/{period}";
+                }
+
+                // Jeet: Otherwise, show whether the user has completed the goal or not
+                else if (currentValue < goal.Value)
+                {
+                    progressLabel.Content = $"Goal not completed";
+                    progressText.Text = $"You were {currentValue} {Helper.ActivityToUnit(Activity)}s away from {thisWord}{timeFrame}'s goal you set!";
+                }
+                else
+                {
+                    progressLabel.Content = $"Goal Completed!";
+                    progressText.Text = $"Congratulations, you completed your goal of {goal.Value} {Helper.ActivityToUnit(Activity)}s within {thisWord}{timeFrame}";
+                }
+
 
                 preExistingGoal.Visibility = Visibility.Visible;
                 inputStackPanel.Visibility = Visibility.Collapsed;

@@ -44,7 +44,7 @@
                                 <StackPanel VerticalAlignment="Stretch" Name="stepsStackPanel">
                                     <Label
                                         FontFamily="Cascadia Code" 
-                                        Content="STEPS today" 
+                                        Content="STEPS Today" 
                                         Foreground="#FFCD9E9E" 
                                         HorizontalAlignment="Center"
                                         FontWeight="Bold" 
@@ -80,7 +80,7 @@
                                 <StackPanel VerticalAlignment="Stretch" Name="workStackPanel">
                                     <Label 
                                         FontFamily="Cascadia Code" 
-                                        Content="WORK today" 
+                                        Content="WORK Today" 
                                         Foreground="#FFCD9E9E" 
                                         HorizontalAlignment="Center"
                                         FontWeight="Bold" 
@@ -116,7 +116,7 @@
                                 <StackPanel VerticalAlignment="Stretch" Name="sleepStackPanel">
                                     <Label 
                                         FontFamily="Cascadia Code" 
-                                        Content="SLEEP last night" 
+                                        Content="SLEEP Last Night" 
                                         Foreground="#FFCD9E9E" 
                                         HorizontalAlignment="Center"
                                         FontWeight="Bold" 
@@ -152,7 +152,7 @@
                                 <StackPanel VerticalAlignment="Stretch" Name="waterStackPanel">
                                     <Label 
                                         FontFamily="Cascadia Code" 
-                                        Content="WATER DRANK today" 
+                                        Content="WATER DRANK Today" 
                                         Foreground="#FFCD9E9E" 
                                         HorizontalAlignment="Center"
                                         FontWeight="Bold" 

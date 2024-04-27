@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PI_Systems
+﻿namespace PI_Systems
 {
     internal class Helper
     {
@@ -16,6 +10,18 @@ namespace PI_Systems
                 TimeFrame.Week => 7,
                 TimeFrame.Month => 30,
                 _ => 1,
+            };
+        }
+
+        public static string ActivityToUnit(ActivityType activityType)
+        {
+            return activityType switch
+            {
+                ActivityType.Steps => "step",
+                ActivityType.Sleep => "hour",
+                ActivityType.Water => "litre",
+                ActivityType.Work => "hour",
+                _ => "",
             };
         }
     }
