@@ -436,7 +436,7 @@ effectively.\par
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width = \linewidth]{PI ERD}
+  \includegraphics[width = \linewidth]{PI Systems Database}
   \caption{Database ERD model of our PI system}
   \label{fig:PI_ERD}
 \end{figure}
@@ -446,20 +446,6 @@ effectively.\par
 Figure \ref{fig:PI_ERD} describes the following components:
 
 \begin{itemize}
-
-    \item \texttt{User} Class: Central to our system, the User class captures
-        essential personal identifiers and account information for each user.
-        Attributes include Username, Email, and Password, which are fundamental
-        for ensuring secure user authentication and system access. This class
-        acts as the primary entity with which other classes associate,
-        establishing a one-to-many relationship across various data-tracking
-        entities. Each instance of a User can associate with multiple records
-        in subordinate classes, reflecting the diverse activities and metrics
-        tracked by the system. Ultimately, the requirement for a multi-user
-        system was omitted due to limitations in the allocated time frame.
-        However, the underlying database architecture has been deliberately
-        designed to facilitate the seamless integration of multi-user
-        capabilities, should they be developed in the future.
 
     \item \texttt{UserAchievements} Class: This class stores specific
         achievements of users, linked directly to the User class. Attributes
@@ -471,26 +457,26 @@ Figure \ref{fig:PI_ERD} describes the following components:
 
     \item \texttt{UserStep} Class: Dedicated to tracking the physical activity
         of steps taken, this class includes attributes such as Username, Date,
-        and Steps. By recording daily step counts, the UserStep class feeds
+        and Value. By recording daily step counts, the UserStep class feeds
         into the system’s health monitoring and fitness tracking capabilities,
         allowing users to set and monitor physical activity goals.\par
 
     \item \texttt{UserSleep} Class: Focusing on sleep habits, this class
         records the duration of sleep per day for each user with attributes
-        Username, Date, and SleepHour. It is vital for analyzing sleep patterns
+        Username, Date, and Value. It is vital for analyzing sleep patterns
         and correlating them with other health metrics, which is essential for
         offering personalized health insights and improving user
         well-being.\par
 
     \item \texttt{UserWork} Class: This class tracks work and study sessions,
-        an essential feature for our student users. Attributes include
-        Username, WorkName, Date, and Endtime, facilitating the tracking of
+        an essential feature for our users. Attributes include
+        Username, Date, and Value, facilitating the tracking of
         academic and work-related activities over time. This functionality
-        supports students in managing their time and productivity more
+        supports users in managing their time and productivity more
         effectively.\par
 
     \item \texttt{UserWater} Class: Monitoring hydration, the UserWater class
-        includes attributes such as Username, Date, and LitresDrank. Hydration
+        includes attributes such as Username, Date, and Value. Hydration
         tracking is crucial for overall health, and this class allows the
         system to remind users to stay hydrated and track their daily water
         intake.\par
@@ -538,16 +524,16 @@ are specifically designed for handling the input and update functionalities
 related to daily user activities and goal management, respectively. The
 ActivityDayInput Class includes a Prompt string for user guidance and an
 Activity ActivityType to specify the type of activity data being entered. It
-comprises various user interaction handlers such as UpdateButton\_Click() and
+comprises various user interaction handlers such as \texttt{UpdateButton_Click()} and
 InsertOrUpdate() for data submission, alongside UpdateUserWater() and
 UpdateUserSteps() for updating specific activity metrics. Text handling methods
-like TextBox\_TextChanged(), TextBox\_PreviewTextInput(), and
-TextBox\_KeyDown() ensure data integrity and user input validation.\par
+like \texttt{TextBox_TextChanged()}, \texttt{TextBox_PreviewTextInput()}, and
+\texttt{TextBox_KeyDown()} ensure data integrity and user input validation.\par
 
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and
 activity type specifications tailored towards user goals. It features
 goal-specific functionalities such as DisplayGoal() for visualizing set goals,
-GetSumData() for data aggregation, and DeleteGoalButton\_Click() for goal
+GetSumData() for data aggregation, and \texttt{DeleteGoalButton_Click()} for goal
 modification. It inherits text handling and initialization methods from
 ActivityDayInput, ensuring a consistent and user-friendly interface.\par
 
