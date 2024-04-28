@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class Layer:
     def __init__(self, num_of_inputs, num_of_neurons):
         self.weights = 0.01 * np.random.randn(num_of_inputs, num_of_neurons)
@@ -13,31 +12,66 @@ class Layer:
         return self.output
 
 
+class BinaryCrossEntropyLoss:
+    def forward_pass(self, predictions, labels):
+        # Clip values to avoid log(0).
+        predictions = np.clip(predictions, 1e-12, 1 - 1e-12)
+        # A known formula.
+        loss = -np.mean(labels * np.log(predictions) + (1 - labels) * np.log(1 - predictions))
+        return loss
+
+
+    def backward_pass(self, predictions, labels):
+        predictions = np.clip(predictions, 1e-12, 1 - 1e-12)
+        # A known formula.
+        self.gradient = (-(labels / predictions) + (1 - labels) / (1 - predictions)) / len(predictions)
+        return self.gradient
+
+
 class ActivationFunction:
     def __init__(self, is_for_output_layer):
         self.is_for_output_layer = is_for_output_layer
 
 
-    # I.e. update values of all neurons on the current level.
     def forward_pass(self, inputs):
+        self.inputs = inputs
         if self.is_for_output_layer:
             self.output = self.calc_sigmoid(inputs)
         else:
             self.output = self.calc_rectifier(inputs)
-
         return self.output
 
+
+    def backward_pass(self, derivative_values):
+        if self.is_for_output_layer:
+            self.gradient = derivative_values * self.calc_sigmoid_derivative(self.output)
+        else:
+            self.gradient = derivative_values * self.calc_rectifier_derivative(self.inputs)
+        return self.gradient
             
-    # A.K.A. ReLU
+
     @staticmethod
     def calc_rectifier(inputs):
         return np.maximum(0, inputs)
 
 
     @staticmethod
+    def calc_rectifier_derivative(inputs):
+        derivative = np.array(inputs, copy=True)
+        derivative[inputs <= 0] = 0
+        derivative[inputs > 0] = 1
+        return derivative
+
+
+    @staticmethod
     def calc_sigmoid(inputs):
         return 1 / (1 + np.exp(-inputs))
-        
+
+
+    @staticmethod
+    def calc_sigmoid_derivative(output):
+        return output * (1 - output)
+
 
 class SpamClassifier:
     def __init__(self, k):
@@ -104,17 +138,17 @@ class SpamClassifier:
         output_layer = Layer(num_of_outputs_2, 1)
         activation_function_output = ActivationFunction(True)
 
+        total_loss = 0
+        num_of_batches = 0
         # The size of batches should be a multiple of the number of inputs
         # to prevent the last batch from being smaller than the rest!
         for features_data_batch, labels_data_batch in self.generate_batches_of_size(20):
             # Pass through the 1st hidden layer.
             hidden_layer_1.forward_pass(features_data_batch)
             activation_function_1.forward_pass(hidden_layer_1.output)
-
             # Pass through the 2nd hidden layer.
             hidden_layer_2.forward_pass(activation_function_1.output)
             activation_function_2.forward_pass(hidden_layer_2.output)
-
             # Pass through the output layer.
             output_layer.forward_pass(activation_function_2.output)
             activation_function_output.forward_pass(output_layer.output)
@@ -122,7 +156,13 @@ class SpamClassifier:
             print('First outputs are:')
             print(activation_function_output.output[:20])
             print()
-        
+
+            batch_loss = BinaryCrossEntropyLoss().forward_pass(activation_function_output.output, labels_data_batch)
+            total_loss += batch_loss
+            num_of_batches += 1
+
+        mean_epoch_loss = total_loss / num_of_batches
+        print(f'Mean epoch loss: {mean_epoch_loss}')
 
     def predict(self, data):
         self.populate_features_and_labels(False)
