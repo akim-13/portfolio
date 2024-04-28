@@ -5,16 +5,29 @@ class Layer:
         self.weights = 0.01 * np.random.randn(num_of_inputs, num_of_neurons)
         self.biases = np.zeros((1, num_of_neurons))
 
-
-    # I.e. update weights and biases for all connections with the previous layer.
     def forward_pass(self, inputs):
+        self.inputs = inputs
         self.output = np.dot(inputs, self.weights) + self.biases
         return self.output
+
+    def backward_pass(self, output_grad):
+        # Gradient on parameters.
+        self.weights_grad = np.dot(self.inputs.T, output_grad)
+        self.biases_grad = np.sum(output_grad, axis=0, keepdims=True)
+
+        # Gradient on input values to pass to the previous layer.
+        self.input_grad = np.dot(output_grad, self.weights.T)
+        return self.input_grad
+
+    def update_params(self, learning_rate):
+        # Update parameters using gradients and learning rate.
+        self.weights -= learning_rate * self.weights_grad
+        self.biases -= learning_rate * self.biases_grad
 
 
 class BinaryCrossEntropyLoss:
     def forward_pass(self, predictions, labels):
-        # Clip values to avoid log(0).
+        # Clip values to avoid log(0) and log(1) in the denominator.
         predictions = np.clip(predictions, 1e-12, 1 - 1e-12)
         # A known formula.
         loss = -np.mean(labels * np.log(predictions) + (1 - labels) * np.log(1 - predictions))
@@ -23,6 +36,8 @@ class BinaryCrossEntropyLoss:
 
     def backward_pass(self, predictions, labels):
         predictions = np.clip(predictions, 1e-12, 1 - 1e-12)
+        # Ensure that `labels` is a column vector.
+        labels = labels.reshape(-1, 1)
         # A known formula.
         self.gradient = (-(labels / predictions) + (1 - labels) / (1 - predictions)) / len(predictions)
         return self.gradient
@@ -100,12 +115,12 @@ class SpamClassifier:
         self.labels_data = dataset[:, 0]
         self.features_data = dataset[:, 1:]
 
-        print("Shape of the spam training data set:", dataset.shape)
-        print(dataset)
-        print("Shape of labels_data:", self.labels_data.shape)
-        print(self.labels_data)
-        print("Shape of features_data:", self.features_data.shape)
-        print(self.features_data)
+        # print("Shape of the spam training data set:", dataset.shape)
+        # print(dataset)
+        # print("Shape of labels_data:", self.labels_data.shape)
+        # print(self.labels_data)
+        # print("Shape of features_data:", self.features_data.shape)
+        # print(self.features_data)
         
 
     def generate_batches_of_size(self, batch_size):
@@ -125,44 +140,72 @@ class SpamClassifier:
     def train(self):
         self.populate_features_and_labels(True)
         num_of_inputs = np.shape(self.features_data)[1]
-        # A.K.A. the number of neurons in the first hidden layer.
-        num_of_outputs_1 = 32
-        hidden_layer_1 = Layer(num_of_inputs, num_of_outputs_1)
+        learning_rate = 0.01
+
+        hidden_layer_1 = Layer(num_of_inputs, 32)
         activation_function_1 = ActivationFunction(False)
 
-        # Cut the number of neurons in half in the second layer to prevent overfitting.
-        num_of_outputs_2 = int(num_of_outputs_1 / 2)
-        hidden_layer_2 = Layer(num_of_outputs_1, num_of_outputs_2)
+        # Assuming the previous layer has 32 neurons.
+        hidden_layer_2 = Layer(32, 16)  
         activation_function_2 = ActivationFunction(False)
-
-        output_layer = Layer(num_of_outputs_2, 1)
+        
+        # Output layer for binary classification.
+        output_layer = Layer(16, 1)  
         activation_function_output = ActivationFunction(True)
 
         total_loss = 0
         num_of_batches = 0
-        # The size of batches should be a multiple of the number of inputs
-        # to prevent the last batch from being smaller than the rest!
+
         for features_data_batch, labels_data_batch in self.generate_batches_of_size(20):
-            # Pass through the 1st hidden layer.
-            hidden_layer_1.forward_pass(features_data_batch)
-            activation_function_1.forward_pass(hidden_layer_1.output)
-            # Pass through the 2nd hidden layer.
-            hidden_layer_2.forward_pass(activation_function_1.output)
-            activation_function_2.forward_pass(hidden_layer_2.output)
-            # Pass through the output layer.
-            output_layer.forward_pass(activation_function_2.output)
-            activation_function_output.forward_pass(output_layer.output)
 
-            print('First outputs are:')
-            print(activation_function_output.output[:20])
-            print()
+            # Forward pass.
+            output1 = hidden_layer_1.forward_pass(features_data_batch)
+            activated_output1 = activation_function_1.forward_pass(output1)
 
-            batch_loss = BinaryCrossEntropyLoss().forward_pass(activation_function_output.output, labels_data_batch)
+            output2 = hidden_layer_2.forward_pass(activated_output1)
+            activated_output2 = activation_function_2.forward_pass(output2)
+
+            final_output = output_layer.forward_pass(activated_output2)
+            predictions = activation_function_output.forward_pass(final_output)
+
+
+            # Calculate loss.
+            batch_loss = BinaryCrossEntropyLoss().forward_pass(predictions, labels_data_batch)
             total_loss += batch_loss
             num_of_batches += 1
 
+            if num_of_batches % 10 == 0:
+                print(f'Batch number {num_of_batches}')
+                print(f'Features batch {np.shape(features_data_batch)}:\n{features_data_batch}\n')
+                print(f'Labels batch {np.shape(labels_data_batch)}:\n{labels_data_batch}\n')
+                print(f'Predictions {np.shape(predictions)}:\n {predictions}\n')
+                print(f'Batch loss: {batch_loss}\n')
+
+
+            # FIXME: The problems start from here(ish). 
+            # Backward pass.
+            loss_gradient = BinaryCrossEntropyLoss().backward_pass(predictions, labels_data_batch)
+
+            # print(f'Loss gradient {np.shape(loss_gradient)}:\n {loss_gradient}\n')
+
+            grad_output = activation_function_output.backward_pass(loss_gradient)
+
+            grad_layer_out = output_layer.backward_pass(grad_output)
+            output_layer.update_params(learning_rate)
+
+            grad_activation_2 = activation_function_2.backward_pass(grad_layer_out)
+            grad_layer_2 = hidden_layer_2.backward_pass(grad_activation_2)
+            hidden_layer_2.update_params(learning_rate)
+
+            grad_activation_1 = activation_function_1.backward_pass(grad_layer_2)
+            grad_layer_1 = hidden_layer_1.backward_pass(grad_activation_1)
+            hidden_layer_1.update_params(learning_rate)
+
+            
+
         mean_epoch_loss = total_loss / num_of_batches
         print(f'Mean epoch loss: {mean_epoch_loss}')
+
 
     def predict(self, data):
         self.populate_features_and_labels(False)
