@@ -24,12 +24,12 @@ namespace PI_Systems.GUIs.UserControls
     {
         ActivityType[] activities;
         List<LineSeries> ActiveLines = new List<LineSeries>(); // tuple???????
+        bool stepsonly = false;
         public Graphs(params CheckBox[] checkBoxes)
         {
             InitializeComponent();
 
             //Ollie: Setting up stuff for the graph such as xAxis and COlour of legend
-
 
             activities = checkBoxes.Where(c => c.IsChecked == true).Select(c => (ActivityType)c.Tag).ToArray();
             string outputList = activities.Length == 0 ? "Nothing" : string.Join(", ", activities);
@@ -72,22 +72,35 @@ namespace PI_Systems.GUIs.UserControls
             Axis axisX = (Axis)LineGraph.AxisX[0];
             axisX.MaxValue = 1;
             axisX.Separator.Step = 1;
+            if (ActiveLines.Count == 1 && ActiveLines.Contains(StepsLine))
+            {
+                stepsonly = true;
+            }
+            GenerateValues(DateTime.Now.AddDays(-1).Date, DateTime.Now.Date, ActiveLines);
+        }
+        private void RefreshYAxis(int max)
+        {
+            int multiplier = 1;
+            if (stepsonly) { multiplier = 1000; }
             LineGraph.AxisY.Clear();
             DataContext = this;
+            List<String> newlabels = new List<String>();
+            for (int loop = 0; loop < (max + 2) * multiplier;)
+            {
+                newlabels.Add(loop.ToString());
+                loop += multiplier;
+            }
             LineGraph.AxisY.Add(new Axis
             {
-                Labels = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" },
+                Labels = newlabels,
                 MinValue = 0
             });
 
             Axis axisY = (Axis)LineGraph.AxisY[0];
-            axisY.MaxValue = 10;
+            axisY.MaxValue = max + 1;
             axisY.Separator.Step = 1;
             LineGraph.Update(true);
-
-            GenerateValues(DateTime.Now.AddDays(-1).Date, DateTime.Now.Date, ActiveLines);
         }
-
         private void GenerateValues(DateTime StartTimeFrame, DateTime EndTimeFrame, List<LineSeries> ActiveLines)
         {
             SeriesCollection series = new SeriesCollection();
@@ -119,6 +132,7 @@ namespace PI_Systems.GUIs.UserControls
             {
                 stepsline.LineSmoothness = 0;
                 stepsline.Title = "Steps (1000)";
+                if (stepsonly) { stepsline.Title = "Steps"; }
                 var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserSteps");
                 var dataList = Data.ToList();
                 dataList = dataList.OrderBy(d => d.Date).ToList();
@@ -165,6 +179,21 @@ namespace PI_Systems.GUIs.UserControls
                 workline.Values = (list);
                 series.Add(workline);
             }
+            double max = 10;
+            foreach (var line in series)
+            {
+                foreach (var point in line.Values)
+                {
+                    if ((float)point > max)
+                    {
+                        max = (float)point;
+                    }
+                }
+            }
+
+            RefreshYAxis(Convert.ToInt32(max));
+
+
             LineGraph.Series = series;
 
 
@@ -250,6 +279,7 @@ namespace PI_Systems.GUIs.UserControls
                 {
                     stepsline.LineSmoothness = 0;
                     stepsline.Title = "Steps (1000)";
+                   if (stepsonly) { stepsline.Title = "Steps"; }
                     stepsline.Values = new ChartValues<double> { };
                     series.Add(stepsline);
                 }
@@ -329,6 +359,19 @@ namespace PI_Systems.GUIs.UserControls
                         avg = avg / dataList.Count;
                         waterline.Values.Add(avg);
                     }
+                    double max = 10;
+                    foreach (var line in series)
+                    {
+                        foreach (var point in line.Values)
+                        {
+                            if ((double)point > max)
+                            {
+                                max = (double)point;
+                            }
+                        }
+                    }
+
+                    RefreshYAxis(Convert.ToInt32(max));
                     LineGraph.Series = series;
 
 
