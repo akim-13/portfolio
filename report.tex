@@ -246,9 +246,10 @@ and academic research articles to figure out what features our system should hav
 aim is to make a system that assists students in improving both their physical
 health and studying habits whilst not being overly invasive.\\ 
 
-core requirements wil be denoted by SRQ, additional requirements by ARQ.
+specification requirements wil be denoted by SRQ, additional requirements by ARQ.
 
-\subsection{Gathering System Requirements - SRQ 2.3, 3}
+
+\subsection{Gathering System Requirements}
 
 Initially, we asked people what features they would look for in an personal
 improvement application. From these interviews, we identified that most
@@ -256,22 +257,22 @@ students use PI systems for tracking their fitness (60\%) and their learning
 progress (30\%), with the other 10\% being interested in their environmental
 impact. This helped us decide which area of personal informatics our system
 should focus on. Next, we looked at what users stated about our initial ideas
-as well as comparing our ideas to expert findings from our listed articles.
+as well as comparing our ideas to expert findings from our listed articles (SRQ 3.1, 3.2).
 Additionally, many students told us they prefer applications that are intuitive
 but still allow for great insight and control into goals and targets. Also,
 they wished to connect with their friends and peers through the app and liked
 the idea of seeing all their information in a single area. Furthermore, we also
 researched into competitor systems (such as garmin and fitbit) to identify both
-good and bad features of these systems.\par
+good and bad features of these systems .\par
 
-After this, we made an initial requirement list of what functionality our app must contain
+After this, we made an initial requirement list of what functionality our app must contain (SRQ 2.1, 2.3)
 based on the data gathered. We must ensure our system is perfect for tracking
 health and study time, allows users to share their progress with friends, and
 keeps all their data safe and private. Furthermore, we must reguarly reflect on our requirements
 to ensure that they properly suit our vision for the system, adapting them whenever tests, feedback, or other factors suggest so.
  
 
-\subsection{Specific Domain of Application - SRQ 2.1}
+\subsection{Specific Domain of Application}
 
 Our PI system is intricately designed with a student demographic at its core,
 addressing their unique challenges such as managing academic deadlines
@@ -279,15 +280,15 @@ alongside maintaining a balanced lifestyle.\par
 
 Students grapple with the dual challenges of academic accountability and
 physical well-being. The system shall provide a suite of tools for effective
-study habits and simple health tracking.
+study habits and simple health tracking (SRQ 2.1).
  
 
-\subsection{Data Fields Chosen - SRQ 2.1, 5.3}
+\subsection{Data Fields Chosen}
 
 Our app is tailored towards individuals who require assistance managing their time healthily as
 we are aware that a large proportion of students have difficulty maintaining a healthy work-life
 balace. Our app aims to help them track key aspects of the student lifestyle.
-The fields we have chosen to track are as follows:
+The fields we have chosen to track as well as how they shall be accessed are as follows (SRQ 5.1, 5.3):
 
 \begin{itemize}
 
@@ -343,7 +344,7 @@ The fields we have chosen to track are as follows:
         it increases the likelihood they select to drink water over a less
         healthy alternative.
 
-    \item \textbf{Achievements and Goals - ARQ 1}: These will be the methods by which goals for a
+    \item \textbf{Achievements and Goals}: These will be the methods by which goals for a
         user to achieve are set. Their main purpose is to motivate a user to
         change some aspect of their life. Through our research, we discovered
         that by providing some sort of challenge, a user becomes more motivated
@@ -357,90 +358,102 @@ The fields we have chosen to track are as follows:
 \end{itemize}
 
 
-\subsection{Motivating Users - SRQ 7, ARQ 1}
+\subsection{Motivating Users}
 
-Our system will allow users to set and manage goals. This can be whatever a user feels is appropriate for any of the given 
+Our system will allow users to set and manage goals (SRQ 7.1, 7.2, 7.3). This can be whatever a user feels is appropriate for any of the given 
 fields including the time frame in which they wish to complete the goals. In addition to this, our system will implement achievements.
 This will be separate from goals and will be set by our system. For example, a goal for step count could be "walk 10,000 steps today".
 Achievements are key to our system as they provide a reason for a user to improve specific fields
-without aimlessly trying to increase some number. Furthermore, these
+without aimlessly trying to increase some number (SRQ 7.4). Furthermore, these
 achievements rotate daily, ensuring a user never runs our of goals to achieve.\\
 
-Additionally, we set additional requirements for our system to contain a range of social features including a leaderboard and groups. This was requested by many of the students we interviewed who wished to use friendly competiton as a motivator. Unfortunately, we set the priority for this requirement to low as it did not directly influence the core behaviour of our system. During the creation of our system, it was decided that this feature was too complex to implement given the time we had left to fully construct and test the system.
+Additionally, we set additional requirements for our system to contain a range of social features (ARQ 1) including a leaderboard and groups. This was requested by many of the students we interviewed who wished to use friendly competiton as a motivator. Unfortunately, we set the priority for this requirement to low as it did not directly influence the core behaviour of our system. During the creation of our system, it was decided that this feature was too complex to implement given the time we had left to fully construct and test the system.
 
 
-\subsection{Comparing User Data - SRQ 5.2, 6}
+\subsection{Comparing User Data}
 
-Our system must ensure a user can easily view and compare all key data fields. This should be 
-done through graphs displaying all fields a user selects. 
+Our system must ensure a user can easily view and compare all key data fields (SRQ 5.2). This should be 
+done through graphs displaying all fields a user selects on the same axis. 
 This graph should dynamically change size to fit the upper bound of the data for a given user, 
-allowing a user to easily identify any correlation between the data fields.\\
+allowing a user to easily identify any correlation between the data fields (SRQ 6.2).\\
 
 The graph must allow for a user to 
-specifiy a time frame for the data to allow such that 
+specifiy a time frame (SRQ 6.2) for the data to allow such that 
 it allows the user to identify potential outside factors
-that our system cannot consider (ARQ). For example, an event in a given time frame
+that our system cannot consider. For example, an event in a given time frame
 such as a coursework deadline could influence sleep count. 
 
 
-\subsection{Viewing and Collecting Tracking Data - SRQ 5.1/2/3}
+\subsection{Viewing and Collecting Tracking Data}
 
-Users will be given the option to synchronise their step data, both present and past from a fitbit account via the fitbit API. 
+Users will be given the option to synchronise their step data, both present and past from a fitbit account via the fitbit API(ARQ 2). 
 We must ensure that potential users without the
 relevant hardware can still use our system and must be done in an intuitive way
 in order to allow our system to be accessible for a greater amount of students.
 This will also allow for easy gathering of data fields which cannot be tracked
-via physical devices. As not all data fields we have selected can be accessed
+via physical devices (SRQ 5.1). As not all data fields we have selected can be accessed
 directly via the fitbit API (sleep, and study time), manual entry is
-necessary.\newline
+necessary (SRQ 5.3).\newline
 
 To ensure that our users understand what data we are storing, each user shall
 be allowed to view the data we have stored on them for each of these key
-fields. In addition, the security of this data is paramount. We must ensure it
+fields(SRQ 5.2). In addition, the security of this data is paramount. We must ensure it
 cannot be accessed by any other end users.
 
 
-\subsection{Scalability and Performance - ARQ 2, 3}
+\subsection{Scalability and Performance}
 
-Scalability (ARQ 2) will not be a problem for our system as it runs entirely off of the
+Scalability (ARQ 3) will not be a problem for our system as it will run entirely off of the
 user's computer.
 Additionally, in order to allow for completion of our addtitional requirements of adding multi-user functionality, 
 our system must allow for easy scalability. This should be done through a well constructed database.\\
 
 We must ensure that this system performs smoothly and efficiently to not hinder
-a user's experience (ARQ 3).
+a user's experience (ARQ 4).
 
 
-\subsection{Structuring the Software Development Process - SRQ 1}
+\subsection{Structuring the Software Development Process}
 
 Our development of this project must very closely follow the agile and SCRUM
 development approach. This will be done to ensure our system is consistently
 improving and changing to match what our users need.\\
 
-Refer to the Agile Software Process Planning and Management section for more details.
+Refer to the Agile Software Process Planning and Management section for more details (covers all of SRQ 1).
 
 
-\subsection{Testing - SRQ 4}
+\subsection{Testing}
 We must extensively test each code version to ensure that our users will not run into any bugs or other issues whilst using our system. This shall be driven largely by simulating the experience an average user will have.\\
 
-Refer to the Software Testing section for more details
+Refer to the Software Testing section for more details (covers all of SRQ 4).
 
-\subsection{Table of Requirements, Dependencies, and Priorities}
+
 \begin{table}[h!]
-\centering
+\begin{center}
 \begin{tabular}{|l|l|l|c|}
-    \hline
+    \hline 
     \textbf{Requirement (RQ)} & \textbf{SRQ/ARQ} & \textbf{Dependencies} & \textbf{Priority} \\ 
     \hline
-    Software development process & SRQ 1 & N/A & High/Medium \\ 
+    Follow SCRUM ideology & SRQ 1.1 & N/A & High \\ 
+    \hline
+    Include at least one sprint & SRQ 1.2 & 1.1, 1.3 & Medium \\
+    \hline
+    Sprints must last 1-3 weeks & SRQ 1.3 & 1.1, 1.2 & Medium \\
+    \hline
+    Review requirements regularly & SRQ 1.4 & N/A & High \\
     \hline
     Expand on initial requirements & SRQ 2.1 & 3.2 & High \\ 
     \hline
+    Additional functionality for our features & SRQ 2.2 & N/A & High \\
+    \hline
     Establish additional requirements & SRQ 2.3 & 2.1, 2.2 & High \\ 
     \hline
-    Background research & SRQ 3 & N/A & High \\ 
+    Cite 3 articles on target field & SRQ 3.1 & N/A & High \\ 
     \hline
-    Testing & SRQ 4 & N/A & High \\ 
+    Read and cite 6 articles & SRQ 3.2 & N/A & Medium \\
+    \hline
+    Testing driven approach & SRQ 4.1 & N/A & High \\ 
+    \hline
+    Provide testing evidence & SRQ 4.2 & N/A & High \\
     \hline
     Store relevant user data & SRQ 5.1 & 3 & High \\ 
     \hline
@@ -448,26 +461,35 @@ Refer to the Software Testing section for more details
     \hline
     Allow for manual data entry & SRQ 5.3 & N/A & Medium \\ 
     \hline
-    Identify trends and relationships & SRQ 6 & 3, 5.1 & High \\ 
+    Compare user data & SRQ 6.1 & 5.1 & High \\ 
     \hline
+    Allow comparison of data & SRQ 6.2 & 3. 1, 3.2, 5.1 & High \\
+    \hline    
     Allow for managing of goals & SRQ 7.1 & 5.1 & High \\ 
     \hline
-    Allow goals to be set over a given time frame & SRQ 7.2 & 5.1, 7.1 & Medium \\ 
+    Add a time aspect to goals & SRQ 7.2 & 5.1, 7.1 & Medium \\ 
     \hline
     Allow for updating of a goal & SRQ 7.3 & 7.1 & Low \\ 
     \hline
     Motivating features & SRQ 7.4 & 7.1 & Medium \\ 
     \hline
     Social features & ARQ 1 & N/A & High \\ 
+    \hline 
+    Access data Via API & ARQ 2 & 5.1 & Medium \\
     \hline
-    Create a scalable system & ARQ 2 & N/A & Medium \\ 
+    Create a scalable system & ARQ 3 & N/A & Medium \\ 
     \hline
-    System must run smoothly & ARQ 3 & N/A & Low \\ 
+    System must run smoothly & ARQ 4 & N/A & Low \\ 
     \hline
+    Easy data input & ARQ 5 & 5.1, 5.3 & High \\
+    \hline
+
 \end{tabular}
 \caption{Priorities and Dependencies}
 \label{tab:priorities_dependencies}
+\end{center}
 \end{table}
+
 
 \newpage
 \section{Design (5 pages)}
@@ -516,7 +538,7 @@ Figure \ref{fig:PI_ERD} describes the following components:
         and Value. By recording daily step counts, the UserStep class feeds
         into the system’s health monitoring and fitness tracking capabilities,
         allowing users to set and monitor physical activity goals. As the data 
-        can also be inserted though an API, this class aimes to cover ARQ 5.4.\par
+        can also be inserted though an API, this class aimes to cover ARQ 2\par
 
     \item \texttt{UserSleep} Class: Focusing on sleep habits, this class
         records the duration of sleep per day for each user with attributes
@@ -548,7 +570,7 @@ Figure \ref{fig:PI_ERD} describes the following components:
 
 \end{itemize}
 
-UserStep, UserSleep, UserWork anf UserWater are all aimed to satisfy ARQ 5.5 and SRQ 5.1, 5.2 and 5.3.
+UserStep, UserSleep, UserWork anf UserWater are all aimed to satisfy ARQ 5 and SRQ 5.1, 5.2 and 5.3.
 
 \begin{figure}[!ht]
   \centering
@@ -570,7 +592,7 @@ tracked by the system. Ultimately, the requirement for a multi-user
 system was omitted due to limitations in the allocated time frame.
 However, the underlying database architecture has been deliberately
 designed to facilitate the seamless integration of multi-user
-capabilities, should they be developed in the future. This class covers ARQ 5.6.
+capabilities, should they be developed in the future. This class covers ARQ 1.
 
 \subsection{UML Class diagram}
 
