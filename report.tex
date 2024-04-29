@@ -430,28 +430,28 @@ Refer to the Software Testing section for more details
 \begin{table}[h!]
 \centering
 \begin{tabular}{c|c|c|}
-	\hline
+    \hline
 
-	\textbf{requirement (RQ)} & \textbf{Dependencies} & \textbf{Priority} \\ \hline
-	
-	SRQ 1 - Software development process & N/A & High/Medium \\ \hline
-	SRQ 2.1 Expand on initital requirements & 3.2 & High \\ \hline
-	SRQ 2.3 - Establish additional requirements & 2.1, 2.2 & High \\ \hline
-	SRQ 3 - Background research & N/A & High \\ \hline
-	SRQ 4 - Testing & N/A & High \\ \hline
-	SRQ 5.1 - Store relevant user data & 3 & High \\ \hline
-	SRQ 5.2 - Allow users to access data & N/A & High \\ \hline
-	SRQ 5.3 - Allow for manual data entry & N/A & Medium \\ \hline
-	SRQ 6 - Identify trends and relationships & 3, 5.1 & High \\ \hline
-	SRQ 7.1 - Allow for managing of goals & 5.1 & High \\ \hline
-	SRQ 7.2 - Allow goals to be set over a given time frame & 5.1, 7.1 & Medium \\ \hline
-	SRQ 7.3 - Allow for updating of a goal & 7.1 & Low \\ \hline
-	SRQ 7.4  - motivating features & 7.1 & Medium \\ \hline
-	ARQ 1 - Social features & N/A & High \\ \hline
-	ARQ 2 - Create a scalable system & N/A & Medium \\ \hline
-	ARQ 3 - System must  run smoothly & N/A & Low \\ \hline
+    \textbf{requirement (RQ)} & \textbf{Dependencies} & \textbf{Priority} \\ \hline
+    
+    SRQ 1 - Software development process & N/A & High/Medium \\ \hline
+    SRQ 2.1 Expand on initital requirements & 3.2 & High \\ \hline
+    SRQ 2.3 - Establish additional requirements & 2.1, 2.2 & High \\ \hline
+    SRQ 3 - Background research & N/A & High \\ \hline
+    SRQ 4 - Testing & N/A & High \\ \hline
+    SRQ 5.1 - Store relevant user data & 3 & High \\ \hline
+    SRQ 5.2 - Allow users to access data & N/A & High \\ \hline
+    SRQ 5.3 - Allow for manual data entry & N/A & Medium \\ \hline
+    SRQ 6 - Identify trends and relationships & 3, 5.1 & High \\ \hline
+    SRQ 7.1 - Allow for managing of goals & 5.1 & High \\ \hline
+    SRQ 7.2 - Allow goals to be set over a given time frame & 5.1, 7.1 & Medium \\ \hline
+    SRQ 7.3 - Allow for updating of a goal & 7.1 & Low \\ \hline
+    SRQ 7.4  - motivating features & 7.1 & Medium \\ \hline
+    ARQ 1 - Social features & N/A & High \\ \hline
+    ARQ 2 - Create a scalable system & N/A & Medium \\ \hline
+    ARQ 3 - System must  run smoothly & N/A & Low \\ \hline
 
-	 
+     
 \end{tabular}
 \label{tab:priorities_dependencies}
 \end{table}
@@ -539,7 +539,7 @@ UserStep, UserSleep, UserWork anf UserWater are all aimed to satisfy ARQ 5.5 and
 
 \begin{figure}[!ht]
   \centering
-  \includegraphic[width = 6cm]{PI DB User class}
+  \includegraphics[width = 6cm]{PI DB User class}
   \caption{User Class in our database model}
   \label{fig:User_Class}
 \end{figure}
@@ -593,16 +593,16 @@ are specifically designed for handling the input and update functionalities
 related to daily user activities and goal management, respectively. The
 ActivityDayInput Class includes a Prompt string for user guidance and an
 Activity ActivityType to specify the type of activity data being entered. It
-comprises various user interaction handlers such as \texttt{UpdateButton_Click()} and
+comprises various user interaction handlers such as \texttt{UpdateButton\_Click()} and
 InsertOrUpdate() for data submission, alongside UpdateUserWater() and
 UpdateUserSteps() for updating specific activity metrics. Text handling methods
-like \texttt{TextBox_TextChanged()}, \texttt{TextBox_PreviewTextInput()}, and
-\texttt{TextBox_KeyDown()} ensure data integrity and user input validation.\par
+like \texttt{TextBox\_TextChanged()}, \texttt{TextBox\_PreviewTextInput()}, and
+\texttt{TextBox\_KeyDown()} ensure data integrity and user input validation.\par
 
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and
 activity type specifications tailored towards user goals. It features
 goal-specific functionalities such as DisplayGoal() for visualizing set goals,
-GetSumData() for data aggregation, and \texttt{DeleteGoalButton_Click()} for goal
+GetSumData() for data aggregation, and \texttt{DeleteGoalButton\_Click()} for goal
 modification. It inherits text handling and initialization methods from
 ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst ActivityDayInput stand mainly by SQR 6.1 and 5.1, GoalInput follows SQR 7.1, 7.2 and 7.3.\par
 
@@ -772,7 +772,7 @@ encourage users to adjust their habits to meet their sleep targets in the future
   \hfill
 
   \begin{subfigure}{0.4\linewidth}
-    \includegraphics[width = \linewidth]{Achievement Screen}
+    \includegraphics[width = \linewidth]{Achievements Screen}
     \caption{Achievements Section Interface}
     \label{fig:Achievements}
   \end{subfigure}
@@ -815,68 +815,6 @@ users to consistently meet their daily goals and build long-term habits.\par
 Together, these interfaces support the app’s objective to engage users actively in tracking
 their progress and achieving their health and productivity goals.\par
 
-\subsection{Design justification} 
-
-Like specified in a stage-based model of PI systems (Li, Ian; Dey, Anind;
-Forlizzi, Jodi.  2010), there are many factors that a PI system should be
-tailored towards to assure a constant interaction between the system and its
-users.  Our design was vagely tailores \textbf{[FIXME]} towards the 5 stages
-mentioned in a stage-based model of personal informatics systems (Li, Ian ;
-Dey, Anind ; Forlizzi, Jodi.  2010), these being Preparation Stage,  Collection
-Stage, Integration Stage,  Reflection Stage and Action Stage.  We made sure
-that users could chose what informatics they would prefer to track as well as
-how to record it, as we allowed API collection to be enabled or data to be
-manually inserted.\par
-
-We generally offered useful but easy to gather data so that barriers such as
-difficulty in colletion would not interfere with our purpous,  and enabled
-users to compara their data between itself,  to watch for corelation.  For
-example,  a user could compare steps taken to sleep to see if having a proper
-walk directly correlates to sleep paterns,  and the user could even compare the
-data from last month, or in blocks of weeks to have a more aqurate messure.
-These characteristics where tailored towards the Integration and Reflection
-Stage.\par
-
-Similarly,  the achievements page is aimed towards causing an action or a
-refelction in the user.  Our PI system allows users to set realistic goals for
-the day,  week or even month,  and rewards them with badges and motivating
-messages when these goals are met. Furthermore,  a streak counter increases
-every day that you achieve your goals,  and is reset if you fail to meet them.
-This allows users to have a more competitive spirit towards themselves and
-maybe even thir friends.\par
-
-From our multiple interviews, we gathered that people would respond positively
-to friendly competitions,  so we attempted to make a fun and interactive
-acheivements page that could be used to compare data and progress with other
-people.  To further expand upon this,  we made our data comparable with each
-other throiugh line graphs to effectivly see your progress throughout the day,
-week or month,  and to further visualize your goals.\par
-
-As we are perfectly aware that most people mut far more importance into one or
-two data types than the rest, we made it so that you can compare data with as
-many other types of data as you wish,  yet you could also concentrate on a
-specific one.\par
-
-We wished for our PI system to be completely private if need be,  as even
-though we want friendly competitiveness between people,  the data being
-gathered could be quite sensitive,  and thorugh our interviews we gathered that
-making profiles private would be what most people would prefer.  Furthermore,
-through these same interviews we found out that people would like to have goals
-and recomendations set by the PI,  as a sort of guide line for their
-objectives.  To implement this feature,  we devised the achievements page to
-provide our users with a ready made set of goals they should progressively aim
-towards\par
-
-This design framework effectively meets the functional requirements such as
-data tracking, social features, and notifications by ensuring that each class
-is optimized for specific roles within the system. Non-functional requirements
-like usability, scalability, security, and performance are also adeptly
-addressed through this architecture. The system’s modular design allows for
-easy scalability and enhancements, while robust data handling ensures security
-and high performance, ensuring a responsive and reliable user experience. This
-meticulous organization not only supports operational efficiency but also
-enhances user engagement, thereby aligning with the overarching goal of the
-Personal Informatics system.\par
 
 \section{Software Testing (Verification) (2 pages)}
 
