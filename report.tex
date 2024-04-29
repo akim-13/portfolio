@@ -244,9 +244,11 @@ This section establishes the core requirements for our Personal Informatics
 goals. We utilised feedback from surveys, talks with users, market research,
 and academic research articles to figure out what features our system should have. Our
 aim is to make a system that assists students in improving both their physical
-health and studying habits whilst not being overly invasive.
+health and studying habits whilst not being overly invasive.\\ 
 
-\subsection{Gathering System Requirements}
+core requirements wil be denoted by SRQ, additional requirements by ARQ.
+
+\subsection{Gathering System Requirements - SRQ}
 
 Initially, we asked people what features they would look for in an personal
 improvement application. From these interviews, we identified that most
@@ -262,13 +264,14 @@ the idea of seeing all their information in a single area. Furthermore, we also
 researched into competitor systems (such as garmin and fitbit) to identify both
 good and bad features of these systems.\par
 
-After this, we made a final list of what functionality our app must contain
+After this, we made an initial requirement list of what functionality our app must contain
 based on the data gathered. We must ensure our system is perfect for tracking
 health and study time, allows users to share their progress with friends, and
-keeps all their data safe and private.
+keeps all their data safe and private. Furthermore, we must reguarly reflect on our requirements
+to ensure that they properly suit our vision for the system, adapting them whenever tests, feedback, or other factors suggest so.
  
 
-\subsection{Specific Domain of Application}
+\subsection{Specific Domain of Application - SRQ}
 
 Our PI system is intricately designed with a student demographic at its core,
 addressing their unique challenges such as managing academic deadlines
@@ -279,7 +282,7 @@ physical well-being. The system shall provide a suite of tools for effective
 study habits and simple health tracking.
  
 
-\subsection{Data Fields Chosen}
+\subsection{Data Fields Chosen - SRQ}
 
 Our app is tailored towards individuals who require assistance managing their time healthily as
 we are aware that a large proportion of students have difficulty maintaining a healthy work-life
@@ -302,8 +305,8 @@ The fields we have chosen to track are as follows:
         it is usually influenced by factors our system cannot control such as
         noise from other tenants and temperature.
 
-        This field will require a user to manually enter their data **or
-        tracked by a fitbit, depends on the coding**. Allowing a user to set
+        This field will require a user to manually enter their data. 
+        Allowing a user to set
         goals for this field will enable them to prioritise the quantity of
         sleep they are getting each night. Our system should enable our users
         to obtain a consistent, healthy sleep pattern
@@ -340,7 +343,7 @@ The fields we have chosen to track are as follows:
         it increases the likelihood they select to drink water over a less
         healthy alternative.
 
-    \item \textbf{Achievements}: This will be the method by which goals for a
+    \item \textbf{Achievements and Goals - ARQ}: These will be the methods by which goals for a
         user to achieve are set. Their main purpose is to motivate a user to
         change some aspect of their life. Through our research, we discovered
         that by providing some sort of challenge, a user becomes more motivated
@@ -348,35 +351,42 @@ The fields we have chosen to track are as follows:
         benefits) is provided. By allowing the user to set these goals we
         ensure that the user finds these achievements to be possible and
         further increases the likelihood they change some of their bad habits.
+        Additionally, by having system set achievements, a user may be driven to
+        greater heights than they think they can achieve.
 
 \end{itemize}
 
 
-\subsection{Allow Users to Manage Goals}
+\subsection{Motivating Users - ARQ}
 
-Our system will allow users to set and manage goals via an achievement system.
-These achievements can be manually set or removed by the user. We are using
-achievements as they provide a reason for a user to improve specific fields
+Our system will allow users to set and manage goals. This can be whatever a user feels is appropriate for any of the given 
+fields including the time frame in which they wish to complete the goals. In addition to this, our system will implement achievements.
+This will be separate from goals and will be set by our system. For example, a goal for step count could be "walk 10,000 steps today".
+Achievements are key to our system as they provide a reason for a user to improve specific fields
 without aimlessly trying to increase some number. Furthermore, these
-achievements can take place over different ranges of time: day, week to date,
-month to date, year to date.
+achievements rotate daily, ensuring a user never runs our of goals to achieve.\\
 
-\subsection{Comparing User Data}
+Additionally, we set additional requirements for our system to contain a range of social features including a leaderboard and groups. This was requested by many of the students we interviewed who wished to use friendly competiton as a motivator. Unfortunately, we set the priority for this requirement to low as it did not directly influence the core behaviour of our system. During the creation of our system, it was decided that this feature was too complex to implement given the time we had left to fully construct and test the system.
 
-Our system must ensure that a user can compare all data fields in an intuitive
-manner. This will be done via graphs that allow the user to select what fields
-they wish to view along with a time frame (day, week, month to date, year to
-date). By including time frames, the user can identify potential outside factor
-that our system cannot consider. For example, an event in a given time frame
-such as a coursework deadline could influence sleep count. The user could then
-use this data to come up with ways to improve their behaviour patterns for
-other similar circumstances in the future.
 
-\subsection{Viewing and Collecting Tracking Data}
+\subsection{Comparing User Data - SRQ}
 
-A large portion of any given user's data (provided they own a fitbit device or
-have used the fitbit app) is going to be accessed via the fitbit API upon
-request from each user. We must ensure that potential users without the
+Our system must ensure a user can easily view and compare all key data fields. This should be 
+done through graphs displaying all fields a user selects. 
+This graph should dynamically change size to fit the upper bound of the data for a given user, 
+allowing a user to easily identify any correlation between the data fields.\\
+
+The graph must allow for a user to 
+specifiy a time frame for the data to allow such that 
+it allows the user to identify potential outside factors
+that our system cannot consider (ARQ). For example, an event in a given time frame
+such as a coursework deadline could influence sleep count. 
+
+
+\subsection{Viewing and Collecting Tracking Data - SRQ}
+
+Users will be given the option to synchronise their step data, both present and past from a fitbit account via the fitbit API. 
+We must ensure that potential users without the
 relevant hardware can still use our system and must be done in an intuitive way
 in order to allow our system to be accessible for a greater amount of students.
 This will also allow for easy gathering of data fields which cannot be tracked
@@ -389,32 +399,30 @@ be allowed to view the data we have stored on them for each of these key
 fields. In addition, the security of this data is paramount. We must ensure it
 cannot be accessed by any other end users.
 
-\subsection{Scalability and Performance}
+
+\subsection{Scalability and Performance - SRQ}
 
 Scalability will not be a problem for our system as it runs entirely off of the
-user's computer.\\
+user's computer.
+Additionally, in order to allow for completion of our addtitional requirements of adding multi-user functionality, 
+our system must allow for easy scalability(ARQ). This should be done through a well constructed database.\\
 
 We must ensure that this system performs smoothly and efficiently to not hinder
 a user's experience.
 
-\subsection{Structuring the Software Development Process}
+\subsection{Structuring the Software Development Process - SRQ}
 
-Our development of this project very closely followed the agile and SCRUM
-development approach. This was done to ensure our system was consistently
-improving and changing to match what our users will need. This was done through
-weekly review meetings where our group would assemble and discuss if the goals
-for the sprint had been completed, ways to expand upon the work produced in
-each sprint, any potential issues with the goals set for the sprint. This was
-led by our scrum master who ensured that all goals for the week were thoroughly
-discussed and examined, along with taking minutes for each meeting to ensure
-that all members knew exactly what needed to be completed. Our sprints tended
-to last 1 week each, with goals consistently being met by the vast majority of
-the group. During each sprint, the group members focusing on developing the
-software would regularly discuss and assist each other via online meetings.\\
+Our development of this project must very closely follow the agile and SCRUM
+development approach. This will be done to ensure our system is consistently
+improving and changing to match what our users need.\\
 
-\subsection{Testing}
-dunno what we're testing so this is empty :)
+Refer to the Agile Software Process Planning and Management section for more details.
 
+
+\subsection{Testing - SRQ}
+We must extensively test each code version to ensure that our users will not run into any bugs or other issues whilst using our system. This shall be driven largely by simulating the experience an average user will have.\\
+
+Refer to the Software Testing section for more details
 
 \newpage
 \section{Design (5 pages)}
