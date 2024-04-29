@@ -17,30 +17,26 @@ class Layer:
 
         # Gradient on input values to pass to the previous layer.
         self.input_grad = np.dot(output_grad, self.weights.T)
+
         return self.input_grad
 
-    def update_params(self, learning_rate):
-        # Update parameters using gradients and learning rate.
+    def update_params(self, learning_rate=1.0):
+        # Update parameters using Stochastic Gradient Descent.
         self.weights -= learning_rate * self.weights_grad
         self.biases -= learning_rate * self.biases_grad
 
 
-class BinaryCrossEntropyLoss:
+class MeanSquaredErrorLoss:
     def forward_pass(self, predictions, labels):
-        # Clip values to avoid log(0) and log(1) in the denominator.
-        predictions = np.clip(predictions, 1e-12, 1 - 1e-12)
-        # A known formula.
-        loss = -np.mean(labels * np.log(predictions) + (1 - labels) * np.log(1 - predictions))
+        labels = labels.reshape(-1, 1)
+        loss = np.mean((predictions - labels) ** 2)
         return loss
 
 
     def backward_pass(self, predictions, labels):
-        predictions = np.clip(predictions, 1e-12, 1 - 1e-12)
-        # Ensure that `labels` is a column vector.
         labels = labels.reshape(-1, 1)
-        # A known formula.
-        self.gradient = (-(labels / predictions) + (1 - labels) / (1 - predictions)) / len(predictions)
-        return self.gradient
+        gradient = 2 * (predictions - labels) / len(labels)
+        return gradient
 
 
 class ActivationFunction:
@@ -57,11 +53,11 @@ class ActivationFunction:
         return self.output
 
 
-    def backward_pass(self, derivative_values):
+    def backward_pass(self, output_grad):
         if self.is_for_output_layer:
-            self.gradient = derivative_values * self.calc_sigmoid_derivative(self.output)
+            self.gradient = output_grad * self.calc_sigmoid_derivative(self.output)
         else:
-            self.gradient = derivative_values * self.calc_rectifier_derivative(self.inputs)
+            self.gradient = output_grad * self.calc_rectifier_derivative(self.inputs)
         return self.gradient
             
 
@@ -111,7 +107,6 @@ class SpamClassifier:
             print(f'ERROR: improper contents or something is wrong with the file/permissions ("{dataset_relative_path}").')
             return
 
-
         self.labels_data = dataset[:, 0]
         self.features_data = dataset[:, 1:]
 
@@ -153,58 +148,65 @@ class SpamClassifier:
         output_layer = Layer(16, 1)  
         activation_function_output = ActivationFunction(True)
 
-        total_loss = 0
-        num_of_batches = 0
+        for epoch in range(1000):
+            total_loss = 0
+            num_of_batches = 0
+            total_correct = 0
+            total_samples = 0
 
-        for features_data_batch, labels_data_batch in self.generate_batches_of_size(20):
+            for features_data_batch, labels_data_batch in self.generate_batches_of_size(25):
 
-            # Forward pass.
-            output1 = hidden_layer_1.forward_pass(features_data_batch)
-            activated_output1 = activation_function_1.forward_pass(output1)
+                # Forward pass.
+                output1 = hidden_layer_1.forward_pass(features_data_batch)
+                activated_output1 = activation_function_1.forward_pass(output1)
 
-            output2 = hidden_layer_2.forward_pass(activated_output1)
-            activated_output2 = activation_function_2.forward_pass(output2)
+                output2 = hidden_layer_2.forward_pass(activated_output1)
+                activated_output2 = activation_function_2.forward_pass(output2)
 
-            final_output = output_layer.forward_pass(activated_output2)
-            predictions = activation_function_output.forward_pass(final_output)
+                final_output = output_layer.forward_pass(activated_output2)
+                predictions = activation_function_output.forward_pass(final_output)
 
+                # Calculate loss.
+                batch_loss = MeanSquaredErrorLoss().forward_pass(predictions, labels_data_batch)
+                total_loss += batch_loss
+                num_of_batches += 1
 
-            # Calculate loss.
-            batch_loss = BinaryCrossEntropyLoss().forward_pass(predictions, labels_data_batch)
-            total_loss += batch_loss
-            num_of_batches += 1
+                # Calculate accuracy.
+                predicted_labels = (predictions > 0.5).astype(int)
+                correct_predictions = (predicted_labels == labels_data_batch.reshape(-1, 1)).sum()
+                total_correct += correct_predictions
+                total_samples += len(labels_data_batch)
 
-            if num_of_batches % 10 == 0:
-                print(f'Batch number {num_of_batches}')
-                print(f'Features batch {np.shape(features_data_batch)}:\n{features_data_batch}\n')
-                print(f'Labels batch {np.shape(labels_data_batch)}:\n{labels_data_batch}\n')
-                print(f'Predictions {np.shape(predictions)}:\n {predictions}\n')
-                print(f'Batch loss: {batch_loss}\n')
+                # if num_of_batches == 20 and not epoch % 50:
+                #     print(f'CURRENT EPOCH: {epoch}')
+                #     print(f'Batch number {num_of_batches}')
+                #     print(f'Features batch {np.shape(features_data_batch)}:\n{features_data_batch}\n')
+                #     print(f'Labels batch {np.shape(labels_data_batch)}:\n{labels_data_batch}\n')
+                #     print(f'Predictions {np.shape(predictions)}:\n {predictions[:10]}\n')
+                #     print(f'Batch loss: {batch_loss}\n')
 
+                # Backward pass.
+                loss_gradient = MeanSquaredErrorLoss().backward_pass(predictions, labels_data_batch)
+                grad_output = activation_function_output.backward_pass(loss_gradient)
+                grad_layer_out = output_layer.backward_pass(grad_output)
+                grad_activation_2 = activation_function_2.backward_pass(grad_layer_out)
+                grad_layer_2 = hidden_layer_2.backward_pass(grad_activation_2)
+                grad_activation_1 = activation_function_1.backward_pass(grad_layer_2)
+                grad_layer_1 = hidden_layer_1.backward_pass(grad_activation_1)
 
-            # FIXME: The problems start from here(ish). 
-            # Backward pass.
-            loss_gradient = BinaryCrossEntropyLoss().backward_pass(predictions, labels_data_batch)
+                # Update weights and biases.
+                hidden_layer_1.update_params(learning_rate)
+                hidden_layer_2.update_params(learning_rate)
+                output_layer.update_params(learning_rate)
 
-            # print(f'Loss gradient {np.shape(loss_gradient)}:\n {loss_gradient}\n')
-
-            grad_output = activation_function_output.backward_pass(loss_gradient)
-
-            grad_layer_out = output_layer.backward_pass(grad_output)
-            output_layer.update_params(learning_rate)
-
-            grad_activation_2 = activation_function_2.backward_pass(grad_layer_out)
-            grad_layer_2 = hidden_layer_2.backward_pass(grad_activation_2)
-            hidden_layer_2.update_params(learning_rate)
-
-            grad_activation_1 = activation_function_1.backward_pass(grad_layer_2)
-            grad_layer_1 = hidden_layer_1.backward_pass(grad_activation_1)
-            hidden_layer_1.update_params(learning_rate)
-
-            
-
-        mean_epoch_loss = total_loss / num_of_batches
-        print(f'Mean epoch loss: {mean_epoch_loss}')
+            if not epoch % 100:
+                mean_epoch_loss = total_loss / num_of_batches
+                epoch_accuracy = total_correct / total_samples
+                print(f'(epoch {epoch}) LOSS: {mean_epoch_loss:.4f}')
+                print(f'(epoch {epoch}) ACC: {epoch_accuracy:.4f}\n')
+                # print(f'({epoch}) max prediction: {np.max(predictions)}')
+                # print(f'({epoch}) min prediction: {np.min(predictions)}')
+                print('='*80+'\n')
 
 
     def predict(self, data):
