@@ -5,10 +5,12 @@ class Layer:
         self.weights = 0.01 * np.random.randn(num_of_inputs, num_of_neurons)
         self.biases = np.zeros((1, num_of_neurons))
 
+
     def forward_pass(self, inputs):
         self.inputs = inputs
         self.output = np.dot(inputs, self.weights) + self.biases
         return self.output
+
 
     def backward_pass(self, output_grad):
         # Gradient on parameters.
@@ -19,6 +21,7 @@ class Layer:
         self.input_grad = np.dot(output_grad, self.weights.T)
 
         return self.input_grad
+
 
     def update_params(self, learning_rate=1.0):
         # Update parameters using Stochastic Gradient Descent.
@@ -94,7 +97,7 @@ class SpamClassifier:
         if is_training_data:
             dataset_filename = 'training_spam.csv'
         else:
-            dataset_filename = 'test_spam.csv'
+            dataset_filename = 'testing_spam.csv'
 
         dataset_relative_path = f'./data/{dataset_filename}'
 
@@ -135,7 +138,7 @@ class SpamClassifier:
     def train(self):
         self.populate_features_and_labels(True)
         num_of_inputs = np.shape(self.features_data)[1]
-        learning_rate = 0.01
+        learning_rate = 0.03
 
         hidden_layer_1 = Layer(num_of_inputs, 32)
         activation_function_1 = ActivationFunction(False)
@@ -154,8 +157,7 @@ class SpamClassifier:
             total_correct = 0
             total_samples = 0
 
-            for features_data_batch, labels_data_batch in self.generate_batches_of_size(25):
-
+            for features_data_batch, labels_data_batch in self.generate_batches_of_size(50):
                 # Forward pass.
                 output1 = hidden_layer_1.forward_pass(features_data_batch)
                 activated_output1 = activation_function_1.forward_pass(output1)
@@ -208,15 +210,72 @@ class SpamClassifier:
                 # print(f'({epoch}) min prediction: {np.min(predictions)}')
                 print('='*80+'\n')
 
+        layers = [hidden_layer_1, hidden_layer_2, output_layer]
+        self.save_model(layers, 'spam_classifier_weights.npz')
+        print('Model parameters saved successfully.\n')
 
-    def predict(self, data):
+
+    @staticmethod
+    def save_model(layers, filename='model.npz'):
+        # Preparing a dictionary to hold data with explicit keys
+        data_dict = {}
+        for i, layer in enumerate(layers):
+            data_dict[f'weights_{i}'] = layer.weights
+            data_dict[f'biases_{i}'] = layer.biases
+        np.savez(filename, **data_dict)
+
+
+    @staticmethod
+    def load_model(layers, filename='model.npz'):
+        data = np.load(filename)
+        for i, layer in enumerate(layers):
+            layer.weights = data[f'weights_{i}']
+            layer.biases = data[f'biases_{i}']
+
+
+    def predict(self):
         self.populate_features_and_labels(False)
-        return np.zeros(data.shape[0])
+        num_of_inputs = np.shape(self.features_data)[1]
 
+        hidden_layer_1 = Layer(num_of_inputs, 32)
+        activation_function_1 = ActivationFunction(False)
+
+        # Assuming the previous layer has 32 neurons.
+        hidden_layer_2 = Layer(32, 16)  
+        activation_function_2 = ActivationFunction(False)
+        
+        # Output layer for binary classification.
+        output_layer = Layer(16, 1)  
+        activation_function_output = ActivationFunction(True)
+
+        layers = [hidden_layer_1, hidden_layer_2, output_layer] 
+        self.load_model(layers, 'spam_classifier_weights.npz')
+
+        print('Model parameters loaded successfully.\nTesting...')
+
+        layers = [hidden_layer_1, activation_function_1, hidden_layer_2, activation_function_2, output_layer, activation_function_output]
+        inputs = self.features_data
+        for layer in layers:
+            inputs = layer.forward_pass(inputs)
+        print('Done.\n')
+
+        loss = MeanSquaredErrorLoss().forward_pass(inputs, self.labels_data)
+
+        predicted_labels = (inputs > 0.5).astype(int)
+        correct_predictions = (predicted_labels == self.labels_data.reshape(-1, 1)).sum()
+        accuracy = correct_predictions / len(self.labels_data)
+
+
+        print(f'Loss: {loss}')
+        print(f'Accuracy: {accuracy*100}%')
+
+        print(f'Max: {max(inputs)}')
+        print(f'Min: {min(inputs)}')
     
 def create_classifier():
     classifier = SpamClassifier(k=1)
     classifier.train()
+    classifier.predict()
     return classifier
 
 
