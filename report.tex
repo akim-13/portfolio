@@ -804,16 +804,163 @@ Below is the outcome of the testing of the --------- feature:
 
 \section{Reflection and Conclusion (4 pages)}
 
-This section should include two main sections:
+With our PI system now complete and the specified requirements met, we can 
+reflect on the merits and failures of the system and our approach to it. To do 
+this we will critically analyse the way our system was designed and specified, 
+as well as the approach we followed during development. By doing this we will 
+be able to conclude as to the success of this project as a whole, consider 
+future alterations to our system and analyse ways in which our approach could 
+be improved. Learning from this, we will be able to develop systems more 
+successfully in the future. Unfortunately, due to the deadline for the 
+completion of our  project, we will not be able to try using our system for a 
+significant period of time in order to properly gauge how well it works from 
+a user's perspective but, we can still evaluate it from a critical viewpoint 
+and make educated speculations about its effectiveness.\par
 
-A critique of your software system’s requirements specification, design and
-testing, including what might be improved and why you feel it would be better
-with these changes.
+\subsection{System Development}
+The creation the specification for our system began with research to establish 
+the interests of our target demographic. The biggest parts of this research 
+were an online form distributed to our peers and some interviews. The results 
+of these were very helpful and were the driving force behind our choice of 
+tracking metrics. However, while this approach was sound and successful in 
+gathering information, only around twenty individuals filled in the form and 
+we only managed to interview two individuals. This is a large enough number of 
+people that we feel comfortable with using the results as a guide, especially 
+given the clear majority in the opinions of the form respondents. However, in 
+future, ensuring a larger sample size would improve the reliability of our 
+results and, at the very least, make us more certain in our decisions.\par
 
-A critical reflection on the group’s software process, including evidence of
-Agility in your software process, evidence of having evolved your requirements
-to reflect changes in understanding of problem and viability of designs.
+Our choice of tracking metrics was informed both by data gathering and by 
+research into other PI systems. This meant that our final list of four metrics 
+reflected the desires of our peers, as well as our informed opinions on the 
+most beneficial choices. On reflection, these four metrics still seem to 
+provide an excellent and balanced summary of an individual's physical and 
+mental health in a way that appears likely to provide useful insights and 
+achievable targets. We are therefore confident that our choice of metrics is 
+sound. However, due to the variety of research responses, especially from the 
+interviewees, it was not possible to take the views of every individual into 
+account; there were a few features suggested during the interviews which were 
+not added to the specification, either due to the need to limit the scope of 
+the system or because they didn't align with the conclusions of other 
+respondents or with our research. In future, looking back on this research or 
+through conducting more thorough research, we could implement extra features 
+over a longer period if a consensus was reached among requests.\par
 
+One key requirement we specified for our system, which is a very important 
+feature of any PI system, was the ability to log data. This specification was 
+clearly met, with the user able to log their progress in all four metrics. The 
+manual data entry process is also very simple and intuitive, with very little 
+room for confusion. By implementing it in this way we have made the data entry 
+aspect of our PI system as effortless as possible, thereby making the use of 
+our system more pleasant for the user. The system also has the ability to use 
+the Fitbit API to gather data, as specified in the requirements. While this 
+does work well and fulfils the requirements, Fitbit refresh API tokens on a 
+regular basis. This means that users are regularly required to re-enter their 
+Fitbit API token for our system to gather their data, reducing the benefits of 
+the automated tracking. In future, it would be beneficial to look into 
+avoiding this problem so that the effort required on the part of the user is 
+minimised. Avoiding this is presumably possible as the Fitbit mobile app is 
+reportedly built using this API and does not require repeated token entry from 
+users.\par
+
+Another important PI feature which our specification detailed was the 
+intuitive display of user data and progress. This requirement was successfully 
+met through the use of a software library specialising in graphs. Using this, 
+aesthetic, interactive and detailed graphs for chosen metrics were produced, 
+giving users insight into health variations in their lifestyle. A possible 
+area for improvement in this section would be the highlighting of particularly 
+healthy periods of time to motivate the user, as this has been shown to promote 
+positive reflection (Loerakker et al., 2023). However, the functionality of 
+this feature certainly meets the requirements we set out.\par
+
+The principal other feature our specification required was the inclusion of 
+goals and achievements. This was also successfully implemented and provides 
+an effective way to track progress towards goals and to provide motivation, 
+making it a worthwhile part of the specification and the system. In future, 
+however, a possible improvement would be the ability to see other users' 
+achievements within the application. Of course, successes can be compared by 
+the sharing of screenshots or in-person demonstration but a built-in system 
+would make this easier and could help spread word of the system to more 
+students who might find it useful. Additionally, the ability to have multiple 
+goals per activity could be beneficial for some users. For example those who 
+would like to have a short-term goal and a longer term goal.\par
+
+The database our system uses is designed to conform with third normal form 
+and works effectively within our program to allow the storage and retrieval 
+of user data. Additionally, the generalised design aids the future development 
+of our program; the addition of new metrics or multiple users does not require 
+any new tables or alterations to the database design, only a new record in one 
+table. We are therefore content with the maintainability and design of the 
+database. Furthermore, our class design closely mirrors this design and is 
+therefore equally well placed for future development.\par
+
+As per our specification, the PI system is a locally-run PC application. This 
+is beneficial to users when it comes to the viewing of the graphical statistics 
+provided by the program as the majority of computers running the program will 
+likely have a larger screen than a tablet or smartphone. However, it also 
+requires that users log data using a large device. This could become quite 
+burdensome, especially when away from home, because of the requirement for a 
+laptop running the system. Given the widespread use of smartphones which are 
+often carried almost everywhere, a future improvement to our system would be 
+to allow the tracking of data on mobile devices, making the process much more 
+portable and accessible.\par
+
+Our approach to the test-driven development of our system worked well in 
+practice, with developers finding most of the bugs in their own code during 
+testing and the finished product working effectively with no known issues. By 
+using white-box testing the developers were able to apply tests based on their 
+in-depth knowledge of the processes involved, thereby anticipating problems 
+others would not. However, on one occasion, a bug went unnoticed by the initial 
+testing and was only picked up by the product owner. This implies that, in 
+future, a combination of white-box and black-box testing might prove to be more 
+robust due to the diverse perspectives provided by group work.\par  
+
+\subsection{Software Process}
+To develop this product we followed the Scrum framework and the Agile 
+methodology of software development with the aim of allowing us to structure 
+and manage the creation of the system in an effective and methodical way. We 
+managed to complete five week-long sprints during the development process with 
+the sprint backlog successfully cleared during the majority of the sprints and 
+almost cleared during the rest.  This process definitely helped us to keep 
+track of our progress in comparison with the specification and kept us to an 
+efficient schedule which kept development moving at a sensible pace. It also 
+allowed the system requirements to evolve during development, leading to a 
+better final product overall.\par
+
+One way in which we could have improved our adherence to the Scrum framework 
+would have been the inclusion of more frequent Scrum meetings. During our 
+sprints, frequent Scrum meetings were held to discuss progress but they did 
+not always occur on a daily basis. Holding daily scrum meetings would have 
+been impossible given our busy and clashing schedules, especially during 
+the Easter Break when developers had significant plans outside of work. 
+However, more Scrum meetings could have been held on occasion and may have 
+improved communication and understanding within the group.\par
+
+A notable way the Agile methodology allowed us to evolve our requirements 
+was in the design of the system's database. In a sprint planning session 
+part way through the development process, it was realised that our database 
+could be made more efficient by replacing individual tables for each metric 
+with a table listing metrics, thus creating a bridging table. The product 
+backlog was updated to include this new design and the change was implemented 
+as part of the sprint that followed, making the database more efficient.\par
+
+A part of the process that worked particularly efficiently in our group was 
+the sprint planning weekly meetings. By having a member of the team run the 
+meetings, and through open communication, we managed to always ensure that 
+every member of the team had something to do and could work on them 
+effectively during the sprint so that the group as a whole produced 
+meaningful results during the sprint and finished the project before 
+the deadline.\par
+
+\subsection{Conclusion}
+In conclusion, through carefully considered design and adherence to Agile 
+methods, we managed to successfully produce a working PI system in an 
+organised way. We believe that this system is intuitive, informative and 
+robust. Furthermore, our approach to testing and development was very 
+effective. Therefore, the development of this system has primarily been a 
+success. However, there are areas in which the system itself could be 
+improved in future to increase ease of use. The development and testing 
+could also be improved by approaching them more collaboratively.\par
 
 \section{References}
 
