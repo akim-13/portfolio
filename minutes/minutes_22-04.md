@@ -1,7 +1,7 @@
 # Attendance
 - Taking attendance.
 
-## Progress Review and Next Sprint (22/04 — 29/04)
+## Progress Review and Final Sprint (22/04 — 03/05)
 ### Code
 - Ollie has finished the **Graphs** except for the Work part, which has not been fully implemented yet by James.
 
