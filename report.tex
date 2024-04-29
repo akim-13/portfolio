@@ -6,6 +6,7 @@
 \usepackage{titlesec}
 \usepackage{url}
 \usepackage{graphicx}
+\usepackage{subcaption}
 
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
@@ -434,6 +435,7 @@ data relationships and is critical in guiding the development process to ensure
 the system meets both functional and non-functional requirements
 effectively.\par
 
+
 \begin{figure}[!ht]
   \centering
   \includegraphics[width = \linewidth]{PI Systems Database}
@@ -453,13 +455,15 @@ Figure \ref{fig:PI_ERD} describes the following components:
         detailed recording and analysis of user accomplishments across
         different activities and timeframes. It enables the system to provide
         feedback and insights based on historical achievement data, supporting
-        motivational features such as goal setting and progress tracking. This class aimed to adhere specifically to SRQ 7.4, yet it also contributes to SRQ 7.1.\par
+        motivational features such as goal setting and progress tracking. This 
+        class aimed to adhere specifically to SRQ 7.4, yet it also contributes to SRQ 7.1.\par
 
     \item \texttt{UserStep} Class: Dedicated to tracking the physical activity
         of steps taken, this class includes attributes such as Username, Date,
         and Value. By recording daily step counts, the UserStep class feeds
         into the system’s health monitoring and fitness tracking capabilities,
-        allowing users to set and monitor physical activity goals. As the data can also be inserted though an API, this class aimes to cover ARQ 5.4.\par
+        allowing users to set and monitor physical activity goals. As the data 
+        can also be inserted though an API, this class aimes to cover ARQ 5.4.\par
 
     \item \texttt{UserSleep} Class: Focusing on sleep habits, this class
         records the duration of sleep per day for each user with attributes
@@ -486,7 +490,8 @@ Figure \ref{fig:PI_ERD} describes the following components:
         With attributes like Username, ActivityID, TimeFrameID, Date, and
         Value, this class supports the setting and monitoring of personalized
         goals, enhancing the system's capability to drive user engagement and
-        encourage behavior modification. UserGoals covers requierments such as SQR 7.1, 7.2 and 7.3.\par
+        encourage behavior modification. UserGoals covers requierments such as 
+        SQR 7.1, 7.2 and 7.3.\par
 
 \end{itemize}
 
@@ -594,9 +599,117 @@ for all user data. This structure ensures seamless data flow across the system,
 fulfilling functional and non-functional requirements, and enhancing overall
 user interaction.\par
 
+\subsection{UI design}
+
+This section outlines the design of the user interface (UI) for our Personal 
+Informatics system, focusing on creating an intuitive and engaging user experience.
+We aim to bridge the gap between the system's technical capabilities and the user's
+needs through a well-thought-out interface. The UI design is crafted to facilitate 
+easy navigation and interaction, ensuring that users can efficiently manage and 
+track their personal data. Here, we discuss the guiding principles of our UI design
+and how they enhance usability and user engagement.\par
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width = \linewidth]{Main Menu}
+  \caption{This is the Main Menu of the application}
+  \label{fig:Menu}
+\end{figure}
+
+Figure \ref{fig:Menu} illustrates the main menu of our application. Positioned in the top left
+corner of the screen, the label "Menu" accompanied by a small computer icon indicates
+to the user that they are currently viewing the main menu. The background of the 
+entire menu is a dark blue, a color choice designed to minimize eye strain during 
+prolonged use of the app.\par
+
+The main menu features four prominent buttons, each corresponding to the core 
+functionalities of the Personal Informatics system: steps, work, sleep, and water.
+Additionally, two smaller green buttons provide access to sub-functionalities, 
+specifically graphs and achievements. Each of the four larger buttons displays 
+the type of statistic it relates to, with today's data (or the previous night's
+for sleep hours) shown in smaller font size directly below.\par
+
+A unique aspect of the design is a small white checkbox located in the top left 
+corner of each button. These boxes are marked when a user completes related 
+achievements. In Figure \ref{fig:Menu}, all statistics are shown as zero, indicating
+that no achievements have been met, and thus, the checkboxes remain unticked.\par
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width = \linewidth]{Work Screen}
+    \caption{Work Section Interface}
+    \label{fig:Work}
+  \end{subfigure}
+  \hfill
+
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width = \linewidth]{Steps Screen}
+    \caption{Steps Section Interface}
+    \label{fig:Steps}
+  \end{subfigure}
+  \hfill
+
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width = \linewidth]{Water Screen}
+    \caption{Water Section Interface}
+    \label{fig:Water}
+  \end{subfigure}
+  \hfill
+
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width = \linewidth]{Sleep Screen}
+    \caption{Sleep Section Interface}
+    \label{fig:Sleep}
+  \end{subfigure}
+
+  \caption{Main Functionalities Interface}
+  \label{fig:Main}
+\end{figure}
+
+Figure \ref{fig:Main} displays the four main functionality screen, which is designed
+to be simpler and more focused compared to the main menu. In the top left corner, a 
+dark green "BACK" button allows users to easily return to the main menu.\par 
+
+We can clearly see from figure \ref{fig:Work} that the heading "WORK" is prominently 
+displayed at the top of the screen, accompanied by a book icon to visually represent 
+the category. Centered on the screen is a large green box that tracks and displays the
+user's progress on their weekly achievement goals. Under the heading "Progress for goal
+this Week" of the box, the interface shows the amount of work completed and the specific
+day of the week the goal was set. This box can be closed using the small red "x" button
+located at its top right corner, providing a way to dismiss the details if desired.
+Directly below this display, there is an input bar where users can "Add new work" they 
+have completed that day. Adjacent to this bar, a plus button facilitates the addition 
+of the entered data, allowing users to easily update their daily work achievements.\par
+
+Figure \ref{fig:Steps} presents the steps interface, which maintains a consistent design
+with the work screen but introduces several specific modifications. The heading "Step" is
+displayed at the top of the screen, distinguished by a shoe icon next to it, replacing the
+book symbol used in the work interface. A notable difference in layout is the placement of
+the progress box, which is positioned below the input bars rather than above. This adjustment
+allows for immediate and easy data entry upon accessing the screen. Additionally, a new input
+bar for inserting an API token has been added to facilitate the integration of step data from
+external devices or services. Directly next to the API token input bar are "Connect" and 
+"Update" buttons. The "Connect" button is used for verifying the API token, while the "Update"
+button adjacent to the Step input bar enables users to refresh and submit their step count 
+data. Any incorrect format in the input will trigger an error message, as illustrated in 
+figure \ref{fig:Error}, ensuring users are aware of input specifications and can correct their entries accordingly.\par
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width = \linewidth]{Error}
+  \caption{Error inserting wrong API Token format}
+  \label{fig:Error}
+\end{figure}
+
+
+  
+
+
+
 \subsection{Design justification} 
 
-Like scpecified in a stage-based model of PI systems (Li, Ian; Dey, Anind;
+Like specified in a stage-based model of PI systems (Li, Ian; Dey, Anind;
 Forlizzi, Jodi.  2010), there are many factors that a PI system should be
 tailored towards to assure a constant interaction between the system and its
 users.  Our design was vagely tailores \textbf{[FIXME]} towards the 5 stages
