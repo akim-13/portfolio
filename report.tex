@@ -695,13 +695,7 @@ with the work screen but introduces several specific modifications. The heading 
 displayed at the top of the screen, distinguished by a shoe icon next to it, replacing the
 book symbol used in the work interface. A notable difference in layout is the placement of
 the progress box, which is positioned below the input bars rather than above. This adjustment
-allows for immediate and easy data entry upon accessing the screen. Additionally, a new input
-bar for inserting an API token has been added to facilitate the integration of step data from
-external devices or services. Directly next to the API token input bar are "Connect" and 
-"Update" buttons. The "Connect" button is used for verifying the API token, while the "Update"
-button adjacent to the Step input bar enables users to refresh and submit their step count 
-data. Any incorrect format in the input will trigger an error message, as illustrated in 
-figure \ref{fig:Error}, ensuring users are aware of input specifications and can correct their entries accordingly.\par
+allows for immediate and easy data entry upon accessing the screen.\par
 
 \begin{figure}[h!]
   \centering
@@ -710,10 +704,84 @@ figure \ref{fig:Error}, ensuring users are aware of input specifications and can
   \label{fig:Error}
 \end{figure}
 
+Additionally, a new input bar for inserting an API token has been added to facilitate the integration of step data from
+external devices or services. Directly next to the API token input bar are "Connect" and 
+"Update" buttons. The "Connect" button is used for verifying the API token, while the "Update"
+button adjacent to the Step input bar enables users to refresh and submit their step count 
+data. Any incorrect format in the input will trigger an error message, as illustrated in 
+figure \ref{fig:Error}, ensuring users are aware of input specifications and can correct their entries accordingly.\par
 
-  
+Figures \ref{fig:Water} and \ref{fig:Sleep} illustrate the design of the Water and Sleep screens,
+respectively, which are consistent in layout with the other main functionalities of the app. 
+Both screens feature a "BACK" button in the top left corner for easy navigation. The Water 
+screen is identified by a heading labeled "Water" accompanied by a water drop icon, and the
+Sleep screen is marked by a heading labeled "Sleep" adorned with a "zzz" icon. Each screen 
+includes an input bar for users to enter their respective data values easily.\par
 
+In Figure \ref{fig:Water}, showcasing the Water functionality, the progress box is displayed
+upon achieving a set goal. It prominently features the message "Goal Completed!" in bold 
+golden text, accompanied by a congratulatory message that also specifies the goal achieved.
+This positive reinforcement is designed to motivate users and acknowledge their accomplishments.\par
 
+Conversely, Figure \ref{fig:Sleep} details the Sleep functionality when a goal is not met.
+The progress box in this scenario displays a bold, golden headline "Goal Not Completed" at
+the top. Below this heading, the screen informs users of the shortfall, specifying the 
+amount needed to achieve the goal. In the depicted example, it indicates that the user 
+was 20 hours short of reaching the weekly sleep goal. This feedback is intended to 
+encourage users to adjust their habits to meet their sleep targets in the future.\par
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width = \linewidth]{Graphs Screen}
+    \caption{Graphs Section Interface}
+    \label{fig:Graphs}
+  \end{subfigure}
+  \hfill
+
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width = \linewidth]{Achievement Screen}
+    \caption{Achievements Section Interface}
+    \label{fig:Achievements}
+  \end{subfigure}
+
+  \caption{2 other functionalities}
+  \label{fig:subfunc}
+\end{figure}
+
+Figure \ref{fig:Graphs} showcases the Graph interface of the application, which is
+designed to provide a visual representation of user data over time. The screen 
+includes a "BACK" button located at the top left corner, allowing users to easily
+navigate back to the main menu. The heading "Graphs," marked with a small graph icon,
+indicates the functionality of the interface.\par
+
+The main feature of this interface is a large line graph, titled at the top to specify
+the type of data being displayed. Users have the flexibility to select the timeline 
+for the graph, ranging from a day to a year, with the current example set to display
+data over a year. The timeline is plotted on the horizontal axis, while the specific
+metrics related to the user’s activities are displayed along the vertical axis. The 
+graph utilizes a light blue line on a gridded white background, enhancing readability
+and making it easier for users to interpret their data trends.\par
+
+Figure \ref{fig:Achievements} presents the Achievements interface, which aims to motivate
+and inform users about their progress in meeting set goals. Similar to other interfaces,
+it includes a "BACK" button at the top left for returning to the main menu and is labeled
+with the heading "Achievements," accompanied by a medal icon to symbolize success and recognition.\par
+
+The interface is divided into two main sections. On the left, a box at the top displays
+the number of achievements completed within the week, indicated as "0/4" in this example,
+suggesting no goals have been met yet. Below this summary, four boxes represent the 
+achievements tied to the four main functionalities of the system (steps, work, sleep, and
+water). Each box includes a white checkbox that is ticked off when the corresponding daily
+goal is achieved.\par
+
+On the right half of the screen, a white text box provides a summary of the total activities
+completed for each functionality during the week, assisting users in tracking their weekly
+progress. Additionally, a streak counter is placed above the activity summaries, encouraging
+users to consistently meet their daily goals and build long-term habits.\par
+
+Together, these interfaces support the app’s objective to engage users actively in tracking
+their progress and achieving their health and productivity goals.\par
 
 \subsection{Design justification} 
 
