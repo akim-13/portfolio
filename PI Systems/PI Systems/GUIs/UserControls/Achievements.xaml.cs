@@ -1,9 +1,6 @@
-using System;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Windows.Networking.Connectivity;
 
 namespace PI_Systems.GUIs.UserControls
 {
@@ -53,10 +50,10 @@ namespace PI_Systems.GUIs.UserControls
             getAchWork = Database.Instance.GetStringDataToday("UserWork");
             float achWork = float.Parse(getAchWork);
 
-            float totalWater = 0;
-            int totalSteps = 0;
-            float totalWork = 0;
-            float totalSleep = 0;
+            Achievement1.Fill = Brushes.Gray;
+            Achievement2.Fill = Brushes.Gray;
+            Achievement3.Fill = Brushes.Gray;
+            Achievement4.Fill = Brushes.Gray;
 
             achievementCounter = 0;
             if (achSleep >= 8)
@@ -69,7 +66,7 @@ namespace PI_Systems.GUIs.UserControls
                 Achievement2.Fill = Brushes.GreenYellow;
                 achievementCounter++;
             }
-            if (achStep >= 60000)
+            if (achStep >= 5000)
             {
                 Achievement3.Fill = Brushes.GreenYellow;
                 achievementCounter++;
@@ -89,10 +86,10 @@ namespace PI_Systems.GUIs.UserControls
                 currentStreak = 0;
             }
 
-            totalSleep = Database.Instance.sumOfData("UserSleep");
-            totalWork = Database.Instance.sumOfData("UserWork");
-            totalSteps = Database.Instance.sumOfData("UserSteps");
-            totalWater = Database.Instance.sumOfData("UserWater");
+            float totalSleep = Database.Instance.sumOfData("UserSleep");
+            float totalWork = Database.Instance.sumOfData("UserWork");
+            int totalSteps = Database.Instance.sumOfData("UserSteps");
+            float totalWater = Database.Instance.sumOfData("UserWater");
 
 
             achievementMessage += $"You slept for {totalSleep} hours in total!\n";
