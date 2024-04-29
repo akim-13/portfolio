@@ -279,7 +279,7 @@ namespace PI_Systems.GUIs.UserControls
                 {
                     stepsline.LineSmoothness = 0;
                     stepsline.Title = "Steps (1000)";
-                   if (stepsonly) { stepsline.Title = "Steps"; }
+                    if (stepsonly) { stepsline.Title = "Steps"; }
                     stepsline.Values = new ChartValues<double> { };
                     series.Add(stepsline);
                 }
@@ -297,7 +297,7 @@ namespace PI_Systems.GUIs.UserControls
                     workline.Title = "Work";
                     workline.LabelPoint = point => $"{point.Y:N1}";// Multiply Y value by 1000 and format to 2 decimal places
                     workline.Values = new ChartValues<double> { };
-                    series.Add(waterline);
+                    series.Add(workline);
                 }
 
                 for (int loop = 0; loop <= 11; loop++)
@@ -357,7 +357,7 @@ namespace PI_Systems.GUIs.UserControls
                             avg += (dataList[loop2].Value);
                         }
                         avg = avg / dataList.Count;
-                        waterline.Values.Add(avg);
+                        workline.Values.Add(avg);
                     }
                     double max = 10;
                     foreach (var line in series)
