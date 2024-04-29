@@ -453,13 +453,13 @@ Figure \ref{fig:PI_ERD} describes the following components:
         detailed recording and analysis of user accomplishments across
         different activities and timeframes. It enables the system to provide
         feedback and insights based on historical achievement data, supporting
-        motivational features such as goal setting and progress tracking.\par
+        motivational features such as goal setting and progress tracking. This class aimed to adhere specifically to SRQ 7.4, yet it also contributes to SRQ 7.1.\par
 
     \item \texttt{UserStep} Class: Dedicated to tracking the physical activity
         of steps taken, this class includes attributes such as Username, Date,
         and Value. By recording daily step counts, the UserStep class feeds
         into the system’s health monitoring and fitness tracking capabilities,
-        allowing users to set and monitor physical activity goals.\par
+        allowing users to set and monitor physical activity goals. As the data can also be inserted though an API, this class aimes to cover ARQ 5.4.\par
 
     \item \texttt{UserSleep} Class: Focusing on sleep habits, this class
         records the duration of sleep per day for each user with attributes
@@ -486,9 +486,11 @@ Figure \ref{fig:PI_ERD} describes the following components:
         With attributes like Username, ActivityID, TimeFrameID, Date, and
         Value, this class supports the setting and monitoring of personalized
         goals, enhancing the system's capability to drive user engagement and
-        encourage behavior modification.\par
+        encourage behavior modification. UserGoals covers requierments such as SQR 7.1, 7.2 and 7.3.\par
 
 \end{itemize}
+
+UserStep, UserSleep, UserWork anf UserWater are all aimed to satisfy ARQ 5.5 and SRQ 5.1, 5.2 and 5.3.
 
 \begin{figure}[!ht]
   \centering
@@ -510,7 +512,7 @@ tracked by the system. Ultimately, the requirement for a multi-user
 system was omitted due to limitations in the allocated time frame.
 However, the underlying database architecture has been deliberately
 designed to facilitate the seamless integration of multi-user
-capabilities, should they be developed in the future.
+capabilities, should they be developed in the future. This class covers ARQ 5.6.
 
 \subsection{UML Class diagram}
 
@@ -539,7 +541,7 @@ like GetUserActivities() and GetUserActivityAt() fetch activity data for users,
 crucial for generating reports and insights. Utility methods including
 GetStringDataToday(), GetUserGoal(), and DeleteUserGoal() provide additional
 functionality for managing daily data strings and user goals, enhancing the
-system’s responsiveness to user interactions.\par
+system’s responsiveness to user interactions. These methods where essential for SRQ 6.1 and 6.2, as well as directly adhering to SRQ 5.1 and 5.2. \par
 
 The ActivityDayInput and GoalInput classes, both inheriting from UserControl,
 are specifically designed for handling the input and update functionalities
@@ -557,7 +559,7 @@ activity type specifications tailored towards user goals. It features
 goal-specific functionalities such as DisplayGoal() for visualizing set goals,
 GetSumData() for data aggregation, and \texttt{DeleteGoalButton_Click()} for goal
 modification. It inherits text handling and initialization methods from
-ActivityDayInput, ensuring a consistent and user-friendly interface.\par
+ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst ActivityDayInput stand mainly by SQR 6.1 and 5.1, GoalInput follows SQR 7.1, 7.2 and 7.3.\par
 
 \newpage
 \subsection{UML Flow diagram}
