@@ -7,9 +7,16 @@
              xmlns:lc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
             <huc:TitleAndBack Title="Graphs 📈"/>
+        </Grid>
+        <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <Label Name="label" Content="" Foreground="Wheat" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
                 <ComboBox x:Name="step_goal_timeframe" Width="75" Background="{x:Null}" Height="25" SelectedIndex="0" FontFamily="Cascadia Code" FontSize="16" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="7,0,20,0" SelectionChanged="GoalTimeframe_Changed" Foreground="Black">
@@ -19,7 +26,9 @@
                     <ComboBoxItem FontFamily="Cascadia Code" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">year</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
-            <lc:CartesianChart Margin="10" Height="310" x:Name="LineGraph" LegendLocation="Top">
+            </Grid>
+        <Grid Grid.Row="2">
+            <lc:CartesianChart Margin="10" x:Name="LineGraph" LegendLocation="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <lc:CartesianChart.AxisX>
                     <lc:Axis MaxValue="12"></lc:Axis>
                 </lc:CartesianChart.AxisX>
@@ -29,10 +38,7 @@
                     <lc:LineSeries x:Name="WorkLine" Values ="" LineSmoothness ="0"  Title="Work" Visibility="Hidden"/>
                     <lc:LineSeries x:Name="WaterLine" Values ="" LineSmoothness ="0" Title="Water" Visibility="Hidden"/>
                 </lc:CartesianChart.Series>
-
-                
             </lc:CartesianChart>
-        </StackPanel>
-
+        </Grid>
     </Grid>
 </UserControl>

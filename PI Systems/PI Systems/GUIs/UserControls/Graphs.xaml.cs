@@ -24,12 +24,12 @@ namespace PI_Systems.GUIs.UserControls
     {
         ActivityType[] activities;
         List<LineSeries> ActiveLines = new List<LineSeries>(); // tuple???????
+        bool stepsonly = false;
         public Graphs(params CheckBox[] checkBoxes)
         {
             InitializeComponent();
 
             //Ollie: Setting up stuff for the graph such as xAxis and COlour of legend
-            
 
             activities = checkBoxes.Where(c => c.IsChecked == true).Select(c => (ActivityType)c.Tag).ToArray();
             string outputList = activities.Length == 0 ? "Nothing" : string.Join(", ", activities);
@@ -54,7 +54,7 @@ namespace PI_Systems.GUIs.UserControls
             if (outputList.Contains("Work"))
             {
                 WorkLine.Visibility = System.Windows.Visibility.Visible;
-                //ActiveLines.Add((WorkLine, typeof(UserWork)));
+                ActiveLines.Add(WorkLine);
             }
             if (outputList == "Nothing")
             {
@@ -72,22 +72,35 @@ namespace PI_Systems.GUIs.UserControls
             Axis axisX = (Axis)LineGraph.AxisX[0];
             axisX.MaxValue = 1;
             axisX.Separator.Step = 1;
+            if (ActiveLines.Count == 1 && ActiveLines.Contains(StepsLine))
+            {
+                stepsonly = true;
+            }
+            GenerateValues(DateTime.Now.AddDays(-1).Date, DateTime.Now.Date, ActiveLines);
+        }
+        private void RefreshYAxis(int max)
+        {
+            int multiplier = 1;
+            if (stepsonly) { multiplier = 1000; }
             LineGraph.AxisY.Clear();
             DataContext = this;
+            List<String> newlabels = new List<String>();
+            for (int loop = 0; loop < (max + 2) * multiplier;)
+            {
+                newlabels.Add(loop.ToString());
+                loop += multiplier;
+            }
             LineGraph.AxisY.Add(new Axis
             {
-                Labels = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" },
+                Labels = newlabels,
                 MinValue = 0
-            }); 
+            });
 
             Axis axisY = (Axis)LineGraph.AxisY[0];
-            axisY.MaxValue = 10;
+            axisY.MaxValue = max + 1;
             axisY.Separator.Step = 1;
             LineGraph.Update(true);
-
-            GenerateValues(DateTime.Now.AddDays(-1).Date,DateTime.Now.Date, ActiveLines);
         }
-
         private void GenerateValues(DateTime StartTimeFrame, DateTime EndTimeFrame, List<LineSeries> ActiveLines)
         {
             SeriesCollection series = new SeriesCollection();
@@ -97,74 +110,96 @@ namespace PI_Systems.GUIs.UserControls
             LineSeries stepsline = new LineSeries();
 
             // Sort the list by Date
-                this.LineGraph.Series.Clear();
-                if (ActiveLines.Contains(SleepLine))
-                {
-                    sleepline.LineSmoothness = 0;
-                    sleepline.Title = "Sleep";
-                    var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserSleep");
-                    var dataList = Data.ToList();
-                    dataList = dataList.OrderBy(d => d.Date).ToList();
-                    List<float> values = new List<float>();
-                    for (int loop = 0; loop < dataList.Count; loop++)
-                    {
-                        values.Add(dataList[loop].Value);
-                    }
-                    IChartValues list = new ChartValues<float>(values);
-                    sleepline.Values = list;
-                    series.Add(sleepline);
-                }
-                if (ActiveLines.Contains(StepsLine))
-                {
-                    stepsline.LineSmoothness = 0;
-                    stepsline.Title = "Steps (1000)";
-                    var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserSteps");
-                    var dataList = Data.ToList();
-                    dataList = dataList.OrderBy(d => d.Date).ToList();
-                    List<float> values = new List<float>();
-                    for (int loop = 0; loop < dataList.Count; loop++)
-                    {
-                        values.Add(dataList[loop].Value / 1000);
-                    }
-                    IChartValues list = new ChartValues<float>(values);
-                    stepsline.Values = list;
-                    series.Add(stepsline);
-                }
-                if (ActiveLines.Contains(WaterLine))
-                {
-                    waterline.LineSmoothness = 0;
-                    waterline.Title = "Water";
-                    var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserWater");
-                    var dataList = Data.ToList();
-                    dataList = dataList.OrderBy(d => d.Date).ToList();
-                    List<float> values = new List<float>();
-                    for (int loop = 0; loop < dataList.Count; loop++)
-                    {
-                        values.Add(dataList[loop].Value);
-                    }
-                    IChartValues list = new ChartValues<float>(values);
-                    waterline.Values = (list);
-                    series.Add(waterline);
-                }
-                LineGraph.Series = series;
-       
-            
-            /*
-            if (ActiveLines.Contains(WorkLine))
+            this.LineGraph.Series.Clear();
+            if (ActiveLines.Contains(SleepLine))
             {
-                WorkLine.Values.Clear();
-                var Data = Database.Instance.GetUserActivities<UserWork>(DateTime.Now.AddDays(TimeFrame).Date, DateTime.Now.Date);
-                float[] values = new float[Data.Length];
-                for (int loop2 = 0; loop2 < Data.Length; loop2++)
+                sleepline.LineSmoothness = 0;
+                sleepline.Title = "Sleep";
+                sleepline.LabelPoint = point => $"{point.Y:N1}";
+                var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserSleep");
+                var dataList = Data.ToList();
+                dataList = dataList.OrderBy(d => d.Date).ToList();
+                List<float> values = new List<float>();
+                for (int loop = 0; loop < dataList.Count; loop++)
                 {
-                    values[loop2] = Data[loop2].WorkDone??;
+                    values.Add(dataList[loop].Value);
                 }
                 IChartValues list = new ChartValues<float>(values);
-                WorkLine.Values = list;
-            }*/
+                sleepline.Values = list;
+                series.Add(sleepline);
+            }
+            if (ActiveLines.Contains(StepsLine))
+            {
+                stepsline.LineSmoothness = 0;
+                stepsline.Title = "Steps (1000)";
+                if (stepsonly) { stepsline.Title = "Steps"; }
+                var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserSteps");
+                var dataList = Data.ToList();
+                dataList = dataList.OrderBy(d => d.Date).ToList();
+                List<float> values = new List<float>();
+                for (int loop = 0; loop < dataList.Count; loop++)
+                {
+                    values.Add(dataList[loop].Value / 1000);
+                }
+                IChartValues list = new ChartValues<float>(values);
+                stepsline.Values = list;
+                series.Add(stepsline);
+            }
+            if (ActiveLines.Contains(WaterLine))
+            {
+                waterline.LineSmoothness = 0;
+                waterline.Title = "Water";
+                waterline.LabelPoint = point => $"{point.Y:N1}";// Multiply Y value by 1000 and format to 2 decimal places
+                var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserWater");
+                var dataList = Data.ToList();
+                dataList = dataList.OrderBy(d => d.Date).ToList();
+                List<float> values = new List<float>();
+                for (int loop = 0; loop < dataList.Count; loop++)
+                {
+                    values.Add(dataList[loop].Value);
+                }
+                IChartValues list = new ChartValues<float>(values);
+                waterline.Values = (list);
+                series.Add(waterline);
+            }
+            if (ActiveLines.Contains(WorkLine))
+            {
+                workline.LineSmoothness = 0;
+                workline.Title = "Work";
+                workline.LabelPoint = point => $"{point.Y:N1}";// Multiply Y value by 1000 and format to 2 decimal places
+                var Data = Database.Instance.GetUserActivities(StartTimeFrame, EndTimeFrame, "UserWork");
+                var dataList = Data.ToList();
+                dataList = dataList.OrderBy(d => d.Date).ToList();
+                List<float> values = new List<float>();
+                for (int loop = 0; loop < dataList.Count; loop++)
+                {
+                    values.Add(dataList[loop].Value);
+                }
+                IChartValues list = new ChartValues<float>(values);
+                workline.Values = (list);
+                series.Add(workline);
+            }
+            double max = 10;
+            foreach (var line in series)
+            {
+                foreach (var point in line.Values)
+                {
+                    if ((float)point > max)
+                    {
+                        max = (float)point;
+                    }
+                }
+            }
+
+            RefreshYAxis(Convert.ToInt32(max));
+
+
+            LineGraph.Series = series;
+
+
 
         }
-        
+
         private void GoalTimeframe_Changed(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
@@ -207,7 +242,7 @@ namespace PI_Systems.GUIs.UserControls
             else if (cbi.Content.ToString() == "month")
             {
                 xTitle = "Month";
-                DateTime startDate = new DateTime(DateTime.Now.Year,DateTime.Now.Month, 1);
+                DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 DateTime endDate = startDate.AddMonths(1).AddDays(-1);
                 xMaxval = endDate.Day - 1;
                 xLabels = new string[endDate.Day];
@@ -237,12 +272,14 @@ namespace PI_Systems.GUIs.UserControls
                     sleepline.LineSmoothness = 0;
                     sleepline.Title = "Sleep";
                     sleepline.Values = new ChartValues<double> { };
-                    series.Add(sleepline); 
+                    sleepline.LabelPoint = point => $"{point.Y:N1}";// Multiply Y value by 1000 and format to 2 decimal places
+                    series.Add(sleepline);
                 }
                 if (ActiveLines.Contains(StepsLine))
                 {
                     stepsline.LineSmoothness = 0;
                     stepsline.Title = "Steps (1000)";
+                   if (stepsonly) { stepsline.Title = "Steps"; }
                     stepsline.Values = new ChartValues<double> { };
                     series.Add(stepsline);
                 }
@@ -250,7 +287,16 @@ namespace PI_Systems.GUIs.UserControls
                 {
                     waterline.LineSmoothness = 0;
                     waterline.Title = "Water";
+                    waterline.LabelPoint = point => $"{point.Y:N1}";// Multiply Y value by 1000 and format to 2 decimal places
                     waterline.Values = new ChartValues<double> { };
+                    series.Add(waterline);
+                }
+                if (ActiveLines.Contains(WorkLine))
+                {
+                    workline.LineSmoothness = 0;
+                    workline.Title = "Work";
+                    workline.LabelPoint = point => $"{point.Y:N1}";// Multiply Y value by 1000 and format to 2 decimal places
+                    workline.Values = new ChartValues<double> { };
                     series.Add(waterline);
                 }
 
@@ -259,7 +305,7 @@ namespace PI_Systems.GUIs.UserControls
                     DateTime startDate = new DateTime(DateTime.Now.Year, loop + 1, 1);
                     // Finding the end date of the month
                     DateTime endDate = startDate.AddMonths(1).AddDays(-1);
-                    
+
                     // Sort the list by Date
                     if (ActiveLines.Contains(SleepLine))
                     {
@@ -300,6 +346,32 @@ namespace PI_Systems.GUIs.UserControls
                         avg = avg / dataList.Count;
                         waterline.Values.Add(avg);
                     }
+                    if (ActiveLines.Contains(WorkLine))
+                    {
+                        var Data = Database.Instance.GetUserActivities(startDate, endDate, "UserWork");
+                        var dataList = Data.ToList();
+                        dataList = dataList.OrderBy(d => d.Date).ToList();
+                        double avg = 0;
+                        for (int loop2 = 0; loop2 < dataList.Count; loop2++)
+                        {
+                            avg += (dataList[loop2].Value);
+                        }
+                        avg = avg / dataList.Count;
+                        waterline.Values.Add(avg);
+                    }
+                    double max = 10;
+                    foreach (var line in series)
+                    {
+                        foreach (var point in line.Values)
+                        {
+                            if ((double)point > max)
+                            {
+                                max = (double)point;
+                            }
+                        }
+                    }
+
+                    RefreshYAxis(Convert.ToInt32(max));
                     LineGraph.Series = series;
 
 
