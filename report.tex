@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+qa\documentclass[12pt]{article}
 
 % Packages
 \usepackage[hidelinks]{hyperref}
@@ -538,7 +538,7 @@ Figure \ref{fig:PI_ERD} describes the following components:
         and Value. By recording daily step counts, the UserStep class feeds
         into the system’s health monitoring and fitness tracking capabilities,
         allowing users to set and monitor physical activity goals. As the data 
-        can also be inserted though an API, this class aimes to cover ARQ 2\par
+        can also be inserted though an API, this class aimes to cover ARQ 2.\par
 
     \item \texttt{UserSleep} Class: Focusing on sleep habits, this class
         records the duration of sleep per day for each user with attributes
@@ -753,8 +753,35 @@ this Week"} of the box, the interface shows the amount of work completed and the
 day of the week the goal was set. This box can be closed using the small red \texttt{"x"} button
 located at its top right corner, providing a way to dismiss the details if desired.
 Directly below this display, there is an input bar where users can \texttt{"Add new work"} they 
-have completed that day. Adjacent to this bar, a plus button facilitates the addition 
-of the entered data, allowing users to easily update their daily work achievements.\par
+have completed that day. Adjacent to this bar, a plus button is the way to confirm the work
+users inserted and start to time it, allowing users to easily update their daily work achievements.\par
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width = \linewidth]{Add Work}
+    \caption{Add Work bar}
+    \label{fig:Add_Work}
+  \end{subfigure}
+  \hfill
+
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width = \linewidth]{Add Work 2}
+    \caption{Add work successfully}
+    \label{fig:Add_Work_2}
+  \end{subfigure}
+
+  \caption{Add Work Interface}
+  \label{fig:Work_Interface}
+\end{figure}
+
+Figure \ref{fig:Work_Interface} illustrates how the functionality Work works. When users dismiss
+the progress box, the will see a new input bar, which they can use to add the amount of time that
+they work for the time period they chose in the bar (figure \ref{fig:Add_Work}). Another way here
+is to insert the type of work users want to do in the \texttt{"Add new work"} bar and then press 
+the plus button. The work will appear and the time start running, users can pause it whenever they
+like. After finishing the work, users can press the red plus button to add the time they have been
+working for to the progress. They can easily check it in the main menu screen.\par
 
 Figure \ref{fig:Steps} presents the steps interface, which maintains a consistent design
 with the work screen but introduces several specific modifications. The heading \texttt{"Step"} is
@@ -772,7 +799,7 @@ allows for immediate and easy data entry upon accessing the screen.\par
 
 Additionally, a new input bar for inserting an API token has been added to facilitate the integration of step data from
 external devices or services. Directly next to the API token input bar are \texttt{"Connect"} and 
-\texttt{"Update"} buttons. The "Connect" button is used for verifying the API token, while the \texttt{"Update"}
+\texttt{"Update"} buttons. The \texttt{"Connect"} button is used for verifying the API token, while the \texttt{"Update"}
 button adjacent to the Step input bar enables users to refresh and submit their step count 
 data. Any incorrect format in the input will trigger an error message, as illustrated in 
 figure \ref{fig:Error}, ensuring users are aware of input specifications and can correct their entries accordingly.\par
