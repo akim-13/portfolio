@@ -8,7 +8,7 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{array}
-\usepackage{geometry}
+\usepackage[margin=70pt]{geometry}
 \usepackage{changepage}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
@@ -33,32 +33,33 @@
 % Title Page
 \begin{titlepage}
     \centering
-    {\Huge \bfseries [Name of the App/Project]}\\[0.2cm]
+    {\Huge \bfseries Custom Personal Informatics System}\\[0.2cm]
     \vspace*{0.5cm}
     {\large Author 1, Author 2, Author 3, Author 4, Author 5, Author 6, Author 7, Author 8, Author 9}\\[2cm] % Authors
     \vspace*{1cm}
 
     \begin{minipage}{0.9\textwidth}
 
-        \textbf{Abstract:} About 200 words here. Lorem ipsum aliquam
-        etiam erat velit scelerisque in dictum non consectetur a erat nam at lectus
-        urna duis convallis convallis tellus id interdum velit laoreet id donec
-        ultrices tincidunt arcu non sodales neque sodales ut etiam sit amet nisl
-        purus in mollis nunc sed id semper risus in hendrerit gravida rutrum
-        quisque non tellus orci ac auctor augue mauris augue neque gravida in
-        fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus
-        pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum odio
-        eu feugiat pretium nibh ipsum consequat nisl vel pretium lectus quam id leo
-        in vitae turpis massa sed elementum tempus egestas sed sed risus pretium
-        quam vulputate dignissim suspendisse in est ante in nibh mauris cursus
-        mattis molestie a iaculis at erat pellentesque adipiscing commodo elit at
-        imperdiet dui accumsan sit amet nulla facilisi morbi tempus iaculis urna id
-        volutpat lacus laoreet non curabitur gravida arcu ac tortor dignissim
-        convallis aenean et tortor at risus viverra adipiscing at in tellus integer
-        feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit amet
-        porttitor eget dolor morbi non arcu risus quis varius quam quisque id diam
-        vel quam elementum pulvinar etiam non quam lacus suspendisse faucibus
-        interdum posuere lorem.
+        \textbf{Abstract:} The integration of personal informatics (PI) systems
+        into everyday routines holds significant potential for enhancing
+        individual health, well-being, and productivity. Our project, aimed at
+        university students, leverages PI software to monitor and analyze
+        personal data to foster self-improvement and awareness. Through primary
+        research involving surveys and interviews, we identified key metrics
+        that resonate with our target audience—sleep, water intake, step count,
+        and productive hours. These metrics not only align with common health
+        guidelines but are also among the most sought-after data points for
+        students looking to balance their academic and personal lives. Our
+        system is designed to encourage user engagement through easy data
+        entry, intuitive interfaces, and integration with external devices like
+        Fitbit for automated data collection. By providing real-time feedback
+        and visual progress indicators, the system aims to motivate users to
+        develop healthier habits and achieve personal goals. This paper
+        discusses the development process, including design considerations,
+        Agile methodology, user feedback integration, and challenges faced
+        during implementation. By focusing on a user-centered design and
+        streamlined functionality, our system offers a practical tool for
+        students to manage and enhance their daily routines.
 
     \end{minipage}
 \end{titlepage}
@@ -238,7 +239,7 @@ parts of the system, focus was also placed on merging all the functionality
 together to create our system as a whole. To align the completion of the 
 project with our deadline and allow enough time for the required work, this 
 final sprint took place over 11 days, between the 22nd of April and the 3rd of 
-March. By the end of the sprint, the entirety of the sprint and product 
+May. By the end of the sprint, the entirety of the sprint and product 
 backlogs had been completed and the project as a whole was finished.\par
 
 By following the Scrum framework we were able to efficiently divide our work 
@@ -254,10 +255,11 @@ This section establishes the core requirements for our Personal Informatics
 goals. We utilised feedback from surveys, talks with users, market research,
 and academic research articles to figure out what features our system should have. Our
 aim is to make a system that assists students in improving both their physical
-health and studying habits whilst not being overly invasive.\\ 
+health and studying habits whilst not being overly invasive.\par
 
-specification requirements wil be denoted by SRQ, additional requirements by ARQ.
-
+In the following sections, the notation \textit{SRQ} will be used to denote
+requirements from the coursework's specification, while \textit{ARQ} will
+represent Additional Requirements.
 
 \subsection{Gathering System Requirements}
 
@@ -413,35 +415,34 @@ cannot be accessed by any other end users.
 
 \subsection{Scalability and Performance}
 
-Scalability (ARQ 3) will not be a problem for our system as it will run entirely off of the
-user's computer.
-Additionally, in order to allow for completion of our addtitional requirements of adding multi-user functionality, 
-our system must allow for easy scalability. This should be done through a well constructed database.\\
-
-We must ensure that this system performs smoothly and efficiently to not hinder
-a user's experience (ARQ 4).
+Scalability (ARQ 3) will not be a problem for our system as it will run entirely
+off of the user's computer. Additionally, in order to allow for completion of our
+addtitional requirements of adding multi-user functionality, our system must
+allow for easy scalability. This should be done through a well constructed
+database. We must ensure that this system performs smoothly and efficiently to not
+hinder a user's experience (ARQ 4).
 
 
 \subsection{Structuring the Software Development Process}
 
 Our development of this project must very closely follow the agile and SCRUM
 development approach. This will be done to ensure our system is consistently
-improving and changing to match what our users need.\\
-
-Refer to the Agile Software Process Planning and Management section for more details (covers all of SRQ 1).
-
+improving and changing to match what our users need. Refer to the Agile Software
+Process Planning and Management section for more details (covers all of SRQ 1).
 
 \subsection{Testing}
-We must extensively test each code version to ensure that our users will not run into any bugs or other issues whilst using our system. This shall be driven largely by simulating the experience an average user will have.\\
 
-Refer to the Software Testing section for more details (covers all of SRQ 4).
+We must extensively test each code version to ensure that our users will not run
+into any bugs or other issues whilst using our system. This shall be driven
+largely by simulating the experience an average user will have. Refer to the
+Software Testing section for more details (covers all of SRQ 4).
 
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \begin{center}
 \begin{tabular}{|l|l|l|c|}
     \hline 
-    \textbf{Requirement (RQ)} & \textbf{SRQ/ARQ} & \textbf{Dependencies} & \textbf{Priority} \\ 
+    \textbf{Requirement (RQ)} & \textbf{Notation} & \textbf{Dependencies} & \textbf{Priority} \\ 
     \hline
     Follow SCRUM ideology & SRQ 1.1 & N/A & High \\ 
     \hline
@@ -502,8 +503,8 @@ Refer to the Software Testing section for more details (covers all of SRQ 4).
 
 
 \newpage
-\section{Design (5 pages)}
-\subsection{Design description}
+\section{Design}
+\subsection{Design Description}
 
 In the design of our PI system, the UML diagrams serve as a cornerstone for
 understanding the structure and relationships within the application. The
@@ -511,7 +512,7 @@ diagrams are organized to reflect the logical architecture of the system and
 consists of several key classes that correlate directly with the user data
 management and activity tracking functionalities.\par
 
-\subsection{Database ERD model}
+\subsection{Database ERD Model}
 
 The Entity-Relationship Diagram (ERD) illustrates the intricate structure of
 our PI system, designed specifically for tracking and managing various
@@ -576,37 +577,40 @@ Figure \ref{fig:PI_ERD} describes the following components:
         Value, this table supports the setting and monitoring of personalized
         goals, enhancing the system's capability to drive user engagement and
         encourage behavior modification. UserGoals covers requierments such as 
-        SQR 7.1, 7.2 and 7.3.\par
+        SRQ 7.1, 7.2 and 7.3.\par
 
 \end{itemize}
 
-UserStep, UserSleep, UserWork anf UserWater are all aimed to satisfy ARQ 5 and SRQ 5.1, 5.2 and 5.3.
+\texttt{UserStep}, \texttt{UserSleep}, \texttt{UserWork} and \texttt{UserWater}
+are all aimed to satisfy ARQ 5 and SRQ 5.1, 5.2 and 5.3.
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width = \linewidth]{PI DB User class}
+  \includegraphics[width = 0.6\linewidth]{PI DB User class}
   \caption{User Class in our database model}
   \label{fig:User_Table}
 \end{figure}
 
-Figure \ref{fig:User_Table} describes our  \texttt{User} Table: 
-Used to be central to our system, the User table captures
-essential personal identifiers and account information for each user.
-Attributes include Username, Email, and PasswordHash, which are fundamental
-for ensuring secure user authentication and system access. This table
-acts as the primary entity with which other tables associate,
-establishing a one-to-many relationship across various data-tracking
-entities. Each instance of a User can associate with multiple records
-in subordinate tables, reflecting the diverse activities and metrics
-tracked by the system. Ultimately, the requirement for a multi-user
-system was omitted due to limitations in the allocated time frame.
-However, the underlying database architecture has been deliberately
-designed to facilitate the seamless integration of multi-user
-capabilities, should they be developed in the future. This table covers ARQ 1.
+Figure \ref{fig:User_Table} describes our \texttt{User} Table: Used to be
+central to our system, the User table captures essential personal identifiers and
+account information for each user. Attributes include Username, Email, and
+PasswordHash, which are fundamental for ensuring secure user authentication and
+system access. This table acts as the primary entity with which other tables
+associate, establishing a one-to-many relationship across various data-tracking
+entities. Each instance of a User can associate with multiple records in
+subordinate tables, reflecting the diverse activities and metrics tracked by the
+system. Ultimately, the requirement for a multi-user system was omitted due to
+limitations in the allocated time frame. However, the underlying database
+architecture has been deliberately designed to facilitate the seamless
+integration of multi-user capabilities, should they be developed in the future.
+This table covers ARQ 1.
 
-\subsection{UML Class diagram}
+\subsection{UML Class Diagram}
 
-We use the Dapper module on \texttt{C\#} since it allows us to return or insert a list of \texttt{C\#} objects from an sql query instead of retrieving them as tuples. Hence, based on the ERD, all the classes are built for the Dapper package./par
+We use the Dapper module on \texttt{C\#} since it allows us to return or insert a
+list of \texttt{C\#} objects from an sql query instead of retrieving them as
+tuples. Hence, based on the ERD, all the classes are built for the Dapper
+package./par
 
 \begin{figure}[!ht]
   \centering
@@ -649,12 +653,14 @@ like \texttt{TextBox\_TextChanged()}, \texttt{TextBox\_PreviewTextInput()}, and
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and
 activity type specifications tailored towards user goals. It features
 goal-specific functionalities such as DisplayGoal() for visualizing set goals,
-GetSumData() for data aggregation, and \texttt{DeleteGoalButton\_Click()} for goal
-modification. It inherits text handling and initialization methods from
-ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst ActivityDayInput stand mainly by SQR 6.1 and 5.1, GoalInput follows SQR 7.1, 7.2 and 7.3.\par
+GetSumData() for data aggregation, and \texttt{DeleteGoalButton\_Click()} for
+goal modification. It inherits text handling and initialization methods from
+ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst
+ActivityDayInput stand mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1,
+7.2 and 7.3.\par
 
 \newpage
-\subsection{UML Flow diagram}
+\subsection{UML Flow Diagram}
 
 \begin{figure}[!ht]
   \centering
@@ -686,7 +692,7 @@ for all user data. This structure ensures seamless data flow across the system,
 fulfilling functional and non-functional requirements, and enhancing overall
 user interaction.\par
 
-\subsection{UI design}
+\subsection{UI Design}
 
 This section outlines the design of the user interface (UI) for our Personal 
 Informatics system, focusing on creating an intuitive and engaging user experience.
@@ -696,10 +702,10 @@ easy navigation and interaction, ensuring that users can efficiently manage and
 track their personal data. Here, we discuss the guiding principles of our UI design
 and how they enhance usability and user engagement.\par
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
   \centering
-  \includegraphics[width = \linewidth]{Main Menu}
-  \caption{This is the Main Menu of the application}
+  \includegraphics[width = 0.7\linewidth]{Main Menu}
+  \caption{Main Menu of the Application}
   \label{fig:Menu}
 \end{figure}
 
@@ -720,29 +726,27 @@ A unique aspect of the design is a small white checkbox located in the top left
 corner of each button. These boxes can be marked by user when he/she want to see
 the related data in graph.\par
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
   \centering
   \begin{subfigure}{0.4\linewidth}
     \includegraphics[width = \linewidth]{Work Screen}
     \caption{Work Section Interface}
     \label{fig:Work}
-  \end{subfigure}
+  \end{subfigure}%
+  \vspace{10pt}
   \hfill
-
   \begin{subfigure}{0.4\linewidth}
     \includegraphics[width = \linewidth]{Steps Screen}
     \caption{Steps Section Interface}
     \label{fig:Steps}
   \end{subfigure}
-  \hfill
 
   \begin{subfigure}{0.4\linewidth}
     \includegraphics[width = \linewidth]{Water Screen}
     \caption{Water Section Interface}
     \label{fig:Water}
-  \end{subfigure}
+  \end{subfigure}%
   \hfill
-
   \begin{subfigure}{0.4\linewidth}
     \includegraphics[width = \linewidth]{Sleep Screen}
     \caption{Sleep Section Interface}
@@ -753,39 +757,43 @@ the related data in graph.\par
   \label{fig:Main}
 \end{figure}
 
+
+
 Figure \ref{fig:Main} displays the four main functionality screen, which is designed
 to be simpler and more focused compared to the main menu. In the top left corner, a 
 dark green \texttt{"BACK"} button allows users to easily return to the main menu.\par 
 
-We can clearly see from figure \ref{fig:Work} that the heading \texttt{"WORK"} is prominently 
-displayed at the top of the screen, accompanied by a book icon to visually represent 
-the category. Centered on the screen is a large green box that tracks and displays the
-user's progress on their weekly achievement goals. Under the heading \texttt{"Progress for goal
-this Week"} of the box, the interface shows the amount of work completed and the specific
-day of the week the goal was set. This box can be closed using the small red \texttt{"x"} button
-located at its top right corner, providing a way to dismiss the details if desired.
-Directly below this display, there is an input bar where users can \texttt{"Add new work"} they 
-have completed that day. Adjacent to this bar, a plus button is the way to confirm the work
-users inserted and start to time it, allowing users to easily update their daily work achievements.\par
+We can clearly see from figure \ref{fig:Work} that the heading \texttt{"WORK"} is
+prominently displayed at the top of the screen, accompanied by a book icon to
+visually represent the category. Centered on the screen is a large green box that
+tracks and displays the user's progress on their weekly achievement goals. Under
+the heading \texttt{"Progress for goal this Week"} of the box, the interface
+shows the amount of work completed and the specific day of the week the goal was
+set. This box can be closed using the small red \texttt{"x"} button located at
+its top right corner, providing a way to dismiss the details if desired. Directly
+below this display, there is an input bar where users can \texttt{"Add new work"}
+they have completed that day. Adjacent to this bar, a plus button is the way to
+confirm the work users inserted and start to time it, allowing users to easily
+update their daily work achievements.\par
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
   \centering
   \begin{subfigure}{0.4\linewidth}
-    \includegraphics[width = \linewidth]{Add Work}
+    \includegraphics[width=\linewidth]{Add Work}
     \caption{Add Work bar}
     \label{fig:Add_Work}
   \end{subfigure}
   \hfill
-
   \begin{subfigure}{0.4\linewidth}
-    \includegraphics[width = \linewidth]{Add Work 2}
+    \includegraphics[width=\linewidth]{Add Work 2}
     \caption{Add work successfully}
     \label{fig:Add_Work_2}
   \end{subfigure}
-
   \caption{Add Work Interface}
   \label{fig:Work_Interface}
 \end{figure}
+
+
 
 Figure \ref{fig:Work_Interface} illustrates how the functionality Work works. When users dismiss
 the progress box, the will see a new input bar, which they can use to add the amount of time that
@@ -802,9 +810,9 @@ book symbol used in the work interface. A notable difference in layout is the pl
 the progress box, which is positioned below the input bars rather than above. This adjustment
 allows for immediate and easy data entry upon accessing the screen.\par
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
   \centering
-  \includegraphics[width = \linewidth]{Error}
+  \includegraphics[width = 0.7\linewidth]{Error}
   \caption{Error inserting wrong API Token format}
   \label{fig:Error}
 \end{figure}
@@ -835,22 +843,20 @@ amount needed to achieve the goal. In the depicted example, it indicates that th
 was 20 hours short of reaching the weekly sleep goal. This feedback is intended to 
 encourage users to adjust their habits to meet their sleep targets in the future.\par
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
   \centering
   \begin{subfigure}{0.4\linewidth}
-    \includegraphics[width = \linewidth]{Graphs Screen}
+    \includegraphics[width=\linewidth]{Graphs Screen}
     \caption{Graphs Section Interface}
     \label{fig:Graphs}
   \end{subfigure}
   \hfill
-
   \begin{subfigure}{0.4\linewidth}
-    \includegraphics[width = \linewidth]{Achievements Screen}
+    \includegraphics[width=\linewidth]{Achievements Screen}
     \caption{Achievements Section Interface}
     \label{fig:Achievements}
   \end{subfigure}
-
-  \caption{2 other functionalities}
+  \caption{Two other functionalities}
   \label{fig:subfunc}
 \end{figure}
 
@@ -889,39 +895,30 @@ Together, these interfaces support the app’s objective to engage users activel
 their progress and achieving their health and productivity goals.\par
 
 
-\section{Software Testing (Verification) (2 pages)}
-
-This section should include:
-
-Testing plans, indicating how you planned to perform verification of your PI
-system. These plans should reflect your requirements and design work, and be
-completed before any implementation (coding) work begins.
-
-Evidence of testing - test case results.
+\section{Software Testing (Verification)}
 
 During the initial planning of this project, the approach to testing was
-discussed. It was agreed that each time a developer completed a feature from
-the product backlog they would thoroughly white-box test it themselves using a
+discussed. It was agreed that each time a developer completed a feature from the
+product backlog they would thoroughly white-box test it themselves using a
 variety of specifically chosen test cases and take screenshots to record the
-results. If all tests produced the desired results, the developer would
-consider the feature complete. If any tests were unsuccessful, however, they
-would debug and fix the problem before applying all tests again. In this way,
-the component's functionality given both valid and invalid inputs would be
-ensured. By testing each element before combining it with other elements of the
-system, the testing process as a whole would comprise a bottom-up integration
-testing approach. On the completion of a part of the product backlog, the
-developer would send the screenshots produced in testing to the product owner.
-The product owner would then analyse the screenshots to ensure that the
-evidenced functionality aligned with the requirements of the product backlog.
-The product owner would also use the screenshots to provide feedback to the
-developers and to inform future decisions and alterations to the product
-backlog.\par
+results. If all tests produced the desired results, the developer would consider
+the feature complete. If any tests were unsuccessful, however, they would debug
+and fix the problem before applying all tests again. In this way, the component's
+functionality given both valid and invalid inputs would be ensured. By testing
+each element before combining it with other elements of the system, the testing
+process as a whole would comprise a bottom-up integration testing approach. On
+the completion of a part of the product backlog, the developer would send the
+screenshots produced in testing to the product owner. The product owner would
+then analyse the screenshots to ensure that the evidenced functionality aligned
+with the requirements of the product backlog. The product owner would also use
+the screenshots to provide feedback to the developers and to inform future
+decisions and alterations to the product backlog.\par
 
 \subsection{Example}
 Below is the outcome of the testing of the --------- feature:
 
 
-\section{Reflection and Conclusion (4 pages)}
+\section{Reflection and Conclusion}
 
 With our PI system now complete and the specified requirements met, we can 
 reflect on the merits and failures of the system and our approach to it. To do 
@@ -1143,15 +1140,9 @@ improved in future to increase ease of use, which given a longer development tim
 
 
 \section{Appendices}
-You must include your one-page final GCF as the first appendix to your report. You should
-include records of your group meetings (minutes) as the second appendix. You may include
-transcripts of interviews and/or other evidence of primary research you have conducted as
-the third appendix.
-Also, you may include earlier design models to evidence how your ideas have evolved as an
-appendix. if you wish to include, as well as any unit tests or additional test runs you might
-wish to include with your report
+\subsection{Group Contribution Form}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \begin{tabular}{|p{1.5cm}|p{1.5cm}|p{3cm}|p{6cm}|}
 \hline
@@ -1178,9 +1169,10 @@ wish to include with your report
 \end{tabular}
 \end{table}
 
+\newpage
+\subsection{Contribution Table}
 
-
-\begin{table}[h]
+\begin{table}[!ht]
 \begin{adjustwidth}{-3cm}{-3cm}
 \centering
 \begin{tabular}{|p{1.5cm}|p{3.1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
@@ -1202,10 +1194,8 @@ wish to include with your report
 \end{table}
 
 
-
-
 \newpage
-\begin{table}[h]
+\begin{table}[!ht]
 \begin{adjustwidth}{-3cm}{-3cm}
 \centering
 \begin{tabular}{|p{1.5cm}|p{3.1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
