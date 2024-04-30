@@ -1004,14 +1004,21 @@ students who might find it useful. Additionally, the ability to have multiple
 goals per activity could be beneficial for some users. For example those who 
 would like to have a short-term goal and a longer term goal.\par
 
-The database our system uses is designed to conform with third normal form 
-and works effectively within our program to allow the storage and retrieval 
-of user data. Additionally, the generalised design aids the future development 
-of our program; the addition of new metrics or multiple users does not require 
-any new tables or alterations to the database design, only a new record in one 
-table. We are therefore content with the maintainability and design of the 
-database. Furthermore, our class design closely mirrors this design and is 
-therefore equally well placed for future development.\par
+The database our system uses is designed to integrate intuitively with the 
+structure of our software and is quick and easy to understand and access. The 
+addition of future metrics to our system would not be difficult to implement, 
+simply requiring an associated table. However, while our database is intuitive, 
+it could be normalised further by adding a bridging table with 
+activity IDs. The benefit of this change would be increased efficiency and 
+ease of further development. Adding new metrics would likely only require an 
+extra record in the Activities table. However, there would also be downsides 
+to this approach; understanding the layout of the database would be less 
+simple, relying on keeping track of foreign keys and more complicated database 
+queries. Our class design closely resembles that of our database and is 
+therefore similarly intuitive. If we were to alter the database design, 
+careful alterations to the interface between the database and the code could 
+maintain the clarity of data storage from a programming perspective by 
+minimising changes in the class design.\par
 
 As per our specification, the PI system is a locally-run PC application. This 
 is beneficial to users when it comes to the viewing of the graphical statistics 
@@ -1058,10 +1065,11 @@ improved communication and understanding within the group.\par
 A notable way the Agile methodology allowed us to evolve our requirements 
 was in the design of the system's database. In a sprint planning session 
 part way through the development process, it was realised that our database 
-could be made more efficient by replacing individual tables for each metric 
-with a table listing metrics, thus creating a bridging table. The product 
+could be made more efficient by adjusting the design. The product 
 backlog was updated to include this new design and the change was implemented 
-as part of the sprint that followed, making the database more efficient.\par
+as part of the sprint that followed, making the database more efficient. In 
+this way, the Agile methodology helped us avoid future problems and work by 
+allowing flexibility during the development process\par
 
 A part of the process that worked particularly efficiently in our group was 
 the sprint planning weekly meetings. By having a member of the team run the 
