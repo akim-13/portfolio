@@ -28,7 +28,7 @@ namespace PI_Systems.GUIs.HelperUserControls
         {
             // Jeet: Updates the inputted data to the database (depends on the Activity)
             // James: Check for valid inputs before updating the activities
-            float input = float.Parse(textBox.Text);
+            float input = textBox.Text == "." ? 0 : float.Parse(textBox.Text);
             switch (Activity)
             {
                 case ActivityType.Water:
