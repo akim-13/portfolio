@@ -1,4 +1,4 @@
-qa\documentclass[12pt]{article}
+\documentclass[12pt]{article}
 
 % Packages
 \usepackage[hidelinks]{hyperref}
@@ -7,7 +7,9 @@ qa\documentclass[12pt]{article}
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{subcaption}
-
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{changepage}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 % Header and Footer
@@ -1140,5 +1142,48 @@ the third appendix.
 Also, you may include earlier design models to evidence how your ideas have evolved as an
 appendix. if you wish to include, as well as any unit tests or additional test runs you might
 wish to include with your report
+
+\begin{table}[h]
+\begin{adjustwidth}{-3cm}{-3cm}
+\centering
+\begin{tabular}{|p{1.5cm}|p{3.1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+ & \textbf{Week 1} & \textbf{Week 2} & \textbf{Week 3} & \textbf{Week 4} & \textbf{Week 5} \\
+\hline
+\textbf{Akim} & Led meeting, took down minutes, created Github Repo, created latex report framework and created and ran a survey& Led meeting, took down minutes, assigned workload, created UI diagram and presented to the Technical Team &  Led meeting, took down minutes, assigned workload and reviewed the documentation &  Led meeting, took down minutes, assigned workload and reviewed the documentation& Led meeting, took down minutes, assigned workload and reviewed and improved the documentation \\
+\hline
+\textbf{Alex} & Researched PI structures, found out what data to collect and researched the effective of PI systems & Created UI diagram with Akim & Attempted to work on UI  & Documented the functional requirements and justifications for each & Adding requirements to the Design section \\
+\hline
+\textbf{James} & Reviewed, commented and created priorities to each given requirement and added some additional ones & Worked on Steps and Work UI and added some functionality & Added more functionality to the work page e.g. timers & Added ability to delete work goals and all work done adds to a total work value & Reviewed and provided feedback on the report \\
+\hline
+\textbf{Jeet} & Interviewed people about PI systems and created transcript about key data gathered & Made database ERD, UML class diagrams, researched SCRUM and finished Menu UI & Updated the way databases work and created goal table that works with the UI & Connected Fitbit API with the app, where the user can input their token to download all their data & Made a Work table that works with James' UI and added some functionality to the update button \\
+\hline
+\textbf{Katrya} & Made table comparing appropriate languages for the UI design & Researched databases and C\# connections & N/A & Created achievements UI and functionality & Polished up achievements UI \\
+\hline
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+
+
+\newpage
+\begin{table}[h]
+\begin{adjustwidth}{-3cm}{-3cm}
+\centering
+\begin{tabular}{|p{1.5cm}|p{3.1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+\textbf{Martin} & Made summary on research into Fitbit software & Wrote Introduction section & Wrote Agile software section of report & Started Testing section and updated Agile section & Wrote reflection, conclusion sections and updated Agile section  \\
+\hline
+\textbf{Ollie} & Made summary on two articles on PI systems & Created the UI, made theme and researched graphing & Applied graphs to the UI with each statistic & Connected graphs to database and added the ability to change time period & Screenshotted prototype 1, integrated work into graphs and polished graphs UI\\
+\hline
+\textbf{Tom} & Made summary on research into Garmin software & Created basic program showing how Fitbit API could be used & Rephrased specification section and added more detail to documentation & More rephrasing in specification section, finished non-functional requirements and polished other parts & Updated specification section to reflect our program, requirements table \\
+\hline
+\textbf{Thang} &  Made summary on two articles on PI systems & Wrote first half of specification section and drafted second & Started writing design section and finished ERD description & Completed design description with UML models and added non-functional requirement justifications & Adjusted UML description and finished UI design description \\
+\hline
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+\end{document}
 
 \end{document}
