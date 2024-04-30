@@ -524,46 +524,46 @@ Figure \ref{fig:PI_ERD} describes the following components:
 
 \begin{itemize}
 
-    \item \texttt{UserAchievements} Class: This class stores specific
-        achievements of users, linked directly to the User class. Attributes
+    \item \texttt{UserAchievements} Table: This table stores specific
+        achievements of users, linked directly to the User table. Attributes
         like Username, Date, ActivityID, TimeFrameID, and Value allow for
         detailed recording and analysis of user accomplishments across
         different activities and timeframes. It enables the system to provide
         feedback and insights based on historical achievement data, supporting
         motivational features such as goal setting and progress tracking. This 
-        class aimed to adhere specifically to SRQ 7.4, yet it also contributes to SRQ 7.1.\par
+        table aimed to adhere specifically to SRQ 7.4, yet it also contributes to SRQ 7.1.\par
 
-    \item \texttt{UserStep} Class: Dedicated to tracking the physical activity
+    \item \texttt{UserStep} Table: Dedicated to tracking the physical activity
         of steps taken, this class includes attributes such as Username, Date,
-        and Value. By recording daily step counts, the UserStep class feeds
+        and Value. By recording daily step counts, the UserStep table feeds
         into the system’s health monitoring and fitness tracking capabilities,
         allowing users to set and monitor physical activity goals. As the data 
-        can also be inserted though an API, this class aimes to cover ARQ 2.\par
+        can also be inserted though an API, this table aimes to cover ARQ 2.\par
 
-    \item \texttt{UserSleep} Class: Focusing on sleep habits, this class
+    \item \texttt{UserSleep} Table: Focusing on sleep habits, this table
         records the duration of sleep per day for each user with attributes
         Username, Date, and Value. It is vital for analyzing sleep patterns
         and correlating them with other health metrics, which is essential for
         offering personalized health insights and improving user
         well-being.\par
 
-    \item \texttt{UserWork} Class: This class tracks work and study sessions,
+    \item \texttt{UserWork} Table: This table tracks work and study sessions,
         an essential feature for our users. Attributes include
         Username, Date, and Value, facilitating the tracking of
         academic and work-related activities over time. This functionality
         supports users in managing their time and productivity more
         effectively.\par
 
-    \item \texttt{UserWater} Class: Monitoring hydration, the UserWater class
+    \item \texttt{UserWater} Table: Monitoring hydration, the UserWater class
         includes attributes such as Username, Date, and Value. Hydration
-        tracking is crucial for overall health, and this class allows the
+        tracking is crucial for overall health, and this table allows the
         system to remind users to stay hydrated and track their daily water
         intake.\par
 
-    \item \texttt{UserGoals} Class: As a strategic component of our system, the
-        UserGoals class holds data related to the personal objectives of users.
+    \item \texttt{UserGoals} Table: As a strategic component of our system, the
+        UserGoals table holds data related to the personal objectives of users.
         With attributes like Username, ActivityID, TimeFrameID, Date, and
-        Value, this class supports the setting and monitoring of personalized
+        Value, this table supports the setting and monitoring of personalized
         goals, enhancing the system's capability to drive user engagement and
         encourage behavior modification. UserGoals covers requierments such as 
         SQR 7.1, 7.2 and 7.3.\par
@@ -576,25 +576,27 @@ UserStep, UserSleep, UserWork anf UserWater are all aimed to satisfy ARQ 5 and S
   \centering
   \includegraphics[width = \linewidth]{PI DB User class}
   \caption{User Class in our database model}
-  \label{fig:User_Class}
+  \label{fig:User_Table}
 \end{figure}
 
-Figure \ref{fig:User_Class} describes our  \texttt{User} Class: 
-Used to be central to our system, the User class captures
+Figure \ref{fig:User_Table} describes our  \texttt{User} Table: 
+Used to be central to our system, the User table captures
 essential personal identifiers and account information for each user.
 Attributes include Username, Email, and PasswordHash, which are fundamental
-for ensuring secure user authentication and system access. This class
-acts as the primary entity with which other classes associate,
+for ensuring secure user authentication and system access. This table
+acts as the primary entity with which other tables associate,
 establishing a one-to-many relationship across various data-tracking
 entities. Each instance of a User can associate with multiple records
-in subordinate classes, reflecting the diverse activities and metrics
+in subordinate tables, reflecting the diverse activities and metrics
 tracked by the system. Ultimately, the requirement for a multi-user
 system was omitted due to limitations in the allocated time frame.
 However, the underlying database architecture has been deliberately
 designed to facilitate the seamless integration of multi-user
-capabilities, should they be developed in the future. This class covers ARQ 1.
+capabilities, should they be developed in the future. This table covers ARQ 1.
 
 \subsection{UML Class diagram}
+
+We use the Dapper module on \texttt{C#} since it allows us to return or insert a list of \texttt{C#} objects from an sql query instead of retrieving them as tuples. Hence, based on the ERD, all the classes are built for the Dapper package./par
 
 \begin{figure}[!ht]
   \centering
