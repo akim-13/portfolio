@@ -29,6 +29,52 @@ class Layer:
         self.biases -= learning_rate * self.biases_grad
 
 
+class ActivationFunction:
+    def __init__(self, is_for_output_layer):
+        self.is_for_output_layer = is_for_output_layer
+
+
+    def forward_pass(self, inputs):
+        self.inputs = inputs
+        if self.is_for_output_layer:
+            self.output = self._calc_sigmoid(inputs)
+        else:
+            self.output = self._calc_rectifier(inputs)
+
+        return self.output
+
+
+    def backward_pass(self, output_grad):
+        if self.is_for_output_layer:
+            self.gradient = output_grad * self._calc_sigmoid_derivative(self.output)
+        else:
+            self.gradient = output_grad * self._calc_rectifier_derivative(self.inputs)
+        return self.gradient
+            
+
+    @staticmethod
+    def _calc_rectifier(inputs):
+        return np.maximum(0, inputs)
+
+
+    @staticmethod
+    def _calc_rectifier_derivative(inputs):
+        derivative = np.array(inputs, copy=True)
+        derivative[inputs <= 0] = 0
+        derivative[inputs > 0] = 1
+        return derivative
+
+
+    @staticmethod
+    def _calc_sigmoid(inputs):
+        return 1 / (1 + np.exp(-inputs))
+
+
+    @staticmethod
+    def _calc_sigmoid_derivative(output):
+        return output * (1 - output)
+
+
 class MeanSquaredErrorLoss:
     def forward_pass(self, predictions, labels):
         labels = labels.reshape(-1, 1)
@@ -42,58 +88,61 @@ class MeanSquaredErrorLoss:
         return gradient
 
 
-class ActivationFunction:
-    def __init__(self, is_for_output_layer):
-        self.is_for_output_layer = is_for_output_layer
-
-
-    def forward_pass(self, inputs):
-        self.inputs = inputs
-        if self.is_for_output_layer:
-            self.output = self.calc_sigmoid(inputs)
-        else:
-            self.output = self.calc_rectifier(inputs)
-        return self.output
-
-
-    def backward_pass(self, output_grad):
-        if self.is_for_output_layer:
-            self.gradient = output_grad * self.calc_sigmoid_derivative(self.output)
-        else:
-            self.gradient = output_grad * self.calc_rectifier_derivative(self.inputs)
-        return self.gradient
-            
-
-    @staticmethod
-    def calc_rectifier(inputs):
-        return np.maximum(0, inputs)
-
-
-    @staticmethod
-    def calc_rectifier_derivative(inputs):
-        derivative = np.array(inputs, copy=True)
-        derivative[inputs <= 0] = 0
-        derivative[inputs > 0] = 1
-        return derivative
-
-
-    @staticmethod
-    def calc_sigmoid(inputs):
-        return 1 / (1 + np.exp(-inputs))
-
-
-    @staticmethod
-    def calc_sigmoid_derivative(output):
-        return output * (1 - output)
-
-
 class SpamClassifier:
-    def __init__(self, k):
-        self.k = k
-        features_data, labels_data = None, None
+    def train(self, filename):
+        self._populate_features_and_labels(True)
+        setup = self._set_up(32)
+
+        batch_size = 50
+        num_of_epochs = 1500
+        for epoch in range(num_of_epochs + 1):
+
+            total_loss, total_correct = self._go_through_epoch(setup, batch_size)
+
+            if epoch % 100 == 0:
+                total_samples = len(self.labels_of_samples)
+                num_of_batches = total_samples / batch_size
+                mean_epoch_loss = total_loss / num_of_batches
+                epoch_accuracy = total_correct / total_samples
+                print('='*20 + f' EPOCH {epoch} ' + '='*20+'\n')
+                print(f'LOSS: {mean_epoch_loss:.4f}')
+                print(f'ACC : {epoch_accuracy:.4f} ({total_correct}/{total_samples})\n')
+
+        print('='*52 + '\n\nTraining completed.')
+
+        layers = setup[0]
+        self._save_model(layers, filename)
+        print('Model parameters saved successfully.\n')
 
 
-    def populate_features_and_labels(self, is_training_data):
+    def predict(self, filename):
+        self._populate_features_and_labels(False)
+        setup = self._set_up(32)
+        layers = setup[0]
+        activation_functions = setup[1]
+
+        self._load_model(layers, filename)
+
+        print('Model parameters loaded successfully.\nTesting...', end=' ')
+
+        # Forward pass.
+        neuron_activations = self.samples
+        for layer, activation_function in zip(layers, activation_functions):
+            neuron_activations = layer.forward_pass(neuron_activations)
+            neuron_activations = activation_function.forward_pass(neuron_activations)
+
+        print('Done.\n')
+
+        loss = MeanSquaredErrorLoss().forward_pass(neuron_activations, self.labels_of_samples)
+        predicted_labels = (neuron_activations > 0.5).astype(int)
+        correct_predictions = (predicted_labels == self.labels_of_samples.reshape(-1, 1)).sum()
+        accuracy = correct_predictions / len(self.labels_of_samples)
+
+        print(f'Loss: {loss:.3f}')
+        print(f'Accuracy: {accuracy*100:.2f}%')
+
+
+    def _populate_features_and_labels(self, is_training_data):
         if is_training_data:
             dataset_filename = 'training_spam.csv'
         else:
@@ -110,177 +159,120 @@ class SpamClassifier:
             print(f'ERROR: improper contents or something is wrong with the file/permissions ("{dataset_relative_path}").')
             return
 
-        self.labels_data = dataset[:, 0]
-        self.features_data = dataset[:, 1:]
+        self.labels_of_samples = dataset[:, 0]
+        self.samples = dataset[:, 1:]
 
-        # print("Shape of the spam training data set:", dataset.shape)
-        # print(dataset)
-        # print("Shape of labels_data:", self.labels_data.shape)
-        # print(self.labels_data)
-        # print("Shape of features_data:", self.features_data.shape)
-        # print(self.features_data)
+
+    def _set_up(self, num_of_neurons_in_first_hidden_layer):
+        num_of_inputs = np.shape(self.samples)[1]
+
+        hidden_layer_1 = Layer(num_of_inputs, num_of_neurons_in_first_hidden_layer)
+        activation_function_1 = ActivationFunction(False)
+
+        hidden_layer_2 = Layer(num_of_neurons_in_first_hidden_layer, int(num_of_neurons_in_first_hidden_layer/2))  
+        activation_function_2 = ActivationFunction(False)
         
+        output_layer = Layer(int(num_of_neurons_in_first_hidden_layer/2), 1)  
+        activation_function_output = ActivationFunction(True)
 
-    def generate_batches_of_size(self, batch_size):
-        num_of_inputs = self.features_data.shape[0]
+        layers = [ hidden_layer_1, hidden_layer_2, output_layer ]
+        activation_functions = [ activation_function_1, activation_function_2, activation_function_output ]
+
+        return layers, activation_functions
+
+
+    def _go_through_epoch(self, setup, batch_size):
+        hidden_layer_1, hidden_layer_2, output_layer = setup[0]
+        activation_function_1, activation_function_2, activation_function_output = setup[1]
+
+        total_loss = 0
+        total_correct = 0
+
+        for samples_batch, labels_of_samples_batch in self._generate_batches_of_size(batch_size):
+            # Forward pass.
+            output1 = hidden_layer_1.forward_pass(samples_batch)
+            activated_output1 = activation_function_1.forward_pass(output1)
+
+            output2 = hidden_layer_2.forward_pass(activated_output1)
+            activated_output2 = activation_function_2.forward_pass(output2)
+
+            final_output = output_layer.forward_pass(activated_output2)
+            predictions = activation_function_output.forward_pass(final_output)
+
+            # Calculate loss.
+            batch_loss = MeanSquaredErrorLoss().forward_pass(predictions, labels_of_samples_batch)
+            total_loss += batch_loss
+
+            # Calculate accuracy.
+            predicted_labels = (predictions > 0.5).astype(int)
+            correct_predictions = (predicted_labels == labels_of_samples_batch.reshape(-1, 1)).sum()
+            total_correct += correct_predictions
+
+            # Backward pass.
+            loss_gradient = MeanSquaredErrorLoss().backward_pass(predictions, labels_of_samples_batch)
+
+            grad_output = activation_function_output.backward_pass(loss_gradient)
+            grad_layer_out = output_layer.backward_pass(grad_output)
+
+            grad_activation_2 = activation_function_2.backward_pass(grad_layer_out)
+            grad_layer_2 = hidden_layer_2.backward_pass(grad_activation_2)
+
+            grad_activation_1 = activation_function_1.backward_pass(grad_layer_2)
+            grad_layer_1 = hidden_layer_1.backward_pass(grad_activation_1)
+
+            # Update weights and biases.
+            learning_rate = 0.03
+            hidden_layer_1.update_params(learning_rate)
+            hidden_layer_2.update_params(learning_rate)
+            output_layer.update_params(learning_rate)
+
+        return total_loss, total_correct
+
+
+    def _generate_batches_of_size(self, batch_size):
+        num_of_inputs = self.samples.shape[0]
         indices = np.arange(num_of_inputs)
         np.random.shuffle(indices)
 
-        features_data_shuffled = self.features_data[indices]
-        labels_data_shuffled = self.labels_data[indices]
+        samples_shuffled = self.samples[indices]
+        labels_of_samples_shuffled = self.labels_of_samples[indices]
 
         for i in range(0, num_of_inputs, batch_size):
-            features_data_batch = features_data_shuffled[i:i + batch_size]
-            labels_data_batch = labels_data_shuffled[i:i + batch_size]
-            yield (features_data_batch, labels_data_batch)
-
-
-    def train(self):
-        self.populate_features_and_labels(True)
-        num_of_inputs = np.shape(self.features_data)[1]
-        learning_rate = 0.03
-
-        hidden_layer_1 = Layer(num_of_inputs, 32)
-        activation_function_1 = ActivationFunction(False)
-
-        # Assuming the previous layer has 32 neurons.
-        hidden_layer_2 = Layer(32, 16)  
-        activation_function_2 = ActivationFunction(False)
-        
-        # Output layer for binary classification.
-        output_layer = Layer(16, 1)  
-        activation_function_output = ActivationFunction(True)
-
-        for epoch in range(1000):
-            total_loss = 0
-            num_of_batches = 0
-            total_correct = 0
-            total_samples = 0
-
-            for features_data_batch, labels_data_batch in self.generate_batches_of_size(50):
-                # Forward pass.
-                output1 = hidden_layer_1.forward_pass(features_data_batch)
-                activated_output1 = activation_function_1.forward_pass(output1)
-
-                output2 = hidden_layer_2.forward_pass(activated_output1)
-                activated_output2 = activation_function_2.forward_pass(output2)
-
-                final_output = output_layer.forward_pass(activated_output2)
-                predictions = activation_function_output.forward_pass(final_output)
-
-                # Calculate loss.
-                batch_loss = MeanSquaredErrorLoss().forward_pass(predictions, labels_data_batch)
-                total_loss += batch_loss
-                num_of_batches += 1
-
-                # Calculate accuracy.
-                predicted_labels = (predictions > 0.5).astype(int)
-                correct_predictions = (predicted_labels == labels_data_batch.reshape(-1, 1)).sum()
-                total_correct += correct_predictions
-                total_samples += len(labels_data_batch)
-
-                # if num_of_batches == 20 and not epoch % 50:
-                #     print(f'CURRENT EPOCH: {epoch}')
-                #     print(f'Batch number {num_of_batches}')
-                #     print(f'Features batch {np.shape(features_data_batch)}:\n{features_data_batch}\n')
-                #     print(f'Labels batch {np.shape(labels_data_batch)}:\n{labels_data_batch}\n')
-                #     print(f'Predictions {np.shape(predictions)}:\n {predictions[:10]}\n')
-                #     print(f'Batch loss: {batch_loss}\n')
-
-                # Backward pass.
-                loss_gradient = MeanSquaredErrorLoss().backward_pass(predictions, labels_data_batch)
-                grad_output = activation_function_output.backward_pass(loss_gradient)
-                grad_layer_out = output_layer.backward_pass(grad_output)
-                grad_activation_2 = activation_function_2.backward_pass(grad_layer_out)
-                grad_layer_2 = hidden_layer_2.backward_pass(grad_activation_2)
-                grad_activation_1 = activation_function_1.backward_pass(grad_layer_2)
-                grad_layer_1 = hidden_layer_1.backward_pass(grad_activation_1)
-
-                # Update weights and biases.
-                hidden_layer_1.update_params(learning_rate)
-                hidden_layer_2.update_params(learning_rate)
-                output_layer.update_params(learning_rate)
-
-            if not epoch % 100:
-                mean_epoch_loss = total_loss / num_of_batches
-                epoch_accuracy = total_correct / total_samples
-                print(f'(epoch {epoch}) LOSS: {mean_epoch_loss:.4f}')
-                print(f'(epoch {epoch}) ACC: {epoch_accuracy:.4f}\n')
-                # print(f'({epoch}) max prediction: {np.max(predictions)}')
-                # print(f'({epoch}) min prediction: {np.min(predictions)}')
-                print('='*80+'\n')
-
-        layers = [hidden_layer_1, hidden_layer_2, output_layer]
-        self.save_model(layers, 'spam_classifier_weights.npz')
-        print('Model parameters saved successfully.\n')
+            samples_batch = samples_shuffled[i:i + batch_size]
+            labels_of_samples_batch = labels_of_samples_shuffled[i:i + batch_size]
+            yield (samples_batch, labels_of_samples_batch)
 
 
     @staticmethod
-    def save_model(layers, filename='model.npz'):
-        # Preparing a dictionary to hold data with explicit keys
+    def _save_model(layers, filename='model_parameters.npz'):
         data_dict = {}
         for i, layer in enumerate(layers):
             data_dict[f'weights_{i}'] = layer.weights
             data_dict[f'biases_{i}'] = layer.biases
-        np.savez(filename, **data_dict)
+
+        try:
+            np.savez(filename, **data_dict)
+        except:
+            print(f'ERROR: Something went wrong while saving the file "{filename}".')
 
 
     @staticmethod
-    def load_model(layers, filename='model.npz'):
-        data = np.load(filename)
+    def _load_model(layers, filename='model_parameters.npz'):
+        try:
+            data = np.load(filename)
+        except:
+            print(f'ERROR: Something went wrong while loading the file "{filename}".')
+
         for i, layer in enumerate(layers):
             layer.weights = data[f'weights_{i}']
             layer.biases = data[f'biases_{i}']
 
 
-    def predict(self):
-        self.populate_features_and_labels(False)
-        num_of_inputs = np.shape(self.features_data)[1]
-
-        hidden_layer_1 = Layer(num_of_inputs, 32)
-        activation_function_1 = ActivationFunction(False)
-
-        # Assuming the previous layer has 32 neurons.
-        hidden_layer_2 = Layer(32, 16)  
-        activation_function_2 = ActivationFunction(False)
-        
-        # Output layer for binary classification.
-        output_layer = Layer(16, 1)  
-        activation_function_output = ActivationFunction(True)
-
-        layers = [hidden_layer_1, hidden_layer_2, output_layer] 
-        self.load_model(layers, 'spam_classifier_weights.npz')
-
-        print('Model parameters loaded successfully.\nTesting...')
-
-        layers = [hidden_layer_1, activation_function_1, hidden_layer_2, activation_function_2, output_layer, activation_function_output]
-        inputs = self.features_data
-        for layer in layers:
-            inputs = layer.forward_pass(inputs)
-        print('Done.\n')
-
-        loss = MeanSquaredErrorLoss().forward_pass(inputs, self.labels_data)
-
-        predicted_labels = (inputs > 0.5).astype(int)
-        correct_predictions = (predicted_labels == self.labels_data.reshape(-1, 1)).sum()
-        accuracy = correct_predictions / len(self.labels_data)
-
-
-        print(f'Loss: {loss}')
-        print(f'Accuracy: {accuracy*100}%')
-
-        print(f'Max: {max(inputs)}')
-        print(f'Min: {min(inputs)}')
-    
-def create_classifier():
-    classifier = SpamClassifier(k=1)
-    classifier.train()
-    classifier.predict()
-    return classifier
-
-
 def main():
-    classifier = create_classifier()
+    # SpamClassifier().train('./data/spam_classifier_parameters.npz')
+    SpamClassifier().predict('./data/93_percent_parameters.npz')
+
 
 if __name__ == "__main__":
     main()
+
