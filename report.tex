@@ -911,8 +911,84 @@ with the requirements of the product backlog. The product owner would also use
 the screenshots to provide feedback to the developers and to inform future
 decisions and alterations to the product backlog.\par
 
-\subsection{Example}
-Below is the outcome of the testing of the --------- feature:
+\subsection{Examples}
+The programmers in our group were very good at ensuring that their code initially 
+contained no bugs so testing revealed very few errors. Below, however, are some 
+examples of bugs that were found which demonstrate how effective the testing approach 
+was in ensuring the adherence of our system to the specifications and the smooth 
+operation of the software.\par
+
+\subsubsection{Achievement Consistency}
+When testing the achievements section of the product, the following test 
+cases were included in the process:\par
+\begin{center}
+    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Description} & \textbf{Test} & \textbf{Expected Result}\\
+        \hline
+        Achievement page highlights completed achievements & Input data which 
+        completes an achievement & Achievement page highlights completion and 
+        shows correct progress \\
+        \hline
+        Achievement page does not highlight previously completed achievements 
+        which are no longer complete & Input data which completes an achievement 
+        then edit data so that achievement is not completed & Achievement page 
+        reverts highlighting and progress label\\
+        \hline
+    \end{tabular}
+\end{center}
+The first test of the two was passed successfully. However, while the progress 
+label did revert to a lower value upon alteration of the data, the achievement 
+remained highlighted, as shown in the figure below.\par
+\begin{center}
+    \includegraphics[width=0.45\linewidth]{achievementCorrect.png}
+    \includegraphics[width=0.45\linewidth]{achievementIncorrect.png}
+\end{center}
+The developer in charge of this section was quickly able to find the source of 
+this issue and fix it.\par
+
+\subsubsection{Incomplete Input}
+Another issue that was found during testing was in the manual data input. To avoid 
+invalid entries, the input box only allowed numbers and decimal points to be entered, 
+however, the following test case caused an unexpected error.\par
+\begin{center}
+    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Description} & \textbf{Test} & \textbf{Expected Result}\\
+        \hline
+        Incomplete inputs are handled gracefully 
+        & Input a decimal point 
+        & Input is treated as a zero\\
+        \hline
+    \end{tabular}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{decimalPointError.png}
+\end{center}
+When a decimal point was entered, the program froze and then crashed. 
+To avoid this, the developer changed the code handling the inputs and 
+the problem was solved.\par
+
+\subsubsection{Goal Expiry}
+A third example of an error caught by our testing was an issue with the 
+time period of goals. During testing, the following test case failed:\par
+\begin{center}
+    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Description} & \textbf{Test} & \textbf{Expected Result}\\
+        \hline
+        Goals expire once end time has been reached 
+        & Allow a goal to end uncompleted 
+        & Goal shows failure and ends\\
+        \hline
+    \end{tabular}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{goalNotExpiring.png}
+\end{center}
+As shown in the figure above, once the goal time had passed, the counter 
+simply continued to run. This relatively major issue was quickly resolved 
+and the feature now functions correctly.\par
 
 
 \section{Reflection and Conclusion}
