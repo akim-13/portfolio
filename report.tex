@@ -658,8 +658,7 @@ goal-specific functionalities such as DisplayGoal() for visualizing set goals,
 GetSumData() for data aggregation, and \texttt{DeleteGoalButton\_Click()} for
 goal modification. It inherits text handling and initialization methods from
 ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst
-ActivityDayInput stands mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1,
-7.2 and 7.3.\par
+ActivityDayInput stands mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1, 7.2 and 7.3.\par
 
 \subsection{UML Flow Diagram}
 
@@ -691,7 +690,7 @@ activity comparison and trend analysis. The Database manages its instance,
 maintaining data integrity and security, and acts as a centralized repository
 for all user data. This structure ensures seamless data flow across the system,
 fulfilling functional and non-functional requirements, and enhancing overall
-user interaction.\par
+user interaction. The association between these elements are the groundwork for all requirements SRQ 5, SRQ 6 and SRQ 7, aswell as ARQ 4.\par
 
 \subsection{User Interface}
 
@@ -721,11 +720,11 @@ functionalities of the Personal Informatics system: steps, work, sleep, and wate
 Additionally, two smaller green buttons provide access to sub-functionalities, 
 specifically graphs and achievements. Each of the four larger buttons displays 
 the type of statistic it relates to, with today's data (or the previous night's
-for sleep hours) shown in smaller font size directly below.\par
+for sleep hours) shown in smaller font size directly below. The design adheres to SRQ 5.2 and 6.1.\par
 
 A unique aspect of the design is a small white checkbox located in the top left
 corner of each button. These boxes can be marked by user when they want to see
-the related data in graph.\par
+the related data in graph, and therefore allows for SRQ 6.2 to function smoothly.\par
 
 \begin{figure}[!ht]
   \centering
@@ -775,7 +774,7 @@ its top right corner, providing a way to dismiss the details if desired. Directl
 below this display, there is an input bar where users can \texttt{"Add new work"}
 they have completed that day. Adjacent to this bar, a plus button is the way to
 confirm the work users inserted and start to time it, allowing users to easily
-update their daily work achievements.\par
+update their daily work achievements. This was designed in this format for ARQ 5.\par
 
 \begin{figure}[!ht]
   \centering
@@ -809,7 +808,7 @@ with the work screen but introduces several specific modifications. The heading 
 displayed at the top of the screen, distinguished by a shoe icon next to it, replacing the
 book symbol used in the work interface. A notable difference in layout is the placement of
 the progress box, which is positioned below the input bars rather than above. This adjustment
-allows for immediate and easy data entry upon accessing the screen.\par
+allows for immediate and easy data entry upon accessing the screen, complying with ARQ 5.\par
 
 \begin{figure}[!ht]
   \centering
@@ -819,7 +818,7 @@ allows for immediate and easy data entry upon accessing the screen.\par
 \end{figure}
 
 Additionally, a new input bar for inserting an API token has been added to facilitate the integration of step data from
-external devices or services. Directly next to the API token input bar are \texttt{"Connect"} and 
+external devices or services and fulfilling ARQ 2. Directly next to the API token input bar are \texttt{"Connect"} and 
 \texttt{"Update"} buttons. The \texttt{"Connect"} button is used for verifying the API token, while the \texttt{"Update"}
 button adjacent to the Step input bar enables users to refresh and submit their step count 
 data. Any incorrect format in the input will trigger an error message, as illustrated in 
@@ -835,7 +834,7 @@ includes an input bar for users to enter their respective data values easily.\pa
 In Figure \ref{fig:Water}, showcasing the Water functionality, the progress box is displayed
 upon achieving a set goal. It prominently features the message \texttt{"Goal Completed!"} in bold 
 golden text, accompanied by a congratulatory message that also specifies the goal achieved.
-This positive reinforcement is designed to motivate users and acknowledge their accomplishments.\par
+This positive reinforcement is designed to motivate users and acknowledge their accomplishments, as SRQ 7.4 demands.\par
 
 Conversely, Figure \ref{fig:Sleep} details the Sleep functionality when a goal is not met.
 The progress box in this scenario displays a bold, golden headline \texttt{"Goal Not Completed"} at
@@ -873,7 +872,7 @@ for the graph, ranging from a day to a year, with the current example set to dis
 data over a year. The timeline is plotted on the horizontal axis, while the specific
 metrics related to the user’s activities are displayed along the vertical axis. The 
 graph utilizes a light blue line on a gridded white background, enhancing readability
-and making it easier for users to interpret their data trends.\par
+and making it easier for users to interpret their data trends. Through this interface, SRQ 6.1 and 6.2 are followed.\par
 
 Figure \ref{fig:Achievements} presents the Achievements interface, which aims to motivate
 and inform users about their progress in meeting set goals. Similar to other interfaces,
@@ -893,7 +892,7 @@ progress. Additionally, a streak counter is placed above the activity summaries,
 users to consistently meet their daily goals and build long-term habits.\par
 
 Together, these interfaces support the app’s objective to engage users actively in tracking
-their progress and achieving their health and productivity goals.\par
+their progress and achieving their health and productivity goals, perfectly complying with SRQ 7.1 and allowing users to compare data with others, complying with ARQ 1.\par
 
 
 \section{Software Testing and Verification} \label{sec:testing}
