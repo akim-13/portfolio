@@ -15,7 +15,7 @@
 % Header and Footer
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{[Name of the app/project] Report}
+\lhead{Custom PI System Report}
 \rhead{Programming 2 (CM12005)}
 \cfoot{\thepage}
 \setlength{\headheight}{14.5pt}
@@ -259,7 +259,8 @@ health and studying habits whilst not being overly invasive.\par
 
 In the following sections, the notation \textit{SRQ} will be used to denote
 requirements from the coursework's specification, while \textit{ARQ} will
-represent Additional Requirements.
+represent Additional Requirements. Refer to Section \ref{sec:reqTable} for a
+quick-reference table of requirements.
 
 \subsection{Gathering System Requirements}
 
@@ -390,7 +391,7 @@ This graph should dynamically change size to fit the upper bound of the data for
 allowing a user to easily identify any correlation between the data fields (SRQ 6.2).\\
 
 The graph must allow for a user to 
-specifiy a time frame (SRQ 6.2) for the data to allow such that 
+specify a time frame (SRQ 6.2) for the data to allow such that 
 it allows the user to identify potential outside factors
 that our system cannot consider. For example, an event in a given time frame
 such as a coursework deadline could influence sleep count. 
@@ -404,7 +405,7 @@ relevant hardware can still use our system and must be done in an intuitive way
 in order to allow our system to be accessible for a greater amount of students.
 This will also allow for easy gathering of data fields which cannot be tracked
 via physical devices (SRQ 5.1). As not all data fields we have selected can be accessed
-directly via the fitbit API (sleep, and study time), manual entry is
+directly via the Fitbit API (sleep, and study time), manual entry is
 necessary (SRQ 5.3).\newline
 
 To ensure that our users understand what data we are storing, each user shall
@@ -417,7 +418,7 @@ cannot be accessed by any other end users.
 
 Scalability (ARQ 3) will not be a problem for our system as it will run entirely
 off of the user's computer. Additionally, in order to allow for completion of our
-addtitional requirements of adding multi-user functionality, our system must
+additional requirements of adding multi-user functionality, our system must
 allow for easy scalability. This should be done through a well constructed
 database. We must ensure that this system performs smoothly and efficiently to not
 hinder a user's experience (ARQ 4).
@@ -434,47 +435,47 @@ Process Planning and Management section for more details (covers all of SRQ 1).
 
 We must extensively test each code version to ensure that our users will not run
 into any bugs or other issues whilst using our system. This shall be driven
-largely by simulating the experience an average user will have. Refer to the
-Software Testing section for more details (covers all of SRQ 4).
+largely by simulating the experience an average user will have. Refer to
+Section \ref{sec:testing} for more details (covers all of SRQ 4).
 
-
+\subsection{Requirements Table} \label{sec:reqTable}
 \begin{table}[!ht]
 \begin{center}
-\begin{tabular}{|l|l|l|c|}
+\begin{tabular}{|l|c|c|c|}
     \hline 
     \textbf{Requirement (RQ)} & \textbf{Notation} & \textbf{Dependencies} & \textbf{Priority} \\ 
     \hline
-    Follow SCRUM ideology & SRQ 1.1 & N/A & High \\ 
+    Follow SCRUM ideology & SRQ 1.1 & --- & High \\ 
     \hline
     Include at least one sprint & SRQ 1.2 & 1.1, 1.3 & Medium \\
     \hline
     Sprints must last 1-3 weeks & SRQ 1.3 & 1.1, 1.2 & Medium \\
     \hline
-    Review requirements regularly & SRQ 1.4 & N/A & High \\
+    Review requirements regularly & SRQ 1.4 & --- & High \\
     \hline
     Expand on initial requirements & SRQ 2.1 & 3.2 & High \\ 
     \hline
-    Additional functionality for our features & SRQ 2.2 & N/A & High \\
+    Additional functionality for our features & SRQ 2.2 & --- & High \\
     \hline
     Establish additional requirements & SRQ 2.3 & 2.1, 2.2 & High \\ 
     \hline
-    Cite 3 articles on target field & SRQ 3.1 & N/A & High \\ 
+    Cite 3 articles on target field & SRQ 3.1 & --- & High \\ 
     \hline
-    Read and cite 6 articles & SRQ 3.2 & N/A & Medium \\
+    Read and cite 6 articles & SRQ 3.2 & --- & Medium \\
     \hline
-    Testing driven approach & SRQ 4.1 & N/A & High \\ 
+    Testing driven approach & SRQ 4.1 & --- & High \\ 
     \hline
-    Provide testing evidence & SRQ 4.2 & N/A & High \\
+    Provide testing evidence & SRQ 4.2 & --- & High \\
     \hline
-    Store relevant user data & SRQ 5.1 & 3 & High \\ 
+    Store relevant user data & SRQ 5.1 & 3.1, 3.2 & High \\ 
     \hline
-    Allow users to access data & SRQ 5.2 & N/A & High \\ 
+    Allow users to access data & SRQ 5.2 & --- & High \\ 
     \hline
-    Allow for manual data entry & SRQ 5.3 & N/A & Medium \\ 
+    Allow for manual data entry & SRQ 5.3 & --- & Medium \\ 
     \hline
     Compare user data & SRQ 6.1 & 5.1 & High \\ 
     \hline
-    Allow comparison of data & SRQ 6.2 & 3. 1, 3.2, 5.1 & High \\
+    Allow comparison of data & SRQ 6.2 & 3.1, 3.2, 5.1 & High \\
     \hline    
     Allow for managing of goals & SRQ 7.1 & 5.1 & High \\ 
     \hline
@@ -484,15 +485,15 @@ Software Testing section for more details (covers all of SRQ 4).
     \hline
     Motivating features & SRQ 7.4 & 7.1 & Medium \\ 
     \hline
-    Social features & ARQ 1 & N/A & High \\ 
+    Social features & ARQ 1 & 2.1 & High \\ 
     \hline 
-    Access data Via API & ARQ 2 & 5.1 & Medium \\
+    Access data Via API & ARQ 2 & 2.1, 5.1 & Medium \\
     \hline
-    Create a scalable system & ARQ 3 & N/A & Medium \\ 
+    Create a scalable system & ARQ 3 & 2.1 & Medium \\ 
     \hline
-    System must run smoothly & ARQ 4 & N/A & Low \\ 
+    System must run smoothly & ARQ 4 & 2.1 & Low \\ 
     \hline
-    Easy data input & ARQ 5 & 5.1, 5.3 & High \\
+    Easy data input & ARQ 5 & 2.1, 5.1, 5.3 & High \\
     \hline
 
 \end{tabular}
@@ -504,13 +505,13 @@ Software Testing section for more details (covers all of SRQ 4).
 
 \newpage
 \section{Design}
-\subsection{Design Description}
 
-In the design of our PI system, the UML diagrams serve as a cornerstone for
+\textbf{TODO: Change this to something else (more intro-ish)}
+[In the design of our PI system, the UML diagrams serve as a cornerstone for
 understanding the structure and relationships within the application. The
 diagrams are organized to reflect the logical architecture of the system and
 consists of several key classes that correlate directly with the user data
-management and activity tracking functionalities.\par
+management and activity tracking functionalities.]\par
 
 \subsection{Database ERD Model}
 
@@ -547,7 +548,7 @@ Figure \ref{fig:PI_ERD} describes the following components:
         and Value. By recording daily step counts, the UserStep table feeds
         into the system’s health monitoring and fitness tracking capabilities,
         allowing users to set and monitor physical activity goals. As the data 
-        can also be inserted though an API, this table aimes to cover ARQ 2.\par
+        can also be inserted though an API, this table aims to cover ARQ 2.\par
 
     \item \texttt{UserSleep} Table: Focusing on sleep habits, this table
         records the duration of sleep per day for each user with attributes
@@ -574,8 +575,8 @@ Figure \ref{fig:PI_ERD} describes the following components:
         With attributes like Username, ActivityID, TimeFrameID, Date, and
         Value, this table supports the setting and monitoring of personalized
         goals, enhancing the system's capability to drive user engagement and
-        encourage behavior modification. UserGoals covers requierments such as 
-        SRQ 7.1, 7.2 and 7.3.\par
+        encourage behavior modification. UserGoals covers SRQ 7.1, 7.2 and
+        7.3.\par
 
 \end{itemize}
 
@@ -589,7 +590,7 @@ are all aimed to satisfy ARQ 5 and SRQ 5.1, 5.2 and 5.3.
   \label{fig:User_Table}
 \end{figure}
 
-Figure \ref{fig:User_Table} describes our \texttt{User} Table: Used to be
+Figure \ref{fig:User_Table} describes our \texttt{User} Table: used to be
 central to our system, the User table captures essential personal identifiers and
 account information for each user. Attributes include Username, Email, and
 PasswordHash, which are fundamental for ensuring secure user authentication and
@@ -605,10 +606,12 @@ This table covers ARQ 1.
 
 \subsection{UML Class Diagram}
 
+
+
 We use the Dapper module on \texttt{C\#} since it allows us to return or insert a
-list of \texttt{C\#} objects from an sql query instead of retrieving them as
+list of \texttt{C\#} objects from an SQL query instead of retrieving them as
 tuples. Hence, based on the ERD, all the classes are built for the Dapper
-package./par
+package.\textbf{TODO: Move this paragraph somewhere else}\par
 
 \begin{figure}[!ht]
   \centering
@@ -635,7 +638,8 @@ like GetUserActivities() and GetUserActivityAt() fetch activity data for users,
 crucial for generating reports and insights. Utility methods including
 GetStringDataToday(), GetUserGoal(), and DeleteUserGoal() provide additional
 functionality for managing daily data strings and user goals, enhancing the
-system’s responsiveness to user interactions. These methods where essential for SRQ 6.1 and 6.2, as well as directly adhering to SRQ 5.1 and 5.2. \par
+system’s responsiveness to user interactions. These methods were essential for
+SRQ 6.1 and 6.2, as well as directly adhering to SRQ 5.1 and 5.2. \par
 
 The ActivityDayInput and GoalInput classes, both inheriting from UserControl,
 are specifically designed for handling the input and update functionalities
@@ -654,7 +658,7 @@ goal-specific functionalities such as DisplayGoal() for visualizing set goals,
 GetSumData() for data aggregation, and \texttt{DeleteGoalButton\_Click()} for
 goal modification. It inherits text handling and initialization methods from
 ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst
-ActivityDayInput stand mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1,
+ActivityDayInput stands mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1,
 7.2 and 7.3.\par
 
 \subsection{UML Flow Diagram}
@@ -689,15 +693,15 @@ for all user data. This structure ensures seamless data flow across the system,
 fulfilling functional and non-functional requirements, and enhancing overall
 user interaction.\par
 
-\subsection{UI Design}
+\subsection{User Interface}
 
-This section outlines the design of the user interface (UI) for our Personal 
-Informatics system, focusing on creating an intuitive and engaging user experience.
-We aim to bridge the gap between the system's technical capabilities and the user's
-needs through a well-thought-out interface. The UI design is crafted to facilitate 
-easy navigation and interaction, ensuring that users can efficiently manage and 
-track their personal data. Here, we discuss the guiding principles of our UI design
-and how they enhance usability and user engagement.\par
+This section outlines the design of the user interface (UI) for our PI system,
+focusing on creating an intuitive and engaging user experience. We aim to bridge
+the gap between the system's technical capabilities and the user's needs through
+a well-thought-out interface. The UI design is crafted to facilitate easy
+navigation and interaction, ensuring that users can efficiently manage and track
+their personal data. Here, we discuss the guiding principles of our UI design and
+how they enhance usability and user engagement.\par
 
 \begin{figure}[!ht]
   \centering
@@ -719,8 +723,8 @@ specifically graphs and achievements. Each of the four larger buttons displays
 the type of statistic it relates to, with today's data (or the previous night's
 for sleep hours) shown in smaller font size directly below.\par
 
-A unique aspect of the design is a small white checkbox located in the top left 
-corner of each button. These boxes can be marked by user when he/she want to see
+A unique aspect of the design is a small white checkbox located in the top left
+corner of each button. These boxes can be marked by user when they want to see
 the related data in graph.\par
 
 \begin{figure}[!ht]
@@ -892,7 +896,7 @@ Together, these interfaces support the app’s objective to engage users activel
 their progress and achieving their health and productivity goals.\par
 
 
-\section{Software Testing (Verification)}
+\section{Software Testing and Verification} \label{sec:testing}
 
 During the initial planning of this project, the approach to testing was
 discussed. It was agreed that each time a developer completed a feature from the
@@ -1082,6 +1086,7 @@ effective, however testing may have been improved by incorporating a more collab
 success. However, there are areas in which the system itself could be 
 improved in future to increase ease of use, which given a longer development time could have been addressed accordingly.\par
 
+\newpage
 \section{References}
 
 \renewcommand{\refname}{} 
@@ -1136,6 +1141,7 @@ improved in future to increase ease of use, which given a longer development tim
 \end{thebibliography}
 
 
+\newpage
 \section{Appendices}
 \subsection{Group Contribution Form}
 
