@@ -1,15 +1,16 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 
 % Packages
-\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{array}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
-\usepackage{url}
+\usepackage{enumitem}
 \usepackage{graphicx}
-\usepackage{subcaption}
-\usepackage{array}
-\usepackage[margin=70pt]{geometry}
 \usepackage{changepage}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage[margin=70pt]{geometry}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 % Header and Footer
@@ -41,15 +42,11 @@
 
         {\large Akim Komarnitskii \newline {\small (ak3625, BSc CS Y1)}} &
         {\large Jeet Meher \newline {\small (jm3522, MComp CS Y1)}} &
-        {\large Ollie Vahid \newline {\small(ov247, BSc CS Y1)}} \\
-
-        [0.75cm]
+        {\large Ollie Vahid \newline {\small(ov247, BSc CS Y1)}} \\[0.75cm]
 
         {\large Alex Herrera \newline \small (ah3208, MComp CS Y1)} &
         {\large Kateryna Dzemliuk \newline \small (kd794, BSc CS Y1)} &
-        {\large Tom Boyce \newline \small (tb2301, BSc CS Y1)} \\
-
-        [0.75cm]
+        {\large Tom Boyce \newline \small (tb2301, BSc CS Y1)} \\[0.75cm]
 
         {\large James Sheppard \newline \small (js4209, MComp CS Y1)} &
         {\large Martin Darwall \newline \small (md2353, BSc CS Y1)} &
@@ -153,23 +150,29 @@ chances of rumination and cessation of goal pursuit. The study showed that
 framing data positively can promote self-compassion. For example, highlighting
 positive achievements rather than criticising poorer performance.\par
 
+
 Our intention is to create a PI system aimed at current university students. To
 decide on a list of metrics for our system to track, we investigated the
-interests of our chosen demographic by means of a Google Forms survey. The
-survey, which was sent to students online, revealed that 60\% of respondents
-were most interested in tracking their health, followed by 30\% who were most
-interested in tracking their own learning and development. In addition, when
-asked to rate their interest in tracking their data for self-improvement on a
-scale of 1-10, 55\% of participants rated their interest at 8 or above. This
-reinforced our belief that a PI system would be popular among our target
-audience. We also conducted some individual interviews of students involving
-more specific questions about health and desirable PI system features. These
-interviews revealed an interest in graphs and a simple user interface which we
-will take into account when designing our application. All the students we
-interviewed also expressed a desire to alter the number of hours of sleep they
-got on a daily basis. Based on these investigations, as well as research into
-Fitbit and Garmin software, we decided that our system would track hours of
-sleep, water intake, steps taken and hours spent productively.\par
+interests of our chosen demographic by means of a Google Forms survey (see
+Appendix \ref{app:survey}). The survey, which was sent to students online,
+revealed that 60\% of respondents were most interested in tracking their
+health, followed by 30\% who were most interested in tracking their own
+learning and development. In addition, when asked to rate their interest in
+tracking their data for self-improvement on a scale of 1-10, 55\% of
+participants rated their interest at 8 or above. This reinforced our belief
+that a PI system would be popular among our target audience. 
+
+\newpage
+
+Furthermore, we conducted some individual interviews of students involving more
+specific questions about health and desirable PI system features (see Appendix
+\ref{app:interviews}). These interviews revealed an interest in graphs and a
+simple user interface which we will take into account when designing our
+application. All the students we interviewed also expressed a desire to alter
+the number of hours of sleep they got on a daily basis. Based on these
+investigations, as well as research into Fitbit and Garmin software, we decided
+that our system would track hours of sleep, water intake, steps taken and hours
+spent productively.\par
 
 Our system will allow data to be entered manually. Some metrics will also be
 able to collect data automatically via the Fitbit API to reduce the burden of
@@ -259,6 +262,7 @@ work tracking section was not fully functional due to technical difficulties.
 The completion of these requirements was moved to the following week's
 sprint.\par
 
+
 The fifth, and final, sprint targeted the completion of as yet unimplemented
 features and work on the report document. These responsibilities were split so
 that roughly half the group was working on each. As well as the programming of
@@ -273,37 +277,39 @@ By following the Scrum framework we were able to efficiently divide our work
 into manageable quantities and maintain constant progress towards a timely 
 completion, clearly demonstrating the effectiveness of the methodology.\par
 
-
-\newpage
 \section{Specification of Software Requirements}
 
 This section establishes the core requirements for our Personal Informatics
 (PI) system, focusing on helping students keep up with their fitness and study
-goals. We utilised feedback from surveys, talks with users, market research,
-and academic research articles to figure out what features our system should have. Our
-aim is to make a system that assists students in improving both their physical
-health and studying habits whilst not being overly invasive.\par
+goals. We utilised feedback from surveys (see Appendix \ref{app:survey}), talks
+with users, market research, and academic research articles to figure out what
+features our system should have. Our aim is to make a system that assists
+students in improving both their physical health and studying habits whilst not
+being overly invasive.\par
 
 In the following sections, the notation \textit{SRQ} will be used to denote
 requirements from the coursework's specification, while \textit{ARQ} will
 represent Additional Requirements. Refer to Section \ref{sec:reqTable} for a
 quick-reference table of requirements.
 
+\newpage
+
 \subsection{Gathering System Requirements}
 
 Initially, we asked people what features they would look for in an personal
-improvement application. From these interviews, we identified that most
-students use PI systems for tracking their fitness (60\%) and their learning
-progress (30\%), with the other 10\% being interested in their environmental
-impact. This helped us decide which area of personal informatics our system
-should focus on. Next, we looked at what users stated about our initial ideas
-as well as comparing our ideas to expert findings from our listed articles (SRQ 3.1, 3.2).
-Additionally, many students told us they prefer applications that are intuitive
-but still allow for great insight and control into goals and targets. Also,
-they wished to connect with their friends and peers through the app and liked
-the idea of seeing all their information in a single area. Furthermore, we also
-researched into competitor systems (such as Garmin and Fitbit) to identify both
-good and bad features of these systems .\par
+improvement application. From these interviews (see Appendix \ref{app:survey}
+and \ref{app:interviews}), we identified that most students use PI systems for
+tracking their fitness (60\%) and their learning progress (30\%), with the
+other 10\% being interested in their environmental impact. This helped us
+decide which area of personal informatics our system should focus on. Next, we
+looked at what users stated about our initial ideas as well as comparing our
+ideas to expert findings from our listed articles (SRQ 3.1, 3.2). Additionally,
+many students told us they prefer applications that are intuitive but still
+allow for great insight and control into goals and targets. Also, they wished
+to connect with their friends and peers through the app and liked the idea of
+seeing all their information in a single area. Furthermore, we also researched
+into competitor systems (such as Garmin and Fitbit) to identify both good and
+bad features of these systems.\par
 
 After this, we made an initial requirement list of what functionality our app must contain (SRQ 2.1, 2.3)
 based on the data gathered. We must ensure our system is perfect for tracking
@@ -344,13 +350,13 @@ The fields we have chosen to track as well as how they shall be accessed are as 
         Sleep quality also plays a large role in this but is incredibly
         difficult to track unless specialist equipment is used. Additionally,
         it is usually influenced by factors our system cannot control such as
-        noise from other tenants and temperature.
+        noise from other tenants and temperature. This field will require a
+        user to manually enter their data. Allowing a user to set goals for
+        this field will enable them to prioritise the quantity of sleep they
+        are getting each night. Our system should enable our users to obtain a
+        consistent, healthy sleep pattern.
 
-        This field will require a user to manually enter their data. 
-        Allowing a user to set
-        goals for this field will enable them to prioritise the quantity of
-        sleep they are getting each night. Our system should enable our users
-        to obtain a consistent, healthy sleep pattern
+    \newpage
     
     \item \textbf{Tracking step count}: The average student spends a large
         proportion of their day sedentary, whether that be from napping after a
@@ -407,7 +413,14 @@ Achievements are key to our system as they provide a reason for a user to improv
 without aimlessly trying to increase some number (SRQ 7.4). Furthermore, these
 achievements rotate daily, ensuring a user never runs our of goals to achieve.\\
 
-Additionally, we set additional requirements for our system to contain a range of social features (ARQ 1) including a leaderboard and groups. This was requested by many of the students we interviewed who wished to use friendly competition as a motivator. Unfortunately, we set the priority for this requirement too low as it did not directly influence the core behaviour of our system. During the creation of our system, it was decided that this feature was too complex to implement given the time we had left to fully construct and test the system.
+Additionally, we set additional requirements for our system to contain a range
+of social features (ARQ 1) including a leaderboard and groups. This was
+requested by many of the students we interviewed who wished to use friendly
+competition as a motivator (see Appendix \ref{app:interviews}). Unfortunately,
+we set the priority for this requirement too low as it did not directly
+influence the core behaviour of our system. During the creation of our system,
+it was decided that this feature was too complex to implement given the time we
+had left to fully construct and test the system.
 
 
 \subsection{Comparing User Data}
@@ -464,6 +477,8 @@ We must extensively test each code version to ensure that our users will not run
 into any bugs or other issues whilst using our system. This shall be driven
 largely by simulating the experience an average user will have. Refer to
 Section \ref{sec:testing} for more details (covers all of SRQ 4).
+
+\newpage
 
 \subsection{Requirements Table} \label{sec:reqTable}
 \begin{table}[!ht]
@@ -530,7 +545,6 @@ Section \ref{sec:testing} for more details (covers all of SRQ 4).
 \end{table}
 
 
-\newpage
 \section{Design}
 
 In the design section of a software development project, the focus shifts from
@@ -555,6 +569,8 @@ effectively.\par
   \caption{Database ERD Model}
   \label{fig:PI_ERD}
 \end{figure}
+
+\newpage
 
 Figure \ref{fig:PI_ERD} describes the following components:
 
@@ -589,6 +605,8 @@ Figure \ref{fig:PI_ERD} describes the following components:
         academic and work-related activities over time. This functionality
         supports users in managing their time and productivity more
         effectively.\par
+
+    \newpage
 
     \item \texttt{UserWater} Table: Monitoring hydration, the \texttt{UserWater} table
         includes attributes such as \texttt{Username}, \texttt{Date}, and \texttt{Value}. Hydration
@@ -651,6 +669,8 @@ C\# objects from an SQL query, rather than handling them as tuples.
 Accordingly, based on the ERD, all classes are designed to integrate seamlessly
 with the Dapper package.\par
 
+\newpage
+
 The \texttt{Database} class ensures a singleton pattern for database management,
 creating a single, globally accessible instance throughout the application
 lifecycle. It manages the database connectivity, facilitating secure and
@@ -679,12 +699,14 @@ validation.\par
 
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and
 activity type specifications tailored towards user goals. It features
-goal-specific functionalities such as \texttt{DisplayGoal()} for visualising set goals,
-\texttt{GetSumData()} for data aggregation, and \texttt{DeleteGoalButton\_Click()} for
-goal modification. It inherits text handling and initialisation methods from
-ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst
-ActivityDayInput stands mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1, 7.2 and 7.3.\par
+goal-specific functionalities such as \texttt{DisplayGoal()} for visualising
+set goals, \texttt{DeleteGoalButton\_Click()} for goal modification, and
+\texttt{GetSumData()} for data aggregation. It inherits text handling and
+initialisation methods from ActivityDayInput, ensuring a consistent and
+user-friendly interface. Whilst ActivityDayInput stands mainly by SRQ 6.1 and
+5.1, GoalInput follows SRQ 7.1, 7.2 and 7.3.\par
 
+\vspace{-10pt}
 \subsection{UML Flow Diagram}
 
 \begin{figure}[!ht]
@@ -716,6 +738,8 @@ maintaining data integrity and security, and acts as a centralised repository
 for all user data. This structure ensures seamless data flow across the system,
 fulfilling functional and non-functional requirements, and enhancing overall
 user interaction. The association between these elements are the groundwork for all requirements SRQ 5, SRQ 6 and SRQ 7, as well as ARQ 4.\par
+
+\newpage
 
 \subsection{User Interface}
 
@@ -789,6 +813,8 @@ Figure \ref{fig:Main} displays the four main functionality screen, which is desi
 to be simpler and more focused compared to the main menu. In the top left corner, a 
 dark green \texttt{"BACK"} button allows users to easily return to the main menu.\par 
 
+\newpage
+
 We can clearly see from figure \ref{fig:Work} that the heading \texttt{"WORK"} is
 prominently displayed at the top of the screen, accompanied by a book icon to
 visually represent the category. Centred on the screen is a large green box that
@@ -819,6 +845,8 @@ update their daily work achievements. This was designed in this format for ARQ 5
   \label{fig:Work_Interface}
 \end{figure}
 
+\newpage
+
 Figure \ref{fig:Work_Interface} illustrates how the functionality Work works. When users dismiss
 the progress box, the will see a new input bar, which they can use to add the amount of time that
 they work for the time period they chose in the bar (figure \ref{fig:Add_Work}). Another way here
@@ -834,12 +862,14 @@ book symbol used in the work interface. A notable difference in layout is the pl
 the progress box, which is positioned below the input bars rather than above. This adjustment
 allows for immediate and easy data entry upon accessing the screen, complying with ARQ 5.\par
 
+\vspace{-7pt}
 \begin{figure}[!ht]
   \centering
   \includegraphics[width = 0.5\linewidth]{Error}
   \caption{Error inserting wrong API Token format}
   \label{fig:Error}
 \end{figure}
+\vspace{-7pt}
 
 Additionally, a new input bar for inserting an API token has been added to facilitate the integration of step data from
 external devices or services and fulfilling ARQ 2. Directly next to the API token input bar are \texttt{"Connect"} and 
@@ -884,72 +914,86 @@ encourage users to adjust their habits to meet their sleep targets in the future
   \label{fig:subfunc}
 \end{figure}
 
+\newpage
+
 Figure \ref{fig:Graphs} showcases the Graph interface of the application, which is
 designed to provide a visual representation of user data over time. The screen 
 includes a \texttt{"BACK"} button located at the top left corner, allowing users to easily
 navigate back to the main menu. The heading \texttt{"Graphs"}, marked with a small graph icon,
 indicates the functionality of the interface.\par
 
-The main feature of this interface is a large line graph, titled at the top to specify
-the type of data being displayed. Users have the flexibility to select the timeline 
-for the graph, ranging from a day to a year, with the current example set to display
-data over a year. The timeline is plotted on the horizontal axis, while the specific
-metrics related to the user’s activities are displayed along the vertical axis. The 
-graph utilises a light blue line on a gridded white background, enhancing readability
-and making it easier for users to interpret their data trends. The graph is also capable of showing multiple line at once with different colour. This feature makes it easier for users to compare among different types of statistic (figure \ref{fig:2_graphs}). Through this interface, SRQ 6.1 and 6.2 are followed.\par
+The main feature of this interface is a large line graph, titled at the top to
+specify the type of data being displayed. Users have the flexibility to select
+the timeline for the graph, ranging from a day to a year, with the current
+example set to display data over a year. The timeline is plotted on the
+horizontal axis, while the specific metrics related to the user’s activities
+are displayed along the vertical axis. The graph utilises a light blue line on
+a gridded white background, enhancing readability and making it easier for
+users to interpret their data trends. The graph is also capable of showing
+multiple line at once with different colour. This feature makes it easier for
+users to compare among different types of statistic (figure
+\ref{fig:2_graphs}). Through this interface, SRQ 6.1 and 6.2 are followed.\par
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width = 0.5\linewidth]{2 line graph}
   \caption{More than one line graph can be shown at a time}
   \label{fig:2_graphs}
 \end{figure}
 
-Figure \ref{fig:Achievements} presents the Achievements interface, which aims to motivate
-and inform users about their progress in meeting set goals. Similar to other interfaces,
-it includes a \texttt{"BACK"} button at the top left for returning to the main menu and is labeled
-with the heading \texttt{"Achievements"}, accompanied by a medal icon to symbolise success and recognition.\par
+Figure \ref{fig:Achievements} presents the Achievements interface, which aims
+to motivate and inform users about their progress in meeting set goals. Similar
+to other interfaces, it includes a \texttt{"BACK"} button at the top left for
+returning to the main menu and is labeled with the heading
+\texttt{"Achievements"}, accompanied by a medal icon to symbolise success and
+recognition.\par
 
-The interface is divided into two main sections. On the left, a box at the top displays
-the number of achievements completed within the week, indicated as \texttt{"0/4"} in this example,
-suggesting no goals have been met yet. Below this summary, four boxes represent the 
-achievements tied to the four main functionalities of the system (steps, work, sleep, and
-water). Each box includes a white checkbox that is ticked off when the corresponding daily
-goal is achieved.\par
+The interface is divided into two main sections. On the left, a box at the top
+displays the number of achievements completed within the week, indicated as
+\texttt{"0/4"} in this example, suggesting no goals have been met yet. Below
+this summary, four boxes represent the achievements tied to the four main
+functionalities of the system (steps, work, sleep, and water). Each box
+includes a white checkbox that is ticked off when the corresponding daily goal
+is achieved.\par
 
-On the right half of the screen, a white text box provides a summary of the total activities
-completed for each functionality during the week, assisting users in tracking their weekly
-progress. Additionally, a streak counter is placed above the activity summaries, encouraging
-users to consistently meet their daily goals and build long-term habits.\par
+\newpage
 
-Together, these interfaces support the app’s objective to engage users actively in tracking
-their progress and achieving their health and productivity goals, perfectly complying with SRQ 7.1 and allowing users to compare data with others, complying with ARQ 1.\par
+On the right half of the screen, a white text box provides a summary of the
+total activities completed for each functionality during the week, assisting
+users in tracking their weekly progress. Additionally, a streak counter is
+placed above the activity summaries, encouraging users to consistently meet
+their daily goals and build long-term habits.\par
+
+Together, these interfaces support the app’s objective to engage users actively
+in tracking their progress and achieving their health and productivity goals,
+perfectly complying with SRQ 7.1 and allowing users to compare data with
+others, complying with ARQ 1.\par
 
 
 \section{Software Testing and Verification} \label{sec:testing}
 
 During the initial planning of this project, the approach to testing was
-discussed and a Test Plan was created,  Figure \ref{fig:TestDesign} . It was
-agreed that each time a developer completed a feature from the product backlog
-they would thoroughly white-box test it themselves using a variety of
-specifically chosen test cases and take screenshots to record the results. If
-all tests produced the desired results, the developer would consider the
-feature complete. If any tests were unsuccessful, however, they would debug and
-fix the problem before applying all tests again.  If the error was found in
-anothers developers code,  the error and the test results were provided to the
-person responisble and they would colaborate on the debugging.  In this way,
-the component's functionality given both valid and invalid inputs would be
-ensured. By testing each element before combining it with other elements of the
-system, the testing process as a whole would comprise a bottom-up integration
-testing approach. On the completion of a part of the product backlog, the
-developer would send the screenshots produced in testing to the product owner.
-The product owner would then analyse the screenshots to ensure that the
-evidenced functionality aligned with the requirements of the product backlog.
-The product owner would also use the screenshots to provide feedback to the
-developers and to inform future decisions and alterations to the product
-backlog.\par
+discussed and a testing plan was created,  see Figure \ref{fig:TestDesign} in
+Appendix \ref{app:testing}. It was agreed that each time a developer completed
+a feature from the product backlog they would thoroughly white-box test it
+themselves using a variety of specifically chosen test cases and take
+screenshots to record the results. If all tests produced the desired results,
+the developer would consider the feature complete. If any tests were
+unsuccessful, however, they would debug and fix the problem before applying all
+tests again.  If the error was found in another  developer's code,  the error
+and the test results were provided to the person responsible and they would
+collaborate on the debugging. In this way, the component's functionality given
+both valid and invalid inputs would be ensured. By testing each element before
+combining it with other elements of the system, the testing process as a whole
+would comprise a bottom-up integration testing approach. On the completion of a
+part of the product backlog, the developer would send the screenshots produced
+in testing to the product owner. The product owner would then analyse the
+screenshots to ensure that the evidenced functionality aligned with the
+requirements of the product backlog. The product owner would also use the
+screenshots to provide feedback to the developers and to inform future
+decisions and alterations to the product backlog.\par
 
-\subsection{Examples}
+\subsection{Examples of Manual Testing}
 
 The programmers in our group were very good at ensuring that their code
 initially contained no bugs so testing revealed very few errors. Below,
@@ -976,14 +1020,12 @@ cases were included in the process:\par
         \hline
     \end{tabular}
 \end{center}
-The first test of the two was passed successfully. However, while the progress 
-label did revert to a lower value upon alteration of the data, the achievement 
-remained highlighted, as shown in figure \ref{fig:ManualTest1}(see Apendix).\par
 
- %Image removed 
-
-The developer in charge of this section was quickly able to find the source of 
-this issue and fix it.\par
+The first test of the two was passed successfully. However, while the progress
+label did revert to a lower value upon alteration of the data, the achievement
+remained highlighted, as shown in Figure \ref{fig:ManualTest1} (see Appendix
+\ref{app:testing}). The developer in charge of this section was quickly able to
+find the source of this issue and fix it.\par
 
 \subsubsection{Incomplete Input}
 Another issue that was found during testing was in the manual data input. To avoid 
@@ -1003,9 +1045,10 @@ however, the following test case caused an unexpected error.\par
 
 %Image removed
 
-When a decimal point was entered,  as in figure \ref{fig:ManualTest2}(see Apendix), the program froze and then crashed. 
-To avoid this, the developer changed the code handling the inputs and 
-the problem was solved.\par
+When a decimal point was entered, as in Figure \ref{fig:ManualTest2} (see
+Appendix \ref{app:testing}), the program froze and then crashed. To avoid this,
+the developer changed the code handling the inputs and the problem was
+solved.\par
 
 \subsubsection{Goal Expiry}
 A third example of an error caught by our testing was an issue with the 
@@ -1022,11 +1065,10 @@ time period of goals. During testing, the following test case failed:\par
     \end{tabular}
 \end{center}
 
-% Image removed
-
-As shown in the figure \ref{fig:ManualTest3}(see Apendix), once the goal time had passed, the counter 
-simply continued to run. This relatively major issue was quickly resolved 
-and the feature now functions correctly.\par
+As shown in the Figure \ref{fig:ManualTest3} (see Appendix \ref{app:testing}),
+once the goal time had passed, the counter simply continued to run. This
+relatively major issue was quickly resolved and the feature now functions
+correctly.\par
 
 \section{Reflection and Conclusion}
 
@@ -1043,18 +1085,20 @@ significant period of time in order to properly gauge how well it works from
 a user's perspective but, we can still evaluate it from a critical viewpoint 
 and make educated speculations about its effectiveness.\par
 
-\subsection{System Development}
-The creation the specification for our system began with research to establish 
-the interests of our target demographic. The biggest parts of this research 
-were an online form distributed to our peers and some interviews. The results 
-of these were very helpful and were the driving force behind our choice of 
-tracking metrics. However, while this approach was sound and successful in 
-gathering information, only around twenty individuals filled in the form and 
-we only managed to interview two individuals. This is a large enough number of 
-people that we feel comfortable with using the results as a guide, especially 
-given the clear majority in the opinions of the form respondents. However, in 
-future, ensuring a larger sample size would improve the reliability of our 
-results and, at the very least, make us more certain in our decisions.\par
+\subsection{System Development} 
+
+The creation the specification for our system began with research to establish
+the interests of our target demographic. The biggest parts of this research
+were an online form distributed to our peers and some interviews (see Appendix
+\ref{app:survey} and \ref{app:interviews}). The results of these were very
+helpful and were the driving force behind our choice of tracking metrics.
+However, while this approach was sound and successful in gathering information,
+only around twenty individuals filled in the form and we only managed to
+interview two individuals. This is a large enough number of people that we feel
+comfortable with using the results as a guide, especially given the clear
+majority in the opinions of the form respondents. However, in future, ensuring
+a larger sample size would improve the reliability of our results and, at the
+very least, make us more certain in our decisions.\par
 
 Our choice of tracking metrics was informed both by data gathering and by 
 research into other PI systems. This meant that our final list of four metrics 
@@ -1121,11 +1165,13 @@ ease of further development. Adding new metrics would likely only require an
 extra record in the Activities table. However, there would also be downsides 
 to this approach; understanding the layout of the database would be less 
 simple, relying on keeping track of foreign keys and more complicated database 
-queries. Our class design closely resembles that of our database and is 
-therefore similarly intuitive. If we were to alter the database design, 
-careful alterations to the interface between the database and the code could 
-maintain the clarity of data storage from a programming perspective by 
-minimising changes in the class design.\par
+queries. \par
+
+Our class design closely resembles that of our database and is therefore
+similarly intuitive. If we were to alter the database design, careful
+alterations to the interface between the database and the code could maintain
+the clarity of data storage from a programming perspective by minimising
+changes in the class design.\par
 
 As per our specification, the PI system is a locally-run PC application. This 
 is beneficial to users when it comes to the viewing of the graphical statistics 
@@ -1178,6 +1224,8 @@ as part of the sprint that followed, making the database more efficient. In
 this way, the Agile methodology helped us avoid future problems and work by 
 allowing flexibility during the development process\par
 
+\newpage
+
 A part of the process that worked particularly efficiently in our group was 
 the sprint planning weekly meetings. By having a member of the team run the 
 meetings, and through open communication, we managed to always ensure that 
@@ -1187,13 +1235,16 @@ meaningful results during the sprint and finished the project before
 the deadline.\par
 
 \subsection{Conclusion}
-In conclusion, through carefully considered design and adherence to Agile 
-methods, we managed to successfully produce a working PI system in an 
-organised way. We believe that this system is intuitive, informative and 
-robust. Furthermore, our approach to testing and development was 
-effective, however testing may have been improved by incorporating a more collaborative system. Therefore, the development of this system has primarily been a 
-success. However, there are areas in which the system itself could be 
-improved in future to increase ease of use, which given a longer development time could have been addressed accordingly.\par
+
+In conclusion, through carefully considered design and adherence to Agile
+methods, we managed to successfully produce a working PI system in an organised
+way. We believe that this system is intuitive, informative and robust.
+Furthermore, our approach to testing and development was effective, however
+testing may have been improved by incorporating a more collaborative system.
+Therefore, the development of this system has primarily been a success.
+However, there are areas in which the system itself could be improved in future
+to increase ease of use, which given a longer development time could have been
+addressed accordingly.\par
 
 \newpage
 \section{References}
@@ -1249,94 +1300,6 @@ improved in future to increase ease of use, which given a longer development tim
     \textit{Sleep}, 38(6), pp.843–844.
 \end{thebibliography}
 
-
-
-
-\newpage
-
-\section{Appendix: Testing}
-\subsection{Test Plan Design}
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width = 1\linewidth]{Test Design.jpg}
-  \caption{Test Plan Design}
-    \label{fig:TestDesign}
-\end{figure}
-\pagebreak
-\subsection{Manual Testing}
-
-\begin{figure}[!ht]
-  \centering
-  \begin{subfigure}{0.4\linewidth}
-    \includegraphics[width=\linewidth]{achievementCorrect.png}
-    \caption{Achievement Correct}
-    \label{fig:ManualTest1.1}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}{0.4\linewidth}
-    \includegraphics[width=\linewidth]{achievementIncorrect.png}
-    \caption{Achievement Incorrect}
-    \label{fig:ManualTest1.2}
-  \end{subfigure}
-  \caption{Achievement Test}
-  \label{fig:ManualTest1}
-\end{figure}
-
-
-
-
-\begin{figure}[!ht]
-\centering
-    \includegraphics[width=0.8\linewidth]{decimalPointError.png}
-\caption{Decimal Point Error}
-\label{fig:ManualTest2}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-    \includegraphics[width=0.6\linewidth]{goalNotExpiring.png}
-\caption{Goal Not Expiring}
-\label{fig:ManualTest3}
-\end{figure}
-
-\pagebreak
-\subsection{Unit Testing}
-\begin{figure}[!ht]
-\centering
-    \includegraphics[width=0.8\linewidth]{Insert.png}
-\caption{A test demonstrating an Insertion into the Steps Table in the Database}
-\label{fig:Database Unit Test 1}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-    \includegraphics[width=0.8\linewidth]{UpdatingTest.png}
-\caption{A test demonstrating an Update to the previous Insertion}
-\label{fig:Database Unit Test 2}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-    \includegraphics[width=0.8\linewidth]{AddingDailyGoalTest.png}
-\caption{A test demonstrating an Insertion of a Daily Goal in the Database}
-\label{fig:Database Unit Test 3}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-    \includegraphics[width=0.8\linewidth]{AddingWeeklyGoalTest.png}
-\caption{A test demonstrating an Insertion of a Weekly Goal in the Database}
-\label{fig:Database Unit Test 4}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-    \includegraphics[width=0.8\linewidth]{DeletingGoalTest.png}
-\caption{A test demonstrating the deletion of a Goal in the Database}
-\label{fig:Database Unit Test 5}
-\end{figure}
-
-
 \newpage
 \section{Appendix: Group Contribution Form}
 
@@ -1367,8 +1330,178 @@ improved in future to increase ease of use, which given a longer development tim
 \end{tabular}
 \end{table}
 
+For additional information refer to Appendix \ref{app:ct}.
+
 \newpage
-\section{Appendix: Contribution Table}
+
+
+\section{Appendix: Survey}\label{app:survey}
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=0.6\linewidth]{survey1.jpg}
+\caption{Survey Bar Chart}
+\label{fig:survey1}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=0.6\linewidth]{survey2.jpg}
+\caption{Survey Pie Chart}
+\label{fig:survey2}
+\end{figure}
+
+\newpage
+
+
+\section{Appendix: Interview Transcripts}\label{app:interviews}
+
+\textbf{Interviewee: Edwin Smith}
+
+\begin{enumerate}[label=\textbf{Q\arabic*:}, leftmargin=*, align=left]
+    \item What are you looking for in an app to help you improve your sleep schedule?
+    \begin{quote}
+        Something that relaxes me.
+    \end{quote}
+
+    \item How many hours of sleep do you get on average, per day?
+    \begin{quote}
+        Around 10 hours of sleep, however, I want to reduce this amount.
+    \end{quote}
+
+    \item Do you think that your calorie intake is greater than, less than, or around the same as the daily calorie intake of the average adult?
+    \begin{quote}
+        Probably more, but I am happy as I am. My metabolism is high and the daily average also depends on your physical build.
+    \end{quote}
+
+    \item Would you be open to participating in challenges/competitions within the app to help you meet your fitness goals? If so, what kind of challenges are you looking for?
+    \begin{quote}
+        Yes, I would be down for challenges, especially amongst other people or friends. Since I am an avid gym enthusiast, it would be cool to see a “who can eat ‘n’ amount of calories in a day” kind of challenge. Note that this is only for bulking reasons, however you can implement better calorie intakes depending on what the person wants. Having a challenge based on the number of steps or distance traveled would improve my cardio a lot, especially if a friend of mine could also join in.
+    \end{quote}
+
+    \item How important is the user interface for you? Will you like a simple minimalistic design, or a UI consisting of more options and possibly more complex?
+    \begin{quote}
+        I would like a simple but powerful UI, which allows you to see a bunch of data visualised. I would like to see a leaderboard of my friends, and a weekly challenges button so it keeps everyone busy.
+    \end{quote}
+
+    \item Any other information you believe could be useful?
+    \begin{quote}
+        No.
+    \end{quote}
+\end{enumerate}
+\newpage
+\textbf{Interviewee: Oliver Niles}
+
+\begin{enumerate}[label=\textbf{Q\arabic*:}, resume, leftmargin=*, align=left]
+    \item Are there any visualisations or reports you would like to see to help you understand your fitness data better?
+    \begin{quote}
+        Yes, I would like to see line graphs where I can customise the range of data, ranging from days to years. Every week I would like a report which outlines the key data points of my fitness in order to determine what I can do to improve.
+    \end{quote}
+
+    \item What kind of feedback/encouragement would you like to see from the app, and how would you like this to be displayed?
+    \begin{quote}
+        You could implement a point system as a form of encouragement, where you could customise your account and compare with other friends on the app. I am more likely to use the app if it is more competitive with other people.
+    \end{quote}
+
+    \item How important are social features, like being able to view other people’s achievements, like your friends?
+    \begin{quote}
+        Quite important to be able to view other people’s achievements, but you could make it so your account is not visible to other people as well. However, it is important to focus on yourself because sometimes it can be unrealistic especially if the person you are comparing with is not at a level that you are at.
+    \end{quote}
+
+    \item Do you have any fitness/health goals that you would like the app to help you achieve?
+    \begin{quote}
+        Yes, I would like to be able to gain muscle over the next year by tracking my calorie intake and exercises that I have done. I’d also like to be able to get more sleep using the app’s recommended bedtime schedule for my goals.
+    \end{quote}
+
+    \item Any other information you believe could be useful?
+    \begin{quote}
+        After I input the calories of a meal, I would like to have the option to save the meal as a preset which I can add to any day, which automatically adds the calories of that meal to my daily calories count so that I don’t have to type it in each time.
+    \end{quote}
+\end{enumerate}
+
+\newpage
+
+\section{Appendix: Testing}\label{app:testing}
+\subsection{Testing Plan}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width = 1\linewidth]{Test Design.jpg}
+  \caption{Testing Plan}
+    \label{fig:TestDesign}
+\end{figure}
+\pagebreak
+\subsection{Manual Testing}
+
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width=\linewidth]{achievementCorrect.png}
+    \caption{Achievement Correct}
+    \label{fig:ManualTest1.1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width=\linewidth]{achievementIncorrect.png}
+    \caption{Achievement Incorrect}
+    \label{fig:ManualTest1.2}
+  \end{subfigure}
+  \caption{Achievement Test}
+  \label{fig:ManualTest1}
+\end{figure}
+
+
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=0.8\linewidth]{decimalPointError.png}
+\caption{Decimal Point Error}
+\label{fig:ManualTest2}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=0.6\linewidth]{goalNotExpiring.png}
+\caption{Goal Not Expiring}
+\label{fig:ManualTest3}
+\end{figure}
+
+
+\newpage
+\subsection{Unit Testing}
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=\linewidth]{Insert.png}
+\caption{A test demonstrating an Insertion into the Steps Table in the Database}
+\label{fig:Database Unit Test 1}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=\linewidth]{UpdatingTest.png}
+\caption{A test demonstrating an Update to the previous Insertion}
+\label{fig:Database Unit Test 2}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=\linewidth]{AddingDailyGoalTest.png}
+\caption{A test demonstrating an Insertion of a Daily Goal in the Database}
+\label{fig:Database Unit Test 3}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=\linewidth]{AddingWeeklyGoalTest.png}
+\caption{A test demonstrating an Insertion of a Weekly Goal in the Database}
+\label{fig:Database Unit Test 4}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=\linewidth]{DeletingGoalTest.png}
+\caption{A test demonstrating the deletion of a Goal in the Database}
+\label{fig:Database Unit Test 5}
+\end{figure}
+
+
+\clearpage
+\section{Appendix: Contribution Table}\label{app:ct}
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-3cm}{-3cm}
@@ -1410,6 +1543,7 @@ improved in future to increase ease of use, which given a longer development tim
 \end{tabular}
 \end{adjustwidth}
 \end{table}
+
 
 
 \newpage
@@ -1511,7 +1645,6 @@ improved in future to increase ease of use, which given a longer development tim
       his findings.
     \end{itemize}
   \end{itemize}
-  \newpage
 \item
   \textbf{Draft the Initial Requirements:}
 
@@ -1520,6 +1653,8 @@ improved in future to increase ease of use, which given a longer development tim
   \item
     \textbf{Responsible:} James
   \end{itemize}
+
+  \newpage
 \item
   \textbf{Start the Report in LaTeX:}
 
@@ -1921,7 +2056,6 @@ Points}\label{next-week-discussion-points}}
       Akim
     \end{itemize}
   \end{itemize}
-  \newpage
 \item
   Go through the report part of the spec and \textbf{allocate work} to
   Tom:
@@ -2029,7 +2163,6 @@ Points}\label{next-week-discussion-points}}
   \item
     Began integrating the API.
   \end{itemize}
-  \newpage
 \item
   \textbf{General Discussions:}
 
@@ -2109,6 +2242,7 @@ Points}\label{next-week-discussion-points}}
       Jeet
     \end{itemize}
   \end{itemize}
+  \newpage
 \item
   Assist with \textbf{Achievements Functionality}.
 
@@ -2145,7 +2279,6 @@ Points}\label{next-week-discussion-points}}
       Akim
     \end{itemize}
   \end{itemize}
-\newpage
 \item
   \textbf{Assign Tasks} for Martin and Alex.
 
@@ -2335,7 +2468,6 @@ Points}\label{next-week-discussion-points}}
   \end{itemize}
 \end{itemize}
 
-\newpage
 \textbf{Report}:
 
 \begin{itemize}
@@ -2351,6 +2483,7 @@ Points}\label{next-week-discussion-points}}
   \item
     \textbf{Deadline}: Wednesday
   \end{itemize}
+  \newpage
 \item
   Thang and Alex have not been able to complete the \textbf{Design
   section} by today, but they will fully complete it and push to GitHub
