@@ -506,12 +506,11 @@ Section \ref{sec:testing} for more details (covers all of SRQ 4).
 \newpage
 \section{Design}
 
-\textbf{TODO: Change this to something else (more intro-ish)}
-[In the design of our PI system, the UML diagrams serve as a cornerstone for
-understanding the structure and relationships within the application. The
-diagrams are organized to reflect the logical architecture of the system and
-consists of several key classes that correlate directly with the user data
-management and activity tracking functionalities.]\par
+In the design section of a software development project, the focus shifts from
+conceptualizing solutions to delineating the concrete frameworks and blueprints
+that will guide the creation and implementation of the software. This section 
+comprises several key design documents and diagrams that together provide a 
+comprehensive overview of both the structural and visual aspects of the project.\par
 
 \subsection{Database ERD Model}
 
@@ -606,12 +605,10 @@ This table covers ARQ 1.
 
 \subsection{UML Class Diagram}
 
-
-
 We use the Dapper module on \texttt{C\#} since it allows us to return or insert a
 list of \texttt{C\#} objects from an SQL query instead of retrieving them as
 tuples. Hence, based on the ERD, all the classes are built for the Dapper
-package.\textbf{TODO: Move this paragraph somewhere else}\par
+packagepar
 
 \begin{figure}[!ht]
   \centering
@@ -626,7 +623,11 @@ design to efficiently manage and process user data. Central to this
 architecture is the Database class, which acts as the primary conduit for all
 data manipulation and retrieval activities within the system. This class is
 critical for the robust handling of data and supports various functionalities
-critical to user interaction and data integrity.\par
+critical to user interaction and data integrity.We utilize the Dapper module 
+in \texttt{C#}, which facilitates the direct return or insertion of a list of 
+\texttt{C#} objects from an SQL query, rather than handling them as tuples. 
+Accordingly, based on the ERD, all classes are designed to integrate seamlessly
+with the Dapper package.\par
 
 The Database class ensures a singleton pattern for database management,
 creating a single, globally accessible instance throughout the application
