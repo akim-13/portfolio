@@ -535,7 +535,7 @@ Figure \ref{fig:PI_ERD} describes the following components:
 
     \item \texttt{UserAchievements} Table: This table stores specific
         achievements of users, linked directly to the User table. Attributes
-        like Username, Date, ActivityID, TimeFrameID, and Value allow for
+        like \texttt{Username}, \texttt{Date}, \texttt{ActivityID}, \texttt{TimeFrameID}, and \texttt{Value} allow for
         detailed recording and analysis of user accomplishments across
         different activities and timeframes. It enables the system to provide
         feedback and insights based on historical achievement data, supporting
@@ -543,38 +543,38 @@ Figure \ref{fig:PI_ERD} describes the following components:
         table aimed to adhere specifically to SRQ 7.4, yet it also contributes to SRQ 7.1.\par
 
     \item \texttt{UserStep} Table: Dedicated to tracking the physical activity
-        of steps taken, this class includes attributes such as Username, Date,
-        and Value. By recording daily step counts, the UserStep table feeds
+        of steps taken, this table includes attributes such as \texttt{Username}, \texttt{Date},
+        and \texttt{Value}. By recording daily step counts, the \texttt{UserStep} table feeds
         into the system’s health monitoring and fitness tracking capabilities,
         allowing users to set and monitor physical activity goals. As the data 
         can also be inserted though an API, this table aims to cover ARQ 2.\par
 
     \item \texttt{UserSleep} Table: Focusing on sleep habits, this table
         records the duration of sleep per day for each user with attributes
-        Username, Date, and Value. It is vital for analyzing sleep patterns
+        \texttt{Username}, \texttt{Date}, and \texttt{Value}. It is vital for analyzing sleep patterns
         and correlating them with other health metrics, which is essential for
         offering personalized health insights and improving user
         well-being.\par
 
     \item \texttt{UserWork} Table: This table tracks work and study sessions,
         an essential feature for our users. Attributes include
-        Username, Date, and Value, facilitating the tracking of
+        \texttt{Username}, \texttt{Date}, and \texttt{Value}, facilitating the tracking of
         academic and work-related activities over time. This functionality
         supports users in managing their time and productivity more
         effectively.\par
 
-    \item \texttt{UserWater} Table: Monitoring hydration, the UserWater class
-        includes attributes such as Username, Date, and Value. Hydration
+    \item \texttt{UserWater} Table: Monitoring hydration, the \texttt{UserWater} table
+        includes attributes such as \texttt{Username}, \texttt{Date}, and \texttt{Value}. Hydration
         tracking is crucial for overall health, and this table allows the
         system to remind users to stay hydrated and track their daily water
         intake.\par
 
     \item \texttt{UserGoals} Table: As a strategic component of our system, the
         UserGoals table holds data related to the personal objectives of users.
-        With attributes like Username, ActivityID, TimeFrameID, Date, and
-        Value, this table supports the setting and monitoring of personalized
+        With attributes like \texttt{Username}, \texttt{ActivityID}, \texttt{TimeFrameID}, \texttt{Date}, and
+        \texttt{Value}, this table supports the setting and monitoring of personalized
         goals, enhancing the system's capability to drive user engagement and
-        encourage behavior modification. UserGoals covers SRQ 7.1, 7.2 and
+        encourage behavior modification. \texttt{UserGoals} covers SRQ 7.1, 7.2 and
         7.3.\par
 
 \end{itemize}
@@ -591,11 +591,11 @@ are all aimed to satisfy ARQ 5 and SRQ 5.1, 5.2 and 5.3.
 
 Figure \ref{fig:User_Table} describes our \texttt{User} Table: used to be
 central to our system, the User table captures essential personal identifiers and
-account information for each user. Attributes include Username, Email, and
-PasswordHash, which are fundamental for ensuring secure user authentication and
+account information for each user. Attributes include \texttt{Username}, \texttt{Email}, and
+\texttt{PasswordHash}, which are fundamental for ensuring secure user authentication and
 system access. This table acts as the primary entity with which other tables
 associate, establishing a one-to-many relationship across various data-tracking
-entities. Each instance of a User can associate with multiple records in
+entities. Each instance of a user can associate with multiple records in
 subordinate tables, reflecting the diverse activities and metrics tracked by the
 system. Ultimately, the requirement for a multi-user system was omitted due to
 limitations in the allocated time frame. However, the underlying database
@@ -604,11 +604,6 @@ integration of multi-user capabilities, should they be developed in the future.
 This table covers ARQ 1.
 
 \subsection{UML Class Diagram}
-
-We use the Dapper module on \texttt{C\#} since it allows us to return or insert a
-list of \texttt{C\#} objects from an SQL query instead of retrieving them as
-tuples. Hence, based on the ERD, all the classes are built for the Dapper
-packagepar
 
 \begin{figure}[!ht]
   \centering
@@ -620,43 +615,43 @@ packagepar
 The class diagram of our PI system (fig. \ref{fig:Class}) delineates the
 fundamental components and their relationships, underscoring the system's
 design to efficiently manage and process user data. Central to this
-architecture is the Database class, which acts as the primary conduit for all
+architecture is the \texttt{Database} class, which acts as the primary conduit for all
 data manipulation and retrieval activities within the system. This class is
 critical for the robust handling of data and supports various functionalities
-critical to user interaction and data integrity.We utilize the Dapper module 
+critical to user interaction and data integrity. We utilize the Dapper module 
 in \texttt{C#}, which facilitates the direct return or insertion of a list of 
 \texttt{C#} objects from an SQL query, rather than handling them as tuples. 
 Accordingly, based on the ERD, all classes are designed to integrate seamlessly
 with the Dapper package.\par
 
-The Database class ensures a singleton pattern for database management,
+The \texttt{Database} class ensures a singleton pattern for database management,
 creating a single, globally accessible instance throughout the application
 lifecycle. It manages the database connectivity, facilitating secure and
 persistent connections to the data store. Data manipulation methods such as
-InsertWithQuery(), Insert(), UpdateWithQuery(), and Update() allow for
+\texttt{InsertWithQuery()}, \texttt{Insert()}, \texttt{UpdateWithQuery()}, and \texttt{Update()} allow for
 efficient data insertion and updating within the database. Retrieval methods
-like GetUserActivities() and GetUserActivityAt() fetch activity data for users,
+like \texttt{GetUserActivities()} and \texttt{GetUserActivityAt()} fetch activity data for users,
 crucial for generating reports and insights. Utility methods including
-GetStringDataToday(), GetUserGoal(), and DeleteUserGoal() provide additional
+\texttt{GetStringDataToday()}, \texttt{GetUserGoal()}, and \texttt{DeleteUserGoal()} provide additional
 functionality for managing daily data strings and user goals, enhancing the
 system’s responsiveness to user interactions. These methods were essential for
 SRQ 6.1 and 6.2, as well as directly adhering to SRQ 5.1 and 5.2. \par
 
-The ActivityDayInput and GoalInput classes, both inheriting from UserControl,
+The \texttt{ActivityDayInput} and \texttt{GoalInput classes},
 are specifically designed for handling the input and update functionalities
 related to daily user activities and goal management, respectively. The
-ActivityDayInput Class includes a Prompt string for user guidance and an
-Activity ActivityType to specify the type of activity data being entered. It
+\texttt{ActivityDayInput} Class includes a Prompt string for user guidance and an
+Activity \texttt{ActivityType} to specify the type of activity data being entered. It
 comprises various user interaction handlers such as \texttt{UpdateButton\_Click()} and
-InsertOrUpdate() for data submission, alongside UpdateUserWater() and
-UpdateUserSteps() for updating specific activity metrics. Text handling methods
+\texttt{InsertOrUpdate()} for data submission, alongside \texttt{UpdateUserWater()} and
+\texttt{UpdateUserSteps()} for updating specific activity metrics. Text handling methods
 like \texttt{TextBox\_TextChanged()}, \texttt{TextBox\_PreviewTextInput()}, and
 \texttt{TextBox\_KeyDown()} ensure data integrity and user input validation.\par
 
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and
 activity type specifications tailored towards user goals. It features
-goal-specific functionalities such as DisplayGoal() for visualizing set goals,
-GetSumData() for data aggregation, and \texttt{DeleteGoalButton\_Click()} for
+goal-specific functionalities such as \texttt{DisplayGoal()} for visualizing set goals,
+\texttt{GetSumData()} for data aggregation, and \texttt{DeleteGoalButton\_Click()} for
 goal modification. It inherits text handling and initialization methods from
 ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst
 ActivityDayInput stands mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1, 7.2 and 7.3.\par
@@ -675,19 +670,19 @@ interactions between classes, essential for efficient functionality and user
 experience. At the core is the MainMenu class, which integrates features like
 tracking steps, achievements, water intake, and sleep via separate classes
 (Step, Achievement, Water, Sleep). These classes manage specific activities and
-are tightly integrated with ActivityDayInput and GoalInput controls for data
+are tightly integrated with \texttt{ActivityDayInput} and \texttt{GoalInput} controls for data
 entry and goal management.\par
 
 For example, when users input their daily water intake through the
-ActivityDayInput tailored for water, this control processes and validates the
+\texttt{ActivityDayInput} tailored for water, this control processes and validates the
 data, then interacts with the Water class and the Database to store this
-information. Similarly, the GoalInput facilitates setting and updating goals,
+information. Similarly, the \texttt{GoalInput} facilitates setting and updating goals,
 interacting directly with the Database to ensure goals are current and
 reflective of user activity.\par
 
-The association between the ActivityDayInput, GoalInput, and the Database
+The association between the \texttt{ActivityDayInput}, \texttt{GoalInput}, and the \texttt{Database}
 ensures immediate data reflection in the system, supporting features like
-activity comparison and trend analysis. The Database manages its instance,
+activity comparison and trend analysis. The \texttt{Database} manages its instance,
 maintaining data integrity and security, and acts as a centralized repository
 for all user data. This structure ensures seamless data flow across the system,
 fulfilling functional and non-functional requirements, and enhancing overall
@@ -725,7 +720,8 @@ for sleep hours) shown in smaller font size directly below. The design adheres t
 
 A unique aspect of the design is a small white checkbox located in the top left
 corner of each button. These boxes can be marked by user when they want to see
-the related data in graph, and therefore allows for SRQ 6.2 to function smoothly.\par
+the related data in graph, and therefore allows for SRQ 6.2 to function smoothly.
+Moreover, several boxes can be ticked at once, allowing users to see the relativity of different type of stats in one graph.\par
 
 \begin{figure}[!ht]
   \centering
@@ -793,8 +789,6 @@ update their daily work achievements. This was designed in this format for ARQ 5
   \caption{Add Work Interface}
   \label{fig:Work_Interface}
 \end{figure}
-
-
 
 Figure \ref{fig:Work_Interface} illustrates how the functionality Work works. When users dismiss
 the progress box, the will see a new input bar, which they can use to add the amount of time that
@@ -874,6 +868,7 @@ data over a year. The timeline is plotted on the horizontal axis, while the spec
 metrics related to the user’s activities are displayed along the vertical axis. The 
 graph utilizes a light blue line on a gridded white background, enhancing readability
 and making it easier for users to interpret their data trends. Through this interface, SRQ 6.1 and 6.2 are followed.\par
+
 
 Figure \ref{fig:Achievements} presents the Achievements interface, which aims to motivate
 and inform users about their progress in meeting set goals. Similar to other interfaces,
