@@ -34,9 +34,18 @@
 \begin{titlepage}
     \centering
     {\Huge \bfseries Custom Personal Informatics System}\\[0.2cm]
-    \vspace*{0.5cm}
-    {\large Author 1, Author 2, Author 3, Author 4, Author 5, Author 6, Author 7, Author 8, Author 9}\\[2cm] % Authors
-    \vspace*{1cm}
+
+    \vspace{30pt}
+
+    \begin{tabular}{>{\centering}m{0.3\textwidth} >{\centering}m{0.3\textwidth} >{\centering\arraybackslash}m{0.3\textwidth}}
+        {\large Akim Komarnitskii} & {\large Jeet Meher} & {\large Ollie Vahid} \\
+        [0.75cm]
+        {\large Alex Herrera} & {\large Kateryna Dzemliuk} & {\large Tom Boyce} \\
+        [0.75cm]
+        {\large James Sheppard} & {\large Martin Darwall} & {\large Chien Nguyen} \\
+    \end{tabular}
+
+    \vspace{35pt}
 
     \begin{minipage}{0.9\textwidth}
 
@@ -525,7 +534,7 @@ effectively.\par
 \begin{figure}[!ht]
   \centering
   \includegraphics[width = 0.7\linewidth]{PI Systems Database}
-  \caption{Database ERD model of our PI system}
+  \caption{Database ERD Model}
   \label{fig:PI_ERD}
 \end{figure}
 
@@ -585,7 +594,7 @@ are all aimed to satisfy ARQ 5 and SRQ 5.1, 5.2 and 5.3.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width = 0.4\linewidth]{PI Systems Database-2}
-  \caption{User Class in our database model}
+  \caption{User Class in the Database Model}
   \label{fig:User_Table}
 \end{figure}
 
@@ -608,7 +617,7 @@ This table covers ARQ 1.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width = 0.7\linewidth]{UML Class diagram}
-  \caption{UML Class diagram of our PI system}
+  \caption{UML Class Diagram}
   \label{fig:Class}
 \end{figure}
 
@@ -619,8 +628,8 @@ architecture is the \texttt{Database} class, which acts as the primary conduit f
 data manipulation and retrieval activities within the system. This class is
 critical for the robust handling of data and supports various functionalities
 critical to user interaction and data integrity. We utilize the Dapper module 
-in \texttt{C#}, which facilitates the direct return or insertion of a list of 
-\texttt{C#} objects from an SQL query, rather than handling them as tuples. 
+in C\#, which facilitates the direct return or insertion of a list of 
+C\# objects from an SQL query, rather than handling them as tuples. 
 Accordingly, based on the ERD, all classes are designed to integrate seamlessly
 with the Dapper package.\par
 
@@ -637,16 +646,18 @@ functionality for managing daily data strings and user goals, enhancing the
 system’s responsiveness to user interactions. These methods were essential for
 SRQ 6.1 and 6.2, as well as directly adhering to SRQ 5.1 and 5.2. \par
 
-The \texttt{ActivityDayInput} and \texttt{GoalInput classes},
-are specifically designed for handling the input and update functionalities
-related to daily user activities and goal management, respectively. The
-\texttt{ActivityDayInput} Class includes a Prompt string for user guidance and an
-Activity \texttt{ActivityType} to specify the type of activity data being entered. It
-comprises various user interaction handlers such as \texttt{UpdateButton\_Click()} and
-\texttt{InsertOrUpdate()} for data submission, alongside \texttt{UpdateUserWater()} and
-\texttt{UpdateUserSteps()} for updating specific activity metrics. Text handling methods
-like \texttt{TextBox\_TextChanged()}, \texttt{TextBox\_PreviewTextInput()}, and
-\texttt{TextBox\_KeyDown()} ensure data integrity and user input validation.\par
+The \texttt{ActivityDayInput} and \texttt{GoalInput classes}, are specifically
+designed for handling the input and update functionalities related to daily
+user activities and goal management, respectively. The
+\texttt{ActivityDayInput} Class includes a Prompt string for user guidance and
+an Activity \texttt{ActivityType} to specify the type of activity data being
+entered. It comprises various user interaction handlers such as
+\texttt{UpdateButton\_Click()} and \texttt{InsertOrUpdate()} for data
+submission, alongside \texttt{UpdateUserWater()} and \texttt{UpdateUserSteps()}
+for updating specific activity metrics. Text handling methods like
+\texttt{TextBox\_TextChanged()}, \texttt{TextBox\_KeyDown()} and
+\texttt{TextBox\_PreviewTextInput()}. ensure data integrity and user input
+validation.\par
 
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and
 activity type specifications tailored towards user goals. It features
@@ -661,7 +672,7 @@ ActivityDayInput stands mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1, 7.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width = 0.7\linewidth]{UML Flow diagram}
-  \caption{UML Flow diagram of our PI system}
+  \caption{UML Flow Diagram}
   \label{fig:flow}
 \end{figure}
 
@@ -917,11 +928,12 @@ the screenshots to provide feedback to the developers and to inform future
 decisions and alterations to the product backlog.\par
 
 \subsection{Examples}
-The programmers in our group were very good at ensuring that their code initially 
-contained no bugs so testing revealed very few errors. Below, however, are some 
-examples of bugs that were found which demonstrate how effective the testing approach 
-was in ensuring the adherence of our system to the specifications and the smooth 
-operation of the software.\par
+
+The programmers in our group were very good at ensuring that their code
+initially contained no bugs so testing revealed very few errors. Below,
+however, are some examples of bugs that were found which demonstrate how
+effective the testing approach was in ensuring the adherence of our system to
+the specifications and the smooth operation of the software.\par
 
 \subsubsection{Achievement Consistency}
 When testing the achievements section of the product, the following test 
@@ -989,7 +1001,7 @@ time period of goals. During testing, the following test case failed:\par
     \end{tabular}
 \end{center}
 \begin{center}
-    \includegraphics[width=0.8\linewidth]{goalNotExpiring.png}
+    \includegraphics[width=0.6\linewidth]{goalNotExpiring.png}
 \end{center}
 As shown in the figure above, once the goal time had passed, the counter 
 simply continued to run. This relatively major issue was quickly resolved 
@@ -1219,8 +1231,7 @@ improved in future to increase ease of use, which given a longer development tim
 
 
 \newpage
-\section{Appendices}
-\subsection{Group Contribution Form}
+\section{Appendix: Group Contribution Form}
 
 \begin{table}[!ht]
 \centering
@@ -1250,7 +1261,7 @@ improved in future to increase ease of use, which given a longer development tim
 \end{table}
 
 \newpage
-\subsection{Contribution Table}
+\section{Appendix: Contribution Table}
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-3cm}{-3cm}
@@ -1275,6 +1286,7 @@ improved in future to increase ease of use, which given a longer development tim
 
 
 \newpage
+
 \begin{table}[!ht]
 \begin{adjustwidth}{-3cm}{-3cm}
 \centering
@@ -1291,6 +1303,1068 @@ improved in future to increase ease of use, which given a longer development tim
 \end{tabular}
 \end{adjustwidth}
 \end{table}
-\end{document}
+
+
+\newpage
+\section{Appendix: Minutes}
+\newcommand{\tightlist}{}
+
+\hypertarget{minutes-from-2503}{%
+\subsection{Minutes From 25/03}\label{minutes-from-2503}}
+
+\hypertarget{attendance}{%
+\subsubsection{Attendance}\label{attendance}}
+
+\begin{itemize}
+\tightlist
+\item
+  Taking attendance.
+\end{itemize}
+
+\hypertarget{meeting-notes}{%
+\subsubsection{Meeting Notes}\label{meeting-notes}}
+
+\begin{itemize}
+\tightlist
+\item
+  James is currently responsible for making the group contribution table
+  and the attendance table.
+\item
+  The plan for the first sprint was discussed as a group discussion. See
+  the next section for details.
+\item
+  With everything discussed, team members have started working on their
+  tasks.
+\end{itemize}
+
+\hypertarget{first-sprint-2503-0104}{%
+\subsubsection{First Sprint (25/03 ---
+01/04)}\label{first-sprint-2503-0104}}
+
+\textbf{Tasks}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Gather Articles:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Each member finds two articles and provides a brief summary of each.
+  \item
+    Everyone must research at least one article by this Wednesday.
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Alex --- will provide at least one article from the specification.
+    \item
+      Thang
+    \item
+      Ollie
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Interviewing:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Jeet --- for live interviewing and taking transcripts.
+    \item
+      Akim --- creates and distributes a Google Form/survey.
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Market Research:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Potentially provide reference(s).
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Tom --- researches one competitor and provides a summary of his
+      findings.
+    \item
+      Martin --- researches another competitor and provides a summary of
+      his findings.
+    \end{itemize}
+  \end{itemize}
+  \newpage
+\item
+  \textbf{Draft the Initial Requirements:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:} James
+  \end{itemize}
+\item
+  \textbf{Start the Report in LaTeX:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:} Akim --- provides the initial framework.
+  \end{itemize}
+\item
+  \textbf{Research Programming Languages:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:} Katrya --- to research languages including
+    Python, C\#, Java, C++, and JavaScript (in case we decide to create
+    a website instead of implementing on PC), and others if necessary.
+    Create a table listing different characteristics to compare and
+    contrast, and provide a brief summary/conclusion.
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{next-week-discussion-points}{%
+\subsubsection{Next Week Discussion
+Points}\label{next-week-discussion-points}}
+
+\begin{itemize}
+\tightlist
+\item
+  Finalize the initial version of the spec, including:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    What are the requirements?
+  \item
+    Deciding on the PI to use.
+  \end{itemize}
+\item
+  Which language to use? Is Python suited for the job? Consider if it's
+  only suitable as a prototype.
+\end{itemize}
+
+\hypertarget{minutes-from-0104}{%
+\subsection{Minutes From 01/04}\label{minutes-from-0104}}
+
+\hypertarget{attendance-1}{%
+\subsubsection{Attendance}\label{attendance-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  Taking attendance.
+\end{itemize}
+
+\hypertarget{discussion-topics}{%
+\subsubsection{Discussion Topics}\label{discussion-topics}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Requirements Table:} Discussion on the requirements table
+  prepared by James.
+\item
+  \textbf{SCRUM Master:} Jeet has volunteered to be the SCRUM master,
+  with responsibilities including in-depth SCRUM research and advising
+  on future strategy steps.
+\item
+  \textbf{Meeting Leader:} Akim has volunteered to be the meeting leader
+  for all future meetings.
+\item
+  \textbf{Writing Assignments:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Alex will complete an article from the specification by today.
+  \item
+    Alex, Ollie, and Thang are tasked with inserting references into the
+    requirements table by the end of the week.
+  \end{itemize}
+\item
+  \textbf{Programming Language:} C\# has been selected as the
+  programming language for the project.
+\item
+  \textbf{Development Roles:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Jeet and Ollie have been appointed as front-end developers.
+  \end{itemize}
+\item
+  \textbf{Sprint Planning:} Discussion about the second sprint.
+\end{itemize}
+
+\hypertarget{second-sprint-0104-0804}{%
+\subsubsection{Second Sprint (01/04 ---
+08/04)}\label{second-sprint-0104-0804}}
+
+\textbf{Tasks}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Create a UI Diagram by Wednesday:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Akim
+    \item
+      Alex
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Create Framework for the Project on GitHub:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Jeet
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{After the UI Diagram is Finished, Create a Coding Plan:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    It should include both front-end and back-end.
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Jeet
+    \item
+      Ollie
+    \item
+      James
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Potentially Start the UI for the Menu:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Jeet and/or Ollie
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Research APIs:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Create a small program with comments showing off basic
+    functionality.
+  \item
+    Share the program on GitHub in the \texttt{research} directory
+    (create if doesn't exist).
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Tom
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Start Writing the Content of the Report:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{The Introduction section:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Martin
+    \end{itemize}
+  \item
+    \textbf{The Software Requirements Specification:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Thang
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Create a Basic DB Using SQL and C\#:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    A small program with comments that describes basic operations.
+  \item
+    Share the program on GitHub in the \texttt{research} directory
+    (create if doesn't exist).
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Katrya
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{minutes-from-0804}{%
+\subsection{Minutes From 08/04}\label{minutes-from-0804}}
+
+\hypertarget{attendance-2}{%
+\subsubsection{Attendance}\label{attendance-2}}
+
+\begin{itemize}
+\tightlist
+\item
+  Taking attendance.
+\end{itemize}
+
+\hypertarget{discussion-topics-1}{%
+\subsubsection{Discussion Topics}\label{discussion-topics-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Discussing the Report:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Martin has completed his task and will merge the report branch into
+    the master after the meeting.
+  \item
+    Thang has completed his task and will upload his work on GitHub by
+    the end of today.
+  \end{itemize}
+\item
+  \textbf{Presentations:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Jeet presented the UML diagram.
+  \item
+    Jeet presented the ERD.
+  \item
+    Jeet walked everyone through the code.
+  \item
+    Oliver presented how the graphs will be implemented.
+  \end{itemize}
+\item
+  \textbf{APIs:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Tom discussed the research he has done on APIs and will upload it to
+    GitHub today.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{third-sprint-0804-1504}{%
+\subsubsection{Third Sprint (08/04 ---
+15/04)}\label{third-sprint-0804-1504}}
+
+\textbf{Coding tasks}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Potentially fully code the \textbf{Graphs} part.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Oliver
+    \end{itemize}
+  \end{itemize}
+\item
+  Potentially fully code the \textbf{Achievements} part.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Alex
+    \end{itemize}
+  \end{itemize}
+\item
+  Potentially fully code the \textbf{Work} part:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      James
+    \end{itemize}
+  \end{itemize}
+\item
+  Fully implement the \textbf{goals for all metrics} apart from Work.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Jeet
+    \end{itemize}
+  \end{itemize}
+\item
+  Implement the \textbf{API for Steps}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Akim or Jeet (to be decided)
+    \end{itemize}
+  \end{itemize}
+\item
+  Consider \textbf{changing the DB design}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Jeet
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\textbf{Report tasks:}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  \textbf{Go through the report and give feedback} to Thang and Martin:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Akim
+    \end{itemize}
+  \end{itemize}
+  \newpage
+\item
+  Go through the report part of the spec and \textbf{allocate work} to
+  Tom:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Deadline:} Wednesday
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Akim
+    \end{itemize}
+  \end{itemize}
+\item
+  Complete the \textbf{Introduction Section}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Martin
+    \end{itemize}
+  \end{itemize}
+\item
+  Start the \textbf{SCRUM Section}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Martin
+    \end{itemize}
+  \end{itemize}
+\item
+  Start the \textbf{Design Section}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Thang
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{minutes-from-1504}{%
+\subsection{Minutes From 15/04}\label{minutes-from-1504}}
+
+\hypertarget{attendance-3}{%
+\subsubsection{Attendance}\label{attendance-3}}
+
+\begin{itemize}
+\tightlist
+\item
+  Taking attendance.
+\end{itemize}
+
+\hypertarget{discussion-topics-2}{%
+\subsubsection{Discussion Topics}\label{discussion-topics-2}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Ollie's Presentation on Graphs:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Ollie completed the basic version of the graphs, which currently
+    lacks functionality.
+  \end{itemize}
+\item
+  \textbf{James' Update on Database Integration:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    James added database integration to the Work page.
+  \end{itemize}
+\item
+  \textbf{Jeet's Contributions:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Implemented goals for all metrics.
+  \item
+    Simplified the database design.
+  \item
+    Began integrating the API.
+  \end{itemize}
+  \newpage
+\item
+  \textbf{General Discussions:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The team discussed the report.
+  \item
+    The Scrum development process was reviewed.
+  \item
+    Testing plans were outlined; testing will commence after product
+    completion next week.
+  \item
+    Reviewed the project requirements.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{fourth-sprint-1504-2204}{%
+\subsubsection{Fourth Sprint (15/04 ---
+22/04)}\label{fourth-sprint-1504-2204}}
+
+\textbf{Coding tasks}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Finish the \textbf{Graphs}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:} Ollie
+  \end{itemize}
+\item
+  Develop the \textbf{Achievements UI} and Start \textbf{Functional
+  Implementation}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Katrya
+    \item
+      Potentially Jeet (see \#5)
+    \end{itemize}
+  \end{itemize}
+\item
+  Complete the \textbf{Work Section}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Potentially James (confirmation by end of today)
+    \end{itemize}
+  \end{itemize}
+\item
+  Finish the \textbf{API Integration}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Jeet
+    \end{itemize}
+  \end{itemize}
+\item
+  Assist with \textbf{Achievements Functionality}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Jeet
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\textbf{Report tasks}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  \textbf{Review} the Report and \textbf{Provide Feedback}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Akim
+    \end{itemize}
+  \end{itemize}
+\newpage
+\item
+  \textbf{Assign Tasks} for Martin and Alex.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Deadline:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Wednesday
+    \end{itemize}
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Akim
+    \end{itemize}
+  \end{itemize}
+\item
+  Finish the \textbf{Requirements Section}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Tom
+    \end{itemize}
+  \end{itemize}
+\item
+  Finish the \textbf{Design Section}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Thang
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Update the Scrum Section}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Martin
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{minutes-from-1904}{%
+\subsection{Minutes From 19/04}\label{minutes-from-1904}}
+
+\hypertarget{attendance-4}{%
+\subsubsection{Attendance}\label{attendance-4}}
+
+\begin{itemize}
+\tightlist
+\item
+  Taking attendance.
+\end{itemize}
+
+\hypertarget{discussion-topics-3}{%
+\subsubsection{Discussion Topics}\label{discussion-topics-3}}
+
+\begin{itemize}
+\tightlist
+\item
+  Discussing progress.
+\item
+  \textbf{API}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Jeet is almost done, will finish the API integration by Sunday.
+  \end{itemize}
+\item
+  Start the software testing section of the report.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Martin
+    \end{itemize}
+  \end{itemize}
+\item
+  Everyone else is continuing with their work for Monday.
+\end{itemize}
+
+\hypertarget{minutes-from-2204}{%
+\subsection{Minutes From 22/04}\label{minutes-from-2204}}
+
+\hypertarget{attendance-5}{%
+\subsubsection{Attendance}\label{attendance-5}}
+
+\begin{itemize}
+\tightlist
+\item
+  Taking attendance.
+\end{itemize}
+
+\hypertarget{progress-review-and-final-sprint-2204-0305}{%
+\subsubsection{Progress Review and Final Sprint (22/04 ---
+03/05)}\label{progress-review-and-final-sprint-2204-0305}}
+
+\textbf{Coding}:
+
+\begin{itemize}
+\item
+  Ollie has finished the \textbf{Graphs} except for the Work part, which
+  has not been fully implemented yet by James.
+\item
+  \textbf{Achievements UI} has been completed, but \textbf{not the
+  functional part}, which will be done by Wednesday.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Katrya
+  \item
+    \textbf{Deadline}: Wednesday
+  \end{itemize}
+\item
+  The \textbf{Work} part is not fully finished yet, it has to be linked
+  to the DB and properly merged with the rest of the code by Wednesday.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: James
+  \item
+    \textbf{Backup}: Ollie
+  \item
+    \textbf{Deadline}: Wednesday
+  \end{itemize}
+\item
+  Jeet has \textbf{fully integrated the API part}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Some \textbf{bugs} have been discovered by the product owner; they
+    \textbf{will be fixed shortly}.
+  \end{itemize}
+\item
+  Jeet will \textbf{merge everything into the master branch} by
+  Wednesday.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Jeet
+  \item
+    \textbf{Deadline}: Wednesday
+  \end{itemize}
+\item
+  Jeet will implement the table in the DB for Achievements by Friday.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Jeet
+  \item
+    \textbf{Deadline}: Friday
+  \end{itemize}
+\end{itemize}
+
+\newpage
+\textbf{Report}:
+
+\begin{itemize}
+\tightlist
+\item
+  Tom has almost finished the \textbf{Requirements section}, however it
+  has to be redone in the form of a table.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Tom
+  \item
+    \textbf{Deadline}: Wednesday
+  \end{itemize}
+\item
+  Thang and Alex have not been able to complete the \textbf{Design
+  section} by today, but they will fully complete it and push to GitHub
+  by no later than Wednesday.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Thang, Alex
+  \item
+    \textbf{Deadline}: Wednesday
+  \end{itemize}
+\item
+  Martin has updated the \textbf{Scrum section} for the previous week,
+  and will do the same for this week.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Martin
+  \end{itemize}
+\item
+  Start the \textbf{Reflection and Conclusion} section of the report
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Martin
+  \end{itemize}
+\item
+  Give feedback on the \textbf{Testing section} and let Martin know what
+  to do next
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Akim
+  \item
+    \textbf{Deadline}: Wednesday
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{minutes-from-2904}{%
+\subsection{Minutes From 29/04}\label{minutes-from-2904}}
+
+\hypertarget{attendance-6}{%
+\subsubsection{Attendance}\label{attendance-6}}
+
+\begin{itemize}
+\tightlist
+\item
+  Taking attendance.
+\end{itemize}
+
+\hypertarget{progress-review-and-report-finalization}{%
+\subsubsection{Progress Review and Report
+Finalization}\label{progress-review-and-report-finalization}}
+
+\begin{itemize}
+\tightlist
+\item
+  Upload the \textbf{updated ERD} to the Google doc.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Jeet
+  \end{itemize}
+\item
+  Update the \textbf{ERD} in the report.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Thang
+  \end{itemize}
+\item
+  Insert \textbf{ARQ/SRQ notation} to the rest of Thang's Design
+  section.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Alex
+  \end{itemize}
+\item
+  Complete the \textbf{Requirements} section now.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Tom
+  \end{itemize}
+\item
+  Update \textbf{SCRUM} and complete the \textbf{Testing} section.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Martin
+  \end{itemize}
+\item
+  Go through the report and give feedback.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: James, Akim
+  \end{itemize}
+\item
+  Include \textbf{appendices} in the report.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Responsible}: Akim
+  \end{itemize}
+\item
+  Ollie successfully integrated the \textbf{work section with the
+  graphs} and implemented \textbf{dynamic upper bound} for the graphs.
+\end{itemize}
 
 \end{document}
+

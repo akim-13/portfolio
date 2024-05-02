@@ -1,10 +1,12 @@
-# Meeting Notes
+# Minutes From 25/03
+## Meeting Notes
 - James is currently responsible for making the group contribution table and the attendance table.
 - The plan for the first sprint was discussed as a group discussion. See the next section for details.
 - With everything discussed, team members have started working on their tasks.
 
-# First Sprint (25/03 — 01/04)
-## Tasks:
+## First Sprint (25/03 — 01/04)
+**Tasks**:
+
 1. **Gather Articles:**
    - Each member finds two articles and provides a brief summary of each. 
    - Everyone must research at least one article by this Wednesday.
@@ -28,7 +30,7 @@
 6. **Research Programming Languages:**
    - **Responsible:** Katrya — to research languages including Python, C#, Java, C++, and JavaScript (in case we decide to create a website instead of implementing on PC), and others if necessary. Create a table listing different characteristics to compare and contrast, and provide a brief summary/conclusion.
 
-# Next Week Discussion Points
+## Next Week Discussion Points
 - Finalize the initial version of the spec, including:
   - What are the requirements?
   - Deciding on the PI to use.
