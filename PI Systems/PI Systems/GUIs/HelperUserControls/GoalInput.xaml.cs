@@ -15,6 +15,8 @@ namespace PI_Systems.GUIs.HelperUserControls
         public string? Prompt { get; set; }
         public ActivityType Activity { get; set; }
 
+        private float input;
+
         public GoalInput()
         {
             InitializeComponent();
@@ -67,13 +69,19 @@ namespace PI_Systems.GUIs.HelperUserControls
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!float.TryParse(textBox.Text, out input))
+            {
+                MessageBox.Show("This is not a valid input", "Invalid input", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             UserGoals entry = new UserGoals
             {
                 Username = MainMenu.Instance.user,
                 ActivityID = (int)Activity,
                 TimeFrameID = goalTimeFrame.SelectedIndex,
                 Date = DateTime.Now.Date,
-                Value = float.Parse(textBox.Text)
+                Value = input
             };
 
             // Jeet: Try inserting data, and if it can't be inserted (since it already exists), update it 

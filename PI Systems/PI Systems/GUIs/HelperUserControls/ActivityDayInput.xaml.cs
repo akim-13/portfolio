@@ -14,6 +14,8 @@ namespace PI_Systems.GUIs.HelperUserControls
         public string? Prompt { get; set; }
         public ActivityType? Activity { get; set; }
 
+        private float input;
+
         public ActivityDayInput()
         {
             InitializeComponent();
@@ -28,7 +30,11 @@ namespace PI_Systems.GUIs.HelperUserControls
         {
             // Jeet: Updates the inputted data to the database (depends on the Activity)
             // James: Check for valid inputs before updating the activities
-            float input = textBox.Text == "." ? 0 : float.Parse(textBox.Text);
+            if (!float.TryParse(textBox.Text, out input))
+            {
+                MessageBox.Show("This is not a valid input", "Invalid input", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             switch (Activity)
             {
                 case ActivityType.Water:
@@ -88,7 +94,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                Value = textBox.Text == "." ? 0 : float.Parse(textBox.Text)
+                Value = input
             };
             InsertOrUpdate(entry, "UserWater");
         }
@@ -99,7 +105,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                Value = textBox.Text == "." ? 0 : float.Parse(textBox.Text)
+                Value = input
             };
             InsertOrUpdate(entry, "UserSleep");
         }
@@ -110,7 +116,7 @@ namespace PI_Systems.GUIs.HelperUserControls
             {
                 Username = MainMenu.Instance.user,
                 Date = DateTime.Now.Date,
-                Value = textBox.Text == "." ? 0 : int.Parse(textBox.Text)
+                Value = input
             };
             InsertOrUpdate(entry, "UserSteps");
         }
