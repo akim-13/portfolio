@@ -929,12 +929,12 @@ their progress and achieving their health and productivity goals, perfectly comp
 \section{Software Testing and Verification} \label{sec:testing}
 
 During the initial planning of this project, the approach to testing was
-discussed. It was agreed that each time a developer completed a feature from the
+discussed and a Test Plan was created,  Figure \ref{fig:TestDesign} . It was agreed that each time a developer completed a feature from the
 product backlog they would thoroughly white-box test it themselves using a
 variety of specifically chosen test cases and take screenshots to record the
 results. If all tests produced the desired results, the developer would consider
 the feature complete. If any tests were unsuccessful, however, they would debug
-and fix the problem before applying all tests again. In this way, the component's
+and fix the problem before applying all tests again.  If the error was found in anothers developers code,  the error and the test results were provided to the person responisble and they would colaborate on the debugging.  In this way, the component's
 functionality given both valid and invalid inputs would be ensured. By testing
 each element before combining it with other elements of the system, the testing
 process as a whole would comprise a bottom-up integration testing approach. On
@@ -974,11 +974,10 @@ cases were included in the process:\par
 \end{center}
 The first test of the two was passed successfully. However, while the progress 
 label did revert to a lower value upon alteration of the data, the achievement 
-remained highlighted, as shown in the figure below.\par
-\begin{center}
-    \includegraphics[width=0.45\linewidth]{achievementCorrect.png}
-    \includegraphics[width=0.45\linewidth]{achievementIncorrect.png}
-\end{center}
+remained highlighted, as shown in figure \ref{fig:ManualTest1}(see Apendix).\par
+
+ %Image removed 
+
 The developer in charge of this section was quickly able to find the source of 
 this issue and fix it.\par
 
@@ -997,10 +996,10 @@ however, the following test case caused an unexpected error.\par
         \hline
     \end{tabular}
 \end{center}
-\begin{center}
-    \includegraphics[width=0.8\linewidth]{decimalPointError.png}
-\end{center}
-When a decimal point was entered, the program froze and then crashed. 
+
+%Image removed
+
+When a decimal point was entered,  as in figure \ref{fig:ManualTest2}(see Apendix), the program froze and then crashed. 
 To avoid this, the developer changed the code handling the inputs and 
 the problem was solved.\par
 
@@ -1018,13 +1017,12 @@ time period of goals. During testing, the following test case failed:\par
         \hline
     \end{tabular}
 \end{center}
-\begin{center}
-    \includegraphics[width=0.6\linewidth]{goalNotExpiring.png}
-\end{center}
-As shown in the figure above, once the goal time had passed, the counter 
+
+% Image removed
+
+As shown in the figure \ref{fig:ManualTest3}(see Apendix), once the goal time had passed, the counter 
 simply continued to run. This relatively major issue was quickly resolved 
 and the feature now functions correctly.\par
-
 
 \section{Reflection and Conclusion}
 
@@ -1246,6 +1244,58 @@ improved in future to increase ease of use, which given a longer development tim
     A Joint Consensus Statement of the American Academy of Sleep Medicine and Sleep Research Society. 
     \textit{Sleep}, 38(6), pp.843–844.
 \end{thebibliography}
+
+
+
+
+\newpage
+
+\section{Appendix: Testing}
+\subsection{Test Plan Design}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width = 1\linewidth]{Test Design}
+\label{fig:TestDesign}
+\end{figure}
+\pagebreak
+\subsection{Manual Testing}
+
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width=\linewidth]{achievementCorrect.png}
+    \caption{Achievement Correct}
+    \label{fig:ManualTest1.1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.4\linewidth}
+    \includegraphics[width=\linewidth]{achievementIncorrect.png}
+    \caption{Achievement Incorrect}
+    \label{fig:ManualTest1.2}
+  \end{subfigure}
+  \caption{Achievement Test}
+  \label{fig:ManualTest1}
+\end{figure}
+
+
+
+
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=0.8\linewidth]{decimalPointError.png}
+\caption{Decimal Point Error}
+\label{fig:ManualTest2}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+    \includegraphics[width=0.6\linewidth]{goalNotExpiring.png}
+\caption{Goal Not Expiring}
+\label{fig:ManualTest3}
+\end{figure}
+
+\pagebreak
+\subsection{Unit Testing}
 
 
 \newpage
