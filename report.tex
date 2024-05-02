@@ -302,13 +302,13 @@ Additionally, many students told us they prefer applications that are intuitive
 but still allow for great insight and control into goals and targets. Also,
 they wished to connect with their friends and peers through the app and liked
 the idea of seeing all their information in a single area. Furthermore, we also
-researched into competitor systems (such as garmin and fitbit) to identify both
+researched into competitor systems (such as Garmin and Fitbit) to identify both
 good and bad features of these systems .\par
 
 After this, we made an initial requirement list of what functionality our app must contain (SRQ 2.1, 2.3)
 based on the data gathered. We must ensure our system is perfect for tracking
 health and study time, allows users to share their progress with friends, and
-keeps all their data safe and private. Furthermore, we must reguarly reflect on our requirements
+keeps all their data safe and private. Furthermore, we must regularly reflect on our requirements
 to ensure that they properly suit our vision for the system, adapting them whenever tests, feedback, or other factors suggest so.
  
 
@@ -327,7 +327,7 @@ study habits and simple health tracking (SRQ 2.1).
 
 Our app is tailored towards individuals who require assistance managing their time healthily as
 we are aware that a large proportion of students have difficulty maintaining a healthy work-life
-balace. Our app aims to help them track key aspects of the student lifestyle.
+balance. Our app aims to help them track key aspects of the student lifestyle.
 The fields we have chosen to track as well as how they shall be accessed are as follows (SRQ 5.1, 5.3):
 
 \begin{itemize}
@@ -337,7 +337,7 @@ The fields we have chosen to track as well as how they shall be accessed are as 
         usually the area in which students choose to disregard in order to
         create more time. However, a lack of sleep can be detrimental on all
         aspects of life and as such it is imperative that we ensure our users
-        are aware of how little sleep thay may be getting across a given time
+        are aware of how little sleep they may be getting across a given time
         frame. We are aware that some students may also be getting too much
         sleep which can lead to them feeling lethargic throughout the day and
         as such our system should also provide a solution for these users.
@@ -353,7 +353,7 @@ The fields we have chosen to track as well as how they shall be accessed are as 
         to obtain a consistent, healthy sleep pattern
     
     \item \textbf{Tracking step count}: The average student spends a large
-        proportion of their day sedentry, whether that be from napping after a
+        proportion of their day sedentary, whether that be from napping after a
         lecture, studying hard for an exam, or sat behind a computer trying to
         finish coursework. This can cause students to not get out frequently
         for events other than their lectures and the occasional social
@@ -362,7 +362,7 @@ The fields we have chosen to track as well as how they shall be accessed are as 
         risk of certain diseases such as heart disease. It is imperative to
         emphasise to our users who do not perform enough steps in a given time
         period that this behaviour is not healthy. Our system will allow a user
-        to view trends in their step data and clearly visualise how litte (or
+        to view trends in their step data and clearly visualise how little (or
         many) steps they are actually performing.
 
     \item \textbf{Tracking work done}: Students often report one of two
@@ -379,7 +379,7 @@ The fields we have chosen to track as well as how they shall be accessed are as 
     \item \textbf{Tracking water intake}: Water intake has many hidden
         benefits: helps with weight loss by making you feel more full,
         increases energy levels, improves skin health. Many students may
-        neglect drinking water as they need an energy boosted via caffeinated
+        neglect drinking water as they need an energy boost via caffeinated
         products. By setting clear goals of how much water a user should drink,
         it increases the likelihood they select to drink water over a less
         healthy alternative.
@@ -407,7 +407,7 @@ Achievements are key to our system as they provide a reason for a user to improv
 without aimlessly trying to increase some number (SRQ 7.4). Furthermore, these
 achievements rotate daily, ensuring a user never runs our of goals to achieve.\\
 
-Additionally, we set additional requirements for our system to contain a range of social features (ARQ 1) including a leaderboard and groups. This was requested by many of the students we interviewed who wished to use friendly competiton as a motivator. Unfortunately, we set the priority for this requirement to low as it did not directly influence the core behaviour of our system. During the creation of our system, it was decided that this feature was too complex to implement given the time we had left to fully construct and test the system.
+Additionally, we set additional requirements for our system to contain a range of social features (ARQ 1) including a leaderboard and groups. This was requested by many of the students we interviewed who wished to use friendly competition as a motivator. Unfortunately, we set the priority for this requirement too low as it did not directly influence the core behaviour of our system. During the creation of our system, it was decided that this feature was too complex to implement given the time we had left to fully construct and test the system.
 
 
 \subsection{Comparing User Data}
@@ -426,7 +426,7 @@ such as a coursework deadline could influence sleep count.
 
 \subsection{Viewing and Collecting Tracking Data}
 
-Users will be given the option to synchronise their step data, both present and past from a fitbit account via the fitbit API(ARQ 2). 
+Users will be given the option to synchronise their step data, both present and past from a Fitbit account via the Fitbit API(ARQ 2). 
 We must ensure that potential users without the
 relevant hardware can still use our system and must be done in an intuitive way
 in order to allow our system to be accessible for a greater amount of students.
@@ -525,7 +525,7 @@ Section \ref{sec:testing} for more details (covers all of SRQ 4).
 
 \end{tabular}
 \caption{Priorities and Dependencies}
-\label{tab:priorities_dependencies}
+\label{tab:reqTable}
 \end{center}
 \end{table}
 
@@ -534,7 +534,7 @@ Section \ref{sec:testing} for more details (covers all of SRQ 4).
 \section{Design}
 
 In the design section of a software development project, the focus shifts from
-conceptualizing solutions to delineating the concrete frameworks and blueprints
+conceptualising solutions to delineating the concrete frameworks and blueprints
 that will guide the creation and implementation of the software. This section 
 comprises several key design documents and diagrams that together provide a 
 comprehensive overview of both the structural and visual aspects of the project.\par
@@ -578,9 +578,9 @@ Figure \ref{fig:PI_ERD} describes the following components:
 
     \item \texttt{UserSleep} Table: Focusing on sleep habits, this table
         records the duration of sleep per day for each user with attributes
-        \texttt{Username}, \texttt{Date}, and \texttt{Value}. It is vital for analyzing sleep patterns
+        \texttt{Username}, \texttt{Date}, and \texttt{Value}. It is vital for analysing sleep patterns
         and correlating them with other health metrics, which is essential for
-        offering personalized health insights and improving user
+        offering personalised health insights and improving user
         well-being.\par
 
     \item \texttt{UserWork} Table: This table tracks work and study sessions,
@@ -599,9 +599,9 @@ Figure \ref{fig:PI_ERD} describes the following components:
     \item \texttt{UserGoals} Table: As a strategic component of our system, the
         UserGoals table holds data related to the personal objectives of users.
         With attributes like \texttt{Username}, \texttt{ActivityID}, \texttt{TimeFrameID}, \texttt{Date}, and
-        \texttt{Value}, this table supports the setting and monitoring of personalized
+        \texttt{Value}, this table supports the setting and monitoring of personalised
         goals, enhancing the system's capability to drive user engagement and
-        encourage behavior modification. \texttt{UserGoals} covers SRQ 7.1, 7.2 and
+        encourage behaviour modification. \texttt{UserGoals} covers SRQ 7.1, 7.2 and
         7.3.\par
 
 \end{itemize}
@@ -639,13 +639,13 @@ This table covers ARQ 1.
   \label{fig:Class}
 \end{figure}
 
-The class diagram of our PI system (fig. \ref{fig:Class}) delineates the
+The class diagram of our PI system (Figure \ref{fig:Class}) delineates the
 fundamental components and their relationships, underscoring the system's
 design to efficiently manage and process user data. Central to this
 architecture is the \texttt{Database} class, which acts as the primary conduit for all
 data manipulation and retrieval activities within the system. This class is
 critical for the robust handling of data and supports various functionalities
-critical to user interaction and data integrity. We utilize the Dapper module 
+critical to user interaction and data integrity. We utilise the Dapper module 
 in C\#, which facilitates the direct return or insertion of a list of 
 C\# objects from an SQL query, rather than handling them as tuples. 
 Accordingly, based on the ERD, all classes are designed to integrate seamlessly
@@ -679,9 +679,9 @@ validation.\par
 
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and
 activity type specifications tailored towards user goals. It features
-goal-specific functionalities such as \texttt{DisplayGoal()} for visualizing set goals,
+goal-specific functionalities such as \texttt{DisplayGoal()} for visualising set goals,
 \texttt{GetSumData()} for data aggregation, and \texttt{DeleteGoalButton\_Click()} for
-goal modification. It inherits text handling and initialization methods from
+goal modification. It inherits text handling and initialisation methods from
 ActivityDayInput, ensuring a consistent and user-friendly interface. Whilst
 ActivityDayInput stands mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1, 7.2 and 7.3.\par
 
@@ -694,7 +694,7 @@ ActivityDayInput stands mainly by SRQ 6.1 and 5.1, GoalInput follows SRQ 7.1, 7.
   \label{fig:flow}
 \end{figure}
 
-The flow diagram of our PI system (fig. \ref{fig:flow}) illustrates the
+The flow diagram of our PI system (Figure \ref{fig:flow}) illustrates the
 interactions between classes, essential for efficient functionality and user
 experience. At the core is the MainMenu class, which integrates features like
 tracking steps, achievements, water intake, and sleep via separate classes
@@ -712,10 +712,10 @@ reflective of user activity.\par
 The association between the \texttt{ActivityDayInput}, \texttt{GoalInput}, and the \texttt{Database}
 ensures immediate data reflection in the system, supporting features like
 activity comparison and trend analysis. The \texttt{Database} manages its instance,
-maintaining data integrity and security, and acts as a centralized repository
+maintaining data integrity and security, and acts as a centralised repository
 for all user data. This structure ensures seamless data flow across the system,
 fulfilling functional and non-functional requirements, and enhancing overall
-user interaction. The association between these elements are the groundwork for all requirements SRQ 5, SRQ 6 and SRQ 7, aswell as ARQ 4.\par
+user interaction. The association between these elements are the groundwork for all requirements SRQ 5, SRQ 6 and SRQ 7, as well as ARQ 4.\par
 
 \subsection{User Interface}
 
@@ -737,7 +737,7 @@ how they enhance usability and user engagement.\par
 Figure \ref{fig:Menu} illustrates the main menu of our application. Positioned in the top left
 corner of the screen, the label \texttt{"Menu"} accompanied by a small computer icon indicates
 to the user that they are currently viewing the main menu. The background of the 
-entire menu is a dark blue, a color choice designed to minimize eye strain during 
+entire menu is a dark blue, a colour choice designed to minimise eye strain during 
 prolonged use of the app.\par
 
 The main menu features four prominent buttons, each corresponding to the core 
@@ -791,7 +791,7 @@ dark green \texttt{"BACK"} button allows users to easily return to the main menu
 
 We can clearly see from figure \ref{fig:Work} that the heading \texttt{"WORK"} is
 prominently displayed at the top of the screen, accompanied by a book icon to
-visually represent the category. Centered on the screen is a large green box that
+visually represent the category. Centred on the screen is a large green box that
 tracks and displays the user's progress on their weekly achievement goals. Under
 the heading \texttt{"Progress for goal this Week"} of the box, the interface
 shows the amount of work completed and the specific day of the week the goal was
@@ -895,8 +895,8 @@ the type of data being displayed. Users have the flexibility to select the timel
 for the graph, ranging from a day to a year, with the current example set to display
 data over a year. The timeline is plotted on the horizontal axis, while the specific
 metrics related to the user’s activities are displayed along the vertical axis. The 
-graph utilizes a light blue line on a gridded white background, enhancing readability
-and making it easier for users to interpret their data trends. The graph is also capable of showing multiple line at once with different color. This feature makes it easier for users to compare among different types of statistic (figure \ref{fig:2_graphs}). Through this interface, SRQ 6.1 and 6.2 are followed.\par
+graph utilises a light blue line on a gridded white background, enhancing readability
+and making it easier for users to interpret their data trends. The graph is also capable of showing multiple line at once with different colour. This feature makes it easier for users to compare among different types of statistic (figure \ref{fig:2_graphs}). Through this interface, SRQ 6.1 and 6.2 are followed.\par
 
 \begin{figure}[h!]
   \centering
@@ -908,7 +908,7 @@ and making it easier for users to interpret their data trends. The graph is also
 Figure \ref{fig:Achievements} presents the Achievements interface, which aims to motivate
 and inform users about their progress in meeting set goals. Similar to other interfaces,
 it includes a \texttt{"BACK"} button at the top left for returning to the main menu and is labeled
-with the heading \texttt{"Achievements"}, accompanied by a medal icon to symbolize success and recognition.\par
+with the heading \texttt{"Achievements"}, accompanied by a medal icon to symbolise success and recognition.\par
 
 The interface is divided into two main sections. On the left, a box at the top displays
 the number of achievements completed within the week, indicated as \texttt{"0/4"} in this example,
