@@ -547,21 +547,18 @@ Section \ref{sec:testing} for more details (covers all of SRQ 4).
 
 \section{Design}
 
-In the design section of a software development project, the focus shifts from
-conceptualising solutions to delineating the concrete frameworks and blueprints
-that will guide the creation and implementation of the software. This section 
-comprises several key design documents and diagrams that together provide a 
-comprehensive overview of both the structural and visual aspects of the project.\par
+The following section encompasses how we wish to turn our initial requirements 
+into a structured plan of how each feature will be implemented. Furthermore, 
+it contains many important diagrams and images detailing the specifics of each 
+feature that combine to form a complete overview of our system.\par
 
 \subsection{Database ERD Model}
 
-The Entity-Relationship Diagram (ERD) illustrates the intricate structure of
-our PI system, designed specifically for tracking and managing various
-user-centric activities. This diagram provides a visual representation of the
-data relationships and is critical in guiding the development process to ensure
-the system meets both functional and non-functional requirements
-effectively.\par
-
+Our Entity-Relationship Diagram (ERD) demonstrates the structure of 
+our PI system's database. This ERD has been specifically constructed
+to suit our system's needs and as such is a great guide for the development 
+of both the database and system in general as it ensures that all requirements
+that need to store data are covered.\par
 
 \begin{figure}[!ht]
   \centering
@@ -576,51 +573,44 @@ Figure \ref{fig:PI_ERD} describes the following components:
 
 \begin{itemize}
 
-    \item \texttt{UserAchievements} Table: This table stores specific
-        achievements of users, linked directly to the User table. Attributes
-        like \texttt{Username}, \texttt{Date}, \texttt{ActivityID}, \texttt{TimeFrameID}, and \texttt{Value} allow for
-        detailed recording and analysis of user accomplishments across
-        different activities and timeframes. It enables the system to provide
-        feedback and insights based on historical achievement data, supporting
-        motivational features such as goal setting and progress tracking. This 
-        table aimed to adhere specifically to SRQ 7.4, yet it also contributes to SRQ 7.1.\par
+    \item \texttt{UserAchievements} Table: This table is used to store the 
+	achievements for every user. By using a compound 
+	key of the \texttt{Username}, \texttt{Date}, and \texttt{ActivityID} fields each achievement can be uniquely stored.
+	 These fields also allow for the comparison of the accomplishments
+	of a user across a given activity or timeframe. The \texttt{Timeframe} 
+	and \texttt{Value} fields are also essential as they contain vital data
+	 to each achievement: What a user must achieve and by when. This 
+        table adheres to SRQ 7.4. and  SRQ 7.1.\par
 
-    \item \texttt{UserStep} Table: Dedicated to tracking the physical activity
-        of steps taken, this table includes attributes such as \texttt{Username}, \texttt{Date},
-        and \texttt{Value}. By recording daily step counts, the \texttt{UserStep} table feeds
-        into the system’s health monitoring and fitness tracking capabilities,
-        allowing users to set and monitor physical activity goals. As the data 
-        can also be inserted though an API, this table aims to cover ARQ 2.\par
+    \item \texttt{UserStep} Table: This table records all step data
+	that the system is provided. By using a compound key
+	of the \texttt{Username} and \texttt{Date} fields each user's step count can be stored
+	for a given day, with the count being stored in the \texttt{Value} field. By taking these 
+	daily inputs, our system can obtain enough data to assist in the improvement of the
+	habits of a given user and help them set realistic goals. As the data can also be inserted 
+	through an API, this table aims to cover ARQ 2.\par
 
-    \item \texttt{UserSleep} Table: Focusing on sleep habits, this table
-        records the duration of sleep per day for each user with attributes
-        \texttt{Username}, \texttt{Date}, and \texttt{Value}. It is vital for analysing sleep patterns
-        and correlating them with other health metrics, which is essential for
-        offering personalised health insights and improving user
-        well-being.\par
+    \item \texttt{UserSleep} Table: This table is used to record all sleep data 
+	that the system is provided. By using a compound key
+	of the \texttt{Username} and \texttt{Date} fields each user's sleep time can be stored
+	for a given day, with the total time being stored in the \texttt{Value} field. By taking these 
+	daily inputs, our system can obtain enough data to assist in the improvement of the
+	habits of a given user and help them identify when their sleeping time is either too low or high.\par
 
-    \item \texttt{UserWork} Table: This table tracks work and study sessions,
-        an essential feature for our users. Attributes include
-        \texttt{Username}, \texttt{Date}, and \texttt{Value}, facilitating the tracking of
-        academic and work-related activities over time. This functionality
-        supports users in managing their time and productivity more
-        effectively.\par
+    \item \texttt{UserWork} Table: This table records all entries of both working and studying
+	a given user performs. By using a compund key of
+	the \texttt{Username} and \texttt{Date} fields each user's daily work time can be stored. The \texttt{Value} field holds the time data for each entry.
+	By collecting large amounts of this data over an extended period of time, our system can support a user in identifying
+	when they should be using their time more effectively.\par
 
-    \newpage
+    \item \texttt{UserWater} Table: All entries for the Water field are stored here.
+	By using a compund key of the \texttt{Username} and \texttt{Date} fields each user's water 
+	intake can be stored and monitored, with the amount of water intake being stored in the \texttt{Value} field.\par
 
-    \item \texttt{UserWater} Table: Monitoring hydration, the \texttt{UserWater} table
-        includes attributes such as \texttt{Username}, \texttt{Date}, and \texttt{Value}. Hydration
-        tracking is crucial for overall health, and this table allows the
-        system to remind users to stay hydrated and track their daily water
-        intake.\par
-
-    \item \texttt{UserGoals} Table: As a strategic component of our system, the
-        UserGoals table holds data related to the personal objectives of users.
-        With attributes like \texttt{Username}, \texttt{ActivityID}, \texttt{TimeFrameID}, \texttt{Date}, and
-        \texttt{Value}, this table supports the setting and monitoring of personalised
-        goals, enhancing the system's capability to drive user engagement and
-        encourage behaviour modification. \texttt{UserGoals} covers SRQ 7.1, 7.2 and
-        7.3.\par
+    \item \texttt{UserGoals} Table: The UserGoals table holds data related to the goals set by users.
+        With attributes of \texttt{Username}, \texttt{ActivityID} forming a compund key, as well as \texttt{TimeFrameID}, \texttt{Date}, and
+        \texttt{Value} storing the data that makes up each goal, this table supports the setting and monitoring of personalised
+        goals. \texttt{UserGoals} covers SRQ 7.1, 7.2 and 7.3.\par
 
 \end{itemize}
 
@@ -634,18 +624,17 @@ are all aimed to satisfy ARQ 5 and SRQ 5.1, 5.2 and 5.3.
   \label{fig:User_Table}
 \end{figure}
 
-Figure \ref{fig:User_Table} describes our \texttt{User} Table: used to be
-central to our system, the User table captures essential personal identifiers and
-account information for each user. Attributes include \texttt{Username}, \texttt{Email}, and
+Figure \ref{fig:User_Table} describes our \texttt{User} Table which sits at the centre of our database. 
+The User table stores essential personal identifiers and account information for each user. Attributes include \texttt{Username}, \texttt{Email}, and
 \texttt{PasswordHash}, which are fundamental for ensuring secure user authentication and
 system access. This table acts as the primary entity with which other tables
-associate, establishing a one-to-many relationship across various data-tracking
-entities. Each instance of a user can associate with multiple records in
-subordinate tables, reflecting the diverse activities and metrics tracked by the
-system. Ultimately, the requirement for a multi-user system was omitted due to
-limitations in the allocated time frame. However, the underlying database
+associate, establishing one-to-many relationships across the many data tracking
+tables. Each user can associate with multiple records in the
+linked tables, reflecting the diverse activities and metrics tracked by the
+system. Ultimately, the requirement of a multi-user system was omitted due to
+limitations of time caused by unexpected issues with other development. However, the current database
 architecture has been deliberately designed to facilitate the seamless
-integration of multi-user capabilities, should they be developed in the future.
+integration of multi-user capabilities, should it be developed in the future.
 This table covers ARQ 1.
 
 \subsection{UML Class Diagram}
@@ -663,7 +652,7 @@ design to efficiently manage and process user data. Central to this
 architecture is the \texttt{Database} class, which acts as the primary conduit for all
 data manipulation and retrieval activities within the system. This class is
 critical for the robust handling of data and supports various functionalities
-critical to user interaction and data integrity. We utilise the Dapper module 
+critical to user interaction and data integrity. We utilised the Dapper module 
 in C\#, which facilitates the direct return or insertion of a list of 
 C\# objects from an SQL query, rather than handling them as tuples. 
 Accordingly, based on the ERD, all classes are designed to integrate seamlessly
@@ -694,7 +683,7 @@ entered. It comprises various user interaction handlers such as
 submission, alongside \texttt{UpdateUserWater()} and \texttt{UpdateUserSteps()}
 for updating specific activity metrics. Text handling methods like
 \texttt{TextBox\_TextChanged()}, \texttt{TextBox\_KeyDown()} and
-\texttt{TextBox\_PreviewTextInput()}. ensure data integrity and user input
+\texttt{TextBox\_PreviewTextInput()} ensure data integrity and user input
 validation.\par
 
 The GoalInput Class mirrors the ActivityDayInput class in providing prompts and
