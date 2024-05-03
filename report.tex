@@ -973,37 +973,77 @@ others, complying with ARQ 1.\par
 \section{Software Testing and Verification} \label{sec:testing}
 
 During the initial planning of this project, the approach to testing was
-discussed and a testing plan was created,  see Figure \ref{fig:TestDesign} in
-Appendix \ref{app:testing}. It was agreed that each time a developer completed
-a feature from the product backlog they would thoroughly white-box test it
-themselves using a variety of specifically chosen test cases and take
-screenshots to record the results. If all tests produced the desired results,
-the developer would consider the feature complete. If any tests were
-unsuccessful, however, they would debug and fix the problem before applying all
-tests again.  If the error was found in another  developer's code,  the error
-and the test results were provided to the person responsible and they would
-collaborate on the debugging. In this way, the component's functionality given
-both valid and invalid inputs would be ensured. By testing each element before
-combining it with other elements of the system, the testing process as a whole
-would comprise a bottom-up integration testing approach. On the completion of a
-part of the product backlog, the developer would send the screenshots produced
-in testing to the product owner. The product owner would then analyse the
-screenshots to ensure that the evidenced functionality aligned with the
-requirements of the product backlog. The product owner would also use the
-screenshots to provide feedback to the developers and to inform future
-decisions and alterations to the product backlog.\par
+discussed and a testing plan was created,  see Figure \ref{fig:TestDesign}
+in Appendix \ref{app:testing}. It was agreed that, initially, each time a 
+developer completed a feature from the product backlog, it would be thoroughly 
+white-box tested by the developer using a variety of specifically chosen manual 
+test cases and screenshots would be taken to record the results. If all tests 
+produced the desired results, the developer would consider the feature complete. 
+If any tests were unsuccessful, however, they would debug and fix the problem 
+before applying all tests again. If the error was found in another developer's 
+code during joint work, the error and the test results would be provided to the 
+person responsible and the programmers involved would collaborate on the debugging. 
+In this way, the component's functionality given both valid and invalid inputs would 
+be ensured. 
 
-\subsection{Examples of Manual Testing}
+By testing each element before combining it with other elements of the system, the 
+manual testing process as a whole would comprise a bottom-up integration testing approach. 
+On the completion of a section of the product backlog, the developer would send 
+the screenshots produced in testing to the product owner. The product owner would 
+then analyse the screenshots to ensure that the evidenced functionality aligned 
+with the requirements of the product backlog; to provide feedback to the developers; 
+and to inform future decisions and alterations to the product backlog. Additionally, 
+the product owner would manually test the system functionality during sprint planning 
+meetings to provide a form of black-box testing.\par
 
-The programmers in our group were very good at ensuring that their code
-initially contained no bugs so testing revealed very few errors. Below,
-however, are some examples of bugs that were found which demonstrate how
-effective the testing approach was in ensuring the adherence of our system to
-the specifications and the smooth operation of the software.\par
+Once the system as a whole was developed, the second stage of testing would be 
+implemented, in which unit tests would be designed and used by developers to 
+more thoroughly scour the system for bugs and inconsistencies. These automated 
+and time-efficient tests would effectively provide a second layer of protection 
+against errors in the code. With the system completed, these tests would be able 
+to target the complete testing of the interactions between the database, the API 
+and the system itself.\par
 
-\subsubsection{Achievement Consistency}
-When testing the achievements section of the product, the following test 
-cases were included in the process:\par
+Our approach to testing was very effective in ensuring a lack of bugs 
+in our code. The programmers in our group were very good at ensuring that 
+their code initially contained no bugs so the manual testing stage 
+revealed very few errors and unit tests even fewer. However, the clearly 
+defined two-stage approach to testing made the process much smoother and 
+more robust and provided confidence in the stability of the final product.\par 
+
+\subsection{Manual Testing}
+The manual testing of our system can be considered in two main parts due to 
+the program's design. Firstly, that of consistent data entry and the 
+corresponding graph. And, secondly, the testing of the responsiveness and 
+behaviour of goals and achievements. This is reflected in the test plan in 
+Appendix \ref{app:testing}. The data entry portion of this testing required 
+the intelligent selection of inputs to test general cases, edge cases and 
+invalid input. An example of this was the following test case used to check 
+the response of input boxes to incomplete inputs(See Figure \ref{fig:ManualTest2}). 
+In this case an error was found, as the input caused the program to crash. 
+The developer was quickly able to remedy this by adding an extra condition 
+to the processing code.
+\begin{center}
+    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Description} & \textbf{Test} & \textbf{Expected Result}\\
+        \hline
+        Incomplete inputs are handled gracefully 
+        & Input a decimal point 
+        & Input is treated as a zero\\
+        \hline
+    \end{tabular}
+\end{center}
+The second section of the manual testing phase involved the testing of the 
+Achievement and Goal sections. Data input was less important to this part, 
+serving purely to allow the reaching of different possibilities within the 
+system. For example, in the test cases below, the developer used manual 
+inputs to get to a state of having an achievement and then leave that state. 
+In this example, the programmer discovered that if an achievement's 
+requirement was reached and then the data was updated so that the requirement 
+was no longer reached, some results were displayed incorrectly on the 
+Achievements page (See Figure \ref{fig:ManualTest1}). The source of this issue 
+was swiftly located and removed by the developer on discovery.\par
 \begin{center}
     \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
         \hline
@@ -1020,39 +1060,10 @@ cases were included in the process:\par
         \hline
     \end{tabular}
 \end{center}
-
-The first test of the two was passed successfully. However, while the progress
-label did revert to a lower value upon alteration of the data, the achievement
-remained highlighted, as shown in Figure \ref{fig:ManualTest1} (see Appendix
-\ref{app:testing}). The developer in charge of this section was quickly able to
-find the source of this issue and fix it.\par
-
-\subsubsection{Incomplete Input}
-Another issue that was found during testing was in the manual data input. To avoid 
-invalid entries, the input box only allowed numbers and decimal points to be entered, 
-however, the following test case caused an unexpected error.\par
-\begin{center}
-    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
-        \hline
-        \textbf{Description} & \textbf{Test} & \textbf{Expected Result}\\
-        \hline
-        Incomplete inputs are handled gracefully 
-        & Input a decimal point 
-        & Input is treated as a zero\\
-        \hline
-    \end{tabular}
-\end{center}
-
-%Image removed
-
-When a decimal point was entered, as in Figure \ref{fig:ManualTest2} (see
-Appendix \ref{app:testing}), the program froze and then crashed. To avoid this,
-the developer changed the code handling the inputs and the problem was
-solved.\par
-
-\subsubsection{Goal Expiry}
-A third example of an error caught by our testing was an issue with the 
-time period of goals. During testing, the following test case failed:\par
+A relatively major issue that was found in this area was goals not correctly 
+expiring once their dedicated end time was reached 
+(See Figure \ref{fig:ManualTest3}). Once the test case below had been checked, 
+the bug was quickly found and solved.\par
 \begin{center}
     \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
         \hline
@@ -1064,11 +1075,27 @@ time period of goals. During testing, the following test case failed:\par
         \hline
     \end{tabular}
 \end{center}
+\subsection{Unit Testing}
+Unit testing was also divided into two parts in line with our test plan: 
+Direct data entry testing and API integration testing. In function, direct 
+data entry unit testing was effectively a more robust and exhaustive version 
+of the manual testing of the same functionality, covering standard inputs, 
+edge cases and invalid inputs. For example, figure \ref{fig:Database Unit Test 2} 
+shows a unit test designed to check that updating the number of steps a user has 
+completed has the correct effect on the database. Similarly, a unit test 
+ensuring correct database editing upon the creation of a new goal can be seen 
+in figure \ref{fig:Database Unit Test 3}. A variety of further unit tests and 
+their results can be found in Appendix \ref{app:testing}. Pleasingly, this unit 
+testing did not uncover any issues with our code, showcasing the effectiveness of 
+our manual testing and the initial programming of the system.\par
 
-As shown in the Figure \ref{fig:ManualTest3} (see Appendix \ref{app:testing}),
-once the goal time had passed, the counter simply continued to run. This
-relatively major issue was quickly resolved and the feature now functions
-correctly.\par
+The unit testing of the API's interaction was similar to the first set of unit 
+tests in terms of the tests themselves. For each action that the API could be 
+involved in, a unit test was designed to ensure that the effect on the database 
+caused by the action was identical to the effect which would be caused by the same 
+action performed manually.\par
+
+
 
 \section{Reflection and Conclusion}
 
