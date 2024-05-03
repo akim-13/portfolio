@@ -548,18 +548,17 @@ Section \ref{sec:testing} for more details (covers all of SRQ 4).
 
 \section{Design}
 
-The following section encompasses how we wish to turn our initial requirements 
-into a structured plan of how each feature will be implemented. Furthermore, 
+The following section shows how we plan to turn our initial requirements 
+into a complete program where all of our features are included. Furthermore, 
 it contains many important diagrams and images detailing the specifics of each 
-feature that combine to form a complete overview of our system.\par
+feature in our system.\par
 
 \subsection{Database ERD Model}
 
 Our Entity-Relationship Diagram (ERD) demonstrates the structure of 
-our PI system's database. This ERD has been specifically constructed
-to suit our system's needs and as such is a great guide for the development 
-of both the database and system in general as it ensures that all requirements
-that need to store data are covered.\par
+our PI system's database. This ERD has been created
+to suit our system's needs and to be used as a guide during development
+to ensure database functionality.\par
 
 \begin{figure}[!ht]
   \centering
@@ -590,7 +589,7 @@ Figure \ref{fig:PI_ERD} describes the following components:
     habits of a given user and help them identify when their sleeping time is either too low or high.\par
 
     \item \texttt{UserWork} Table: This table records all entries of both working and studying
-    a given user performs. By using a compund key of
+    a given user performs. By using a compound key of
     the \texttt{Username} and \texttt{Date} fields each user's daily work time can be stored. The \texttt{Value} field holds the time data for each entry.
     By collecting large amounts of this data over an extended period of time, our system can support a user in identifying
     when they should be using their time more effectively.\par
@@ -602,7 +601,7 @@ Figure \ref{fig:PI_ERD} describes the following components:
     \newpage
 
     \item \texttt{UserGoals} Table: The UserGoals table holds data related to the goals set by users.
-        With attributes of \texttt{Username}, \texttt{ActivityID} forming a compund key, as well as \texttt{TimeFrameID}, \texttt{Date}, and
+        With attributes of \texttt{Username}, \texttt{ActivityID} forming a compound key, as well as \texttt{TimeFrameID}, \texttt{Date}, and
         \texttt{Value} storing the data that makes up each goal, this table supports the setting and monitoring of personalised
         goals. \texttt{UserGoals} covers SRQ 7.1, 7.2 and 7.3.\par
 
@@ -619,16 +618,15 @@ are all aimed to satisfy ARQ 5 and SRQ 5.1, 5.2 and 5.3.
 \end{figure}
 
 Figure \ref{fig:User_Table} describes our \texttt{User} Table which sits at the centre of our database. 
-The User table stores essential personal identifiers and account information for each user. Attributes include \texttt{Username}, \texttt{Email}, and
+The User table stores personal information of the user to allow us to differentiate between users. Attributes include \texttt{Username}, \texttt{Email}, and
 \texttt{PasswordHash}, which are fundamental for ensuring secure user authentication and
-system access. This table acts as the primary entity with which other tables
-associate, establishing one-to-many relationships across the many data tracking
-tables. Each user can associate with multiple records in the
-linked tables, reflecting the diverse activities and metrics tracked by the
-system. Ultimately, the requirement of a multi-user system was omitted due to
-limitations of time caused by unexpected issues with other development. However, the current database
-architecture has been deliberately designed to facilitate the seamless
-integration of multi-user capabilities, should it be developed in the future.
+system access. This table acts as the primary table with which other tables
+associate, establishing one-to-many relationships. Each user can associate with multiple records in the
+linked tables, reflecting the different amount of activities and metrics tracked by the
+system. Ultimately, the requirement of a multi-user system was removed due to
+limitations of time and other unexpected issues with development. However, the current database
+architecture has been deliberately designed so that a multi-user interface could be easily integrated
+, should it be developed in the future.
 This table covers ARQ 1.
 
 \subsection{UML Class Diagram}
@@ -640,23 +638,23 @@ This table covers ARQ 1.
   \label{fig:Class}
 \end{figure}
 
-The class diagram of our PI system (Figure \ref{fig:Class}) delineates the
-fundamental components and their relationships, underscoring the system's
+The class diagram of our PI system (Figure \ref{fig:Class}) shows the
+fundamental components of our system and their relationships, highlighting the system's
 design to efficiently manage and process user data. Central to this
-architecture is the \texttt{Database} class, which acts as the primary conduit for all
-data manipulation and retrieval activities within the system. This class is
-critical for the robust handling of data and supports various functionalities
-critical to user interaction and data integrity. We utilised the Dapper module 
-in C\#, which facilitates the direct return or insertion of a list of 
+architecture is the \texttt{Database} class, which acts as the core for all
+data manipulation and data queries within the system. This class is
+critical for the handling of data and supports various functionalities
+essential to user interaction and data integrity. We utilised the Dapper module 
+in C\#, which allows the direct return or insertion of a list of 
 C\# objects from an SQL query, rather than handling them as tuples. 
-Accordingly, based on the ERD, all classes are designed to integrate seamlessly
+Accordingly, based on the ERD, all classes are designed to be easily integrated 
 with the Dapper package.\par
 
 \newpage
 
 The \texttt{Database} class ensures a singleton pattern for database management,
 creating a single, globally accessible instance throughout the application
-lifecycle. It manages the database connectivity, facilitating secure and
+lifecycle. It manages the database connectivity, allowing secure and
 persistent connections to the data store. Data manipulation methods such as
 \texttt{InsertWithQuery()}, \texttt{Insert()}, \texttt{UpdateWithQuery()}, and \texttt{Update()} allow for
 efficient data insertion and updating within the database. Retrieval methods
@@ -717,7 +715,7 @@ reflective of user activity.\par
 The association between the \texttt{ActivityDayInput}, \texttt{GoalInput}, and the \texttt{Database}
 ensures immediate data reflection in the system, supporting features like
 activity comparison and trend analysis. The \texttt{Database} manages its instance,
-maintaining data integrity and security, and acts as a centralised repository
+maintaining data integrity and security, and acts as the core
 for all user data. This structure ensures seamless data flow across the system,
 fulfilling functional and non-functional requirements, and enhancing overall
 user interaction. The association between these elements are the groundwork for all requirements SRQ 5, SRQ 6 and SRQ 7, as well as ARQ 4.\par
@@ -839,7 +837,7 @@ working for to the progress. They can easily check it in the main menu screen.\p
 
 Figure \ref{fig:Steps} presents the steps interface, which maintains a similar design
 with the work screen but introduces several specific modifications. The heading \texttt{"Step"} is
-displayed at the top of the screen, distinguished by a shoe icon next to it, visually represent the
+displayed at the top of the screen, distinguished by a shoe icon next to it, visually represents the
 category of the section. A notable difference in layout is the placement of
 the progress box, which is positioned below the input bars rather than above. This adjustment
 allows for immediate and easy data entry upon accessing the screen, complying with ARQ 5.\par
