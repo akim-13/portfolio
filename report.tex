@@ -65,7 +65,7 @@
         understanding that simple changes in daily routines can significantly
         impact an individual's overall well-being and effectiveness. The
         system's development followed an agile methodology, with features
-        incrementally added and refined over three completed sprints. Our PI
+        incrementally added and refined over five completed sprints. Our PI
         system is designed to track critical metrics such as sleep, water
         intake, steps, and productive hours. Each of these metrics was chosen
         based on extensive initial research including surveys and interviews
@@ -199,13 +199,13 @@ members for completion during the next sprint. To maintain clarity and access
 to information, minutes were taken of these meetings and stored in the project
 GitHub repository. This meant that developers could always access information
 about the progress of other developers and their allocated tasks (See Appendix
-x). During sprints, group members worked either individually or as part of a
-smaller group to complete their allocated element of the sprint backlog.
-Regular scrum meetings were also used to allow group members to communicate
-progress, plans, obstacles and key information. We assigned a scrum master to
-gain a full understanding of Agile values and methodologies and ensure the
-group's adherence to them. A product owner was also chosen to be in charge of
-managing the product backlog and organising sprints.\par
+\ref{app:minutes}). During sprints, group members worked either individually or
+as part of a smaller group to complete their allocated element of the sprint
+backlog. Regular scrum meetings were also used to allow group members to
+communicate progress, plans, obstacles and key information. We assigned a scrum
+master to gain a full understanding of Agile values and methodologies and
+ensure the group's adherence to them. A product owner was also chosen to be in
+charge of managing the product backlog and organising sprints.\par
 
 Our first sprint was devoted towards research into PI systems and what students
 wanted in one. Three group members were assigned to researching PI systems, two
@@ -439,14 +439,14 @@ such as a coursework deadline could influence sleep count.
 
 \subsection{Viewing and Collecting Tracking Data}
 
-Users will be given the option to synchronise their step data, both present and past from a Fitbit account via the Fitbit API(ARQ 2). 
-We must ensure that potential users without the
-relevant hardware can still use our system and must be done in an intuitive way
-in order to allow our system to be accessible for a greater amount of students.
-This will also allow for easy gathering of data fields which cannot be tracked
-via physical devices (SRQ 5.1). As not all data fields we have selected can be accessed
-directly via the Fitbit API (sleep, and study time), manual entry is
-necessary (SRQ 5.3).\newline
+Users will be given the option to synchronise their step data, both present and
+past from a Fitbit account via the Fitbit API(ARQ 2). We must ensure that
+potential users without the relevant hardware can still use our system and must
+be done in an intuitive way in order to allow our system to be accessible for a
+greater amount of students. This will also allow for easy gathering of data
+fields which cannot be tracked via physical devices (SRQ 5.1). As only the
+study time field can be accessed directly via the Fitbit API, manual entry is
+necessary (SRQ 5.3).\par
 
 To ensure that our users understand what data we are storing, each user shall
 be allowed to view the data we have stored on them for each of these key
@@ -573,39 +573,32 @@ Figure \ref{fig:PI_ERD} describes the following components:
 
 \begin{itemize}
 
-    \item \texttt{UserAchievements} Table: This table is used to store the 
-	achievements for every user. By using a compound 
-	key of the \texttt{Username}, \texttt{Date}, and \texttt{ActivityID} fields each achievement can be uniquely stored.
-	 These fields also allow for the comparison of the accomplishments
-	of a user across a given activity or timeframe. The \texttt{Timeframe} 
-	and \texttt{Value} fields are also essential as they contain vital data
-	 to each achievement: What a user must achieve and by when. This 
-        table adheres to SRQ 7.4. and  SRQ 7.1.\par
-
     \item \texttt{UserStep} Table: This table records all step data
-	that the system is provided. By using a compound key
-	of the \texttt{Username} and \texttt{Date} fields each user's step count can be stored
-	for a given day, with the count being stored in the \texttt{Value} field. By taking these 
-	daily inputs, our system can obtain enough data to assist in the improvement of the
-	habits of a given user and help them set realistic goals. As the data can also be inserted 
-	through an API, this table aims to cover ARQ 2.\par
+    that the system is provided. By using a compound key
+    of the \texttt{Username} and \texttt{Date} fields each user's step count can be stored
+    for a given day, with the count being stored in the \texttt{Value} field. By taking these 
+    daily inputs, our system can obtain enough data to assist in the improvement of the
+    habits of a given user and help them set realistic goals. As the data can also be inserted 
+    through an API, this table aims to cover ARQ 2.\par
 
     \item \texttt{UserSleep} Table: This table is used to record all sleep data 
-	that the system is provided. By using a compound key
-	of the \texttt{Username} and \texttt{Date} fields each user's sleep time can be stored
-	for a given day, with the total time being stored in the \texttt{Value} field. By taking these 
-	daily inputs, our system can obtain enough data to assist in the improvement of the
-	habits of a given user and help them identify when their sleeping time is either too low or high.\par
+    that the system is provided. By using a compound key
+    of the \texttt{Username} and \texttt{Date} fields each user's sleep time can be stored
+    for a given day, with the total time being stored in the \texttt{Value} field. By taking these 
+    daily inputs, our system can obtain enough data to assist in the improvement of the
+    habits of a given user and help them identify when their sleeping time is either too low or high.\par
 
     \item \texttt{UserWork} Table: This table records all entries of both working and studying
-	a given user performs. By using a compund key of
-	the \texttt{Username} and \texttt{Date} fields each user's daily work time can be stored. The \texttt{Value} field holds the time data for each entry.
-	By collecting large amounts of this data over an extended period of time, our system can support a user in identifying
-	when they should be using their time more effectively.\par
+    a given user performs. By using a compund key of
+    the \texttt{Username} and \texttt{Date} fields each user's daily work time can be stored. The \texttt{Value} field holds the time data for each entry.
+    By collecting large amounts of this data over an extended period of time, our system can support a user in identifying
+    when they should be using their time more effectively.\par
 
     \item \texttt{UserWater} Table: All entries for the Water field are stored here.
-	By using a compund key of the \texttt{Username} and \texttt{Date} fields each user's water 
-	intake can be stored and monitored, with the amount of water intake being stored in the \texttt{Value} field.\par
+    By using a compund key of the \texttt{Username} and \texttt{Date} fields each user's water 
+    intake can be stored and monitored, with the amount of water intake being stored in the \texttt{Value} field.\par
+
+    \newpage
 
     \item \texttt{UserGoals} Table: The UserGoals table holds data related to the goals set by users.
         With attributes of \texttt{Username}, \texttt{ActivityID} forming a compund key, as well as \texttt{TimeFrameID}, \texttt{Date}, and
@@ -1564,7 +1557,7 @@ For additional information refer to Appendix \ref{app:ct}.
 
 
 \newpage
-\section{Appendix: Minutes}
+\section{Appendix: Minutes}\label{app:minutes}
 \newcommand{\tightlist}{}
 
 \hypertarget{minutes-from-2503}{%
