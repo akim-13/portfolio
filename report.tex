@@ -64,7 +64,7 @@
         productivity. The need for such a system is derived from the growing
         understanding that simple changes in daily routines can significantly
         impact an individual's overall well-being and effectiveness. The
-        system's development followed an agile methodology, with features
+        system's development followed the Agile methodology, with features
         incrementally added and refined over five completed sprints. Our PI
         system is designed to track critical metrics such as sleep, water
         intake, steps, and productive hours. Each of these metrics was chosen
@@ -297,7 +297,7 @@ quick-reference table of requirements.
 \subsection{Gathering System Requirements}
 
 Initially, we asked people what features they would look for in an personal
-improvement application. From these interviews (see Appendix \ref{app:survey}
+improvement application. From these interviews (see Appendices \ref{app:survey}
 and \ref{app:interviews}), we identified that most students use PI systems for
 tracking their fitness (60\%) and their learning progress (30\%), with the
 other 10\% being interested in their environmental impact. This helped us
@@ -414,13 +414,13 @@ without aimlessly trying to increase some number (SRQ 7.4). Furthermore, these
 achievements rotate daily, ensuring a user never runs our of goals to achieve.\\
 
 Additionally, we set additional requirements for our system to contain a range
-of social features (ARQ 1) including a leaderboard and groups. This was
+of social features (ARQ 1) including a leader board and groups. This was
 requested by many of the students we interviewed who wished to use friendly
 competition as a motivator (see Appendix \ref{app:interviews}). Unfortunately,
 we set the priority for this requirement to low as it did not directly
 influence the core behaviour of our system. During the creation of our system,
-it was decided that this feature was too complex to implement  given the time limit and unexpected
-workload of our higher priority requirements.
+it was decided that this feature was too complex to implement  given the time
+limit and unexpected workload of our higher priority requirements.
 
 
 \subsection{Comparing User Data}
@@ -986,83 +986,96 @@ against errors in the code. With the system completed, these tests would be able
 to target the complete testing of the interactions between the database, the API 
 and the system itself.\par
 
-Our approach to testing was very effective in ensuring a lack of bugs 
-in our code. The programmers in our group were very good at ensuring that 
-their code initially contained no bugs so the manual testing stage 
-revealed very few errors and unit tests even fewer. However, the clearly 
-defined two-stage approach to testing made the process much smoother and 
-more robust and provided confidence in the stability of the final product.\par 
+Our approach to testing was very effective in ensuring a lack of bugs in our
+code. The programmers in our group were very good at ensuring that their code
+initially contained no bugs so the manual testing stage revealed very few
+errors and unit tests even fewer. However, the clearly defined two-stage
+approach to testing made the process much smoother and more robust and provided
+confidence in the stability of the final product.\par 
 
-\subsection{Manual Testing}
-The manual testing of our system can be considered in two main parts due to 
-the program's design. Firstly, that of consistent data entry and the 
-corresponding graph. And, secondly, the testing of the responsiveness and 
-behaviour of goals and achievements. This is reflected in the test plan in 
-Appendix \ref{app:testing}. The data entry portion of this testing required 
-the intelligent selection of inputs to test general cases, edge cases and 
-invalid input. An example of this was the following test case used to check 
-the response of input boxes to incomplete inputs(See Figure \ref{fig:ManualTest2}). 
-In this case an error was found, as the input caused the program to crash. 
-The developer was quickly able to remedy this by adding an extra condition 
-to the processing code.
-\begin{center}
+\subsection{Manual Testing} 
+
+The manual testing of our system can be considered in two main parts due to the
+program's design. Firstly, that of consistent data entry and the corresponding
+graph. And, secondly, the testing of the responsiveness and behaviour of goals
+and achievements. This is reflected in the test plan in Appendix
+\ref{app:testing}. The data entry portion of this testing required the
+intelligent selection of inputs to test general cases, edge cases and invalid
+input. An example of this was the following test case used to check the
+response of input boxes to incomplete inputs (See Figure
+\ref{fig:ManualTest2}). In this case an error was found, as the input caused
+the program to crash. The developer was quickly able to remedy this by adding
+an extra condition to the processing code.
+
+\begin{table}[!ht]
+    \centering
     \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
         \hline
-        \textbf{Description} & \textbf{Test} & \textbf{Expected Result}\\
+        \textbf{Description} & \textbf{Test} & \textbf{Expected Result} \\
         \hline
-        Incomplete inputs are handled gracefully 
-        & Input a decimal point 
-        & Input is treated as a zero\\
+        Incomplete inputs are handled gracefully & Input a decimal point & Input is treated as a zero \\
         \hline
     \end{tabular}
-\end{center}
-The second section of the manual testing phase involved the testing of the 
-Achievement and Goal sections. Data input was less important to this part, 
-serving purely to allow the reaching of different possibilities within the 
-system. For example, in the test cases below, the developer used manual 
-inputs to get to a state of having an achievement and then leave that state. 
-In this example, the programmer discovered that if an achievement's 
-requirement was reached and then the data was updated so that the requirement 
-was no longer reached, some results were displayed incorrectly on the 
-Achievements page (See Figure \ref{fig:ManualTest1}). The source of this issue 
-was swiftly located and removed by the developer on discovery.\par
-\begin{center}
-    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
-        \hline
-        \textbf{Description} & \textbf{Test} & \textbf{Expected Result}\\
-        \hline
-        Achievement page highlights completed achievements & Input data which 
-        completes an achievement & Achievement page highlights completion and 
-        shows correct progress \\
-        \hline
-        Achievement page does not highlight previously completed achievements 
-        which are no longer complete & Input data which completes an achievement 
-        then edit data so that achievement is not completed & Achievement page 
-        reverts highlighting and progress label\\
-        \hline
-    \end{tabular}
-\end{center}
-A relatively major issue that was found in this area was goals not correctly 
-expiring once their dedicated end time was reached 
-(See Figure \ref{fig:ManualTest3}). Once the test case below had been checked, 
-the bug was quickly found and solved.\par
-\begin{center}
-    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
-        \hline
-        \textbf{Description} & \textbf{Test} & \textbf{Expected Result}\\
-        \hline
-        Goals expire once end time has been reached 
-        & Allow a goal to end uncompleted 
-        & Goal shows failure and ends\\
-        \hline
-    \end{tabular}
-\end{center}
+    \caption{Decimal Point Bug}
+    \label{table:man1}
+\end{table}
+
+The second section of the manual testing phase involved the testing of the
+Achievement and Goal sections. Data input was less important to this part,
+serving purely to allow the reaching of different possibilities within the
+system. For example, in the test cases below, the developer used manual inputs
+to get to a state of having an achievement and then leave that state. In this
+example, the programmer discovered that if an achievement's requirement was
+reached and then the data was updated so that the requirement was no longer
+reached, some results were displayed incorrectly on the Achievements page (see
+Figure \ref{fig:ManualTest1}). The source of this issue was swiftly located and
+removed by the developer on discovery.\par
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Description} & \textbf{Test} & \textbf{Expected Result} \\
+    \hline
+    Achievement page highlights completed achievements & Input data which 
+    completes an achievement & Achievement page highlights completion and 
+    shows correct progress \\
+    \hline
+    Achievement page does not highlight previously completed achievements 
+    which are no longer complete & Input data which completes an achievement 
+    then edit data so that achievement is not completed & Achievement page 
+    reverts highlighting and progress label \\
+    \hline
+\end{tabular}
+\caption{Achievements Bug}
+\label{table:man2} 
+\end{table} 
+
+
+A relatively major issue that was found in this area was goals not correctly
+expiring once their dedicated end time was reached (See Figure
+\ref{fig:ManualTest3}). Once the test case below had been checked, the bug was
+quickly found and solved.\par
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Description} & \textbf{Test} & \textbf{Expected Result} \\
+    \hline
+    Goals expire once end time has been reached & Allow a goal to end uncompleted & Goal shows failure and ends \\
+    \hline
+\end{tabular}
+\caption{Goals Bug}
+\label{man3}
+\end{table}
+
 \subsection{Unit Testing}
 Unit testing was also divided into two parts in line with our test plan: 
-Direct data entry testing and API integration testing. In function, direct 
+direct data entry testing and API integration testing. In function, direct 
 data entry unit testing was effectively a more robust and exhaustive version 
 of the manual testing of the same functionality, covering standard inputs, 
-edge cases and invalid inputs. For example, figure \ref{fig:Database Unit Test 2} 
+edge cases and invalid inputs. For example, Figure \ref{fig:Database Unit Test 2} 
 shows a unit test designed to check that updating the number of steps a user has 
 completed has the correct effect on the database. Similarly, a unit test 
 ensuring correct database editing upon the creation of a new goal can be seen 
@@ -1071,13 +1084,12 @@ their results can be found in Appendix \ref{app:testing}. Pleasingly, this unit
 testing did not uncover any issues with our code, showcasing the effectiveness of 
 our manual testing and the initial programming of the system.\par
 
-The unit testing of the API's interaction was similar to the first set of unit 
-tests in terms of the tests themselves. For each action that the API could be 
-involved in, a unit test was designed to ensure that the effect on the database 
-caused by the action was identical to the effect which would be caused by the same 
-action performed manually.\par
-
-
+The unit testing of the API's interaction was similar to the first set of unit
+tests in terms of the tests themselves (see Figures \ref{fig:API Test 1} and
+\ref{fig:API Test 2}). For each action that the API could be involved in, a
+unit test was designed to ensure that the effect on the database caused by the
+action was identical to the effect which would be caused by the same action
+performed manually.\par
 
 \section{Reflection and Conclusion}
 
@@ -1096,34 +1108,37 @@ and make educated speculations about its effectiveness.\par
 
 \subsection{System Development} 
 
-The creation of the specification for our system began with research to establish
-the interests of our target demographic. The biggest parts of this research
-were an online form distributed to our peers and some interviews (see Appendix
-\ref{app:survey} and \ref{app:interviews}). The results of these were very
-helpful and were the driving force behind our choice of tracking metrics.
-However, while this approach was sound and successful in gathering information,
-only around twenty individuals filled in the form and we only managed to
-interview two individuals. This is a large enough number of people that we feel
-comfortable with using the results as a guide, especially given the clear
-majority in the opinions of the form respondents. However, in future investigations, ensuring
-a larger sample size would improve the reliability of our results and, at the
-very least, make us more certain of our decisions.\par
+The creation of the specification for our system began with research to
+establish the interests of our target demographic. The biggest parts of this
+research were an online form distributed to our peers and some interviews (see
+Appendices \ref{app:survey} and \ref{app:interviews}). The results of these
+were very helpful and were the driving force behind our choice of tracking
+metrics. However, while this approach was sound and successful in gathering
+information, only around twenty individuals filled in the form and we only
+managed to interview two individuals. This is a large enough number of people
+that we feel comfortable with using the results as a guide, especially given
+the clear majority in the opinions of the form respondents. However, in future
+investigations, ensuring a larger sample size would improve the reliability of
+our results and, at the very least, make us more certain of our decisions.\par
 
-Our choice of tracking metrics was informed both by data gathering and by 
-research into other PI systems. This meant that our final list of four metrics 
-reflected the desires of our peers, as well as our informed opinions on the 
-most beneficial choices. On reflection, these four metrics still seem to 
-provide an excellent and balanced summary of an individual's physical and 
-mental health in a way that appears likely to provide useful insights and 
-achievable targets. We are therefore confident that our choice of metrics is 
-sound. However, due to the variety of research responses, especially from the 
-interviewees, it was not possible to take the views of every individual into 
-account; there were a few features suggested during the interviews which were 
-not added to the specification, either due to the need to limit the scope of 
-the system or because they didn't align with the conclusions of other 
-respondents or with our research. In future, looking back on this research or 
-through conducting more thorough research, we could implement extra features 
-over a longer period if a large proportion of our user base shared a desire for a particular feature.\par
+Our choice of tracking metrics was informed both by data gathering and by
+research into other PI systems. This meant that our final list of four metrics
+reflected the desires of our peers, as well as our informed opinions on the
+most beneficial choices. On reflection, these four metrics still seem to
+provide an excellent and balanced summary of an individual's physical and
+mental health in a way that appears likely to provide useful insights and
+achievable targets. We are therefore confident that our choice of metrics is
+sound. However, due to the variety of research responses, especially from the
+interviewees, it was not possible to take the views of every individual into
+account; there were a few features suggested during the interviews which were
+not added to the specification, either due to the need to limit the scope of
+the system or because they didn't align with the conclusions of other
+respondents or with our research. In future, looking back on this research or
+through conducting more thorough research, we could implement extra features
+over a longer period if a large proportion of our user base shared a desire for
+a particular feature.\par
+
+\newpage
 
 One key requirement we specified for our system, which is a very important 
 feature of any PI system, was the ability to log data. This specification was 
@@ -1193,6 +1208,8 @@ carried almost everywhere, a future improvement to our system would be
 to allow the tracking of data on mobile devices, making the process much more 
 portable and accessible.\par
 
+\newpage
+
 Our approach to the test-driven development of our system worked effectively in 
 practice, with developers finding most of the bugs in their own code during 
 testing and the finished product working effectively with no known issues. By 
@@ -1204,6 +1221,7 @@ future, a combination of white-box and black-box testing might prove to be more
 robust due to the diverse perspectives provided by group work.\par  
 
 \subsection{Software Process}
+
 To develop this product we followed the Scrum framework and the Agile 
 methodology of software development with the aim of allowing us to structure 
 and manage the creation of the system in an effective and methodical way. We 
@@ -1232,8 +1250,6 @@ backlog was updated to include this new design and the change was implemented
 as part of the sprint that followed, making the database more efficient. In 
 this way, the Agile methodology helped us avoid future problems and work by 
 allowing flexibility during the development process.\par
-
-\newpage
 
 One part of the process that worked effectively for our group was 
 the sprint planning weekly meetings. By having a member of the team run the 
@@ -1340,7 +1356,7 @@ addressed accordingly.\par
 \end{tabular}
 \end{table}
 
-For additional information refer to Appendix \ref{app:ct}.
+For additional information refer to Appendices \ref{app:ct} and \ref{app:minutes}.
 
 \newpage
 
