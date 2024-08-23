@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="PI_Systems.GUIs.UserControls.Steps"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:huc="clr-namespace:PI_Systems.GUIs.HelperUserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel>
+            <huc:TitleAndBack Title="Steps 👟"/>
+            <StackPanel x:Name="container" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel x:Name="fitbit_panel" Orientation="Horizontal" Margin="0,10,0,10" Background="DarkSlateGray" HorizontalAlignment="Center">
+                    <Label Width="300" Height="50"  
+                           HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" FontFamily="Cascadia Code" FontSize="14" Foreground="Wheat" Background="{x:Null}" HorizontalAlignment="Center">
+                        Enter fitbit token to update data
+                    </Label>
+                    <TextBox Name="tokenTextBox" Width="250" FontFamily="consolas" TextWrapping="Wrap">
+                        
+                    </TextBox>
+                    <Button 
+                        Width="70" 
+                        Height="50" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" 
+                        Content="Connect" 
+                        FontSize="15" 
+                        FontWeight="Bold" 
+                        Background="Red" 
+                        Foreground="Wheat" 
+                        Click="FitbitButton_Click" 
+                        Margin="0,0,0,0" />
+
+                </StackPanel>
+
+                <!--Grid for adding steps count manually (can be invisible if API connected)-->
+                <Grid Name="stepsInputGrid" Visibility="Visible">
+                    <huc:ActivityDayInput Prompt="Insert amount of steps today" Activity="Steps"/>
+                </Grid>
+
+                <huc:GoalInput Prompt="Insert steps for goal period:" Activity="Steps"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
