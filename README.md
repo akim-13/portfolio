@@ -15,7 +15,7 @@ information refer to Bath's [Penalties for Academic
 Misconduct](https://www.bath.ac.uk/campaigns/academic-integrity-penalties-for-academic-misconduct/)
 page.
 
-# Coursework and Exams
+# Coursework & Exam Results
 
 | Unit Code                                                                    |Subject    |Description|Achieved Distinction|
 |:----------------------------------------------------------------------------:|:---------:|:-----------:|:-----------:|
@@ -36,3 +36,4 @@ page.
 |[cm12006_cw2](https://github.com/akim-13/portfolio/tree/master/Y1/cm12006_cw2)|Maths      ||Yes
 |cm12006_ex1                                                                   |Maths      ||Yes
 
+**Note**: To inspect each project's commit history, select the branch with the corresponding unit code by clicking the button at the top of the page that currently indicates the `master` branch.
