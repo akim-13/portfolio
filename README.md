@@ -15,3 +15,24 @@ information refer to Bath's [Penalties for Academic
 Misconduct](https://www.bath.ac.uk/campaigns/academic-integrity-penalties-for-academic-misconduct/)
 page.
 
+# Coursework and Exams
+
+| Unit Code                                                                    |Subject    |Description|Achieved Distinction|
+|:----------------------------------------------------------------------------:|:---------:|:-----------:|:-----------:|
+|[cm12001_cw1](https://github.com/akim-13/portfolio/tree/master/Y1/cm12001_cw1)|AI         ||Yes
+|[cm12001_cw2](https://github.com/akim-13/portfolio/tree/master/Y1/cm12001_cw2)|AI         ||Yes
+|cm12001_ex1                                                                   |AI         ||Yes
+|[cm12002_cw1](https://github.com/akim-13/portfolio/tree/master/Y1/cm12002_cw1)|Sys. Arch. ||Yes
+|[cm12002_cw2](https://github.com/akim-13/portfolio/tree/master/Y1/cm12002_cw2)|Sys. Arch. ||Yes
+|cm12002_ex1                                                                   |Sys. Arch. ||Yes
+|[cm12003_cw1](https://github.com/akim-13/portfolio/tree/master/Y1/cm12003_cw1)|Programming||Yes
+|[cm12003_cw2](https://github.com/akim-13/portfolio/tree/master/Y1/cm12003_cw2)|Programming||Yes
+|[cm12004_cw1](https://github.com/akim-13/portfolio/tree/master/Y1/cm12004_cw1)|Maths      ||Yes
+|[cm12004_cw2](https://github.com/akim-13/portfolio/tree/master/Y1/cm12004_cw2)|Databases  ||Yes
+|cm12004_ex1                                                                   |Maths      ||Yes
+|[cm12005_cw1](https://github.com/akim-13/portfolio/tree/master/Y1/cm12005_cw1)|Programming||Yes
+|[cm12005_cw2](https://github.com/akim-13/portfolio/tree/master/Y1/cm12005_cw2)|Programming||Yes
+|[cm12006_cw1](https://github.com/akim-13/portfolio/tree/master/Y1/cm12006_cw1)|Maths      ||Yes
+|[cm12006_cw2](https://github.com/akim-13/portfolio/tree/master/Y1/cm12006_cw2)|Maths      ||Yes
+|cm12006_ex1                                                                   |Maths      ||Yes
+
