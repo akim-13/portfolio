@@ -61,5 +61,9 @@ echo "Merge $CW into master, preserving history:"
 git merge --allow-unrelated-histories $CW -m "Merge $CW into master"
 echo
 
+echo "Move $CW branch reference back to the original commit:"
+git branch -f $CW $CW/master
+echo
+
 echo "Coursework $CW added successfully. Don't forget to git push --all origin."
 
