@@ -29,8 +29,8 @@ echo "Fetch branches from $CW:"
 git fetch $CW
 echo
 
-echo "Create a tmp-$CW branch from $CW/master:"
-git checkout -b tmp-$CW $CW/master
+echo "Create $CW branch from $CW/master:"
+git checkout -b $CW $CW/master
 echo
 
 if [ -f ".gitignore" ]; then
@@ -57,13 +57,9 @@ echo
 git checkout master
 echo
 
-echo "Merge tmp-$CW into master, preserving history:"
-git merge --allow-unrelated-histories tmp-$CW -m "Merge $CW into master"
+echo "Merge $CW into master, preserving history:"
+git merge --allow-unrelated-histories $CW -m "Merge $CW into master"
 echo
 
-echo "Delete tmp-$CW:"
-git branch -D tmp-$CW
-echo
-
-echo "Coursework $CW added successfully. Don't forget to git push."
+echo "Coursework $CW added successfully. Don't forget to git push --all origin."
 
