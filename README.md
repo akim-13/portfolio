@@ -24,7 +24,7 @@ page.
 corresponding unit code by clicking the button at the top of the page that
 currently indicates the `master` branch.
 
-## First Year (2023--2024)
+## First Year (2023–2024)
 
 | Unit Code                        |Subject    |Description                       |Result     |
 |:--------------------------------:|:---------:|:--------------------------------:|:---------:|
@@ -47,3 +47,6 @@ currently indicates the `master` branch.
 
 **First Year Average**: `82%`
 
+# Additional Information
+- [Extended Project Qualification](https://github.com/akim-13/epq) (EPQ)
+- [Personal Code of Conduct](https://github.com/akim-13/CCC)
